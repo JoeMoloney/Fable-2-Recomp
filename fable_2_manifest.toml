@@ -116,6 +116,20 @@ name = "fable2_hook_disable_motion_blur"
 registers = ["f12"]
 after_instruction = true
 #
+# Direct mouse-to-camera look (src/core/fable2_hooks.cpp + src/input/mouse_look.h).
+# Runs at 0x822A47F8 in CECCameraUpdateFrame_822A47C0 (before the view transform is
+# computed at sub_822CBDC8); r31 is the active CECCamera. The camera orientation is
+# the unit quaternion in the rotation state (target +160, current +176); the +144
+# 4-float is the look-at/center POSITION and is left alone. The game recomputes the
+# camera from the hero every frame, so the hook keeps a persistent look offset and
+# re-applies it each frame by rotating both rotation-state quaternions, so the camera
+# turns and stays where it is aimed. Toggle: [input] direct_mouse_look.
+[[entrypoint.midasm_hook]]
+address = 0x822A47F8
+name = "fable2_hook_direct_mouse_look"
+registers = ["r31"]
+after_instruction = true
+#
 # CE: sub_824ACAE0 is the CE-chest grant vtable slot called from
 # GetCEContent. Its entire body is `lbz r3, 993(r3)` (returns the byte at
 # item+0x3E1, the "CE content available" flag). Hook right after it and set

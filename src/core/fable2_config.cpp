@@ -76,9 +76,35 @@ keyboard_gamepad_map = "LMB:X,RMB:Y,MMB:B,Shift:A,E:A,Q:LT,Tab:RB,R:RT,Z:LB,B:B,
 mouse_look = true
 
 # Mouse-look sensitivity: right-stick units per pixel of mouse movement
-# (1..4096; larger = more sensitive).
+# (1..4096; larger = more sensitive). Used only when direct_mouse_look is
+# false (the legacy right-stick mapping).
 # Default: 256
 mouse_look_scale = 256
+
+# Direct mouse-to-camera look: apply mouse movement straight to the active
+# camera's orientation (desktop-FPS style, no stick rate cap) instead of
+# writing it into the pad's right stick. false = legacy right-stick mapping.
+# Default: true
+direct_mouse_look = true
+
+# Camera-look sensitivity: radians of camera rotation per host mouse pixel
+# (signed; make it negative to flip the axis direction).
+mouse_look_yaw_sens = 0.0022
+mouse_look_pitch_sens = 0.0022
+
+# Active-camera (CECCamera) orientation offsets (bytes from the camera object),
+# each a unit quaternion (x,y,z,w). The camera orientation is the rotation state
+# (target +160, current +176); the +144 4-float is the look-at/center POSITION
+# (large values) and is left alone. The hook rotates both rotation-state
+# quaternions by the persistent look offset, so the camera turns and stays put.
+# Verify with mouse_look_camera_diag and adjust if a look axis is wrong (no
+# rebuild needed).
+camera_rot_tgt_off = 160
+camera_rot_cur_off = 176
+
+# Log the active camera's orientation fields once, the first frame the mouse
+# moves, to confirm the offsets above. Default: false
+mouse_look_camera_diag = false
 
 [patches]
 # Toggles for the recomp-level (mid-asm hook) patches, consulted at runtime
@@ -255,6 +281,24 @@ bool Load(const std::filesystem::path& path) {
     values.mouse_look_scale = static_cast<int32_t>(Read<int64_t>(
         input_table, "input", "mouse_look_scale", "integer",
         values.mouse_look_scale));
+    values.direct_mouse_look =
+        Read<bool>(input_table, "input", "direct_mouse_look", "boolean",
+                   values.direct_mouse_look);
+    values.mouse_look_yaw_sens = static_cast<float>(
+        Read<double>(input_table, "input", "mouse_look_yaw_sens", "number",
+                     values.mouse_look_yaw_sens));
+    values.mouse_look_pitch_sens = static_cast<float>(
+        Read<double>(input_table, "input", "mouse_look_pitch_sens", "number",
+                     values.mouse_look_pitch_sens));
+    values.camera_rot_tgt_off = static_cast<int32_t>(Read<int64_t>(
+        input_table, "input", "camera_rot_tgt_off", "integer",
+        values.camera_rot_tgt_off));
+    values.camera_rot_cur_off = static_cast<int32_t>(Read<int64_t>(
+        input_table, "input", "camera_rot_cur_off", "integer",
+        values.camera_rot_cur_off));
+    values.mouse_look_camera_diag =
+        Read<bool>(input_table, "input", "mouse_look_camera_diag", "boolean",
+                   values.mouse_look_camera_diag);
   }
   const toml::path patches_path{"patches"};
   const auto patches = root[patches_path];

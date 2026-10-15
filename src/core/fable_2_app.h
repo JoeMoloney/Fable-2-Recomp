@@ -393,6 +393,9 @@ class Fable2App : public rex::ReXApp {
     // Lets the address-scan hook (src/core/fable2_address_scan.cpp) read the
     // guest page tables.
     fable2::addressscan::SetMemory(runtime()->memory());
+    // Lets the direct-mouse-look hook (src/core/fable2_hooks.cpp) translate the
+    // camera object's guest address to a host pointer.
+    fable2::mouselook::set_memory(runtime()->memory());
   }
 
   // Startup integrity check: this build was recompiled against a specific

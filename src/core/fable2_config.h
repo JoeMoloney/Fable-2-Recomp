@@ -42,6 +42,31 @@ struct Values {
   // an empty/missing config can never wedge input.
   bool mouse_look = true;
   int32_t mouse_look_scale = 256;  // range 1..4096 (cvar constraint)
+  // Direct mouse-to-camera look (see src/input/mouse_look.h). When true, mouse
+  // movement bypasses the synthetic pad's right stick and is applied directly
+  // to the active camera's orientation by fable2_hook_direct_mouse_look, giving
+  // a desktop-FPS "move the mouse that far, turn that far" feel with no rate
+  // cap. When false, the legacy right-stick mapping (mouse_look_scale) is used.
+  bool direct_mouse_look = true;
+  // Camera-look sensitivity: radians of camera rotation per host mouse pixel.
+  // Signed so an axis direction can be flipped without a code change.
+  float mouse_look_yaw_sens = 0.0022f;   // horizontal mouse -> camera yaw
+  float mouse_look_pitch_sens = 0.0022f;  // vertical mouse -> camera pitch
+  // Active-camera (CECCamera) orientation offsets used by the direct-mouse-look
+  // hook. The camera's orientation is the unit quaternion in the rotation state
+  // (target at camera+160, current at camera+176, x,y,z,w) -- confirmed at
+  // runtime by mouse_look_camera_diag (|m|=1). The 4-float at camera+144 is the
+  // look-at/center POSITION (large values), NOT a quaternion, so it is left
+  // alone. Both rotation-state quaternions are rotated by the persistent look
+  // offset (the follow logic resets them each frame, so this cannot run away).
+  // Offsets in bytes from the camera object; verify/adjust at runtime with
+  // mouse_look_camera_diag (no rebuild needed to change these).
+  int32_t camera_rot_tgt_off = 160;  // rotation-state target (quaternion)
+  int32_t camera_rot_cur_off = 176;  // rotation-state current (quaternion)
+  // Log the active camera's orientation fields once, the first frame the mouse
+  // moves, to confirm the offset guesses above (and to spot which fields are
+  // position vs. angle vs. the transform). Off by default.
+  bool mouse_look_camera_diag = false;
   // [patches] - toggles for the recomp-level (mid-asm hook) patches. The
   // hook bodies consult these at runtime (src/core/fable2_hooks.cpp), so a patch
   // can be A/B'd with no rebuild. high_tick_rate / higher_hf_tick_rate also
