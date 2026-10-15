@@ -89,22 +89,39 @@ direct_mouse_look = true
 
 # Camera-look sensitivity: radians of camera rotation per host mouse pixel
 # (signed; make it negative to flip the axis direction).
-mouse_look_yaw_sens = 0.0022
-mouse_look_pitch_sens = 0.0022
+mouse_look_yaw_sens = -0.0022
+mouse_look_pitch_sens = -0.0022
+# Camera local axis each look direction rotates around (0=X, 1=Y, 2=Z). The
+# camera looks along its local Y, so a correct orbit turns around the local up
+# (Z) and pitches around the local right (X). Negate the matching *_sens to
+# flip a look direction.
+mouse_look_yaw_axis = 2
+mouse_look_pitch_axis = 0
 
-# Active-camera (CECCamera) orientation offsets (bytes from the camera object),
-# each a unit quaternion (x,y,z,w). The camera orientation is the rotation state
-# (target +160, current +176); the +144 4-float is the look-at/center POSITION
-# (large values) and is left alone. The hook rotates both rotation-state
-# quaternions by the persistent look offset, so the camera turns and stays put.
-# Verify with mouse_look_camera_diag and adjust if a look axis is wrong (no
+# Active-camera (CECCamera) field offsets (bytes from the camera object). The
+# look-orbit is reproduced by rotating BOTH the orientation quaternions AND the
+# world-space eye position around the hero, exactly like the game's own
+# right-stick look. The rotation-state quaternions (target +160, current +176,
+# x,y,z,w) keep the camera facing the hero; the eye position (+144) is the
+# world-space camera position that physically sweeps around the hero. The hero
+# pivot is eye + forward * camera_distance (forward = camera local +Y). Verify
+# with mouse_look_camera_diag and adjust if a look axis or radius is off (no
 # rebuild needed).
 camera_rot_tgt_off = 160
 camera_rot_cur_off = 176
+camera_eye_off = 144
+# Distance from the hero to the camera eye (= orbit radius). The native stick
+# orbit's horizontal radius is ~3.1; tune so the mouse orbit matches.
+camera_distance = 3.1
 
 # Log the active camera's orientation fields once, the first frame the mouse
 # moves, to confirm the offsets above. Default: false
 mouse_look_camera_diag = false
+
+# Dump EVERY 4-byte field of the active camera object (offset 0..260) plus the
+# orientation quaternions, once per frame (capped), to the [ml-dump] log. Used
+# to find which fields the game's own right-stick look changes. Default: false
+mouse_look_camera_dump = false
 
 [patches]
 # Toggles for the recomp-level (mid-asm hook) patches, consulted at runtime
@@ -290,15 +307,30 @@ bool Load(const std::filesystem::path& path) {
     values.mouse_look_pitch_sens = static_cast<float>(
         Read<double>(input_table, "input", "mouse_look_pitch_sens", "number",
                      values.mouse_look_pitch_sens));
+    values.mouse_look_yaw_axis = static_cast<int32_t>(Read<int64_t>(
+        input_table, "input", "mouse_look_yaw_axis", "integer",
+        values.mouse_look_yaw_axis));
+    values.mouse_look_pitch_axis = static_cast<int32_t>(Read<int64_t>(
+        input_table, "input", "mouse_look_pitch_axis", "integer",
+        values.mouse_look_pitch_axis));
     values.camera_rot_tgt_off = static_cast<int32_t>(Read<int64_t>(
         input_table, "input", "camera_rot_tgt_off", "integer",
         values.camera_rot_tgt_off));
     values.camera_rot_cur_off = static_cast<int32_t>(Read<int64_t>(
         input_table, "input", "camera_rot_cur_off", "integer",
         values.camera_rot_cur_off));
+    values.camera_eye_off = static_cast<int32_t>(Read<int64_t>(
+        input_table, "input", "camera_eye_off", "integer",
+        values.camera_eye_off));
+    values.camera_distance = static_cast<float>(Read<double>(
+        input_table, "input", "camera_distance", "number",
+        values.camera_distance));
     values.mouse_look_camera_diag =
         Read<bool>(input_table, "input", "mouse_look_camera_diag", "boolean",
                    values.mouse_look_camera_diag);
+    values.mouse_look_camera_dump =
+        Read<bool>(input_table, "input", "mouse_look_camera_dump", "boolean",
+                   values.mouse_look_camera_dump);
   }
   const toml::path patches_path{"patches"};
   const auto patches = root[patches_path];

@@ -14,6 +14,10 @@
 #include <rex/ppc/context.h>  // PPCRegister (union with u64/s64/u32/... views)
 #include <rex/logging/macros.h>
 
+#include <string>
+
+#include <fmt/format.h>
+
 #include "fable2_config.h"
 #include "mouse_look.h"  // fable2::mouselook (shared host/guest mouse-delta state)
 
@@ -175,32 +179,111 @@ bool fable2_hook_high_hf_tick_rate_skip_store() {
 // Direct mouse-to-camera look (separates the mouse from the keyboard->gamepad
 // mapping; see src/input/mouse_look.h). Runs at 0x822A47F8 in
 // CECCameraUpdateFrame_822A47C0, right after the virtual call writes the
-// camera's "current" transform to the stack (r1+96), and before the view lerp
-// (lerp(r1+96, cam+144, coeff) -> sub_822CBDC8). r31 is the active CECCamera
-// and r1 is the guest stack pointer.
+// camera's "current" transform to the stack (r1+96), and before the view lerp.
+// r31 is the active CECCamera.
 //
-// The game's hero-follow logic recomputes the camera orientation from scratch each
-// frame, so a per-frame mouse rotation springs back to the hero the moment the
-// cursor stops. Instead the hook keeps a persistent look offset (running yaw/pitch
-// radians) and re-applies it every frame by rotating BOTH the "current" transform
-// (r1+96, a fresh per-frame stack buffer) and the "target" transform (cam+144) by
-// that offset. Rotating the current (the lerp's "from") makes the turn immediate
-// (no lerp damping), and re-applying the accumulated offset each frame keeps the
-// camera where it is aimed. Offsets + sensitivity are in fable2_config.toml
-// [input]; mouse_look_camera_diag logs the transforms so the offsets/layout can be
-// confirmed with no rebuild.
+// The goal is to orbit the camera around the hero EXACTLY like the game's own
+// right-stick look. A live [ml-dump] capture (hero stationary, stick pushed
+// around) shows the game drives three coupled things on an orbit: the rotation-
+// state orientation quaternions (cam+160 target / cam+176 current) AND the
+// world-space eye position (cam+144), which sweeps a ~3.1-radius circle around
+// the hero. Rotating only the quaternions makes the camera turn in place (no
+// orbit); rotating only the eye detaches it from the hero. So the hook does
+// both, with the same world-space orbit rotation R:
+//   * orbit the eye:        eye' = pivot + R * (eye - pivot)
+//   * rotate the quaternions: q' = R * q   (target + current)
+// where pivot is the hero (derived as eye + forward * camera_distance, low-passed
+// to resist jitter) and R = yaw around world-up then pitch around the resulting
+// right axis. The hero-follow recomputes cam+144/160/176 from scratch each frame,
+// so the hook re-applies the persistent look offset (running yaw/pitch radians)
+// every frame and the look sticks where it is aimed without springing back or
+// running away. Offsets + sensitivity + orbit radius are in fable2_config.toml
+// [input]; mouse_look_camera_diag / mouse_look_camera_dump log the fields so the
+// layout can be confirmed with no rebuild.
 void fable2_hook_direct_mouse_look(PPCRegister& r31) {
   const auto& cfg = fable2::config::Get();
-  if (!cfg.direct_mouse_look) return;
-
   rex::memory::Memory* mem =
       fable2::mouselook::memory_ref().load(std::memory_order_acquire);
   if (!mem) return;
   const uint32_t cam = r31.u32;
   if (cam == 0) return;
 
-  // Accumulate the persistent look offset (radians). It persists across frames so
-  // the look sticks instead of springing back when the cursor stops.
+  // Diagnostic: dump EVERY 4-byte field of the active camera object (offset
+  // 0..260) once per frame (capped), to the [ml-dump] log, so we can see
+  // empirically which fields the game's own right-stick look changes. Only the
+  // active hero camera (the one with a non-zero look-at center at +144) is
+  // dumped.
+  if (cfg.mouse_look_camera_dump) {
+    const float cx = fable2::mouselook::read_guest_float(mem, cam + 144);
+    if (cx != 0.0f) {
+      static int dumped = 0;
+      if (dumped < 2400) {
+        std::string s = fmt::format("[ml-dump] cam=0x{:08X} ", cam);
+        for (uint32_t off = 0; off <= 260; off += 4) {
+          const float v = fable2::mouselook::read_guest_float(mem, cam + off);
+          s += fmt::format("a{}={:.3f} ", off, v);
+        }
+        REXSYS_INFO("{}", s.c_str());
+        ++dumped;
+      }
+    }
+    // Also dump the GLOBAL camera-state object that sub_822CBDC8 integrates the
+    // eye offset into (reached via the pointer chain
+    // 0x83496940 -> +12 -> +88 -> +4). The look orbit (eye position around the
+    // hero) is integrated here, so it may live in this object rather than the
+    // CECCamera. Dump it under a distinct [ml-dump] tag.
+    uint32_t p0 = 0, p1 = 0, p2 = 0, gs = 0;
+    bool ok0 = fable2::mouselook::try_read_guest_u32(mem, 0x83496940u, &p0);
+    bool ok1 = ok0 && fable2::mouselook::try_read_guest_u32(mem, p0 + 12, &p1);
+    bool ok2 = ok1 && fable2::mouselook::try_read_guest_u32(mem, p1 + 88, &p2);
+    bool ok3 = ok2 && fable2::mouselook::try_read_guest_u32(mem, p2 + 4, &gs);
+    // Log the pointer chain a few times so we can see where it breaks.
+    static int ptrdumped = 0;
+    if (ptrdumped < 3) {
+      ++ptrdumped;
+      REXSYS_INFO("[ml-ptr] base=0x83496940 p0=0x{:08X} p1=0x{:08X} p2=0x{:08X} gs=0x{:08X} ok={}{}{}{}",
+                  p0, p1, p2, gs, ok0 ? '0' : 'X', ok1 ? '1' : 'X',
+                  ok2 ? '2' : 'X', ok3 ? '3' : 'X');
+    }
+    if (ok3 && fable2::mouselook::is_plausible_guest_ptr(gs)) {
+      static int gsdumped = 0;
+      if (gsdumped < 2400) {
+        std::string s = fmt::format("[ml-gs] gs=0x{:08X} ", gs);
+        for (uint32_t off = 0; off <= 260; off += 4) {
+          const float v = fable2::mouselook::read_guest_float(mem, gs + off);
+          s += fmt::format("g{}={:.3f} ", off, v);
+        }
+        REXSYS_INFO("{}", s.c_str());
+        ++gsdumped;
+      }
+    }
+  }
+
+  // Diagnostic: log the camera's orbit angle scalars + look-at every frame
+  // (capped), independent of direct_mouse_look, so we can watch which fields
+  // change when the game's own right-stick look runs. The angle scalars are the
+  // camera's accumulated orbit angles: current at +44/48/52, target at +68/72/76.
+  if (cfg.mouse_look_camera_diag) {
+    static int logged = 0;
+    if (logged < 400) {
+      auto f = [&](uint32_t addr) {
+        return fable2::mouselook::read_guest_float(mem, addr);
+      };
+      REXSYS_INFO(
+          "[ml-d] cam=0x{:08X} ang44={:.3f} ang48={:.3f} ang52={:.3f}  "
+          "tgt68={:.3f} tgt72={:.3f} tgt76={:.3f}  center144={:.2f},{:.2f},{:.2f}",
+          cam,
+          f(cam + 44), f(cam + 48), f(cam + 52),
+          f(cam + 68), f(cam + 72), f(cam + 76),
+          f(cam + 144), f(cam + 148), f(cam + 152));
+      ++logged;
+    }
+  }
+
+  if (!cfg.direct_mouse_look) return;
+
+  // Accumulate the persistent look offset (radians). It persists across frames
+  // so the look sticks instead of springing back when the cursor stops.
   int32_t dx = 0;
   int32_t dy = 0;
   fable2::mouselook::take_delta(dx, dy);
@@ -210,51 +293,73 @@ void fable2_hook_direct_mouse_look(PPCRegister& r31) {
   const float pitch = fable2::mouselook::cum_pitch();
   if (yaw == 0.0f && pitch == 0.0f) return;
 
-  if (cfg.mouse_look_camera_diag) {
-    // Comprehensive one-shot orientation dump (hero-relative values, before we
-    // rotate) so we can tell which 4-float groups are unit quaternions (|m|=1)
-    // vs. positions (large) and find the field that keeps the camera anchored to
-    // the hero. Capped so the log stays bounded.
-    static int logged = 0;
-    if (logged < 80) {
-      auto f = [&](uint32_t addr) {
-        return fable2::mouselook::read_guest_float(mem, addr);
-      };
-      auto mag = [&](uint32_t addr) {
-        const float x = f(addr), y = f(addr + 4), z = f(addr + 8), w = f(addr + 12);
-        return std::sqrt(x * x + y * y + z * z + w * w);
-      };
-      const uint32_t rtgt = cam + uint32_t(cfg.camera_rot_tgt_off);
-      const uint32_t rcur = cam + uint32_t(cfg.camera_rot_cur_off);
-      REXSYS_INFO(
-          "[ml-d] cam=0x{:08X} dx={} dy={} cum={:.3f},{:.3f}",
-          cam, dx, dy, yaw, pitch);
-      REXSYS_INFO(
-          "[ml-d]   center[144]={:.2f} {:.2f} {:.2f}  (look-at/position, left alone)",
-          f(cam + 144), f(cam + 148), f(cam + 152));
-      REXSYS_INFO(
-          "[ml-d]   rotTgt[{}] [{:.3f} {:.3f} {:.3f} {:.3f}] |m|={:.3f}",
-          cfg.camera_rot_tgt_off,
-          f(rtgt), f(rtgt + 4), f(rtgt + 8), f(rtgt + 12), mag(rtgt));
-      REXSYS_INFO(
-          "[ml-d]   rotCur[{}] [{:.3f} {:.3f} {:.3f} {:.3f}] |m|={:.3f}",
-          cfg.camera_rot_cur_off,
-          f(rcur), f(rcur + 4), f(rcur + 8), f(rcur + 12), mag(rcur));
-      REXSYS_INFO(
-          "[ml-d]   ang[44]={:.3f} [48]={:.3f} [52]={:.3f}  tgtang[68]={:.3f} [72]={:.3f} [76]={:.3f}",
-          f(cam + 44), f(cam + 48), f(cam + 52),
-          f(cam + 68), f(cam + 72), f(cam + 76));
-      ++logged;
-    }
-  }
+  // The active hero camera has a real world-space eye position at
+  // camera+camera_eye_off; the secondary camera's is all-zero. Skip the zero one
+  // so we never write a bogus eye/rotation into it.
+  const fable2::mouselook::Vec3 eye = fable2::mouselook::read_guest_vec3(
+      mem, cam + uint32_t(cfg.camera_eye_off));
+  if (fable2::mouselook::vec3_len(eye) < 1.0f) return;
 
-  // Re-apply the accumulated look offset to the rotation-state orientation
-  // quaternions (target + current) so the camera turns and stays where it is
-  // aimed. The look-at/center position (cam+144, large values) is left alone.
-  fable2::mouselook::rotate_guest_quat(
-      mem, cam + uint32_t(cfg.camera_rot_tgt_off), yaw, pitch);
-  fable2::mouselook::rotate_guest_quat(
-      mem, cam + uint32_t(cfg.camera_rot_cur_off), yaw, pitch);
+  using Quat = fable2::mouselook::Quat;
+  using Vec3 = fable2::mouselook::Vec3;
+  using fable2::mouselook::axis_quat_vec;
+  using fable2::mouselook::axis_vec;
+  using fable2::mouselook::quat_from_basis;
+  using fable2::mouselook::quat_mul;
+  using fable2::mouselook::quat_rotate_vec;
+  using fable2::mouselook::vec3_cross;
+  using fable2::mouselook::vec3_normalize;
+
+  // Hero pivot: the eye looks along the camera's local +Y (forward) toward the
+  // hero, so the hero sits `camera_distance` in front of the eye. Low-pass the
+  // pivot so per-frame jitter in the forward/eye estimate cannot shake the orbit.
+  const Quat q_tgt = fable2::mouselook::read_guest_quat(
+      mem, cam + uint32_t(cfg.camera_rot_tgt_off));
+  const Vec3 fwd = quat_rotate_vec(q_tgt, Vec3{0.0f, 1.0f, 0.0f});
+  const float dist = cfg.camera_distance;
+  const Vec3 pivot_new{eye.x + fwd.x * dist, eye.y + fwd.y * dist,
+                       eye.z + fwd.z * dist};
+  if (!fable2::mouselook::orbit_pivot_init()) {
+    fable2::mouselook::orbit_pivot() = pivot_new;
+    fable2::mouselook::orbit_pivot_init() = true;
+  } else {
+    constexpr float kAlpha = 0.15f;  // low-pass toward the fresh estimate
+    Vec3& p = fable2::mouselook::orbit_pivot();
+    p.x += kAlpha * (pivot_new.x - p.x);
+    p.y += kAlpha * (pivot_new.y - p.y);
+    p.z += kAlpha * (pivot_new.z - p.z);
+  }
+  const Vec3 pivot = fable2::mouselook::orbit_pivot();
+
+  // World-space orbit rotation: yaw around the world up axis, then pitch around
+  // the resulting right axis (so pitch stays forward/back after a large yaw).
+  const Quat r_yaw = axis_quat_vec(axis_vec(cfg.mouse_look_yaw_axis), yaw);
+  const Vec3 orbit_right = quat_rotate_vec(r_yaw, axis_vec(cfg.mouse_look_pitch_axis));
+  const Quat r_pitch = axis_quat_vec(orbit_right, pitch);
+  const Quat R = quat_mul(r_pitch, r_yaw);
+
+  // Orbit the eye around the hero: eye' = pivot + R * (eye - pivot).
+  const Vec3 o{eye.x - pivot.x, eye.y - pivot.y, eye.z - pivot.z};
+  const Vec3 o_rot = quat_rotate_vec(R, o);
+  const Vec3 eye_new{pivot.x + o_rot.x, pivot.y + o_rot.y, pivot.z + o_rot.z};
+  fable2::mouselook::write_guest_vec3(mem, cam + uint32_t(cfg.camera_eye_off), eye_new);
+
+  // Orientation: a clean look-at from the new eye toward the hero, with world-up
+  // as up. Building it from scratch (instead of rotating the follow logic's own
+  // orientation, which carries a slight bank/tilt) removes the in-plane twist
+  // that shows up on up/down. right/forward/up form the camera's local X/Y/Z.
+  Vec3 forward = vec3_normalize(
+      Vec3{pivot.x - eye_new.x, pivot.y - eye_new.y, pivot.z - eye_new.z});
+  Vec3 right = vec3_cross(forward, Vec3{0.0f, 0.0f, 1.0f});
+  if (fable2::mouselook::vec3_len(right) < 1e-4f)
+    right = vec3_cross(forward, Vec3{1.0f, 0.0f, 0.0f});  // forward ~ vertical
+  right = vec3_normalize(right);
+  const Vec3 up = vec3_cross(right, forward);
+  const Quat q_new = quat_from_basis(right, forward, up);
+  fable2::mouselook::write_guest_quat(
+      mem, cam + uint32_t(cfg.camera_rot_tgt_off), q_new);
+  fable2::mouselook::write_guest_quat(
+      mem, cam + uint32_t(cfg.camera_rot_cur_off), q_new);
 }
 
 // Realtime Texture Morphing (hero/dog black textures without CPU readback;

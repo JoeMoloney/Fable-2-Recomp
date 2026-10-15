@@ -58,22 +58,38 @@ direct_mouse_look = true
 
 # Camera-look sensitivity: radians of camera rotation per host mouse pixel
 # (signed; make it negative to flip the axis direction).
-mouse_look_yaw_sens = 0.0022
-mouse_look_pitch_sens = 0.0022
+mouse_look_yaw_sens = -0.0022
+mouse_look_pitch_sens = -0.0022
+# World axis each look direction orbits around (0=X, 1=Y, 2=Z). A correct orbit
+# turns around world up (Z) and pitches around the resulting right axis. Negate
+# the matching *_sens to flip a look direction.
+mouse_look_yaw_axis = 2
+mouse_look_pitch_axis = 0
 
-# Active-camera (CECCamera) orientation offsets (bytes from the camera object),
-# each a unit quaternion (x,y,z,w). The camera orientation is the rotation state
-# (target +160, current +176); the +144 4-float is the look-at/center POSITION
-# (large values) and is left alone. The hook rotates both rotation-state
-# quaternions by the persistent look offset, so the camera turns and stays put.
-# Verify with mouse_look_camera_diag and adjust if a look axis is wrong (no
+# Active-camera (CECCamera) field offsets (bytes from the camera object). The
+# look-orbit is reproduced by rotating BOTH the orientation quaternions AND the
+# world-space eye position around the hero, exactly like the game's own
+# right-stick look. The rotation-state quaternions (target +160, current +176,
+# x,y,z,w) keep the camera facing the hero; the eye position (+144) is the
+# world-space camera position that physically sweeps around the hero. The hero
+# pivot is eye + forward * camera_distance (forward = camera local +Y). Verify
+# with mouse_look_camera_diag and adjust if a look axis or radius is off (no
 # rebuild needed).
 camera_rot_tgt_off = 160
 camera_rot_cur_off = 176
+camera_eye_off = 144
+# Distance from the hero to the camera eye (= orbit radius). The native stick
+# orbit's horizontal radius is ~3.1; tune so the mouse orbit matches.
+camera_distance = 3.1
 
 # Log the active camera's orientation fields once, the first frame the mouse
 # moves, to confirm the offsets above. Default: false
 mouse_look_camera_diag = false
+
+# Dump EVERY 4-byte field of the active camera object (offset 0..260) plus the
+# orientation quaternions, once per frame (capped), to the [ml-dump] log. Used
+# to find which fields the game's own right-stick look changes. Default: false
+mouse_look_camera_dump = false
 
 [patches]
 # Toggles for the recomp-level (mid-asm hook) patches, consulted at runtime

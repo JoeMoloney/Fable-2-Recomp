@@ -50,23 +50,46 @@ struct Values {
   bool direct_mouse_look = true;
   // Camera-look sensitivity: radians of camera rotation per host mouse pixel.
   // Signed so an axis direction can be flipped without a code change.
-  float mouse_look_yaw_sens = 0.0022f;   // horizontal mouse -> camera yaw
-  float mouse_look_pitch_sens = 0.0022f;  // vertical mouse -> camera pitch
-  // Active-camera (CECCamera) orientation offsets used by the direct-mouse-look
-  // hook. The camera's orientation is the unit quaternion in the rotation state
-  // (target at camera+160, current at camera+176, x,y,z,w) -- confirmed at
-  // runtime by mouse_look_camera_diag (|m|=1). The 4-float at camera+144 is the
-  // look-at/center POSITION (large values), NOT a quaternion, so it is left
-  // alone. Both rotation-state quaternions are rotated by the persistent look
-  // offset (the follow logic resets them each frame, so this cannot run away).
-  // Offsets in bytes from the camera object; verify/adjust at runtime with
-  // mouse_look_camera_diag (no rebuild needed to change these).
+  float mouse_look_yaw_sens = -0.0022f;   // horizontal mouse -> camera yaw
+  float mouse_look_pitch_sens = -0.0022f;  // vertical mouse -> camera pitch
+  // Camera local axis each look direction rotates around (0=X, 1=Y, 2=Z). The
+  // camera looks along its local Y, so a correct orbit turns around the local up
+  // (Z) and pitches around the local right (X). Negate the matching *_sens to flip
+  // a look direction. No rebuild needed to change these.
+  int32_t mouse_look_yaw_axis = 2;   // default Z (local up -> orbit)
+  int32_t mouse_look_pitch_axis = 0; // default X (local right -> pitch)
+  // Active-camera (CECCamera) field offsets used by the direct-mouse-look hook
+  // (bytes from the camera object). The look-orbit is reproduced by rotating
+  // BOTH the orientation quaternions AND the world-space eye position around the
+  // hero, exactly like the game's own right-stick look:
+  //   * camera_rot_tgt_off (160) / camera_rot_cur_off (176): the rotation-state
+  //     orientation quaternions (x,y,z,w, |m|=1) the follow logic eases the view
+  //     through. Rotated (pre-multiplied) by the orbit rotation so the camera
+  //     keeps facing the hero.
+  //   * camera_eye_off (144): the world-space camera EYE position (large values,
+  //     e.g. ~204,~93,~55). When the stick orbits the camera (hero stationary)
+  //     this sweeps a ~3.1-radius circle around the hero. Rotated around the
+  //     hero pivot by the same orbit rotation so the eye physically moves (a
+  //     true orbit rather than an in-place turn).
+  // The hero pivot is derived as eye + forward * camera_distance, where forward
+  // is the camera's local +Y rotated by the target orientation. All of these
+  // can be tuned at runtime with no rebuild (see mouse_look_camera_diag).
   int32_t camera_rot_tgt_off = 160;  // rotation-state target (quaternion)
   int32_t camera_rot_cur_off = 176;  // rotation-state current (quaternion)
+  int32_t camera_eye_off = 144;      // world-space eye position (x,y,z)
+  // Distance from the hero to the camera eye (= the orbit radius). The game's
+  // native stick orbit has a horizontal radius of ~3.1 (fit from a live
+  // capture); tune this so the mouse orbit radius matches the game's.
+  float camera_distance = 3.1f;
   // Log the active camera's orientation fields once, the first frame the mouse
   // moves, to confirm the offset guesses above (and to spot which fields are
   // position vs. angle vs. the transform). Off by default.
   bool mouse_look_camera_diag = false;
+  // Dump EVERY 4-byte field of the active camera object (offset 0..260) plus the
+  // orientation quaternions, once per frame (capped), to the [ml-dump] log. Used
+  // to empirically find which fields the game's own right-stick look changes so
+  // the mouse look can drive the same field(s). Off by default.
+  bool mouse_look_camera_dump = false;
   // [patches] - toggles for the recomp-level (mid-asm hook) patches. The
   // hook bodies consult these at runtime (src/core/fable2_hooks.cpp), so a patch
   // can be A/B'd with no rebuild. high_tick_rate / higher_hf_tick_rate also
