@@ -41,13 +41,17 @@ struct Values {
   // mouse_look_scale); the cvar keeps its compiled default as a fallback so
   // an empty/missing config can never wedge input.
   bool mouse_look = true;
+  // Shared mouse-look sensitivity slider (1..4096, 256 = 1x): legacy stick
+  // units-per-pixel, and a multiplier on mouse_look_*_sens for direct look.
   int32_t mouse_look_scale = 256;  // range 1..4096 (cvar constraint)
-  // Direct mouse-to-camera look (see src/input/mouse_look.h). When true, mouse
-  // movement bypasses the synthetic pad's right stick and is applied directly
-  // to the active camera's orientation by fable2_hook_direct_mouse_look, giving
-  // a desktop-FPS "move the mouse that far, turn that far" feel with no rate
-  // cap. When false, the legacy right-stick mapping (mouse_look_scale) is used.
-  bool direct_mouse_look = true;
+  // Direct mouse-to-camera look (see src/input/mouse_look.h). EXPERIMENTAL.
+  // When true, mouse movement bypasses the synthetic pad's right stick and is
+  // applied directly to the active camera's orientation by
+  // fable2_hook_direct_mouse_look, giving a desktop-FPS "move the mouse that
+  // far, turn that far" feel with no rate cap. When false, the legacy
+  // right-stick mapping (mouse_look_scale) is used. Defaults to false but is
+  // still considered experimental.
+  bool direct_mouse_look = false;
   // Camera-look sensitivity: radians of camera rotation per host mouse pixel.
   // Signed so an axis direction can be flipped without a code change.
   float mouse_look_yaw_sens = -0.0022f;   // horizontal mouse -> camera yaw

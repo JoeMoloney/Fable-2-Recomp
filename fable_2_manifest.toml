@@ -40015,9 +40015,20 @@ name = "ProcessAndProcessAndProcess706_8227CB98"
 [entrypoint.functions."0x82282ED8"]
 name = "ProcessAndProcessAndProcess707_82282ED8"
 
-# Process a value (seven hundred and eighth form). It takes a value and checks its state, with no external sub-operations. Part of the 0x8241B process cluster. 73 lines. 0 callees. 0 callers.
+# CECCamera target-state setter (vtable method, reached only through virtual
+# dispatch -- 0 static call sites). Args: r3 = the CECCamera (this). r4..r8
+# are five u32 values stored to cam+16/20/28/32/36; if r9 (an optional pointer)
+# is non-null its six u32 are copied to cam+40..56; f1..f6 are stored to
+# cam+68/72/76/80/84/88 -- the target orbit-angle scalars (and three
+# companions) that CECCameraUpdateFrame_822A47C0 eases the current angles
+# (cam+44/48/52) toward each frame; a global flag byte goes to cam+92 and a
+# global pointer to cam+96. This is where the camera controller hands the
+# per-frame target orbit to the camera -- the injection point for driving the
+# native look orbit (see the direct-mouse-look work). Named
+# CECCameraSetTarget for the target state it writes (the auto name
+# ProcessAndProcessAndProcess708 is replaced).
 [entrypoint.functions."0x8241BDF8"]
-name = "ProcessAndProcessAndProcess708_8241BDF8"
+name = "CECCameraSetTarget_8241BDF8"
 
 # Process a value (seven hundred and ninth form). It takes a value and checks its state, with no external sub-operations. Part of the 0x83217 process cluster. 71 lines. 0 callees. 3 callers (sub_83221FC8, sub_832389D8, sub_832391D8).
 [entrypoint.functions."0x83217A38"]
@@ -49168,6 +49179,43 @@ name = "CECCameraUpdateFrame_822A47C0"
 # CECCameraUpdateRoll for the rotation channel it advances.
 [entrypoint.functions."0x822A4A68"]
 name = "CECCameraUpdateRoll_822A4A68"
+
+# Hero-follow velocity integrator. Called once per frame by
+# CECCameraUpdateFrame_822A47C0 with r3 = camera and r4 = the 16-byte position
+# buffer (the lerp result on the stack). Reads the frame dt from cam+192 and
+# compares it against the global threshold float at 0x820994B4; when it is not
+# exceeded the function returns without touching the buffer. Otherwise it walks
+# the global camera-state pointer chain (*(0x83496940) -> +12 -> +88 -> +4)
+# and reads a velocity vector at offset +120, scales it by dt * a global scale
+# constant, and integrates it into the buffer in place (vaddfp). This is what
+# keeps the camera's reference point glued to a moving hero. Sole caller is
+# CECCameraUpdateFrame, so it is named for that camera.
+[entrypoint.functions."0x822CBDC8"]
+name = "CECCameraIntegrateHeroFollow_822CBDC8"
+
+# 4-float state easing helper (a quaternion ease). Args: r3 = output pointer
+# (the function writes two u64 = 4 floats here), r4/r5 = current state (two
+# u64, by value), r6/r7 = target state (two u64, by value), f2 = the easing
+# coefficient. Advances the current state toward the target by the coefficient
+# (a damped/slerp-style step) and writes the result to *r3. Used by
+# CECCameraUpdateRoll_822A4A68 to ease the camera's rotation state (current at
+# cam+176/184 toward target at cam+160/168), and by 11 other call sites across
+# the engine -- hence the generic (non-camera) name.
+[entrypoint.functions."0x8220D058"]
+name = "EaseQuaternionToTarget_8220D058"
+
+# Input bit-merge helper (found while tracing the right-stick look path). Args:
+# r3 = a struct whose byte at +9 is a gate flag and whose two u16 fields at
+# +10 and +12 hold 14-bit magnitudes; r4/r5 supply replacement top bits. For
+# each field it keeps the low 14 bits (clrlwi ..,18) and ORs in the low 2 bits
+# of the matching arg promoted to the top of the 16 bits
+# (rlwinm ..,14,0,17), then stores the result back in place. When the gate
+# flag differs between +9 and the r6 arg the arg is one-complemented first
+# (a sign/flip). Called from the gamepad handling (3 sites) with r4/r5/r6 = 0
+# to clear the top 2 bits. Named for the bit-merge mechanism; the exact input
+# semantic (axis sign/extend) is not fully resolved.
+[entrypoint.functions."0x82688030"]
+name = "InputMergeU16HighBits_82688030"
 
 # Camera-controller update (one of two per-frame camera drivers). Args: r3 =
 # the controller. Computes the frame delta-time from GetTimebase_8221EB58

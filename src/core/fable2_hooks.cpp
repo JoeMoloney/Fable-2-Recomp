@@ -318,8 +318,15 @@ void fable2_hook_direct_mouse_look(PPCRegister& r31) {
   int32_t dx = 0;
   int32_t dy = 0;
   fable2::mouselook::take_delta(dx, dy);
-  fable2::mouselook::cum_yaw() += float(dx) * cfg.mouse_look_yaw_sens;
-  fable2::mouselook::cum_pitch() += float(dy) * cfg.mouse_look_pitch_sens;
+  // Map the shared sensitivity slider (mouse_look_scale, default 256) onto the
+  // direct-look sensitivity too, so one control scales both the legacy right-
+  // stick mapping and this direct camera orbit. At 256 the factor is 1.0, so
+  // the configured mouse_look_*_sens values are used verbatim (no behavior
+  // change at the default); a larger slider value = faster look. Each sens
+  // keeps its own sign (axis direction), only the magnitude is scaled.
+  const float sens_scale = float(cfg.mouse_look_scale) / 256.0f;
+  fable2::mouselook::cum_yaw() += float(dx) * (cfg.mouse_look_yaw_sens * sens_scale);
+  fable2::mouselook::cum_pitch() += float(dy) * (cfg.mouse_look_pitch_sens * sens_scale);
   // Native-aware pitch clamp. The game's own right-stick look integrates the
   // orbit into the target angle at cam+68 and clamps it to [floor, ceil]. We
   // read that native angle and clamp the mouse's cumulative pitch so the TOTAL
