@@ -66,13 +66,15 @@ mouse_look_pitch_sens = -0.0022
 mouse_look_yaw_axis = 2
 mouse_look_pitch_axis = 0
 
-# Look-pitch bounds (degrees from the default camera elevation). The native
-# right-stick look clamps how high/low the camera can orbit; this keeps the
-# mouse within the same range so it can't swing the eye past the poles (over
-# the top / under the ground). Cumulative pitch is clamped to [min, max] each
-# frame; yaw is unbounded (full 360 orbit).
-mouse_look_pitch_max_deg = 70
-mouse_look_pitch_min_deg = -75
+# Native look-orbit angle limits, in the game's own orbit-angle scale (the
+# target angle at camera+68 that the right-stick look integrates and clamps).
+# A full-range stick test shows the native orbit clamps this angle to
+# [floor, ceil]: floor = camera low / looking up, ceil = camera high / looking
+# down. The mouse adds its pitch on top of the native angle and is clamped so
+# the TOTAL (native + mouse) stays within [floor, ceil] — so the mouse and the
+# stick share one orbit and one set of bounds (no compounding past the limits).
+mouse_look_pitch_floor = 1.458
+mouse_look_pitch_ceil = 4.067
 
 # Active-camera (CECCamera) field offsets (bytes from the camera object). The
 # look-orbit is reproduced by rotating BOTH the orientation quaternions AND the

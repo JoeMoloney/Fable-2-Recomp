@@ -52,15 +52,19 @@ struct Values {
   // Signed so an axis direction can be flipped without a code change.
   float mouse_look_yaw_sens = -0.0022f;   // horizontal mouse -> camera yaw
   float mouse_look_pitch_sens = -0.0022f;  // vertical mouse -> camera pitch
-  // Look-pitch bounds, in degrees measured from the default camera elevation.
-  // The native right-stick look clamps how high/low the camera can orbit; without
-  // a bound the accumulated mouse pitch would swing the eye past the poles (over
-  // the top / under the ground). Cumulative pitch is clamped to [min, max] each
-  // frame. The sign follows the (invertible) pitch direction set by
-  // mouse_look_pitch_sens: the positive end is whichever way a positive pitch
-  // rotates the eye. Yaw is intentionally unbounded (a full 360 orbit).
-  float mouse_look_pitch_max_deg = 70.0f;   // limit in the positive pitch direction
-  float mouse_look_pitch_min_deg = -75.0f;  // limit in the negative pitch direction
+  // Native look-orbit angle limits, in the game's own orbit-angle scale (the
+  // target angle at camera+68, which the right-stick look integrates and clamps).
+  // A full-range stick test (hero stationary) shows the native orbit clamps this
+  // angle to [floor, ceil]: floor = camera low / looking up, ceil = camera high /
+  // looking down, with the rest position in between (~2.81 at spawn).
+  //
+  // The mouse adds its cumulative pitch ON TOP of the native angle, and is
+  // clamped so the TOTAL (native orbit + mouse) stays within [floor, ceil]. This
+  // makes the mouse and the stick share one orbit and one set of bounds, so the
+  // two can't compound past the native limits (the mouse's headroom shrinks as
+  // the stick approaches a limit).
+  float mouse_look_pitch_floor = 1.458f;  // native floor angle (camera low)
+  float mouse_look_pitch_ceil = 4.067f;   // native ceiling angle (camera high)
   // Camera local axis each look direction rotates around (0=X, 1=Y, 2=Z). The
   // camera looks along its local Y, so a correct orbit turns around the local up
   // (Z) and pitches around the local right (X). Negate the matching *_sens to flip

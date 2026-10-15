@@ -227,6 +227,37 @@ void fable2_hook_direct_mouse_look(PPCRegister& r31) {
         ++dumped;
       }
     }
+    // Also dump the camera CONTROLLER (owner object at cam+4) — the native
+    // right-stick orbit's accumulated state (angle + clamp) lives here, not on
+    // the CECCamera. Only the active hero camera (non-zero eye at +144) is
+    // dumped. This lets a full-range stick test reveal the orbit-pitch field
+    // and its min/max.
+    if (cx != 0.0f) {
+      uint32_t owner = 0;
+      if (fable2::mouselook::try_read_guest_u32(mem, cam + 4, &owner) &&
+          fable2::mouselook::is_plausible_guest_ptr(owner)) {
+        static int ctldumped = 0;
+        if (ctldumped < 2400) {
+          std::string s = fmt::format("[ml-ctl] ctl=0x{:08X} ", owner);
+          for (uint32_t off = 0; off <= 128; off += 4) {
+            const float v = fable2::mouselook::read_guest_float(mem, owner + off);
+            s += fmt::format("c{}={:.3f} ", off, v);
+          }
+          // Also dump the look sub-object the virtual call reads (owner+124).
+          uint32_t sub = 0;
+          if (fable2::mouselook::try_read_guest_u32(mem, owner + 124, &sub) &&
+              fable2::mouselook::is_plausible_guest_ptr(sub)) {
+            s += fmt::format(" | sub=0x{:08X} ", sub);
+            for (uint32_t off = 0; off <= 64; off += 4) {
+              const float v = fable2::mouselook::read_guest_float(mem, sub + off);
+              s += fmt::format("s{}={:.3f} ", off, v);
+            }
+          }
+          REXSYS_INFO("{}", s.c_str());
+          ++ctldumped;
+        }
+      }
+    }
     // Also dump the GLOBAL camera-state object that sub_822CBDC8 integrates the
     // eye offset into (reached via the pointer chain
     // 0x83496940 -> +12 -> +88 -> +4). The look orbit (eye position around the
@@ -289,13 +320,17 @@ void fable2_hook_direct_mouse_look(PPCRegister& r31) {
   fable2::mouselook::take_delta(dx, dy);
   fable2::mouselook::cum_yaw() += float(dx) * cfg.mouse_look_yaw_sens;
   fable2::mouselook::cum_pitch() += float(dy) * cfg.mouse_look_pitch_sens;
-  // Clamp the accumulated pitch to the configured bounds (degrees -> radians)
-  // so the mouse can't swing the eye past the poles, matching the native
-  // right-stick look. Yaw is left unbounded (a full 360 orbit).
-  constexpr float kDeg2Rad = 0.017453292519943295f;
+  // Native-aware pitch clamp. The game's own right-stick look integrates the
+  // orbit into the target angle at cam+68 and clamps it to [floor, ceil]. We
+  // read that native angle and clamp the mouse's cumulative pitch so the TOTAL
+  // (native orbit + mouse) stays within [floor, ceil]. This makes the mouse and
+  // the stick share one orbit and one set of bounds: the mouse's headroom shrinks
+  // as the stick approaches a limit, so the two can't compound past the native
+  // limits. Yaw is left unbounded (a full 360 orbit).
+  const float native_orbit = fable2::mouselook::read_guest_float(mem, cam + 68);
   float& cum_pitch = fable2::mouselook::cum_pitch();
-  const float pmax = cfg.mouse_look_pitch_max_deg * kDeg2Rad;
-  const float pmin = cfg.mouse_look_pitch_min_deg * kDeg2Rad;
+  const float pmin = cfg.mouse_look_pitch_floor - native_orbit;
+  const float pmax = cfg.mouse_look_pitch_ceil - native_orbit;
   if (cum_pitch > pmax) cum_pitch = pmax;
   if (cum_pitch < pmin) cum_pitch = pmin;
   const float yaw = fable2::mouselook::cum_yaw();

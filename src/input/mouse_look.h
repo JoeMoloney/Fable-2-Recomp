@@ -75,12 +75,14 @@ inline uint32_t read_guest_u32(rex::memory::Memory* mem, uint32_t guest_addr) {
   const uint32_t* p = mem->TranslateVirtual<const uint32_t*>(guest_addr);
   return __builtin_bswap32(*p);
 }
-// True if guest_addr points into a plausibly-valid guest object region (the
-// recompiled image is mapped at 0x82000000; live objects/heap sit in the same
-// high range). Used to guard multi-level pointer chains from dereferencing
-// uninitialized/sentinel values (e.g. a field that is still 0 or 1).
+// True if guest_addr points into a plausibly-valid guest region. Two ranges
+// matter: the recompiled image (code + data + globals) is mapped at 0x82xxxxxx,
+// while live heap objects (the CECCamera, its controller, etc.) sit lower at
+// 0x42xxxxxx. Accepting both lets multi-level chains hop between heap objects
+// and image globals. Excludes 0/1 sentinels and tiny garbage.
 inline bool is_plausible_guest_ptr(uint32_t a) {
-  return a >= 0x82000000u && a < 0x84000000u;
+  return (a >= 0x40000000u && a < 0x48000000u) ||  // live heap objects
+         (a >= 0x82000000u && a < 0x84000000u);      // recompiled image
 }
 // Bounds-checked u32 read: returns ok=false (and leaves *out=0) if the address
 // is not a plausible guest pointer. Never dereferences an out-of-range address.
