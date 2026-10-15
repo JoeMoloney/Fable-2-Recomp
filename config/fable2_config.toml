@@ -66,6 +66,14 @@ mouse_look_pitch_sens = -0.0022
 mouse_look_yaw_axis = 2
 mouse_look_pitch_axis = 0
 
+# Look-pitch bounds (degrees from the default camera elevation). The native
+# right-stick look clamps how high/low the camera can orbit; this keeps the
+# mouse within the same range so it can't swing the eye past the poles (over
+# the top / under the ground). Cumulative pitch is clamped to [min, max] each
+# frame; yaw is unbounded (full 360 orbit).
+mouse_look_pitch_max_deg = 70
+mouse_look_pitch_min_deg = -75
+
 # Active-camera (CECCamera) field offsets (bytes from the camera object). The
 # look-orbit is reproduced by rotating BOTH the orientation quaternions AND the
 # world-space eye position around the hero, exactly like the game's own

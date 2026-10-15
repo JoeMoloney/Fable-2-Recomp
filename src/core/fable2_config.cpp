@@ -91,6 +91,13 @@ direct_mouse_look = true
 # (signed; make it negative to flip the axis direction).
 mouse_look_yaw_sens = -0.0022
 mouse_look_pitch_sens = -0.0022
+# Look-pitch bounds (degrees from the default camera elevation). The native
+# right-stick look clamps how high/low the camera can orbit; this keeps the
+# mouse within the same range so it can't swing the eye past the poles (over
+# the top / under the ground). Cumulative pitch is clamped to [min, max] each
+# frame; yaw is unbounded (full 360 orbit).
+mouse_look_pitch_max_deg = 70
+mouse_look_pitch_min_deg = -75
 # Camera local axis each look direction rotates around (0=X, 1=Y, 2=Z). The
 # camera looks along its local Y, so a correct orbit turns around the local up
 # (Z) and pitches around the local right (X). Negate the matching *_sens to
@@ -307,6 +314,12 @@ bool Load(const std::filesystem::path& path) {
     values.mouse_look_pitch_sens = static_cast<float>(
         Read<double>(input_table, "input", "mouse_look_pitch_sens", "number",
                      values.mouse_look_pitch_sens));
+    values.mouse_look_pitch_max_deg = static_cast<float>(
+        Read<double>(input_table, "input", "mouse_look_pitch_max_deg", "number",
+                     values.mouse_look_pitch_max_deg));
+    values.mouse_look_pitch_min_deg = static_cast<float>(
+        Read<double>(input_table, "input", "mouse_look_pitch_min_deg", "number",
+                     values.mouse_look_pitch_min_deg));
     values.mouse_look_yaw_axis = static_cast<int32_t>(Read<int64_t>(
         input_table, "input", "mouse_look_yaw_axis", "integer",
         values.mouse_look_yaw_axis));

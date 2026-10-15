@@ -289,6 +289,15 @@ void fable2_hook_direct_mouse_look(PPCRegister& r31) {
   fable2::mouselook::take_delta(dx, dy);
   fable2::mouselook::cum_yaw() += float(dx) * cfg.mouse_look_yaw_sens;
   fable2::mouselook::cum_pitch() += float(dy) * cfg.mouse_look_pitch_sens;
+  // Clamp the accumulated pitch to the configured bounds (degrees -> radians)
+  // so the mouse can't swing the eye past the poles, matching the native
+  // right-stick look. Yaw is left unbounded (a full 360 orbit).
+  constexpr float kDeg2Rad = 0.017453292519943295f;
+  float& cum_pitch = fable2::mouselook::cum_pitch();
+  const float pmax = cfg.mouse_look_pitch_max_deg * kDeg2Rad;
+  const float pmin = cfg.mouse_look_pitch_min_deg * kDeg2Rad;
+  if (cum_pitch > pmax) cum_pitch = pmax;
+  if (cum_pitch < pmin) cum_pitch = pmin;
   const float yaw = fable2::mouselook::cum_yaw();
   const float pitch = fable2::mouselook::cum_pitch();
   if (yaw == 0.0f && pitch == 0.0f) return;

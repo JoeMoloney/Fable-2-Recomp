@@ -52,6 +52,15 @@ struct Values {
   // Signed so an axis direction can be flipped without a code change.
   float mouse_look_yaw_sens = -0.0022f;   // horizontal mouse -> camera yaw
   float mouse_look_pitch_sens = -0.0022f;  // vertical mouse -> camera pitch
+  // Look-pitch bounds, in degrees measured from the default camera elevation.
+  // The native right-stick look clamps how high/low the camera can orbit; without
+  // a bound the accumulated mouse pitch would swing the eye past the poles (over
+  // the top / under the ground). Cumulative pitch is clamped to [min, max] each
+  // frame. The sign follows the (invertible) pitch direction set by
+  // mouse_look_pitch_sens: the positive end is whichever way a positive pitch
+  // rotates the eye. Yaw is intentionally unbounded (a full 360 orbit).
+  float mouse_look_pitch_max_deg = 70.0f;   // limit in the positive pitch direction
+  float mouse_look_pitch_min_deg = -75.0f;  // limit in the negative pitch direction
   // Camera local axis each look direction rotates around (0=X, 1=Y, 2=Z). The
   // camera looks along its local Y, so a correct orbit turns around the local up
   // (Z) and pitches around the local right (X). Negate the matching *_sens to flip
