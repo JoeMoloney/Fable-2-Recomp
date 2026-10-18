@@ -119,6 +119,10 @@ mouse_look_pitch_axis = 0
 camera_rot_tgt_off = 160
 camera_rot_cur_off = 176
 camera_eye_off = 144
+# "Is this the hero-orbit camera?" flag. The hook only orbits the hero (player)
+# camera (flag 1.0) and skips cinematic/cutscene cameras (flag 0.0), so
+# cutscenes and scripted shots play normally instead of being hijacked.
+camera_hero_flag_off = 108
 # Distance from the hero to the camera eye (= orbit radius). The native stick
 # orbit's horizontal radius is ~3.1; tune so the mouse orbit matches.
 camera_distance = 3.1
@@ -337,6 +341,9 @@ bool Load(const std::filesystem::path& path) {
     values.camera_eye_off = static_cast<int32_t>(Read<int64_t>(
         input_table, "input", "camera_eye_off", "integer",
         values.camera_eye_off));
+    values.camera_hero_flag_off = static_cast<int32_t>(Read<int64_t>(
+        input_table, "input", "camera_hero_flag_off", "integer",
+        values.camera_hero_flag_off));
     values.camera_distance = static_cast<float>(Read<double>(
         input_table, "input", "camera_distance", "number",
         values.camera_distance));

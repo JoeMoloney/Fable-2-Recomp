@@ -88,6 +88,10 @@ mouse_look_pitch_ceil = 4.067
 camera_rot_tgt_off = 160
 camera_rot_cur_off = 176
 camera_eye_off = 144
+# "Is this the hero-orbit camera?" flag. The hook only orbits the hero (player)
+# camera (flag 1.0) and skips cinematic/cutscene cameras (flag 0.0), so
+# cutscenes and scripted shots play normally instead of being hijacked.
+camera_hero_flag_off = 108
 # Distance from the hero to the camera eye (= orbit radius). The native stick
 # orbit's horizontal radius is ~3.1; tune so the mouse orbit matches.
 camera_distance = 3.1

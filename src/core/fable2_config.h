@@ -94,6 +94,14 @@ struct Values {
   int32_t camera_rot_tgt_off = 160;  // rotation-state target (quaternion)
   int32_t camera_rot_cur_off = 176;  // rotation-state current (quaternion)
   int32_t camera_eye_off = 144;      // world-space eye position (x,y,z)
+  // "Is this the hero-orbit camera?" flag offset. The direct-mouse-look hook
+  // fires for EVERY CECCamera, including cinematic/cutscene cameras that the
+  // game scripts on its own (opening movie, cut-in shots, ...). Orbiting those
+  // fights the cutscene and makes the camera go wild. The hero (player)
+  // camera has a flag of 1.0 at this offset; cutscene/secondary cameras have
+  // 0.0. The hook only orbits the camera when this flag is >= 0.5, leaving
+  // cinematic cameras untouched so cutscenes play normally.
+  int32_t camera_hero_flag_off = 108;
   // Distance from the hero to the camera eye (= the orbit radius). The game's
   // native stick orbit has a horizontal radius of ~3.1 (fit from a live
   // capture); tune this so the mouse orbit radius matches the game's.

@@ -313,6 +313,21 @@ void fable2_hook_direct_mouse_look(PPCRegister& r31) {
 
   if (!cfg.direct_mouse_look) return;
 
+  // Only the hero (player) camera is orbitable. This hook fires for EVERY
+  // CECCamera, including cinematic/cutscene cameras that the game scripts on
+  // its own (the opening movie, cut-in shots, ...). The hero camera is flagged
+  // 1.0 at camera_hero_flag_off; cutscene/secondary cameras are 0.0. Check this
+  // BEFORE consuming the mouse delta so a skipped (scripted) camera can't eat
+  // the input, and so we never fight a scripted camera — orbiting one makes the
+  // view go wild and breaks cutscenes. The all-zero-eye secondary camera is
+  // skipped too so we never write a bogus eye/rotation into it.
+  const fable2::mouselook::Vec3 eye = fable2::mouselook::read_guest_vec3(
+      mem, cam + uint32_t(cfg.camera_eye_off));
+  if (fable2::mouselook::vec3_len(eye) < 1.0f) return;  // secondary camera
+  const float hero_flag = fable2::mouselook::read_guest_float(
+      mem, cam + uint32_t(cfg.camera_hero_flag_off));
+  if (hero_flag < 0.5f) return;  // cinematic / scripted camera
+
   // Accumulate the persistent look offset (radians). It persists across frames
   // so the look sticks instead of springing back when the cursor stops.
   int32_t dx = 0;
@@ -344,13 +359,6 @@ void fable2_hook_direct_mouse_look(PPCRegister& r31) {
   const float pitch = fable2::mouselook::cum_pitch();
   if (yaw == 0.0f && pitch == 0.0f) return;
 
-  // The active hero camera has a real world-space eye position at
-  // camera+camera_eye_off; the secondary camera's is all-zero. Skip the zero one
-  // so we never write a bogus eye/rotation into it.
-  const fable2::mouselook::Vec3 eye = fable2::mouselook::read_guest_vec3(
-      mem, cam + uint32_t(cfg.camera_eye_off));
-  if (fable2::mouselook::vec3_len(eye) < 1.0f) return;
-
   using Quat = fable2::mouselook::Quat;
   using Vec3 = fable2::mouselook::Vec3;
   using fable2::mouselook::axis_quat_vec;
@@ -374,11 +382,20 @@ void fable2_hook_direct_mouse_look(PPCRegister& r31) {
     fable2::mouselook::orbit_pivot() = pivot_new;
     fable2::mouselook::orbit_pivot_init() = true;
   } else {
-    constexpr float kAlpha = 0.15f;  // low-pass toward the fresh estimate
     Vec3& p = fable2::mouselook::orbit_pivot();
-    p.x += kAlpha * (pivot_new.x - p.x);
-    p.y += kAlpha * (pivot_new.y - p.y);
-    p.z += kAlpha * (pivot_new.z - p.z);
+    // If the eye has jumped far from the (low-passed) pivot — a scene
+    // transition / teleport — re-anchor immediately rather than letting a stale
+    // pivot drag the orbit from the previous location for a frame or two.
+    const float drift = fable2::mouselook::vec3_len(
+        Vec3{eye.x - p.x, eye.y - p.y, eye.z - p.z});
+    if (drift > 3.0f * dist) {
+      fable2::mouselook::orbit_pivot() = pivot_new;
+    } else {
+      constexpr float kAlpha = 0.15f;  // low-pass toward the fresh estimate
+      p.x += kAlpha * (pivot_new.x - p.x);
+      p.y += kAlpha * (pivot_new.y - p.y);
+      p.z += kAlpha * (pivot_new.z - p.z);
+    }
   }
   const Vec3 pivot = fable2::mouselook::orbit_pivot();
 
