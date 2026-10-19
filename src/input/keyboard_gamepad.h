@@ -339,18 +339,23 @@ class KeyboardGamepadDriver final : public rex::input::InputDriver {
             // dy>0 = down.
             const int32_t dx = p.x - c.x;
             const int32_t dy = p.y - c.y;
-            if (fable2::config::Get().direct_mouse_look) {
-              // Direct mouse look: hand the raw displacement to the camera
-              // hook (fable2_hook_direct_mouse_look) and leave the pad's right
-              // stick neutral, so the mouse no longer drives the joystick.
-              fable2::mouselook::add_delta(dx, dy);
-            } else {
-              // Legacy: map the displacement onto the right stick. Fable 2
+            // Direct-mouse-look separation DISABLED: the mouse always drives
+            // the synthetic pad's right stick (the native path) so the game's
+            // own stick pipeline produces the look 1:1 with a real right stick.
+            // The raw-displacement path that fed fable2_hook_direct_mouse_look
+            // is commented out below (preserved for reference).
+            // if (fable2::config::Get().direct_mouse_look) {
+            //   // Direct mouse look: hand the raw displacement to the camera
+            //   // hook (fable2_hook_direct_mouse_look) and leave the pad's right
+            //   // stick neutral, so the mouse no longer drives the joystick.
+            //   fable2::mouselook::add_delta(dx, dy);
+            // } else {
+              // Map the displacement onto the right stick. Fable 2
               // inverts Y, so mouse-up (dy<0) maps to +ry (look up).
               const int32_t scale = REXCVAR_GET(mouse_look_scale);
               rx = input_detail::ClampStick(dx * scale);
               ry = input_detail::ClampStick(-dy * scale);
-            }
+            // }
           }
           SetCursorPos(c.x, c.y);  // recenter: consume this frame's movement
           mouse_centered_ = true;

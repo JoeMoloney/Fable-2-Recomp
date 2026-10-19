@@ -87,6 +87,13 @@ mouse_look_scale = 256
 # EXPERIMENTAL (default false; may feel wrong in some scenes).
 direct_mouse_look = false
 
+# Fallback for direct_mouse_look. true (default) = use the OLD re-implemented
+# 2-axis external orbit (eye rotated around a low-passed hero pivot + look-at
+# quaternion, independent yaw); a working hand-rolled orbit. false = offset the
+# game's target orbit angle (cam+68) and let the native easing drive the camera
+# (the intended 1:1 path, still being tuned -- see plans/plan-direct-mouse-1to1.md).
+mouse_look_legacy_orbit = true
+
 # Camera-look sensitivity: radians of camera rotation per host mouse pixel
 # (signed; make it negative to flip the axis direction).
 mouse_look_yaw_sens = -0.0022
@@ -314,6 +321,9 @@ bool Load(const std::filesystem::path& path) {
     values.direct_mouse_look =
         Read<bool>(input_table, "input", "direct_mouse_look", "boolean",
                    values.direct_mouse_look);
+    values.mouse_look_legacy_orbit =
+        Read<bool>(input_table, "input", "mouse_look_legacy_orbit", "boolean",
+                   values.mouse_look_legacy_orbit);
     values.mouse_look_yaw_sens = static_cast<float>(
         Read<double>(input_table, "input", "mouse_look_yaw_sens", "number",
                      values.mouse_look_yaw_sens));

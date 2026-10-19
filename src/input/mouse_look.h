@@ -75,6 +75,17 @@ inline uint32_t read_guest_u32(rex::memory::Memory* mem, uint32_t guest_addr) {
   const uint32_t* p = mem->TranslateVirtual<const uint32_t*>(guest_addr);
   return __builtin_bswap32(*p);
 }
+// Big-endian guest u16 access (matches REX_LOAD_U16 / REX_STORE_U16). The game's
+// XINPUT_STATE right-stick axes (RX at +12, RY at +10) are stored as big-endian
+// u16 values centered at 0x4000 (16384).
+inline uint16_t read_guest_u16(rex::memory::Memory* mem, uint32_t guest_addr) {
+  const uint16_t* p = mem->TranslateVirtual<const uint16_t*>(guest_addr);
+  return static_cast<uint16_t>(__builtin_bswap16(*p));
+}
+inline void write_guest_u16(rex::memory::Memory* mem, uint32_t guest_addr, uint16_t value) {
+  uint16_t* p = mem->TranslateVirtual<uint16_t*>(guest_addr);
+  *p = static_cast<uint16_t>(__builtin_bswap16(value));
+}
 // True if guest_addr points into a plausibly-valid guest region. Two ranges
 // matter: the recompiled image (code + data + globals) is mapped at 0x82xxxxxx,
 // while live heap objects (the CECCamera, its controller, etc.) sit lower at

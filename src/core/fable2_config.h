@@ -52,6 +52,16 @@ struct Values {
   // right-stick mapping (mouse_look_scale) is used. Defaults to false but is
   // still considered experimental.
   bool direct_mouse_look = false;
+  // Fallback for direct_mouse_look. When true (and direct_mouse_look is on) the
+  // OLD re-implemented orbit runs: the hook at CECCameraUpdateFrame rotates the
+  // world-space eye around a low-passed hero pivot and writes a look-at
+  // quaternion (2-axis orbit with independent yaw). This is a working but
+  // hand-rolled orbit (not 1:1 with the stick). When false the direct-mouse
+  // path offsets the game's target orbit angle (cam+68) and lets the native
+  // easing drive the camera -- the intended 1:1 path, but it is still being
+  // tuned (see plans/plan-direct-mouse-1to1.md), so the default is the legacy
+  // orbit until that path is confirmed to move the eye.
+  bool mouse_look_legacy_orbit = true;
   // Camera-look sensitivity: radians of camera rotation per host mouse pixel.
   // Signed so an axis direction can be flipped without a code change.
   float mouse_look_yaw_sens = -0.0022f;   // horizontal mouse -> camera yaw

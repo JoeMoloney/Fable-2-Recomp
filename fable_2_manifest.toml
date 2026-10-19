@@ -117,13 +117,16 @@ registers = ["f12"]
 after_instruction = true
 #
 # Direct mouse-to-camera look (src/core/fable2_hooks.cpp + src/input/mouse_look.h).
-# Runs at 0x822A47F8 in CECCameraUpdateFrame_822A47C0 (before the view transform is
-# computed at sub_822CBDC8); r31 is the active CECCamera. The camera orientation is
-# the unit quaternion in the rotation state (target +160, current +176); the +144
-# 4-float is the look-at/center POSITION and is left alone. The game recomputes the
-# camera from the hero every frame, so the hook keeps a persistent look offset and
-# re-applies it each frame by rotating both rotation-state quaternions, so the camera
-# turns and stays where it is aimed. Toggle: [input] direct_mouse_look.
+# Runs at 0x822A47F8 in CECCameraUpdateFrame_822A47C0 (after the virtual method that
+# writes the fresh per-frame "current" transform to the caller stack); r31 is the
+# active CECCamera. The hook fires for EVERY camera, so it first gates on the
+# hero-orbit camera (flag 1.0 at +108) and skips the all-zero-eye secondary / cinematic
+# cameras (flag 0.0), so scripted cutscenes and cinematic shots aren't hijacked. It
+# keeps a persistent look offset (cumulative yaw/pitch from the raw host mouse, pitch
+# clamped to the native orbit-angle limits so mouse + stick share the same bounds) and
+# re-applies it each frame by orbiting the world-space eye (+144) around a low-passed
+# hero pivot and writing a roll-free look-at orientation to the rotation-state
+# quaternions (target +160, current +176). Toggle: [input] direct_mouse_look.
 [[entrypoint.midasm_hook]]
 address = 0x822A47F8
 name = "fable2_hook_direct_mouse_look"
@@ -43830,9 +43833,36 @@ name = "ProcessAndProcessAndProcess1655_82CEBF30"
 [entrypoint.functions."0x82283ED0"]
 name = "ProcessAndProcessAndProcess1656_82283ED0"
 
-# Process a structure by wrapping a sub-operation (seven hundred and one hundred and one hundred and one hundred and one hundred and three hundred and one hundred and fifty-seventh form). It takes a structure and drives a sub-operation (ProcessAndProcessAndProcess652). This is a very frequently-called helper in the 0x821F4 process cluster. 7 lines. 1 callee. 185 callers.
+# General-purpose SIMD/vector math thunk: a single `b` to ProcessAndProcessAndProcess652_8222CA28,
+# which branches on mode bits in its r4 argument and runs 128-bit vector math on the r3 operand.
+# Called from ~130 sites, including the look-stick input handler (LookStickProcess_83045778), where
+# it normalizes the scaled right-stick RY on the 1:1 camera-look path. 7 lines. 1 callee. 185 callers.
 [entrypoint.functions."0x821F4D88"]
-name = "ProcessAndProcessAndProcess1657_821F4D88"
+name = "VectorMathThunk_821F4D88"
+
+# Look-stick (right-stick) input handler in the 8304x per-controller cluster. Reads RY from the
+# shared XINPUT_STATE buffer (*(r31+24)+10), normalizes it via VectorMathThunk_821F4D88, and caches
+# the result at handler+56; a second pass reads RY+RX, bounds-checks the magnitude, and iterates the
+# per-entry handler array (InputAccumulate_83041408 / InputModeDispatch_83045410). This is the input
+# the hero-camera orbit controller consumes — the 1:1 mouse-look injection point. Mutually recursive
+# with InputModeDispatch_83045410.
+[entrypoint.functions."0x83045778"]
+name = "LookStickProcess_83045778"
+
+# Mode-based input dispatch in the 8304x cluster: reads the input mode and u16 axis values, selects a
+# per-mode data pointer, computes a key via VectorMathThunk_821F4D88, looks up the controller object
+# (sub_83041518), and drives LookStickProcess_83045778 on it. The top-level node processor of the
+# input tree; mutually recursive with LookStickProcess_83045778.
+[entrypoint.functions."0x83045410"]
+name = "InputModeDispatch_83045410"
+
+# Recursive input-value accumulator in the 8304x cluster: walks a per-entry node tree, reads u16 axis
+# values from the shared XINPUT_STATE buffer, multiplies them by the per-entry scale, and accumulates
+# the products into two caller-provided output slots. Produces the look-stick combination the
+# controller consumes; called per-entry from LookStickProcess_83045778 and sub_83041518, recurses on
+# itself.
+[entrypoint.functions."0x83041408"]
+name = "InputAccumulate_83041408"
 
 # Process a structure (seven hundred and one hundred and one hundred and one hundred and one hundred and three hundred and one hundred and fifty-eighth form). It takes a structure and checks its state, with no external sub-operations. Part of the 0x82CD9 process cluster. 45 lines. 0 callees. 2 callers (sub_82CDAD08 and sub_82CDAD90).
 [entrypoint.functions."0x82CD9910"]

@@ -56,6 +56,11 @@ mouse_look_scale = 256
 # EXPERIMENTAL (default false; may feel wrong in some scenes).
 direct_mouse_look = false
 
+# Legacy fallback for direct_mouse_look. true = old 2-axis external orbit
+# (independent yaw); false (default) = inject into the native camera angle
+# setter so the orbit matches the game's single-DOF right-stick orbit (1:1).
+mouse_look_legacy_orbit = true
+
 # Camera-look sensitivity: radians of camera rotation per host mouse pixel
 # (signed; make it negative to flip the axis direction).
 mouse_look_yaw_sens = -0.0022
