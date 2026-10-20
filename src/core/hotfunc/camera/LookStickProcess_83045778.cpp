@@ -95,6 +95,308 @@ enum : uint32_t {
 	kSlotProduct = 112,  // running product accumulator (u32)
 };
 
+// --- Phase 1: normalize the nonzero right-stick RY and cache the result. ---
+// Extracted from LookStickProcess_83045778 for readability. Reads the raw RY from ctx.r10
+// (set by the caller), normalizes it via the SIMD rotation thunk, and caches the result at
+// handler+56. Leaves ctx.r3 as the normalized value and ctx.cr0 as its comparison against 0,
+// which the caller branches on to decide whether to run Phase 2.
+static void lookStickNormalize(PPCContext& ctx, uint8_t* base) {
+	Handler handler{ base, ctx.r31.u32 };
+	// --- Phase 1: RY is nonzero, normalize the right stick. ---
+	// clrlwi r11,r10,16
+	ctx.r11.u64 = ctx.r10.u32 & 0xFFFF;
+	// lis r4,9345
+	ctx.r4.s64 = 612433920;
+	// rotlwi r3,r11,2
+	ctx.r3.u64 = __builtin_rotateleft32(ctx.r11.u32, 2);
+	// bl 0x821f4d88
+	ctx.lr = 0x830457A8;
+	VectorMathThunk_821F4D88(ctx, base);
+	// cmplwi r3,0
+	ctx.cr0.compare<uint32_t>(ctx.r3.u32, 0, ctx.xer);
+	// stw r3,56(r31)
+	handler.setCachedStick(ctx.r3.u32);
+}
+
+// --- Phase 2: run the per-entry dispatch for a nonzero normalized RY. ---
+// Extracted from LookStickProcess_83045778 for readability. Applies the magnitude gate, then
+// walks the RX-indexed per-entry table, running InputAccumulate_83041408 and
+// InputModeDispatch_83045410 per entry and folding each result into the running total. Sets
+// ctx.r3 to the return value (kRetMagnitudeExceeded, kRetEmptySlot, or 0).
+static void lookStickDispatch(PPCContext& ctx, uint8_t* base) {
+	Handler handler{ base, ctx.r31.u32 };
+	StackSlots stack{ base, ctx.r1.u32 };
+	// --- Phase 2: the normalized RY is nonzero, so run the per-entry dispatch. ---
+	// lwz r11,24(r31)
+	ctx.r11.u64 = handler.xinputState();
+	// li r4,0
+	ctx.r4.s64 = 0;
+	// lhz r11,10(r11)
+	ctx.r11.u64 = GV16(ctx.r11.u32 + 10);
+	// rotlwi r5,r11,2
+	ctx.r5.u64 = __builtin_rotateleft32(ctx.r11.u32, 2);
+	// bl 0x82ca3190
+	ctx.lr = 0x830457D4;
+	MemSet_SdkRuntime_82CA3190(ctx, base);
+	// addi r11,r31,4
+	ctx.r11.s64 = handler.entryBlock();
+	// --- Copy the per-entry pointer block (handler+4) to the stack, then load the running total. ---
+	// r10 = destination (the stack block); r11 = source (handler+4); r9 = loop count.
+	// addi r10,r1,96
+	ctx.r10.s64 = stack.addr(kSlotBlock);
+	// r25 = running result total (handler+32). r9 = kPerEntryTableSize: the per-entry table,
+	// copied from handler+4 into the stack block for the dispatches below.
+	// li r9,5
+	ctx.r9.s64 = kPerEntryTableSize;
+	// lwz r25,32(r31)
+	ctx.r25.u64 = handler.runningTotal();
+	// mtctr r9
+	ctx.ctr.u64 = ctx.r9.u64;
+	while (true) {
+		// lwz r9,0(r11)
+		ctx.r9.u64 = GV32(ctx.r11.u32 + 0);
+		// addi r11,r11,4
+		ctx.r11.s64 = ctx.r11.s64 + 4;
+		// stw r9,0(r10)
+		SV32(ctx.r10.u32 + 0, ctx.r9.u32);
+		// addi r10,r10,4
+		ctx.r10.s64 = ctx.r10.s64 + 4;
+		// bdnz 0x830457e8
+		--ctx.ctr.u64;
+		if (ctx.ctr.u32 == 0) break;
+	}
+	// lwz r9,24(r31)
+	ctx.r9.u64 = handler.xinputState();
+	// lwz r11,0(r31)
+	ctx.r11.u64 = handler.context();
+	// lhz r10,10(r9)
+	ctx.r10.u64 = GV16(ctx.r9.u32 + 10);
+	// lwz r9,12(r9)
+	ctx.r9.u64 = GV32(ctx.r9.u32 + 12);
+	// rotlwi r8,r10,3
+	ctx.r8.u64 = __builtin_rotateleft32(ctx.r10.u32, 3);
+	// Magnitude gate: rotl(RY,3) + RX must not exceed the per-controller bound (context+12);
+	// otherwise the input is clamped and we bail with 0x80004005.
+	// lwz r7,12(r11)
+	ctx.r7.u64 = GV32(ctx.r11.u32 + 12);
+	// add r8,r8,r9
+	ctx.r8.u64 = ctx.r8.u64 + ctx.r9.u64;
+	// cmplw cr6,r8,r7
+	ctx.cr6.compare<uint32_t>(ctx.r8.u32, ctx.r7.u32, ctx.xer);
+	// ble cr6,0x8304582c
+	if (ctx.cr6.gt) {
+		// lis r3,-32768 / ori r3,r3,16389  ->  kRetMagnitudeExceeded (0x80004005)
+		ctx.r3.u64 = kRetMagnitudeExceeded;
+	} else {
+		// lwz r11,8(r11)
+		ctx.r11.u64 = GV32(ctx.r11.u32 + 8);
+		// li r26,0
+		ctx.r26.s64 = 0;  // r26 = 0: the clamp base for the per-entry accumulator
+		// cmplwi cr6,r10,0
+		ctx.cr6.compare<uint32_t>(ctx.r10.u32, 0, ctx.xer);
+		// mr r27,r26
+		ctx.r27.u64 = ctx.r26.u64;  // r27 = r26 (0): the per-entry counter, +1 each iteration
+		// add r29,r11,r9
+		ctx.r29.u64 = ctx.r11.u64 + ctx.r9.u64;  // r29 = RX-indexed per-entry table base
+		// Per-entry dispatch loop: walk the RX-indexed table (r29) and process each entry.
+		// beq cr6,0x83045994
+		if (!ctx.cr6.eq) {
+			while (true) {
+				// lwz r3,0(r31)
+				ctx.r3.u64 = handler.context();
+				// lwz r10,4(r29)
+				ctx.r10.u64 = GV32(ctx.r29.u32 + 4);
+				// addi r11,r10,16
+				ctx.r11.s64 = ctx.r10.s64 + 16;
+				// lwz r9,12(r3)
+				ctx.r9.u64 = GV32(ctx.r3.u32 + 12);
+				// cmplw cr6,r11,r9
+				ctx.cr6.compare<uint32_t>(ctx.r11.u32, ctx.r9.u32, ctx.xer);
+				// bgt cr6,0x83045820
+				if (ctx.cr6.gt) {
+					// lis r3,-32768 / ori r3,r3,16389  ->  kRetMagnitudeExceeded (0x80004005)
+					ctx.r3.u64 = kRetMagnitudeExceeded;
+					break;
+				}
+				// lwz r11,8(r3)
+				ctx.r11.u64 = GV32(ctx.r3.u32 + 8);
+				// addi r8,r1,84
+				ctx.r8.s64 = stack.addr(kSlotOutB);
+				// stw r26,80(r1)
+				stack.storeU32(kSlotOutA, ctx.r26.u32);
+				// addi r7,r1,80
+				ctx.r7.s64 = stack.addr(kSlotOutA);
+				// stw r26,84(r1)
+				stack.storeU32(kSlotOutB, ctx.r26.u32);
+				// add r30,r11,r10
+				ctx.r30.u64 = ctx.r11.u64 + ctx.r10.u64;
+				// li r6,1
+				ctx.r6.s64 = 1;
+				// mr r5,r30
+				ctx.r5.u64 = ctx.r30.u64;
+				// addi r4,r1,96
+				ctx.r4.s64 = stack.addr(kSlotBlock);
+				// Accumulate this entry's stick combination into the stack output slots.
+				// bl 0x83041408
+				ctx.lr = 0x83045888;
+				InputAccumulate_83041408(ctx, base);
+				// lhz r9,10(r31)
+				ctx.r9.u64 = handler.word10();
+				// lhz r10,12(r31)
+				ctx.r10.u64 = handler.word12();
+				// lwz r8,80(r1)
+				ctx.r8.u64 = stack.loadU32(kSlotOutA);
+				// add r10,r10,r9
+				ctx.r10.u64 = ctx.r10.u64 + ctx.r9.u64;
+				// lhz r11,102(r1)
+				ctx.r11.u64 = stack.loadU16(kSlotAcc1);
+				// lwz r9,0(r29)
+				ctx.r9.u64 = GV32(ctx.r29.u32 + 0);
+				// stw r9,96(r1)
+				stack.storeU32(kSlotBlock, ctx.r9.u32);
+				// lwz r9,4(r29)
+				ctx.r9.u64 = GV32(ctx.r29.u32 + 4);
+				// stw r9,108(r1)
+				stack.storeU32(kSlotBlock2, ctx.r9.u32);
+				// lhz r9,8(r30)
+				ctx.r9.u64 = GV16(ctx.r30.u32 + 8);
+				// mullw r9,r9,r8
+				ctx.r9.s64 = int64_t(ctx.r9.s32) * int64_t(ctx.r8.s32);
+				// clrlwi r9,r9,16
+				ctx.r9.u64 = ctx.r9.u32 & 0xFFFF;
+				// add r8,r9,r11
+				ctx.r8.u64 = ctx.r9.u64 + ctx.r11.u64;
+				// sth r9,104(r1)
+				stack.storeU16(kSlotAcc2, ctx.r9.u16);
+				// cmpw cr6,r8,r10
+				ctx.cr6.compare<int32_t>(ctx.r8.s32, ctx.r10.s32, ctx.xer);
+				// ble cr6,0x830458d8
+				if (ctx.cr6.gt) {
+					// subf. r11,r11,r10
+					ctx.r11.u64 = ctx.r10.u64 - ctx.r11.u64;
+					ctx.cr0.compare<int32_t>(ctx.r11.s32, 0, ctx.xer);
+					// bge 0x830458d4
+					if (ctx.cr0.lt)
+						// mr r11,r26
+						ctx.r11.u64 = ctx.r26.u64;
+					// sth r11,104(r1)
+					stack.storeU16(kSlotAcc2, ctx.r11.u16);
+				}
+				// mr r6,r25
+				ctx.r6.u64 = ctx.r25.u64;
+				// lwz r3,0(r31)
+				ctx.r3.u64 = handler.context();
+				// mr r5,r30
+				ctx.r5.u64 = ctx.r30.u64;
+				// addi r4,r1,96
+				ctx.r4.s64 = stack.addr(kSlotBlock);
+				// Dispatch to the concrete action handler for this entry.
+				// bl 0x83045410
+				ctx.lr = 0x830458EC;
+				InputModeDispatch_83045410(ctx, base);
+				// lwz r11,56(r31)
+				ctx.r11.u64 = handler.cachedStick();
+				// stwx r3,r28,r11  (r28 = per-entry result pointer, set by the dispatch, +4 each entry)
+				SV32(ctx.r28.u32 + ctx.r11.u32, ctx.r3.u32);
+				// lwz r11,56(r31)
+				ctx.r11.u64 = handler.cachedStick();
+				// lwzx r10,r28,r11
+				ctx.r10.u64 = GV32(ctx.r28.u32 + ctx.r11.u32);
+				// cmplwi cr6,r10,0
+				ctx.cr6.compare<uint32_t>(ctx.r10.u32, 0, ctx.xer);
+				// beq cr6,0x830457b4
+				if (ctx.cr6.eq) {
+					// lis r3,-32761 / ori r3,r3,14  ->  kRetEmptySlot (0x8007000E, empty slot)
+					ctx.r3.u64 = kRetEmptySlot;
+					break;
+				}
+				// --- Tail: fold the per-entry accumulator slots, then update the running total. ---
+				// lhz r10,102(r1)
+				ctx.r10.u64 = stack.loadU16(kSlotAcc1);
+				// lhz r8,104(r1)
+				ctx.r8.u64 = stack.loadU16(kSlotAcc2);
+				// lhz r9,100(r1)
+				ctx.r9.u64 = stack.loadU16(kSlotAcc0);
+				// add r10,r10,r8
+				ctx.r10.u64 = ctx.r10.u64 + ctx.r8.u64;
+				// cmplwi r9,0
+				ctx.cr0.compare<uint32_t>(ctx.r9.u32, 0, ctx.xer);
+				// sth r10,102(r1)
+				stack.storeU16(kSlotAcc1, ctx.r10.u16);
+				// li r10,1
+				ctx.r10.s64 = 1;
+				// beq 0x83045928
+				if (!ctx.cr0.eq) {
+					// li r10,4
+					ctx.r10.s64 = 4;
+				}
+				// lwzx r8,r28,r11
+				ctx.r8.u64 = GV32(ctx.r28.u32 + ctx.r11.u32);
+				// cmplwi cr6,r9,0
+				ctx.cr6.compare<uint32_t>(ctx.r9.u32, 0, ctx.xer);
+				// lhz r9,8(r30)
+				ctx.r9.u64 = GV16(ctx.r30.u32 + 8);
+				// lwz r7,112(r1)
+				ctx.r7.u64 = stack.loadU32(kSlotProduct);
+				// lwz r8,44(r8)
+				ctx.r8.u64 = GV32(ctx.r8.u32 + 44);
+				// mullw r9,r8,r9
+				ctx.r9.s64 = int64_t(ctx.r8.s32) * int64_t(ctx.r9.s32);
+				// mullw r10,r9,r10
+				ctx.r10.s64 = int64_t(ctx.r9.s32) * int64_t(ctx.r10.s32);
+				// rlwinm r10,r10,2,0,29
+				ctx.r10.u64 = __builtin_rotateleft64(ctx.r10.u32 | (ctx.r10.u64 << 32), 2) & 0xFFFFFFFC;
+				// add r10,r10,r7
+				ctx.r10.u64 = ctx.r10.u64 + ctx.r7.u64;
+				// stw r10,112(r1)
+				stack.storeU32(kSlotProduct, ctx.r10.u32);
+				// li r10,1
+				ctx.r10.s64 = 1;
+				// beq cr6,0x8304595c
+				if (!ctx.cr6.eq) {
+					// li r10,4
+					ctx.r10.s64 = 4;
+				}
+				// lwzx r11,r28,r11
+				ctx.r11.u64 = GV32(ctx.r28.u32 + ctx.r11.u32);
+				// addi r27,r27,1
+				ctx.r27.s64 = ctx.r27.s64 + 1;
+				// lhz r9,8(r30)
+				ctx.r9.u64 = GV16(ctx.r30.u32 + 8);
+				// addi r29,r29,8
+				ctx.r29.s64 = ctx.r29.s64 + 8;
+				// lwz r8,24(r31)
+				ctx.r8.u64 = handler.xinputState();
+				// addi r28,r28,4
+				ctx.r28.s64 = ctx.r28.s64 + 4;
+				// lwz r11,44(r11)
+				ctx.r11.u64 = GV32(ctx.r11.u32 + 44);
+				// mullw r11,r11,r9
+				ctx.r11.s64 = int64_t(ctx.r11.s32) * int64_t(ctx.r9.s32);
+				// lhz r9,10(r8)
+				ctx.r9.u64 = GV16(ctx.r8.u32 + 10);
+				// mullw r11,r11,r10
+				ctx.r11.s64 = int64_t(ctx.r11.s32) * int64_t(ctx.r10.s32);
+				// rlwinm r11,r11,2,0,29
+				ctx.r11.u64 = __builtin_rotateleft64(ctx.r11.u32 | (ctx.r11.u64 << 32), 2) & 0xFFFFFFFC;
+				// cmplw cr6,r27,r9
+				ctx.cr6.compare<uint32_t>(ctx.r27.u32, ctx.r9.u32, ctx.xer);
+				// add r25,r11,r25
+				ctx.r25.u64 = ctx.r11.u64 + ctx.r25.u64;
+				// blt cr6,0x83045848
+				if (!ctx.cr6.lt) {
+					// li r3,0
+					ctx.r3.s64 = 0;
+					break;
+				}
+			}
+		} else {
+			// li r3,0
+			ctx.r3.s64 = 0;
+		}
+	}
+}
+
 // LookStickProcess_83045778 — per-controller right/look-stick input handler.
 //
 // `ctx.r3` (captured into r31) is the "handler" object. Guest layout (big-endian offsets):
@@ -136,10 +438,6 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 	// (above) and never reassigned, so the wrapper's guest address is constant for the whole call.
 	// `base` (the function's host-base parameter) is captured for the GV*/SV* macros' address math.
 	Handler handler{ base, ctx.r31.u32 };
-	// Likewise wrap the guest stack frame. r1 is only touched by the entry stwu (above) and the
-	// exit addi (below), so its base is constant for the whole body and the slots have fixed
-	// guest addresses.
-	StackSlots stack{ base, ctx.r1.u32 };
 
 	// --- Read the raw right-stick RY. ---
 	// r11 = XINPUT_STATE buffer pointer (handler+24); r10 = raw RY (u16; 0 = stick centered).
@@ -152,290 +450,11 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 	// beq 0x83045994
 	if (!ctx.cr0.eq) {
 		// --- Phase 1: RY is nonzero, normalize the right stick. ---
-		// clrlwi r11,r10,16
-		ctx.r11.u64 = ctx.r10.u32 & 0xFFFF;
-		// lis r4,9345
-		ctx.r4.s64 = 612433920;
-		// rotlwi r3,r11,2
-		ctx.r3.u64 = __builtin_rotateleft32(ctx.r11.u32, 2);
-		// bl 0x821f4d88
-		ctx.lr = 0x830457A8;
-		VectorMathThunk_821F4D88(ctx, base);
-		// cmplwi r3,0
-		ctx.cr0.compare<uint32_t>(ctx.r3.u32, 0, ctx.xer);
-		// stw r3,56(r31)
-		handler.setCachedStick(ctx.r3.u32);
+		lookStickNormalize(ctx, base);
 		// bne 0x830457c0
 		if (!ctx.cr0.eq) {
 			// --- Phase 2: the normalized RY is nonzero, so run the per-entry dispatch. ---
-			// lwz r11,24(r31)
-			ctx.r11.u64 = handler.xinputState();
-			// li r4,0
-			ctx.r4.s64 = 0;
-			// lhz r11,10(r11)
-			ctx.r11.u64 = GV16(ctx.r11.u32 + 10);
-			// rotlwi r5,r11,2
-			ctx.r5.u64 = __builtin_rotateleft32(ctx.r11.u32, 2);
-			// bl 0x82ca3190
-			ctx.lr = 0x830457D4;
-			MemSet_SdkRuntime_82CA3190(ctx, base);
-			// addi r11,r31,4
-			ctx.r11.s64 = handler.entryBlock();
-			// --- Copy the per-entry pointer block (handler+4) to the stack, then load the running total. ---
-			// r10 = destination (the stack block); r11 = source (handler+4); r9 = loop count.
-			// addi r10,r1,96
-			ctx.r10.s64 = stack.addr(kSlotBlock);
-			// r25 = running result total (handler+32). r9 = kPerEntryTableSize: the per-entry table,
-			// copied from handler+4 into the stack block for the dispatches below.
-			// li r9,5
-			ctx.r9.s64 = kPerEntryTableSize;
-			// lwz r25,32(r31)
-			ctx.r25.u64 = handler.runningTotal();
-			// mtctr r9
-			ctx.ctr.u64 = ctx.r9.u64;
-			while (true) {
-				// lwz r9,0(r11)
-				ctx.r9.u64 = GV32(ctx.r11.u32 + 0);
-				// addi r11,r11,4
-				ctx.r11.s64 = ctx.r11.s64 + 4;
-				// stw r9,0(r10)
-				SV32(ctx.r10.u32 + 0, ctx.r9.u32);
-				// addi r10,r10,4
-				ctx.r10.s64 = ctx.r10.s64 + 4;
-				// bdnz 0x830457e8
-				--ctx.ctr.u64;
-				if (ctx.ctr.u32 == 0) break;
-			}
-			// lwz r9,24(r31)
-			ctx.r9.u64 = handler.xinputState();
-			// lwz r11,0(r31)
-			ctx.r11.u64 = handler.context();
-			// lhz r10,10(r9)
-			ctx.r10.u64 = GV16(ctx.r9.u32 + 10);
-			// lwz r9,12(r9)
-			ctx.r9.u64 = GV32(ctx.r9.u32 + 12);
-			// rotlwi r8,r10,3
-			ctx.r8.u64 = __builtin_rotateleft32(ctx.r10.u32, 3);
-			// Magnitude gate: rotl(RY,3) + RX must not exceed the per-controller bound (context+12);
-			// otherwise the input is clamped and we bail with 0x80004005.
-			// lwz r7,12(r11)
-			ctx.r7.u64 = GV32(ctx.r11.u32 + 12);
-			// add r8,r8,r9
-			ctx.r8.u64 = ctx.r8.u64 + ctx.r9.u64;
-			// cmplw cr6,r8,r7
-			ctx.cr6.compare<uint32_t>(ctx.r8.u32, ctx.r7.u32, ctx.xer);
-			// ble cr6,0x8304582c
-			if (ctx.cr6.gt) {
-				// lis r3,-32768 / ori r3,r3,16389  ->  kRetMagnitudeExceeded (0x80004005)
-				ctx.r3.u64 = kRetMagnitudeExceeded;
-			} else {
-				// lwz r11,8(r11)
-				ctx.r11.u64 = GV32(ctx.r11.u32 + 8);
-				// li r26,0
-				ctx.r26.s64 = 0;  // r26 = 0: the clamp base for the per-entry accumulator
-				// cmplwi cr6,r10,0
-				ctx.cr6.compare<uint32_t>(ctx.r10.u32, 0, ctx.xer);
-				// mr r27,r26
-				ctx.r27.u64 = ctx.r26.u64;  // r27 = r26 (0): the per-entry counter, +1 each iteration
-				// add r29,r11,r9
-				ctx.r29.u64 = ctx.r11.u64 + ctx.r9.u64;  // r29 = RX-indexed per-entry table base
-				// Per-entry dispatch loop: walk the RX-indexed table (r29) and process each entry.
-				// beq cr6,0x83045994
-				if (!ctx.cr6.eq) {
-					while (true) {
-						// lwz r3,0(r31)
-						ctx.r3.u64 = handler.context();
-						// lwz r10,4(r29)
-						ctx.r10.u64 = GV32(ctx.r29.u32 + 4);
-						// addi r11,r10,16
-						ctx.r11.s64 = ctx.r10.s64 + 16;
-						// lwz r9,12(r3)
-						ctx.r9.u64 = GV32(ctx.r3.u32 + 12);
-						// cmplw cr6,r11,r9
-						ctx.cr6.compare<uint32_t>(ctx.r11.u32, ctx.r9.u32, ctx.xer);
-						// bgt cr6,0x83045820
-						if (ctx.cr6.gt) {
-							// lis r3,-32768 / ori r3,r3,16389  ->  kRetMagnitudeExceeded (0x80004005)
-							ctx.r3.u64 = kRetMagnitudeExceeded;
-							break;
-						}
-						// lwz r11,8(r3)
-						ctx.r11.u64 = GV32(ctx.r3.u32 + 8);
-						// addi r8,r1,84
-						ctx.r8.s64 = stack.addr(kSlotOutB);
-						// stw r26,80(r1)
-						stack.storeU32(kSlotOutA, ctx.r26.u32);
-						// addi r7,r1,80
-						ctx.r7.s64 = stack.addr(kSlotOutA);
-						// stw r26,84(r1)
-						stack.storeU32(kSlotOutB, ctx.r26.u32);
-						// add r30,r11,r10
-						ctx.r30.u64 = ctx.r11.u64 + ctx.r10.u64;
-						// li r6,1
-						ctx.r6.s64 = 1;
-						// mr r5,r30
-						ctx.r5.u64 = ctx.r30.u64;
-						// addi r4,r1,96
-						ctx.r4.s64 = stack.addr(kSlotBlock);
-						// Accumulate this entry's stick combination into the stack output slots.
-						// bl 0x83041408
-						ctx.lr = 0x83045888;
-						InputAccumulate_83041408(ctx, base);
-						// lhz r9,10(r31)
-						ctx.r9.u64 = handler.word10();
-						// lhz r10,12(r31)
-						ctx.r10.u64 = handler.word12();
-						// lwz r8,80(r1)
-						ctx.r8.u64 = stack.loadU32(kSlotOutA);
-						// add r10,r10,r9
-						ctx.r10.u64 = ctx.r10.u64 + ctx.r9.u64;
-						// lhz r11,102(r1)
-						ctx.r11.u64 = stack.loadU16(kSlotAcc1);
-						// lwz r9,0(r29)
-						ctx.r9.u64 = GV32(ctx.r29.u32 + 0);
-						// stw r9,96(r1)
-						stack.storeU32(kSlotBlock, ctx.r9.u32);
-						// lwz r9,4(r29)
-						ctx.r9.u64 = GV32(ctx.r29.u32 + 4);
-						// stw r9,108(r1)
-						stack.storeU32(kSlotBlock2, ctx.r9.u32);
-						// lhz r9,8(r30)
-						ctx.r9.u64 = GV16(ctx.r30.u32 + 8);
-						// mullw r9,r9,r8
-						ctx.r9.s64 = int64_t(ctx.r9.s32) * int64_t(ctx.r8.s32);
-						// clrlwi r9,r9,16
-						ctx.r9.u64 = ctx.r9.u32 & 0xFFFF;
-						// add r8,r9,r11
-						ctx.r8.u64 = ctx.r9.u64 + ctx.r11.u64;
-						// sth r9,104(r1)
-						stack.storeU16(kSlotAcc2, ctx.r9.u16);
-						// cmpw cr6,r8,r10
-						ctx.cr6.compare<int32_t>(ctx.r8.s32, ctx.r10.s32, ctx.xer);
-						// ble cr6,0x830458d8
-						if (ctx.cr6.gt) {
-							// subf. r11,r11,r10
-							ctx.r11.u64 = ctx.r10.u64 - ctx.r11.u64;
-							ctx.cr0.compare<int32_t>(ctx.r11.s32, 0, ctx.xer);
-							// bge 0x830458d4
-							if (ctx.cr0.lt)
-								// mr r11,r26
-								ctx.r11.u64 = ctx.r26.u64;
-							// sth r11,104(r1)
-							stack.storeU16(kSlotAcc2, ctx.r11.u16);
-						}
-						// mr r6,r25
-						ctx.r6.u64 = ctx.r25.u64;
-						// lwz r3,0(r31)
-						ctx.r3.u64 = handler.context();
-						// mr r5,r30
-						ctx.r5.u64 = ctx.r30.u64;
-						// addi r4,r1,96
-						ctx.r4.s64 = stack.addr(kSlotBlock);
-						// Dispatch to the concrete action handler for this entry.
-						// bl 0x83045410
-						ctx.lr = 0x830458EC;
-						InputModeDispatch_83045410(ctx, base);
-						// lwz r11,56(r31)
-						ctx.r11.u64 = handler.cachedStick();
-						// stwx r3,r28,r11  (r28 = per-entry result pointer, set by the dispatch, +4 each entry)
-						SV32(ctx.r28.u32 + ctx.r11.u32, ctx.r3.u32);
-						// lwz r11,56(r31)
-						ctx.r11.u64 = handler.cachedStick();
-						// lwzx r10,r28,r11
-						ctx.r10.u64 = GV32(ctx.r28.u32 + ctx.r11.u32);
-						// cmplwi cr6,r10,0
-						ctx.cr6.compare<uint32_t>(ctx.r10.u32, 0, ctx.xer);
-						// beq cr6,0x830457b4
-						if (ctx.cr6.eq) {
-							// lis r3,-32761 / ori r3,r3,14  ->  kRetEmptySlot (0x8007000E, empty slot)
-							ctx.r3.u64 = kRetEmptySlot;
-							break;
-						}
-						// --- Tail: fold the per-entry accumulator slots, then update the running total. ---
-						// lhz r10,102(r1)
-						ctx.r10.u64 = stack.loadU16(kSlotAcc1);
-						// lhz r8,104(r1)
-						ctx.r8.u64 = stack.loadU16(kSlotAcc2);
-						// lhz r9,100(r1)
-						ctx.r9.u64 = stack.loadU16(kSlotAcc0);
-						// add r10,r10,r8
-						ctx.r10.u64 = ctx.r10.u64 + ctx.r8.u64;
-						// cmplwi r9,0
-						ctx.cr0.compare<uint32_t>(ctx.r9.u32, 0, ctx.xer);
-						// sth r10,102(r1)
-						stack.storeU16(kSlotAcc1, ctx.r10.u16);
-						// li r10,1
-						ctx.r10.s64 = 1;
-						// beq 0x83045928
-						if (!ctx.cr0.eq) {
-							// li r10,4
-							ctx.r10.s64 = 4;
-						}
-						// lwzx r8,r28,r11
-						ctx.r8.u64 = GV32(ctx.r28.u32 + ctx.r11.u32);
-						// cmplwi cr6,r9,0
-						ctx.cr6.compare<uint32_t>(ctx.r9.u32, 0, ctx.xer);
-						// lhz r9,8(r30)
-						ctx.r9.u64 = GV16(ctx.r30.u32 + 8);
-						// lwz r7,112(r1)
-						ctx.r7.u64 = stack.loadU32(kSlotProduct);
-						// lwz r8,44(r8)
-						ctx.r8.u64 = GV32(ctx.r8.u32 + 44);
-						// mullw r9,r8,r9
-						ctx.r9.s64 = int64_t(ctx.r8.s32) * int64_t(ctx.r9.s32);
-						// mullw r10,r9,r10
-						ctx.r10.s64 = int64_t(ctx.r9.s32) * int64_t(ctx.r10.s32);
-						// rlwinm r10,r10,2,0,29
-						ctx.r10.u64 = __builtin_rotateleft64(ctx.r10.u32 | (ctx.r10.u64 << 32), 2) & 0xFFFFFFFC;
-						// add r10,r10,r7
-						ctx.r10.u64 = ctx.r10.u64 + ctx.r7.u64;
-						// stw r10,112(r1)
-						stack.storeU32(kSlotProduct, ctx.r10.u32);
-						// li r10,1
-						ctx.r10.s64 = 1;
-						// beq cr6,0x8304595c
-						if (!ctx.cr6.eq) {
-							// li r10,4
-							ctx.r10.s64 = 4;
-						}
-						// lwzx r11,r28,r11
-						ctx.r11.u64 = GV32(ctx.r28.u32 + ctx.r11.u32);
-						// addi r27,r27,1
-						ctx.r27.s64 = ctx.r27.s64 + 1;
-						// lhz r9,8(r30)
-						ctx.r9.u64 = GV16(ctx.r30.u32 + 8);
-						// addi r29,r29,8
-						ctx.r29.s64 = ctx.r29.s64 + 8;
-						// lwz r8,24(r31)
-						ctx.r8.u64 = handler.xinputState();
-						// addi r28,r28,4
-						ctx.r28.s64 = ctx.r28.s64 + 4;
-						// lwz r11,44(r11)
-						ctx.r11.u64 = GV32(ctx.r11.u32 + 44);
-						// mullw r11,r11,r9
-						ctx.r11.s64 = int64_t(ctx.r11.s32) * int64_t(ctx.r9.s32);
-						// lhz r9,10(r8)
-						ctx.r9.u64 = GV16(ctx.r8.u32 + 10);
-						// mullw r11,r11,r10
-						ctx.r11.s64 = int64_t(ctx.r11.s32) * int64_t(ctx.r10.s32);
-						// rlwinm r11,r11,2,0,29
-						ctx.r11.u64 = __builtin_rotateleft64(ctx.r11.u32 | (ctx.r11.u64 << 32), 2) & 0xFFFFFFFC;
-						// cmplw cr6,r27,r9
-						ctx.cr6.compare<uint32_t>(ctx.r27.u32, ctx.r9.u32, ctx.xer);
-						// add r25,r11,r25
-						ctx.r25.u64 = ctx.r11.u64 + ctx.r25.u64;
-						// blt cr6,0x83045848
-						if (!ctx.cr6.lt) {
-							// li r3,0
-							ctx.r3.s64 = 0;
-							break;
-						}
-					}
-				} else {
-					// li r3,0
-					ctx.r3.s64 = 0;
-				}
-			}
+			lookStickDispatch(ctx, base);
 		} else {
 			// lis r3,-32761 / ori r3,r3,14  ->  kRetEmptySlot (0x8007000E, normalized RY was zero)
 			ctx.r3.u64 = kRetEmptySlot;
