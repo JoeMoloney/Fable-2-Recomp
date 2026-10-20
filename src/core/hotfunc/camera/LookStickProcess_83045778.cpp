@@ -25,6 +25,76 @@ extern "C" void __savegprlr_25(PPCContext& ctx, uint8_t* base);
 #define SV16(x, y)  (*(uint16_t*)(REX_RAW_ADDR(x)) = __builtin_bswap16(y))
 #define SV32(x, y)  (*(uint32_t*)(REX_RAW_ADDR(x)) = __builtin_bswap32(y))
 #define SV64(x, y)  (*(uint64_t*)(REX_RAW_ADDR(x)) = __builtin_bswap64(y))
+
+// The per-controller "handler" object in guest RAM. Every field is big-endian, so accessors route
+// through the GV*/SV* macros above (identical address math + bswap as the REX_* macros). Offsets
+// are relative to the object's guest base address.
+struct Handler {
+	// The function's `base` parameter (host base for guest RAM). Stored here because the GV*/SV*
+	// macros address guest RAM as `base + (u32)guest_offset`, and the accessors below need it in
+	// scope. Do NOT rename away from `base` — the macros resolve this identifier.
+	uint8_t* base;
+	// The handler object's guest base address (from r31). All field offsets are relative to this.
+	uint32_t addr;
+
+	// +0  Shared per-controller context/state object pointer. Re-read throughout; the context
+	//     object's own +8 is the base per-entry table and +12 is the magnitude bound.
+	uint32_t context() const { return GV32(addr + 0); }
+
+	// +4  Five-entry per-controller pointer block, copied verbatim to a stack scratch region
+	//     (r1+96) before the dispatch loop. Returns the guest address of entry[0].
+	uint32_t entryBlock() const { return addr + 4; }
+
+	// +10 / +12  Two 16-bit words read (and summed) inside the dispatch loop.
+	uint16_t word10() const { return GV16(addr + 10); }
+	uint16_t word12() const { return GV16(addr + 12); }
+
+	// +24 Pointer to the polled XINPUT_STATE buffer (its own +10 / +12 hold the right-stick axes).
+	uint32_t xinputState() const { return GV32(addr + 24); }
+
+	// +32 Running result total, accumulated across the per-entry dispatches.
+	uint32_t runningTotal() const { return GV32(addr + 32); }
+
+	// +56 Cached normalized right-stick value: written in phase 1, re-read in phase 2 as the store
+	//     offset for each per-entry dispatch result.
+	uint32_t cachedStick() const { return GV32(addr + 56); }
+	void     setCachedStick(uint32_t v) { SV32(addr + 56, v); }
+};
+
+// --- Named constants for the magic values used in the body below. ---
+// The two r3 return codes are written by a `lis`/`ori` pair; the recompiler stores the sign-
+// extended 64-bit result (upper 32 bits all ones), so the constants carry that full value.
+static constexpr uint64_t kRetMagnitudeExceeded = 0xFFFFFFFF80004005ull;  // 0x80004005: stick magnitude exceeded (clamped)
+static constexpr uint64_t kRetEmptySlot         = 0xFFFFFFFF8007000Eull;  // 0x8007000E: a dispatch slot came back empty
+static constexpr uint32_t kPerEntryTableSize    = 5;                      // entries in the per-controller pointer block
+
+// --- Guest stack-frame slots, addressed relative to r1 after the -192 frame allocation. ---
+// r1 is stable for the whole body (only the entry stwu and the exit addi touch it), so each slot
+// has a fixed guest address. `base` (the host base) is captured for the GV*/SV* macros, as in
+// Handler. Do NOT rename the `base` member — the macros resolve that identifier.
+struct StackSlots {
+	uint8_t* base;  // host base (for GV*/SV* addressing)
+	uint32_t sp;    // guest stack base (r1 after the -192 frame allocation)
+
+	uint32_t addr(uint32_t off) const { return sp + off; }             // guest address of a slot
+	uint32_t loadU32(uint32_t off) const { return GV32(sp + off); }
+	void     storeU32(uint32_t off, uint32_t v) { SV32(sp + off, v); }
+	uint16_t loadU16(uint32_t off) const { return GV16(sp + off); }
+	void     storeU16(uint32_t off, uint16_t v) { SV16(sp + off, v); }
+};
+
+// The named stack-frame slots (offsets from r1 after the -192 frame allocation).
+enum : uint32_t {
+	kSlotOutA    = 80,   // InputAccumulate out-slot A (u32); its address is also passed as the r7 argument
+	kSlotOutB    = 84,   // InputAccumulate out-slot B (u32); its address is also passed as the r8 argument
+	kSlotBlock   = 96,   // copied 5-entry pointer block; its address is also passed as the r4 argument
+	kSlotAcc0    = 100,  // tail-accumulation u16 slot
+	kSlotAcc1    = 102,  // tail-accumulation u16 slot
+	kSlotAcc2    = 104,  // tail-accumulation u16 slot
+	kSlotBlock2  = 108,  // second word written into the block area during the dispatch loop
+	kSlotProduct = 112,  // running product accumulator (u32)
+};
+
 // LookStickProcess_83045778 — per-controller right/look-stick input handler.
 //
 // `ctx.r3` (captured into r31) is the "handler" object. Guest layout (big-endian offsets):
@@ -62,9 +132,19 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 	// r31 = the per-controller "handler" object (see header comment).
 	// mr r31,r3
 	ctx.r31.u64 = ctx.r3.u64;
+	// Wrap the handler object so its fields read by name instead of by offset. r31 is written once
+	// (above) and never reassigned, so the wrapper's guest address is constant for the whole call.
+	// `base` (the function's host-base parameter) is captured for the GV*/SV* macros' address math.
+	Handler handler{ base, ctx.r31.u32 };
+	// Likewise wrap the guest stack frame. r1 is only touched by the entry stwu (above) and the
+	// exit addi (below), so its base is constant for the whole body and the slots have fixed
+	// guest addresses.
+	StackSlots stack{ base, ctx.r1.u32 };
+
+	// --- Read the raw right-stick RY. ---
 	// r11 = XINPUT_STATE buffer pointer (handler+24); r10 = raw RY (u16; 0 = stick centered).
 	// lwz r11,24(r31)
-	ctx.r11.u64 = GV32(ctx.r31.u32 + 24);
+	ctx.r11.u64 = handler.xinputState();
 	// lhz r10,10(r11)
 	ctx.r10.u64 = GV16(ctx.r11.u32 + 10);
 	// cmplwi r10,0
@@ -84,12 +164,12 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 		// cmplwi r3,0
 		ctx.cr0.compare<uint32_t>(ctx.r3.u32, 0, ctx.xer);
 		// stw r3,56(r31)
-		SV32(ctx.r31.u32 + 56, ctx.r3.u32);
+		handler.setCachedStick(ctx.r3.u32);
 		// bne 0x830457c0
 		if (!ctx.cr0.eq) {
 			// --- Phase 2: the normalized RY is nonzero, so run the per-entry dispatch. ---
 			// lwz r11,24(r31)
-			ctx.r11.u64 = GV32(ctx.r31.u32 + 24);
+			ctx.r11.u64 = handler.xinputState();
 			// li r4,0
 			ctx.r4.s64 = 0;
 			// lhz r11,10(r11)
@@ -100,15 +180,17 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 			ctx.lr = 0x830457D4;
 			MemSet_SdkRuntime_82CA3190(ctx, base);
 			// addi r11,r31,4
-			ctx.r11.s64 = ctx.r31.s64 + 4;
+			ctx.r11.s64 = handler.entryBlock();
+			// --- Copy the per-entry pointer block (handler+4) to the stack, then load the running total. ---
+			// r10 = destination (the stack block); r11 = source (handler+4); r9 = loop count.
 			// addi r10,r1,96
-			ctx.r10.s64 = ctx.r1.s64 + 96;
-			// r25 = running result total (handler+32). r9 = 5: the per-entry table has 5 entries, copied
-			// from handler+4 into a stack scratch block (r1+96) for the dispatches below.
+			ctx.r10.s64 = stack.addr(kSlotBlock);
+			// r25 = running result total (handler+32). r9 = kPerEntryTableSize: the per-entry table,
+			// copied from handler+4 into the stack block for the dispatches below.
 			// li r9,5
-			ctx.r9.s64 = 5;
+			ctx.r9.s64 = kPerEntryTableSize;
 			// lwz r25,32(r31)
-			ctx.r25.u64 = GV32(ctx.r31.u32 + 32);
+			ctx.r25.u64 = handler.runningTotal();
 			// mtctr r9
 			ctx.ctr.u64 = ctx.r9.u64;
 			while (true) {
@@ -125,9 +207,9 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 				if (ctx.ctr.u32 == 0) break;
 			}
 			// lwz r9,24(r31)
-			ctx.r9.u64 = GV32(ctx.r31.u32 + 24);
+			ctx.r9.u64 = handler.xinputState();
 			// lwz r11,0(r31)
-			ctx.r11.u64 = GV32(ctx.r31.u32 + 0);
+			ctx.r11.u64 = handler.context();
 			// lhz r10,10(r9)
 			ctx.r10.u64 = GV16(ctx.r9.u32 + 10);
 			// lwz r9,12(r9)
@@ -144,27 +226,25 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 			ctx.cr6.compare<uint32_t>(ctx.r8.u32, ctx.r7.u32, ctx.xer);
 			// ble cr6,0x8304582c
 			if (ctx.cr6.gt) {
-				// lis r3,-32768
-				ctx.r3.s64 = -2147483648;
-				// ori r3,r3,16389
-				ctx.r3.u64 = ctx.r3.u64 | 16389;
+				// lis r3,-32768 / ori r3,r3,16389  ->  kRetMagnitudeExceeded (0x80004005)
+				ctx.r3.u64 = kRetMagnitudeExceeded;
 			} else {
 				// lwz r11,8(r11)
 				ctx.r11.u64 = GV32(ctx.r11.u32 + 8);
 				// li r26,0
-				ctx.r26.s64 = 0;
+				ctx.r26.s64 = 0;  // r26 = 0: the clamp base for the per-entry accumulator
 				// cmplwi cr6,r10,0
 				ctx.cr6.compare<uint32_t>(ctx.r10.u32, 0, ctx.xer);
 				// mr r27,r26
-				ctx.r27.u64 = ctx.r26.u64;
+				ctx.r27.u64 = ctx.r26.u64;  // r27 = r26 (0): the per-entry counter, +1 each iteration
 				// add r29,r11,r9
-				ctx.r29.u64 = ctx.r11.u64 + ctx.r9.u64;
+				ctx.r29.u64 = ctx.r11.u64 + ctx.r9.u64;  // r29 = RX-indexed per-entry table base
 				// Per-entry dispatch loop: walk the RX-indexed table (r29) and process each entry.
 				// beq cr6,0x83045994
 				if (!ctx.cr6.eq) {
 					while (true) {
 						// lwz r3,0(r31)
-						ctx.r3.u64 = GV32(ctx.r31.u32 + 0);
+						ctx.r3.u64 = handler.context();
 						// lwz r10,4(r29)
 						ctx.r10.u64 = GV32(ctx.r29.u32 + 4);
 						// addi r11,r10,16
@@ -175,22 +255,20 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 						ctx.cr6.compare<uint32_t>(ctx.r11.u32, ctx.r9.u32, ctx.xer);
 						// bgt cr6,0x83045820
 						if (ctx.cr6.gt) {
-							// lis r3,-32768
-							ctx.r3.s64 = -2147483648;
-							// ori r3,r3,16389
-							ctx.r3.u64 = ctx.r3.u64 | 16389;
+							// lis r3,-32768 / ori r3,r3,16389  ->  kRetMagnitudeExceeded (0x80004005)
+							ctx.r3.u64 = kRetMagnitudeExceeded;
 							break;
 						}
 						// lwz r11,8(r3)
 						ctx.r11.u64 = GV32(ctx.r3.u32 + 8);
 						// addi r8,r1,84
-						ctx.r8.s64 = ctx.r1.s64 + 84;
+						ctx.r8.s64 = stack.addr(kSlotOutB);
 						// stw r26,80(r1)
-						SV32(ctx.r1.u32 + 80, ctx.r26.u32);
+						stack.storeU32(kSlotOutA, ctx.r26.u32);
 						// addi r7,r1,80
-						ctx.r7.s64 = ctx.r1.s64 + 80;
+						ctx.r7.s64 = stack.addr(kSlotOutA);
 						// stw r26,84(r1)
-						SV32(ctx.r1.u32 + 84, ctx.r26.u32);
+						stack.storeU32(kSlotOutB, ctx.r26.u32);
 						// add r30,r11,r10
 						ctx.r30.u64 = ctx.r11.u64 + ctx.r10.u64;
 						// li r6,1
@@ -198,29 +276,29 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 						// mr r5,r30
 						ctx.r5.u64 = ctx.r30.u64;
 						// addi r4,r1,96
-						ctx.r4.s64 = ctx.r1.s64 + 96;
+						ctx.r4.s64 = stack.addr(kSlotBlock);
 						// Accumulate this entry's stick combination into the stack output slots.
 						// bl 0x83041408
 						ctx.lr = 0x83045888;
 						InputAccumulate_83041408(ctx, base);
 						// lhz r9,10(r31)
-						ctx.r9.u64 = GV16(ctx.r31.u32 + 10);
+						ctx.r9.u64 = handler.word10();
 						// lhz r10,12(r31)
-						ctx.r10.u64 = GV16(ctx.r31.u32 + 12);
+						ctx.r10.u64 = handler.word12();
 						// lwz r8,80(r1)
-						ctx.r8.u64 = GV32(ctx.r1.u32 + 80);
+						ctx.r8.u64 = stack.loadU32(kSlotOutA);
 						// add r10,r10,r9
 						ctx.r10.u64 = ctx.r10.u64 + ctx.r9.u64;
 						// lhz r11,102(r1)
-						ctx.r11.u64 = GV16(ctx.r1.u32 + 102);
+						ctx.r11.u64 = stack.loadU16(kSlotAcc1);
 						// lwz r9,0(r29)
 						ctx.r9.u64 = GV32(ctx.r29.u32 + 0);
 						// stw r9,96(r1)
-						SV32(ctx.r1.u32 + 96, ctx.r9.u32);
+						stack.storeU32(kSlotBlock, ctx.r9.u32);
 						// lwz r9,4(r29)
 						ctx.r9.u64 = GV32(ctx.r29.u32 + 4);
 						// stw r9,108(r1)
-						SV32(ctx.r1.u32 + 108, ctx.r9.u32);
+						stack.storeU32(kSlotBlock2, ctx.r9.u32);
 						// lhz r9,8(r30)
 						ctx.r9.u64 = GV16(ctx.r30.u32 + 8);
 						// mullw r9,r9,r8
@@ -230,7 +308,7 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 						// add r8,r9,r11
 						ctx.r8.u64 = ctx.r9.u64 + ctx.r11.u64;
 						// sth r9,104(r1)
-						SV16(ctx.r1.u32 + 104, ctx.r9.u16);
+						stack.storeU16(kSlotAcc2, ctx.r9.u16);
 						// cmpw cr6,r8,r10
 						ctx.cr6.compare<int32_t>(ctx.r8.s32, ctx.r10.s32, ctx.xer);
 						// ble cr6,0x830458d8
@@ -243,50 +321,49 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 								// mr r11,r26
 								ctx.r11.u64 = ctx.r26.u64;
 							// sth r11,104(r1)
-							SV16(ctx.r1.u32 + 104, ctx.r11.u16);
+							stack.storeU16(kSlotAcc2, ctx.r11.u16);
 						}
 						// mr r6,r25
 						ctx.r6.u64 = ctx.r25.u64;
 						// lwz r3,0(r31)
-						ctx.r3.u64 = GV32(ctx.r31.u32 + 0);
+						ctx.r3.u64 = handler.context();
 						// mr r5,r30
 						ctx.r5.u64 = ctx.r30.u64;
 						// addi r4,r1,96
-						ctx.r4.s64 = ctx.r1.s64 + 96;
+						ctx.r4.s64 = stack.addr(kSlotBlock);
 						// Dispatch to the concrete action handler for this entry.
 						// bl 0x83045410
 						ctx.lr = 0x830458EC;
 						InputModeDispatch_83045410(ctx, base);
 						// lwz r11,56(r31)
-						ctx.r11.u64 = GV32(ctx.r31.u32 + 56);
-						// stwx r3,r28,r11
+						ctx.r11.u64 = handler.cachedStick();
+						// stwx r3,r28,r11  (r28 = per-entry result pointer, set by the dispatch, +4 each entry)
 						SV32(ctx.r28.u32 + ctx.r11.u32, ctx.r3.u32);
 						// lwz r11,56(r31)
-						ctx.r11.u64 = GV32(ctx.r31.u32 + 56);
+						ctx.r11.u64 = handler.cachedStick();
 						// lwzx r10,r28,r11
 						ctx.r10.u64 = GV32(ctx.r28.u32 + ctx.r11.u32);
 						// cmplwi cr6,r10,0
 						ctx.cr6.compare<uint32_t>(ctx.r10.u32, 0, ctx.xer);
 						// beq cr6,0x830457b4
 						if (ctx.cr6.eq) {
-							// lis r3,-32761
-							ctx.r3.s64 = -2147024896;
-							// ori r3,r3,14
-							ctx.r3.u64 = ctx.r3.u64 | 14;
+							// lis r3,-32761 / ori r3,r3,14  ->  kRetEmptySlot (0x8007000E, empty slot)
+							ctx.r3.u64 = kRetEmptySlot;
 							break;
 						}
+						// --- Tail: fold the per-entry accumulator slots, then update the running total. ---
 						// lhz r10,102(r1)
-						ctx.r10.u64 = GV16(ctx.r1.u32 + 102);
+						ctx.r10.u64 = stack.loadU16(kSlotAcc1);
 						// lhz r8,104(r1)
-						ctx.r8.u64 = GV16(ctx.r1.u32 + 104);
+						ctx.r8.u64 = stack.loadU16(kSlotAcc2);
 						// lhz r9,100(r1)
-						ctx.r9.u64 = GV16(ctx.r1.u32 + 100);
+						ctx.r9.u64 = stack.loadU16(kSlotAcc0);
 						// add r10,r10,r8
 						ctx.r10.u64 = ctx.r10.u64 + ctx.r8.u64;
 						// cmplwi r9,0
 						ctx.cr0.compare<uint32_t>(ctx.r9.u32, 0, ctx.xer);
 						// sth r10,102(r1)
-						SV16(ctx.r1.u32 + 102, ctx.r10.u16);
+						stack.storeU16(kSlotAcc1, ctx.r10.u16);
 						// li r10,1
 						ctx.r10.s64 = 1;
 						// beq 0x83045928
@@ -301,7 +378,7 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 						// lhz r9,8(r30)
 						ctx.r9.u64 = GV16(ctx.r30.u32 + 8);
 						// lwz r7,112(r1)
-						ctx.r7.u64 = GV32(ctx.r1.u32 + 112);
+						ctx.r7.u64 = stack.loadU32(kSlotProduct);
 						// lwz r8,44(r8)
 						ctx.r8.u64 = GV32(ctx.r8.u32 + 44);
 						// mullw r9,r8,r9
@@ -313,7 +390,7 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 						// add r10,r10,r7
 						ctx.r10.u64 = ctx.r10.u64 + ctx.r7.u64;
 						// stw r10,112(r1)
-						SV32(ctx.r1.u32 + 112, ctx.r10.u32);
+						stack.storeU32(kSlotProduct, ctx.r10.u32);
 						// li r10,1
 						ctx.r10.s64 = 1;
 						// beq cr6,0x8304595c
@@ -330,7 +407,7 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 						// addi r29,r29,8
 						ctx.r29.s64 = ctx.r29.s64 + 8;
 						// lwz r8,24(r31)
-						ctx.r8.u64 = GV32(ctx.r31.u32 + 24);
+						ctx.r8.u64 = handler.xinputState();
 						// addi r28,r28,4
 						ctx.r28.s64 = ctx.r28.s64 + 4;
 						// lwz r11,44(r11)
@@ -360,10 +437,8 @@ extern "C" void LookStickProcess_83045778(PPCContext& __restrict ctx, uint8_t* b
 				}
 			}
 		} else {
-			// lis r3,-32761
-			ctx.r3.s64 = -2147024896;
-			// ori r3,r3,14
-			ctx.r3.u64 = ctx.r3.u64 | 14;
+			// lis r3,-32761 / ori r3,r3,14  ->  kRetEmptySlot (0x8007000E, normalized RY was zero)
+			ctx.r3.u64 = kRetEmptySlot;
 		}
 	} else {
 		// li r3,0
