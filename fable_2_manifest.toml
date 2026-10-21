@@ -42211,7 +42211,12 @@ name = "ProcessAndProcessAndProcess1252_82A3CEF0"
 
 # Process an enormous data structure by dispatching (seven hundred and one hundred and one hundred and one hundred and one hundred and two hundred and fifty-third form). It takes a structure, checks its state, and drives many sub-operations (ProcessAndProcessAndProcess509, ProcessAndProcessAndProcess535, ProcessAndProcessAndProcess536, ProcessAndProcessAndProcess537, ProcessAndProcessAndProcess538, ProcessAndProcessAndProcess539, ProcessAndProcessAndProcess542, ProcessAndProcessAndProcess583, ProcessAndProcessAndProcess584, ProcessAndProcessAndProcess654, sub_832C23A8) based on the result. This is the third-largest function in the recompiled binary, a massive dispatcher in the 0x832BB/0x832C cluster. 4766 lines. 11 callees. 1 caller (sub_832BD3E8).
 [entrypoint.functions."0x832BB018"]
-name = "ProcessAndProcessAndProcess1253_832BB018"
+# Right-stick Y (sThumbRY) consumer on the per-frame camera-orbit path. Reads raw u16 stick
+# axes from a local XINPUT_STATE buffer (r10 = r1+708), packs them, and feeds the camera look/orbit
+# pipeline. Called 4x per frame from ProcessAndProcessAndProcess1676_832BD3E8. This is the confirmed
+# HotFunc rewrite target for 1:1 mouse+stick camera control: the mouse delta is added to sThumbRY (r23)
+# at the r10+14 read site so the entire native downstream pipeline runs with combined stick+mouse input.
+name = "RightStickLookProcess_832BB018"
 
 # Process a structure by reading a field (seven hundred and one hundred and one hundred and one hundred and one hundred and two hundred and fifty-fourth form). It takes a structure and reads a field (GetField8). Part of the 0x82C50 UI cluster. 56 lines. 1 callee. 3 callers (sub_82C45258, sub_82C454B0, sub_82C45578).
 [entrypoint.functions."0x82C50FE8"]

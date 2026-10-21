@@ -8,9 +8,14 @@ default.xex
 # --- Build artifacts --------------------------------------------------------
 out
 generated
-.pi
 nul
+
+
+# --- AI Agent Stuff --------------------------------------------------------
+.pi
 pi-session-*.html
+.claude/*
+!.claude/skills/
 
 # --- Runtime logs written next to the exe (may land in the root when running
 #     with --game_data_root) ---------------------------------------------------

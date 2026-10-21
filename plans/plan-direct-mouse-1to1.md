@@ -4,6 +4,45 @@ Goal: make the mouse drive the third-person camera orbit **exactly** like the ri
 there is no perceptible difference between the two inputs, and combining them (mouse + stick
 simultaneously) just works — same angle, same feel, same native limits.
 
+## STATUS (current approach — 1:1 native right-stick injection)
+
+**Confirmed target:** `RightStickLookProcess_832BB018` (guest 0x832BB018,
+generated/default/fable_2_recomp.139.cpp) is the game's **active per-frame right-stick-Y
+(sThumbRY) consumer** — verified at runtime (the `[ry-probe]` fired only here, many times per
+frame, with physical right-stick input). The earlier candidate `LookStickProcess_83045778` (the
+8304x per-controller cluster) is **dead** during normal gameplay (its whole call chain never
+runs); that override is now a faithful no-op kept for reference.
+
+**How the injection works:** `RightStickLookProcess` reads the right-stick Y u16 from a local
+interleaved stick buffer (`r10+14`, where `r10 = r1+708`) into r23, then packs it (r23<<8 | r23,
+rlwimi) into the per-controller input state that drives the hero-camera orbit. The hotfunc
+override (`src/core/hotfunc/camera/RightStickLookProcess_832BB018.cpp`) adds the per-frame mouse Y
+delta, scaled by `mouse_look_stick_scale` (stick u16 units per host pixel), to that u16 right
+after the read. The native orbit/easing/clamp pipeline then runs on the combined stick + mouse
+value — so the mouse **shares the stick's exact orbit bounds** (it can't compound past the native
+limits, because it feeds the same u16 the stick does).
+
+**Mouse-delta plumbing:** the host input driver accumulates the raw cursor displacement in
+`fable2::mouselook::dy_acc()` (`src/input/mouse_look.h`). `RightStickLookProcess` **peeks** it
+(no reset) so every per-frame call sees the same value; the legacy direct-mouse hook
+(`fable2_hook_direct_mouse_look`, at CECCameraUpdateFrame) **resets** it once per frame via
+`take_delta()` and skips its orbit logic when `mouse_look_native_inject` is on. Frame order
+(input processing → camera update) guarantees the peek precedes the reset.
+
+**Config (`[input]` in fable2_config.toml):**
+- `direct_mouse_look = true` — master switch for the direct-mouse path.
+- `mouse_look_native_inject = true` — use the 1:1 native right-stick injection (this build's
+  target). When false, the legacy external/native-target orbit runs instead.
+- `mouse_look_stick_scale = 64` — stick u16 units per host mouse pixel (512 px = a full
+  ~32768 deflection at the default). Negative flips the direction.
+- `mouse_look_stick_diag = true` — logs `[ml-stick] rest=.. inject=.. mdy=.. scale=..` (capped)
+  so the rest value / deflection range can be measured and the scale calibrated.
+
+**Open item:** the exact scale (rest value + full-deflection range of the `r10+14` u16) is being
+measured from the `[ml-stick]` log; `mouse_look_stick_scale` is the tuning knob. The mouse is
+velocity-based (orbits while moving, stops when idle) vs. the stick's position-based hold — same
+function and bounds, slightly different feel.
+
 ## Why the current (re-implemented) orbit feels off
 
 The current hook (6th iteration) re-implements the orbit externally: it rotates the eye at

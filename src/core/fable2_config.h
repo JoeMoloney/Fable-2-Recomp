@@ -85,6 +85,29 @@ struct Values {
   // a look direction. No rebuild needed to change these.
   int32_t mouse_look_yaw_axis = 2;   // default Z (local up -> orbit)
   int32_t mouse_look_pitch_axis = 0; // default X (local right -> pitch)
+  // 1:1 native right-stick injection: RightStickLookProcess_832BB018 (the game's
+  // active per-frame right-stick-Y consumer) reads the stick Y u16 and drives the
+  // camera orbit. The hotfunc override adds the per-frame mouse Y delta, scaled by
+  // this factor, to that u16 so the native orbit/easing/clamp pipeline runs with
+  // combined stick + mouse input (identical bounds to the stick). Scale is in
+  // stick u16 units per host mouse pixel. The stick is an int16 centered at 0 with
+  // full deflection at ~32768, so 512 px of mouse travel = a full deflection at
+  // the default 64. Signed: negative flips the direction.
+  int32_t mouse_look_stick_scale = 64;
+  // 1:1 native right-stick injection mode. When true (and mouse_look +
+  // direct_mouse_look are on) the RightStickLookProcess_832BB018 hotfunc override
+  // adds the per-frame mouse Y delta (scaled by mouse_look_stick_scale) to the
+  // right-stick Y u16, so the game's OWN orbit/easing/clamp pipeline runs with
+  // combined stick + mouse input. The mouse shares the stick's exact orbit
+  // bounds (no compounding past the native limits) because it feeds the same
+  // u16 the stick does. The legacy direct-mouse hook (fable2_hook_direct_mouse_
+  // look) resets the mouse delta once per frame but skips its orbit logic in this
+  // mode. Off by default (the legacy external orbit remains the default).
+  bool mouse_look_native_inject = false;
+  // Log the rest (pre-injection) and injected right-stick-Y u16 in the
+  // RightStickLookProcess override, capped, to calibrate mouse_look_stick_scale.
+  // Off by default.
+  bool mouse_look_stick_diag = false;
   // Active-camera (CECCamera) field offsets used by the direct-mouse-look hook
   // (bytes from the camera object). The look-orbit is reproduced by rotating
   // BOTH the orientation quaternions AND the world-space eye position around the

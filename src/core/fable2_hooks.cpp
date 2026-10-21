@@ -368,6 +368,19 @@ void fable2_hook_direct_mouse_look(PPCRegister& r31) {
   // The diagnostics above run regardless of which path is active.
   if (!cfg.direct_mouse_look) return;
 
+  // 1:1 native injection: the RightStickLookProcess_832BB018 hotfunc override
+  // already applied the per-frame mouse delta to the right-stick Y u16 (peeked,
+  // not consumed) during input processing, so the game's own orbit/easing/clamp
+  // pipeline now owns the camera. Reset the delta here (once per frame) and skip
+  // all orbit logic so we don't double-apply. This fires for the first CECCamera
+  // each frame (hero or otherwise), which is the once-per-frame cadence the
+  // peek-and-reset design needs.
+  if (cfg.mouse_look_native_inject) {
+    int32_t ndx = 0, ndy = 0;
+    fable2::mouselook::take_delta(ndx, ndy);
+    return;
+  }
+
   // Only the hero (player) camera is orbitable. This hook fires for EVERY
   // CECCamera, including cinematic/cutscene cameras that the game scripts on
   // its own (the opening movie, cut-in shots, ...). The hero camera is flagged

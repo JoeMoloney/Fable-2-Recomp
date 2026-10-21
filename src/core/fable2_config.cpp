@@ -113,6 +113,23 @@ mouse_look_pitch_ceil = 4.067
 # flip a look direction.
 mouse_look_yaw_axis = 2
 mouse_look_pitch_axis = 0
+# 1:1 native right-stick injection: RightStickLookProcess_832BB018 adds the
+# per-frame mouse Y delta (scaled by this factor, in stick u16 units per host
+# mouse pixel) to the right-stick Y u16 so the native orbit pipeline runs with
+# combined stick + mouse input (identical bounds to the stick). The stick is an
+# int16 centered at 0 with full deflection ~32768, so 512 px = a full
+# deflection at the default 64. Negative flips the direction.
+mouse_look_stick_scale = 64
+# 1:1 native right-stick injection. true = the RightStickLookProcess_832BB018
+# hotfunc override adds the mouse Y delta to the right-stick Y u16 so the game's
+# OWN orbit/easing/clamp runs with combined stick + mouse input (identical
+# bounds to the stick). The legacy direct-mouse hook then only resets the delta
+# (no orbit). false = the legacy direct-mouse hook's orbit runs (external or
+# native target offset, per mouse_look_legacy_orbit).
+mouse_look_native_inject = false
+# Log the rest (pre-injection) and injected right-stick-Y u16 (capped) to
+# calibrate mouse_look_stick_scale. Off by default.
+mouse_look_stick_diag = false
 
 # Active-camera (CECCamera) field offsets (bytes from the camera object). The
 # look-orbit is reproduced by rotating BOTH the orientation quaternions AND the
@@ -342,6 +359,15 @@ bool Load(const std::filesystem::path& path) {
     values.mouse_look_pitch_axis = static_cast<int32_t>(Read<int64_t>(
         input_table, "input", "mouse_look_pitch_axis", "integer",
         values.mouse_look_pitch_axis));
+    values.mouse_look_stick_scale = static_cast<int32_t>(Read<int64_t>(
+        input_table, "input", "mouse_look_stick_scale", "integer",
+        values.mouse_look_stick_scale));
+    values.mouse_look_stick_diag = static_cast<bool>(
+        Read<bool>(input_table, "input", "mouse_look_stick_diag", "boolean",
+                   values.mouse_look_stick_diag));
+    values.mouse_look_native_inject = static_cast<bool>(
+        Read<bool>(input_table, "input", "mouse_look_native_inject", "boolean",
+                   values.mouse_look_native_inject));
     values.camera_rot_tgt_off = static_cast<int32_t>(Read<int64_t>(
         input_table, "input", "camera_rot_tgt_off", "integer",
         values.camera_rot_tgt_off));
