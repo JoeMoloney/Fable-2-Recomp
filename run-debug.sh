@@ -13,4 +13,5 @@ exec "./out/build/linux-amd64-$mode/fable_2" \
   --gpu_plugin=xenos --vulkan_device=0 \
   --window_width=1280 --window_height=720 \
   --fullscreen=false --mouse_look=false \
+  --guest_vblank_pacing=false \
   --frame_limit=30 --async_shader_compilation=false
