@@ -1,4 +1,4 @@
 [submodule "thirdparty/rexglue-sdk"]
 	path = thirdparty/rexglue-sdk
-	url = https://github.com/himdo/rexglue-sdk.git
-	branch = main
+	url = https://gitlab.com/JoeMoloney/rexglue-sdk.git
+	branch = fable2
