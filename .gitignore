@@ -45,6 +45,7 @@ build_*.log
 rebuild.log
 rebuild2.log
 __pycache__/
+/renderdoc_captures/
 
 # --- Build-critical scripts (tracked DESPITE the rules above) -----------------
 # The reproducible/AV-clean build toolset (tools/repro) is invoked by CMake's
