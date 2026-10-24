@@ -4,6 +4,7 @@ default.xex
 /nxeart/
 /$SystemUpdate/
 /Gamefiles/
+/.linux-stage-*/
 
 # --- Build artifacts --------------------------------------------------------
 out
@@ -55,6 +56,7 @@ __pycache__/
 !tools/fable2_control.py
 !tools/prepare_runtime_sdk.py
 !tools/generate_game_versions.py
+!tools/linux.py
 !tests/*.py
 !tools/prepare_renderer_mspack.py
 !tools/stage_renderer_sdk.py
