@@ -64,6 +64,14 @@ __pycache__/
 !assets/app-icon.png
 !docs/screenshots/launcher.png
 
+# Linux build/run entry points (keep other shell helpers ignored).
+!/build-release-linux_amd64.sh
+!/build-debug-linux_amd64.sh
+!/build-relwithdebinfo-linux_amd64.sh
+!/run-release.sh
+!/run-debug.sh
+!/run-relwithdebinfo.sh
+
 # --- Fetched/external toolchain deps (created by tools/setup_sdk*.cmd). -------
 # The tracked files in thirdparty/ (rexglue-sdk-local.patch,
 # rexglue-sdk-submodule-pins.txt, vulkan/, vk_video/) stay in the repo.
