@@ -44,7 +44,7 @@ Original GOTY USA/Europe and German GOTY dumps are supported by the default
 Native Vulkan builds have been user-tested on CachyOS with KDE Wayland,
 including a new-game session and controller input. Linux remains experimental:
 the current working baseline disables asynchronous shader compilation, and
-performance, audio and save-reload validation are incomplete. See
+performance, audio and persistence of newly saved progress need more validation. See
 [Linux setup, build and run instructions](docs/LINUX.md).
 
 ## Windows launcher

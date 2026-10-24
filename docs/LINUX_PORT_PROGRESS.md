@@ -4,8 +4,10 @@
 
 Native Linux/Wayland Vulkan boot, interactive menus and a user-tested new-game
 session with controller input work with `--async_shader_compilation=false`.
-Some hitching and an allocator diagnostic remain; audio/save reload and stable
-long-session performance are not yet verified. Earlier "pending" entries below
+Continue loading the existing save, intro skip and in-game cutscene playback
+are user-verified. Some hitching/visual anomalies and an earlier allocator
+diagnostic remain; audio, persistence of new saves and stable long-session
+performance are not yet verified. Earlier "pending" entries below
 are chronological experiment notes, not the latest status. Start with the
 [portable Linux workflow](LINUX.md) for current setup/run commands.
 
@@ -393,6 +395,46 @@ User approved `git add`/`git commit` only; pushing remains manual.
 - SDK remains locally modified by the reviewed patch; its parent gitlink is
   intentionally unchanged. `.opencode/` remains untracked and unmodified.
 - No push performed; stable-support claims remain deferred.
+
+### Continue / cutscene / crowded-scene validation
+
+User-reported sequence in the next untimed synchronous-shader session:
+
+1. Waited for main menu, then powered on the Steam Controller.
+2. Let the idle cinematic start and pressed controller A to return/proceed.
+3. Navigated to Continue and loaded the existing game.
+4. Saw the intro cutscene and skipped it with Start.
+5. Let the in-game cutscene play and followed gameplay instructions.
+6. Encountered choppiness near the trader demonstrating goods, with many NPCs
+   and an LT zoom prompt; some unspecified visual elements looked wrong.
+7. Enlarged the window on the desktop, then closed it from the UI.
+
+This verifies existing-save loading, controller hot-plug/use across this
+sequence, Start skip and cutscene/gameplay progression. The earlier idle
+cinematic freeze suspicion is not a confirmed hard lock: this later run
+progressed beyond it. Resizing was exercised but not comprehensively validated.
+Audio still needs an explicit user report. Do not assign visual defects to
+shaders, graphics instructions, controller or resizing without more evidence.
+
+Evidence: `logs/fable_2_008.log` beside the executable and the helper console
+log for this session. Roughly 14 minutes of execution, 341 pipeline-creation
+messages, expected missing optional `update:` path errors, and unmapped SDL
+HID button messages. No logged allocator-release error, unhandled guest AV or
+Vulkan device-loss error in the inspected output. The previous allocator
+diagnostic remains unresolved, not proved fixed. End shows window closing and
+title termination, consistent with user UI close, not a spontaneous crash.
+
+Before this test, created and read-verified a nine-file save backup below
+`out/save-backups/`. Afterward all nine backed-up files match byte-for-byte,
+including Hero save files; an achievements file was newly created. Thus
+Continue/reload of the existing save is verified, but no new gameplay save
+checkpoint or persistence of newly earned progress has been verified.
+
+Next tests: explicit audio check; reach a completed autosave and verify new
+progress survives normal quit/relaunch; compare the same trader/NPC scene on
+cold/warm runs with frame-time data and precise visual descriptions/screenshots.
+Keep synchronous shaders and the 30-FPS baseline until controlled measurements
+justify changing them. Record rendering, performance and input issues separately.
 
 ### Content checkpoint — 2026-10-24
 

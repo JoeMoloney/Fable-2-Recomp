@@ -2,8 +2,9 @@
 
 The native Linux executable has been built and user-tested on CachyOS x86_64,
 KDE Wayland, an Intel i9-10900K and NVIDIA RTX 3090 (driver 615.78.08). Title
-screen, main-menu navigation, a new-game session and Steam Controller input
-have been observed working. This is **experimental**, not a stable-support or
+screen, main-menu navigation, a new-game session, Continue loading an existing
+save, cutscene skip/playback and Steam Controller input have been observed
+working. This is **experimental**, not a stable-support or
 performance guarantee. No Wine/Proton is used; SDL's Wayland backend is explicit.
 
 ## Requirements
@@ -150,12 +151,20 @@ not, by themselves, game crashes.
 - Runtime logged `BaseHeap::Release failed because address is not a region
   start`; execution continued. Investigate rather than treating the run as
   error-free.
-- Saves were generated, but successful reload/integrity is not yet verified.
-  Audio endpoint initialization is logged; audible/correct sound still needs
-  explicit confirmation.
+- Continue successfully loaded the existing save into early gameplay. The
+  pre-test Hero save files were unchanged afterward, so persistence/reload of
+  newly earned progress is not yet verified. Audio endpoint initialization is
+  logged; audible/correct sound still needs explicit confirmation.
 - Long sessions, cinematics and repeatable startup need more testing. An idle
-  cinematic freeze was suspected, but the user subsequently started a new game;
-  a hard-lock cause is not established.
+  cinematic freeze was suspected, but a later run returned from the idle
+  cinematic with controller A and loaded Continue. A hard-lock cause is not
+  established; intro skip via Start and in-game cutscene playback were tested.
+- The early trader's goods demonstration, with many NPCs and the LT zoom prompt,
+  is a user-reported choppy scene with unspecified visual anomalies. Use it
+  as a repeatable cold/warm performance and rendering comparison. Synchronous
+  shader compilation is a possible hitch source, not a proven explanation of
+  either the choppiness or the visual problems. Window enlargement was also
+  exercised; arbitrary resize correctness has not been comprehensively tested.
 - Optional Windows-only heap/font/exception diagnostics are guarded out on
   Linux; the shared UI diagnostic read path is covered by a Linux test.
 - The existing build-provenance log may say `linked_sdk=external` even for
