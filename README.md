@@ -39,6 +39,14 @@ Original GOTY USA/Europe and German GOTY dumps are supported by the default
 [x] Custom Launcher
   - [x] Built in ISO extractor
 
+## Experimental native Linux
+
+Native Vulkan builds have been user-tested on CachyOS with KDE Wayland,
+including a new-game session and controller input. Linux remains experimental:
+the current working baseline disables asynchronous shader compilation, and
+performance, audio and save-reload validation are incomplete. See
+[Linux setup, build and run instructions](docs/LINUX.md).
+
 ## Windows launcher
 
 The optional WPF launcher detects the original game edition and configures
