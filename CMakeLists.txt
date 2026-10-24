@@ -95,6 +95,13 @@ set(FABLE2_HEADER_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/diagnostics
     ${CMAKE_CURRENT_SOURCE_DIR}/src/input)
 target_include_directories(fable_2 PRIVATE ${FABLE2_HEADER_DIRS})
+# The in-tree SDK's public UI headers include ImGui, but rex::runtime does
+# not propagate its header directory. Import headers only, not object files
+# already linked into the runtime.
+if(TARGET imgui)
+    target_include_directories(fable_2 SYSTEM PRIVATE
+        $<TARGET_PROPERTY:imgui,INTERFACE_INCLUDE_DIRECTORIES>)
+endif()
 if(TARGET fable_2_recomp)
     target_include_directories(fable_2_recomp PRIVATE ${FABLE2_HEADER_DIRS})
 endif()
@@ -103,6 +110,14 @@ endif()
 # per-configuration variant: rexgpu-xenosd.dll for Debug, rexgpu-xenos.dll
 # for Release). Without it the game runs with no GPU emulation.
 rexglue_setup_target(fable_2 GPU_PLUGINS xenos)
+# Linux hosts use $ORIGIN RPATH; the SDK helper stages the GPU plugin but
+# currently leaves the shared runtime in its SDK output directory.
+if(UNIX AND NOT APPLE)
+    add_custom_command(TARGET fable_2 POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                $<TARGET_FILE:rex::runtime> $<TARGET_FILE_DIR:fable_2>
+        VERBATIM)
+endif()
 add_custom_command(TARGET fable_2 POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${CMAKE_CURRENT_BINARY_DIR}/fable2_build.json"

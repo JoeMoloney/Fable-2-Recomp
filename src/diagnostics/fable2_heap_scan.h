@@ -39,6 +39,8 @@
 
 namespace fable2::heapscan {
 
+#ifdef _WIN32
+
 inline constexpr uintptr_t kArenaHostBase = 0x100000000ull;  // see alloc_watch.h
 
 // ---------------------------------------------------------------------------
@@ -369,10 +371,14 @@ inline void maybe_request() {
   if (el > 5.0) scan_request().store(1);
 }
 
+#endif  // _WIN32: optional VirtualQuery/SEH-based heap scanner
+
 }  // namespace fable2::heapscan
 
 extern "C" void UIText_FrameRender(PPCContext& ctx, uint8_t* base) {
+#ifdef _WIN32
   fable2::heapscan::maybe_request();
+#endif
   if (fable2::uir::hook("UIText_FrameRender", ctx, base)) return;
   __imp__UIText_FrameRender(ctx, base);
 }

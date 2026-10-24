@@ -44,7 +44,11 @@
 //   0x822426E0  wait loop: GpuProgressCheck_82B9BF90 (0 = ready -> leave),
 //               else re-run the readiness test and spin while not ready.
 //   0x8224270C  call sub_82B9BEC8(r1+80), then the epilogue at 0x82242714.
+#ifdef _WIN32
 #include <windows.h>
+#else
+#include <thread>
+#endif
 
 #include "fable_2_pch.h"
 
@@ -160,16 +164,18 @@ void BuildArgBlock(PPCContext& ctx, uint8_t* base) {
   ctx.cr6.compare<uint32_t>(ctx.r11.u32, ctx.r10.u32, ctx.xer);
 }
 
-// Host pause of a couple of hundred nanoseconds to a microsecond. Uses
-// WaitForSingleObjectEx with a NULL handle rather than Sleep / std::
-// this_thread::sleep_for because those round to scheduler ticks (~15 ms
-// without timeBeginPeriod) and would overshoot the frame deadline; the
-// waitable-timer path is sub-millisecond accurate. Touches no guest state.
+// Host pause between counter polls. Touches no guest state. Keep the existing
+// Windows behavior for now; its NULL handle is invalid and its timeout argument
+// is in milliseconds, so it does not provide the nanosecond sleep once claimed.
+// On other hosts yield rather than requesting a sub-microsecond sleep, whose
+// scheduler rounding could substantially overshoot the intended interval.
 void SpinPause() {
-  // WaitForSingleObjectEx expects 100-ns units; 0 means "no timeout", so
-  // bump anything below that to one 100-ns quantum.
+#ifdef _WIN32
   const uint32_t hundredNs = kPauseNs / 100;
   WaitForSingleObjectEx(nullptr, hundredNs > 0 ? hundredNs : 1, TRUE);
+#else
+  std::this_thread::yield();
+#endif
 }
 
 // addi r1,r1,144; b __restgprlr_29 (0x82242714).
