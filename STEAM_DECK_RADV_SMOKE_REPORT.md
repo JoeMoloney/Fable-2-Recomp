@@ -3,10 +3,10 @@
 ## Status
 
 The test source and scripts are committed on `feature/native-vulkan-renderer`.
-They were built and run locally on the CachyOS desktop. A checksum-verified
-package is prepared under ignored `out/artifacts/`, but **nothing has been
-transferred to or executed on the Steam Deck**. Do not copy or execute it until
-the user explicitly approves.
+They were built and run locally on the CachyOS desktop, then transferred and run
+once on the Steam Deck after explicit approval. The test used a dedicated home
+staging directory only. No game, Distrobox, production installation, shortcut,
+configuration or save was touched.
 
 ## Smoke test
 
@@ -29,7 +29,7 @@ Desktop JSON and ELF inspection are under ignored
 `out/deck-build/vulkan-smoke/{nvidia,intel}.json` and
 `elf-compatibility.json`. The smoke executable requires GLIBC 2.34, GLIBCXX
 3.4.32, and CXXABI 1.3.9, below the live Deck host's inspected exports. Desktop
-feature results do **not** establish the same features on RADV/Deck.
+feature results were subsequently confirmed on RADV/Deck by the approved run.
 
 The committed packaging script generated
 `out/artifacts/fable2-experimental-5ac599d5f4b7.tar.gz` with source commit
@@ -84,20 +84,45 @@ The feature report covers core dynamic sampled-image indexing,
 sampled-image nonuniform indexing, and update-after-bind properties. Whether the
 renderer needs update-after-bind/partially-bound depends on its eventual heap
 population/update strategy; the smoke test reports support rather than assuming
-all are mandatory.
+all are mandatory. The smoke test only queried these features; it did not enable
+them in a device, create the proposed descriptor heap, compile a shader, draw, or
+sample a 1D texture.
 
 ## Package and approval-gated Deck procedure
 
-After this source is committed, `tools/deck-build/package.sh` will package only
-`out/deck-build/vulkan-smoke/vulkan_smoke`. Its manifest records the source
-commit, builder identity, ELF requirements/dependencies and binary hash. The
-archive and relative-path `.sha256` sidecar remain under ignored `out/artifacts/`.
+`tools/deck-build/package.sh` packaged only `vulkan_smoke` and its manifest. The
+archive is `out/artifacts/fable2-experimental-5ac599d5f4b7.tar.gz`, SHA-256
+`a45490400c9251d6337a919a24c6793c4e92afe0c596e6190ae0239e7a7f25c4`. The Deck
+staging copy passed `sha256sum -c`; the embedded manifest and ELF metadata/hash
+were checked before execution. It was extracted under
+`~/vulkan-smoke-stage/approved-run/5ac599d5f4b7/`.
 
-**Not performed:** no SCP/SSH file transfer, extraction, execution, Podman image
-load/start, game launch, shortcut/config/save access, or production-file change.
+Executed once with the Deck RADV ICD forced and implicit layers disabled:
 
-After explicit user approval, run these commands from the desktop worktree. They
-stage only under the Deck user's home and do not target Steam/game paths:
+```sh
+VK_DRIVER_FILES=/usr/share/vulkan/icd.d/radeon_icd.x86_64.json
+VK_LOADER_LAYERS_DISABLE=~implicit~
+```
+
+The Deck returned exit status **0** and JSON `result: pass`; stderr was empty.
+Device/runtime evidence:
+
+| Item | Deck result |
+|---|---|
+| Loader/device API | 1.4.350 / 1.4.350 |
+| Device/driver | AMD Custom GPU 0932 (RADV VANGOGH), RADV; Mesa 26.2.0-devel (`git-5c65d4fc31`) |
+| GPU operation/sync/readback | `vkCmdFillBuffer`; transfer-to-host barrier + fence; all 16 words verified in host-coherent memory |
+| Sampled 1D image | `R8G8B8A8_UNORM` sampled 1D image supported; sampled format and linear filtering supported |
+| Descriptor indexing | extension advertised; dynamic indexing, descriptor indexing, runtime array, variable count, partially bound, nonuniform sampled-image indexing, sampled-image update-after-bind and update-unused-while-pending all true |
+| Update-after-bind sampled-image limits | 8,388,606 per stage and per descriptor set |
+
+Returned evidence is under ignored `out/deck-build/vulkan-smoke/deck/`:
+
+- `smoke.json` SHA-256 `0c3b13e40bf6e2641957e9e77696eeb2653cfac95de5c771f0b4fbdad7872c96`
+- `smoke.stderr` SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` (empty)
+- `exit-status.txt` SHA-256 `9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa` (contents `0`)
+
+The exact staging/verification/run commands used were:
 
 ```sh
 ssh deck@192.168.1.54 'mkdir -p ~/vulkan-smoke-stage'
@@ -111,8 +136,7 @@ ssh deck@192.168.1.54 'cd ~/vulkan-smoke-stage && \
   readelf -h -l -d --version-info approved-run/5ac599d5f4b7/bin/vulkan_smoke'
 ```
 
-Only after reviewing the checksum, manifest and ELF output—and with execution
-approved—run the smoke executable once and return its evidence:
+After ELF verification, the approved one-time execution and evidence return were:
 
 ```sh
 ssh deck@192.168.1.54 'cd ~/vulkan-smoke-stage/approved-run/5ac599d5f4b7/bin && \
@@ -122,16 +146,18 @@ scp deck@192.168.1.54:~/vulkan-smoke-stage/approved-run/5ac599d5f4b7/smoke.{json
   out/deck-build/vulkan-smoke/deck/
 ```
 
-Do not start or alter the existing Distrobox or installed game files. The
-executable only creates a Vulkan instance/device and performs a small buffer
-fill/readback; it does not open a window or launch Fable 2.
+The Distrobox remained stopped. The executable only creates a Vulkan
+instance/device and performs a small buffer fill/readback; it does not open a
+window or launch Fable 2.
 
 ## Blockers and next step
 
-- Deck RADV feature values and an actual GPU fill/readback have not been tested;
-  execution is explicitly approval-gated.
+- The smoke path is PASS on Deck RADV, but only for instance/device creation,
+  capability queries and one transfer/readback operation. It does not prove
+  graphics pipeline, descriptor-layout, shader sampling, WSI or frame behavior.
 - The existing `fable_2` output's GLIBCXX 3.4.36 requirement blocks direct host
   execution; rebuilding it against an older compatible ABI or running it in a
   verified matching container requires separate scope and source provenance.
-- The next smallest validation is the approved isolated staging-and-smoke run
-  described above. No broader renderer or game validation is implied.
+- The next smallest validation is a separate minimal graphics-pipeline/1D-image
+  descriptor test on RADV, after the runtime binding contract is specified. No
+  broader renderer or game validation is implied.
