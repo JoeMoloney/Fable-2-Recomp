@@ -51,16 +51,19 @@ recompiled successfully after the reusable `Context` changes.
 
 ## Steam Deck package
 
-The locally validated `native_texture_1d` executable can be packaged with:
+The locally validated `native_texture_1d` executable is packaged, checksum-
+verified, and ready for approval-gated staging:
 
-```sh
-bash tools/deck-build/package.sh out/deck-build/native-texture-1d/native_texture_1d
-```
+- Archive: `out/artifacts/fable2-experimental-3504dbcdea09.tar.gz`
+- SHA-256: `975561d664f904464199e87c47e42913361d0e613af16a7cf91784088f0a9a2d`
+- Source commit: `3504dbcdea090fa6a637c8672901086559298c82`, clean at package time.
+- Executable SHA-256: `cfc6ae45c4abe3f239c18f9f7ecba09a1ac9eaf34b302885cc46da1c4d40557c`.
+- The manifest also records the pinned builder image ID, glslang version, GLSL and
+  SPIR-V hashes, ELF dependencies, ABI requirements, and the 288/304/308/208/212
+  SharedConstants layout. Sidecar checksum verification passed.
 
-The package is local under ignored `out/artifacts/`, includes ELF/source/toolchain
-metadata and checksums, and is suitable for approval-gated isolated staging. It
-has **not** been transferred to or run on the Steam Deck. Device feature values
-above are desktop NVIDIA/Intel results, not RADV evidence for this 1D pipeline.
+The package has **not** been transferred to or run on the Steam Deck. Desktop
+NVIDIA/Intel results above are not RADV evidence for this 1D graphics pipeline.
 
 ## Semantic and integration limits
 
