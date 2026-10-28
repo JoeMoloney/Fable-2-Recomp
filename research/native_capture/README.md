@@ -41,6 +41,13 @@ synthetic or captured payloads. It rejects dropped/incomplete captures,
 duplicate resource identities, invalid generations, missing/changed blobs,
 multi-draw bundles, and payloads over configured byte limits.
 
+`payload_snapshot.py` provides a bounded, thread-safe handoff for immutable
+snapshots from a runtime provider to `bundle.py`: it eagerly copies borrowed
+bytes, retains generation, guest/host representation, endian mode and source
+register indices, rejects missing required kinds, and orders resources
+deterministically. It does **not** synchronize Vulkan memory or discover live
+resources; its synthetic tests are not proof of GPU readback correctness.
+
 ```sh
 python3 -m unittest discover -s research/native_capture/tests -v
 python3 research/native_capture/selector.py \
@@ -49,8 +56,22 @@ python3 research/native_capture/selector.py \
 
 ## Capture boundary and limitations
 
-The SDK hook currently captures **metadata only**. It does not read guest memory,
-copy index/vertex bytes, snapshot packed constants, copy texture mip contents,
-or capture target pixels. GPU payload extraction must be added separately and
-must preserve command order/layouts; details and acceptance gates are in
-`TOWN_SQUARE_DRAW_CAPTURE_PLAN.md`.
+The SDK hook currently captures **metadata only**. The payload handoff validates
+and retains bytes after a provider supplies them, but no SDK provider is wired
+to index/vertex memory or shader-visible constant buffers. A Vulkan-safe
+implementation must snapshot at the selected draw's resource-use point,
+synchronize GPU-written ranges, and attach allocator-backed resource
+generations; CPU guest RAM alone is not evidence of Vulkan shared-memory
+contents.
+
+Subsequent texture phase: enumerate translated fetches/subresources, pin the
+texture-cache generation, copy each required mip/layer (and tiled/swizzled
+guest representation where applicable), preserve format/swizzle/plane
+metadata, and fail if any requested subresource is unavailable. Render-target
+phase: capture pre/post draw color and depth attachments through explicit
+transfer-compatible staging and record format, layout, sample count, resolve
+state, viewport and clear/load semantics. EDRAM phase: define an explicit
+guest-tile/format mapping and capture relevant EDRAM-backed color/depth tiles
+plus resolve state; do not substitute host render-target pixels for guest EDRAM
+semantics. Each phase needs independent synchronization and round-trip fixtures
+before its resource kinds become required in a bundle.
