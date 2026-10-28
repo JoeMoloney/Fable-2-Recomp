@@ -53,7 +53,7 @@ struct Context {
       if ((bits & (1u << i)) && (m.memoryTypes[i].propertyFlags & flags) == flags) return i;
     throw std::runtime_error("Required memory type unavailable");
   }
-  void init() {
+  void init(bool enable_variable_descriptor_count = false, bool print_device = true) {
     VkApplicationInfo app{VK_STRUCTURE_TYPE_APPLICATION_INFO};
     app.pApplicationName = "Fable isolated native mesh"; app.apiVersion = VK_API_VERSION_1_2;
     VkInstanceCreateInfo ci{VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO}; ci.pApplicationInfo = &app;
@@ -73,6 +73,8 @@ struct Context {
            !features.features.samplerAnisotropy || !features.features.sampleRateShading ||
            !features12.bufferDeviceAddress || !features12.runtimeDescriptorArray ||
            !features12.scalarBlockLayout) continue;
+      if (enable_variable_descriptor_count &&
+          (!features12.descriptorIndexing || !features12.descriptorBindingVariableDescriptorCount)) continue;
       VkFormatProperties format; vkGetPhysicalDeviceFormatProperties(p, VK_FORMAT_R8G8B8A8_UNORM, &format);
       const VkFormatFeatureFlags needed = VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT |
           VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT | VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT |
@@ -88,9 +90,10 @@ struct Context {
     }
     if (!physical) throw std::runtime_error("No compatible graphics device");
     VkPhysicalDeviceProperties props; vkGetPhysicalDeviceProperties(physical, &props);
-    std::cout << "device=" << props.deviceName << " vendor=" << props.vendorID
-              << " device_id=" << props.deviceID << " driver=" << props.driverVersion
-              << " api=" << props.apiVersion << '\n';
+    if (print_device)
+      std::cout << "device=" << props.deviceName << " vendor=" << props.vendorID
+                << " device_id=" << props.deviceID << " driver=" << props.driverVersion
+                << " api=" << props.apiVersion << '\n';
     float priority = 1;
     VkDeviceQueueCreateInfo qi{VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO};
     qi.queueFamilyIndex = family; qi.queueCount = 1; qi.pQueuePriorities = &priority;
@@ -100,6 +103,10 @@ struct Context {
      features.sampleRateShading=VK_TRUE;
     VkPhysicalDeviceVulkan12Features features12{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_FEATURES};
      features12.bufferDeviceAddress=VK_TRUE; features12.runtimeDescriptorArray=VK_TRUE; features12.scalarBlockLayout=VK_TRUE;
+    if (enable_variable_descriptor_count) {
+      features12.descriptorIndexing=VK_TRUE;
+      features12.descriptorBindingVariableDescriptorCount=VK_TRUE;
+    }
     di.pEnabledFeatures=&features; di.pNext=&features12;
     check(vkCreateDevice(physical, &di, nullptr, &device)); vkGetDeviceQueue(device, family, 0, &queue);
     VkCommandPoolCreateInfo pi{VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO};
@@ -165,6 +172,37 @@ struct Context {
     if (swizzle) vi.components = {VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_ONE};
     check(vkCreateImageView(device, &vi, nullptr, &im.view)); auto view = im.view;
     retire.push_back([this, view]{ vkDestroyImageView(device, view, nullptr); });
+    return im;
+  }
+  Image image_1d(uint32_t width, VkFormat format=VK_FORMAT_R8G8B8A8_UNORM) {
+    if (!width) throw std::runtime_error("Invalid 1D image width");
+    Image im{}; im.width=width; im.height=1; im.format=format;
+    VkImageCreateInfo ci{VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO};
+    ci.imageType=VK_IMAGE_TYPE_1D; ci.format=format; ci.extent={width,1,1};
+    ci.mipLevels=1; ci.arrayLayers=1; ci.samples=VK_SAMPLE_COUNT_1_BIT;
+    ci.tiling=VK_IMAGE_TILING_OPTIMAL;
+    ci.usage=VK_IMAGE_USAGE_SAMPLED_BIT|VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+    check(vkCreateImage(device,&ci,nullptr,&im.image));
+    const auto handle=im.image;
+    VkMemoryRequirements req{}; vkGetImageMemoryRequirements(device,im.image,&req);
+    VkMemoryAllocateInfo ai{VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO}; ai.allocationSize=req.size;
+    try {
+      ai.memoryTypeIndex=memory_type(req.memoryTypeBits,VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+      VkDeviceMemory memory=VK_NULL_HANDLE;
+      check(vkAllocateMemory(device,&ai,nullptr,&memory));
+      retire.push_back([this,memory]{vkFreeMemory(device,memory,nullptr);});
+      check(vkBindImageMemory(device,im.image,memory,0));
+    } catch (...) {
+      vkDestroyImage(device,handle,nullptr);
+      throw;
+    }
+    retire.push_back([this,handle]{vkDestroyImage(device,handle,nullptr);});
+    VkImageViewCreateInfo vi{VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO};
+    vi.image=im.image; vi.viewType=VK_IMAGE_VIEW_TYPE_1D; vi.format=format;
+    vi.subresourceRange={VK_IMAGE_ASPECT_COLOR_BIT,0,1,0,1};
+    check(vkCreateImageView(device,&vi,nullptr,&im.view));
+    const auto view=im.view;
+    retire.push_back([this,view]{vkDestroyImageView(device,view,nullptr);});
     return im;
   }
   void upload(Buffer b, const void* data, size_t bytes) {

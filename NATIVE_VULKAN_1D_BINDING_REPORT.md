@@ -1,0 +1,84 @@
+# Native Vulkan 1D texture binding prototype
+
+## Implementation
+
+The prototype is isolated in `research/native_mesh/` and
+`research/native_texture_1d/`; it does not modify or connect to live ReXGlue
+rendering.
+
+- Added `VariableDescriptorArray`, a reusable variable-count descriptor-array
+  helper. The synthetic graphics pipeline preserves the Xenos set numbering:
+  sets 0/1/2 are reserved for 2D/3D/cube sampled-image heaps, set 3 remains the
+  sampler heap at binding 0, set 4 remains reserved, and the new 1D sampled-image
+  heap is set 5/binding 0. Both test heaps use runtime descriptor arrays with two
+  populated descriptors; partially-bound and update-after-bind are not enabled.
+- Added `Context::image_1d` and optional variable-descriptor-count feature
+  enabling. Existing `Context::init()` behavior remains the default; both
+  pre-existing native renderer executables still build.
+- Added `SharedConstants1D`: 512 bytes total, with the existing 0–287-byte prefix
+  unchanged and a 16-entry 1D descriptor-index lane at bytes 288–351. The target
+  standard PS register mapping is asserted and consumed: InScattering texture
+  index 304 / sampler index 208 (sampler register 4); Extinction texture index
+  308 / sampler index 212 (register 5). The shared buffer device address is
+  passed in the existing 24-byte three-address push-constant structure.
+- The SPIR-V uses separate sampled-image and sampler runtime arrays, an actual
+  1D image view, and explicit bindings set 5/binding 0 and set 3/binding 0.
+  `spirv-val` plus `verify_spirv_contract.py` check Vulkan 1.2 validity, runtime
+  arrays, descriptor decorations, physical-storage-buffer addressing, push
+  constant member offsets, and the four shared word indices.
+
+## Synthetic GPU test results
+
+`research/native_texture_1d/run-local.sh` builds with the pinned Arch builder
+(Clang 23.1.3, Vulkan loader/glslang 1.4.363.0; glslang reports 16.6.0), validates
+the embedded shader modules, and runs against each desktop ICD. Each test uploads
+two four-texel `R8G8B8A8_UNORM` 1D textures, samples InScattering with linear
+filtering at the midpoint between two texels and Extinction at texel centers
+with nearest filtering, renders to a 4x1 `R32G32B32A32_SFLOAT` target, synchronizes,
+and reads back all four pixels.
+
+| Device | Result | Maximum pixel error | Key capability results |
+|---|---|---:|---|
+| NVIDIA GeForce RTX 3090, driver 615.78.08 | PASS | `7.62939e-06` | runtime arrays, variable count, descriptor indexing, dynamic sampled-image indexing and 1D sampled format supported |
+| Intel UHD Graphics 630, Mesa 26.2.4 | PASS | `0` | same tested capabilities supported |
+
+Both outputs match the synthetic expected RGBA values. SPIR-V hashes, toolchain,
+ELF requirements and complete JSON results are in ignored
+`out/deck-build/native-texture-1d/`. The smoke executable's ELF requirements are
+GLIBC 2.34, GLIBCXX 3.4.32 and CXXABI 1.3.9, within the previously inspected
+SteamOS host exports. The old `native_mesh` and `native_event362` targets also
+recompiled successfully after the reusable `Context` changes.
+
+## Steam Deck package
+
+The locally validated `native_texture_1d` executable can be packaged with:
+
+```sh
+bash tools/deck-build/package.sh out/deck-build/native-texture-1d/native_texture_1d
+```
+
+The package is local under ignored `out/artifacts/`, includes ELF/source/toolchain
+metadata and checksums, and is suitable for approval-gated isolated staging. It
+has **not** been transferred to or run on the Steam Deck. Device feature values
+above are desktop NVIDIA/Intel results, not RADV evidence for this 1D pipeline.
+
+## Semantic and integration limits
+
+This test validates native Vulkan descriptor/constant plumbing and synthetic
+sampling, not Xenos shader equivalence. The test uses explicit LOD 0, clamp
+addressing, simple nearest/linear filters, RGBA8 UNORM data and no mip chain. The
+target PS SPIR-V uses implicit-LOD samples; Xenos register/computed LOD, fetch
+validity, coordinate denormalization, bias/offset, mip behavior, format and
+swizzle conversion, and exact sampler semantics remain unverified. No texture
+descriptor is bound by the game renderer, and this extension is not an existing
+runtime ABI yet.
+
+## Next step toward the town-square draw
+
+Implement an explicit runtime binding/population rule for the set-5 1D heap and
+SharedConstants lane, then run the exact observed standard-material VS/PS pair
+against a complete matching draw fixture: geometry/index payloads, vertex-fetch
+descriptors, full constants, texture/mip contents, sampler states, and render
+state. Compare against an independent reference. The current metadata/shader
+pair alone is not enough for that draw, and this prototype does not claim
+town-square rendering parity.

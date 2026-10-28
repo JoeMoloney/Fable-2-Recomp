@@ -62,6 +62,8 @@ root, out = Path(sys.argv[1]), Path(sys.argv[2])
 commit, image = sys.argv[3], sys.argv[4]
 packages_path = Path(sys.argv[5])
 package_text = packages_path.read_text() if packages_path.exists() else "not captured; build-image.sh has not completed"
+shader_manifest_path = root / "out/deck-build/native-texture-1d/shader-manifest.json"
+shader_manifest = json.loads(shader_manifest_path.read_text()) if shader_manifest_path.exists() else None
 files = []
 for path in sorted((out / "bin").iterdir()):
     info = json.loads(subprocess.check_output([
@@ -86,6 +88,7 @@ manifest = {
     ).strip() if subprocess.run(["podman", "image", "exists", image], capture_output=True).returncode == 0 else None,
     "toolchain_package_manifest": package_text,
     "deck_host_reference_exports": {"GLIBC": "2.43", "GLIBCXX": "3.4.35", "CXXABI": "1.3.17"},
+    "embedded_shader_build_inputs": shader_manifest,
     "files": files,
 }
 (out / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")

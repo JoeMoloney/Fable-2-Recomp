@@ -10,7 +10,7 @@ LABEL org.fable2.archlinux.snapshot="${ARCH_SNAPSHOT}"
 # date's immutable Arch Linux Archive repositories, not today's rolling mirrors.
 RUN printf '[options]\nArchitecture=auto\nSigLevel=Required DatabaseOptional\nLocalFileSigLevel=Optional\n\n[core]\nServer=https://archive.archlinux.org/repos/%s/core/os/$arch\n\n[extra]\nServer=https://archive.archlinux.org/repos/%s/extra/os/$arch\n' \
       "${ARCH_SNAPSHOT}" "${ARCH_SNAPSHOT}" > /etc/pacman.conf \
- && pacman -Sy --noconfirm --needed base-devel clang cmake ninja lld python pkgconf \
+ && pacman -Sy --noconfirm --needed base-devel clang cmake ninja lld python pkgconf glslang vulkan-icd-loader \
  && pacman -Scc --noconfirm
 
 WORKDIR /workspace
