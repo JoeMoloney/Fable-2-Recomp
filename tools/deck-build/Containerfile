@@ -1,0 +1,17 @@
+FROM --platform=linux/amd64 docker.io/library/archlinux@sha256:dfb01267da058e5d08ffdc543bf484c9b404655b0bac1d0201d972bf950cdfd0
+
+ARG ARCH_SNAPSHOT=2026/10/18
+LABEL org.opencontainers.image.title="Fable II Steam Deck build toolchain"
+LABEL org.opencontainers.image.base.name="docker.io/library/archlinux"
+LABEL org.opencontainers.image.base.digest="sha256:dfb01267da058e5d08ffdc543bf484c9b404655b0bac1d0201d972bf950cdfd0"
+LABEL org.fable2.archlinux.snapshot="${ARCH_SNAPSHOT}"
+
+# The base image build ID is 20261018.0.612668. Resolve packages only from that
+# date's immutable Arch Linux Archive repositories, not today's rolling mirrors.
+RUN printf '[options]\nArchitecture=auto\nSigLevel=Required DatabaseOptional\nLocalFileSigLevel=Optional\n\n[core]\nServer=https://archive.archlinux.org/repos/%s/core/os/$arch\n\n[extra]\nServer=https://archive.archlinux.org/repos/%s/extra/os/$arch\n' \
+      "${ARCH_SNAPSHOT}" "${ARCH_SNAPSHOT}" > /etc/pacman.conf \
+ && pacman -Sy --noconfirm --needed base-devel clang cmake ninja lld python pkgconf \
+ && pacman -Scc --noconfirm
+
+WORKDIR /workspace
+CMD ["/usr/bin/bash"]
