@@ -1,0 +1,48 @@
+diff --git a/src/graphics/vulkan/command_processor.cpp b/src/graphics/vulkan/command_processor.cpp
+index 914c54b..faac140 100644
+--- a/src/graphics/vulkan/command_processor.cpp
++++ b/src/graphics/vulkan/command_processor.cpp
+@@ -47,6 +47,10 @@
+ #include <rex/ui/vulkan/instance.h>
+ #include <rex/ui/vulkan/util.h>
+ 
++#ifdef FABLE2_EXPERIMENTAL_NATIVE_VULKAN
++#include <renderer/native_vk_live_probe.h>
++#endif
++
+ // Legacy backend compatibility aliases for shared readback controls.
+ REXCVAR_DEFINE_BOOL(vulkan_readback_resolve, false, "GPU/Vulkan",
+                     "Read render-to-texture results on the CPU")
+@@ -75,6 +79,12 @@ REXCVAR_DEFINE_BOOL(vulkan_capture_guest_frame, false, "GPU/Vulkan",
+                     "under RenderDoc. Resets itself after consuming the request.")
+     .lifecycle(rex::cvar::Lifecycle::kHotReload);
+ 
++#ifdef FABLE2_EXPERIMENTAL_NATIVE_VULKAN
++REXCVAR_DEFINE_BOOL(fable2_native_vk_probe, false, "GPU/Vulkan/Experimental",
++                    "One-shot, non-destructive live Vulkan draw-path probe")
++    .lifecycle(rex::cvar::Lifecycle::kHotReload);
++#endif
++
+ REXCVAR_DEFINE_INT32(vulkan_capture_resolve_address, 0, "GPU/Vulkan",
+                      "One-shot RenderDoc capture starting before a resolve to this physical "
+                      "guest address and ending at the next guest swap. Zero disables.")
+@@ -4028,6 +4038,19 @@ bool VulkanCommandProcessor::IssueDraw(xenos::PrimitiveType prim_type, uint32_t
+   // Update dynamic graphics pipeline state.
+   UpdateDynamicState(viewport_info, primitive_polygonal, normalized_depth_control);
+ 
++#ifdef FABLE2_EXPERIMENTAL_NATIVE_VULKAN
++  // Opt-in one-shot operation: enqueue project-owned Vulkan code at a real
++  // guest draw boundary, after Xenos state interpretation and dynamic-state
++  // setup. The helper records the exact current scissor again; DeferredCommandBuffer
++  // executes it through the backend device's vkCmdSetScissor dispatch.
++  static bool native_vk_probe_recorded = false;
++  if (!native_vk_probe_recorded && REXCVAR_GET(fable2_native_vk_probe)) {
++    fable2::nativevk::RecordLiveDrawProbe(deferred_command_buffer_, dynamic_scissor_);
++    native_vk_probe_recorded = true;
++    REXGPU_INFO("[fable2-native-vk] recorded one-shot live draw probe");
++  }
++#endif
++
+   auto vgt_draw_initiator = regs.Get<reg::VGT_DRAW_INITIATOR>();
+ 
+   // Whether to load the guest 32-bit (usually big-endian) vertex index

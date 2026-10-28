@@ -5,6 +5,12 @@
 cmake_minimum_required(VERSION 3.25)
 project(fable_2 LANGUAGES CXX)
 
+# Configure this experimental build in its own binary directory. It keeps the
+# reference target and executable name untouched while selecting ReXGlue's
+# existing Xenos/Vulkan command processor at runtime.
+option(FABLE2_EXPERIMENTAL_NATIVE_VULKAN
+    "Build the isolated experimental executable and force the Vulkan GPU backend" OFF)
+
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS constants/game_versions.json)
 execute_process(COMMAND ${Python3_EXECUTABLE}
@@ -31,19 +37,56 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Needed by the recomp-level patch step below (tools/apply_recomp_patches.py).
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
-include(generated/rexglue.cmake)
+# Allow an in-tree SDK build to use the matching standalone codegen tool. The
+# SDK codegen command regenerates generated/rexglue.cmake, so restore the direct
+# tool command before including it on each CMake configure. Touching the codegen
+# stamp after the tool completes avoids a repeated run caused by stamp/input
+# timestamp ordering.
 set(FABLE2_CODEGEN_TOOL "" CACHE FILEPATH "Standalone compatible ReXGlue codegen tool")
+if(FABLE2_CODEGEN_TOOL AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/generated/rexglue.cmake")
+    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/generated/rexglue.cmake" FABLE2_REXGLUE_CMAKE)
+    set(FABLE2_REXGLUE_CMAKE_ORIGINAL "${FABLE2_REXGLUE_CMAKE}")
+    set(FABLE2_REXGLUE_GENERATED_COMMAND
+        "    COMMAND $<TARGET_FILE:rex::rexglue> codegen \${CMAKE_CURRENT_SOURCE_DIR}/fable_2_manifest.toml")
+    set(FABLE2_REXGLUE_STANDALONE_COMMAND
+        "    COMMAND \"${FABLE2_CODEGEN_TOOL}\" codegen \${CMAKE_CURRENT_SOURCE_DIR}/fable_2_manifest.toml\n    COMMAND \${CMAKE_COMMAND} -E touch\n            \"\${CMAKE_CURRENT_SOURCE_DIR}/generated/default/codegen.build.stamp\"")
+    string(REPLACE "${FABLE2_REXGLUE_GENERATED_COMMAND}"
+                   "${FABLE2_REXGLUE_STANDALONE_COMMAND}"
+                   FABLE2_REXGLUE_CMAKE "${FABLE2_REXGLUE_CMAKE}")
+    if(NOT FABLE2_REXGLUE_CMAKE STREQUAL FABLE2_REXGLUE_CMAKE_ORIGINAL)
+        file(WRITE "${CMAKE_CURRENT_SOURCE_DIR}/generated/rexglue.cmake"
+             "${FABLE2_REXGLUE_CMAKE}")
+    endif()
+endif()
+
+include(generated/rexglue.cmake)
+# Compile the project-owned live Vulkan probe into the existing Xenos plugin
+# only for the isolated experimental build. The reference plugin is unchanged.
+if(FABLE2_EXPERIMENTAL_NATIVE_VULKAN AND TARGET rexgpu-xenos)
+    target_include_directories(rexgpu-xenos PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_compile_definitions(rexgpu-xenos PRIVATE FABLE2_EXPERIMENTAL_NATIVE_VULKAN=1)
+endif()
 if(FABLE2_CODEGEN_TOOL)
     if(NOT EXISTS "${FABLE2_CODEGEN_TOOL}")
         message(FATAL_ERROR "FABLE2_CODEGEN_TOOL does not exist")
     endif()
     # The official tool must keep its own runtime. Host headers, integration
     # sources and libraries come from the matched source-built SDK instead.
-    set_target_properties(rex::rexglue PROPERTIES
-        IMPORTED_LOCATION "${FABLE2_CODEGEN_TOOL}"
-        IMPORTED_LOCATION_DEBUG "${FABLE2_CODEGEN_TOOL}"
-        IMPORTED_LOCATION_RELWITHDEBINFO "${FABLE2_CODEGEN_TOOL}"
-        IMPORTED_LOCATION_RELEASE "${FABLE2_CODEGEN_TOOL}")
+    # Installed SDKs expose rex::rexglue as an imported executable. An
+    # in-tree SDK exposes it as an alias to a source target, which cannot be
+    # retargeted; generated/rexglue.cmake invokes this tool path directly.
+    if(TARGET rexglue)
+        get_target_property(FABLE2_REXGLUE_IMPORTED rexglue IMPORTED)
+    else()
+        get_target_property(FABLE2_REXGLUE_IMPORTED rex::rexglue IMPORTED)
+    endif()
+    if(FABLE2_REXGLUE_IMPORTED)
+        set_target_properties(rex::rexglue PROPERTIES
+            IMPORTED_LOCATION "${FABLE2_CODEGEN_TOOL}"
+            IMPORTED_LOCATION_DEBUG "${FABLE2_CODEGEN_TOOL}"
+            IMPORTED_LOCATION_RELWITHDEBINFO "${FABLE2_CODEGEN_TOOL}"
+            IMPORTED_LOCATION_RELEASE "${FABLE2_CODEGEN_TOOL}")
+    endif()
     # A staged package still contains the official SDK's other configurations.
     # Reject selecting those by accident via an old/manual CMake cache.
     get_filename_component(FABLE2_PACKAGE_ROOT "${rexglue_DIR}/../../.." ABSOLUTE)
@@ -134,6 +177,11 @@ target_compile_definitions(fable_2 PRIVATE
     FABLE2_NATIVE_CONFIGURATION="$<CONFIG>"
     FABLE2_NATIVE_SDK="$<IF:$<BOOL:${FABLE2_CODEGEN_TOOL}>,source-built,external>"
     $<$<PLATFORM_ID:Windows>:_CRT_SECURE_NO_WARNINGS>)
+
+if(FABLE2_EXPERIMENTAL_NATIVE_VULKAN)
+    set_target_properties(fable_2 PROPERTIES OUTPUT_NAME fable_2_native)
+    target_compile_definitions(fable_2 PRIVATE FABLE2_EXPERIMENTAL_NATIVE_VULKAN=1)
+endif()
 
 # Remote control server (AI input channel) is a debug-only tool: it opens a
 # localhost TCP port and injects guest input, so it must NOT ship in Release /

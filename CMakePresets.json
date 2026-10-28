@@ -133,6 +133,18 @@
             "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
         },
         {
+            "name": "linux-amd64-native-vulkan-release",
+            "displayName": "Linux AMD64 experimental native Vulkan renderer (isolated)",
+            "inherits": "linux-base",
+            "binaryDir": "${sourceDir}/out/build/linux-amd64-native-vulkan-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_C_FLAGS": "-march=x86-64-v2",
+                "CMAKE_CXX_FLAGS": "-march=x86-64-v2",
+                "FABLE2_EXPERIMENTAL_NATIVE_VULKAN": "ON"
+            }
+        },
+        {
             "name": "win-amd64-relwithdebinfo",
             "displayName": "Windows AMD64 RelWithDebInfo",
             "inherits": "windows-base",
@@ -225,6 +237,7 @@
         { "name": "win-amd64-relwithdebinfo", "configurePreset": "win-amd64-relwithdebinfo" },
         { "name": "linux-amd64-debug", "configurePreset": "linux-amd64-debug" },
         { "name": "linux-amd64-release", "configurePreset": "linux-amd64-release" },
+        { "name": "linux-amd64-native-vulkan-release", "configurePreset": "linux-amd64-native-vulkan-release" },
         { "name": "linux-amd64-relwithdebinfo", "configurePreset": "linux-amd64-relwithdebinfo" },
         { "name": "win-arm64-debug", "configurePreset": "win-arm64-debug" },
         { "name": "win-arm64-release", "configurePreset": "win-arm64-release" },

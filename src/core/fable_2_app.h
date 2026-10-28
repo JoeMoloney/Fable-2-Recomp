@@ -105,6 +105,13 @@ class Fable2App : public rex::ReXApp {
   //   --gpu_plugin=xenos            D3D12 (default)
   //   --gpu_plugin=xenos-vulkan     Vulkan
   void OnPreSetup(rex::RuntimeConfig& config) override {
+#ifdef FABLE2_EXPERIMENTAL_NATIVE_VULKAN
+    // Separate experimental executable: preserve ReXGlue's existing Xenos
+    // command interpretation, but select its Vulkan implementation explicitly.
+    // The reference executable retains its normal plugin/backend selection.
+    config.gpu_plugin = "xenos";
+    config.graphics = rex::system::LoadGpuPlugin("xenos", "vulkan");
+#else
     std::string plugin = config.gpu_plugin.empty() ? "xenos" : config.gpu_plugin;
     config.gpu_plugin = plugin;
     if (plugin == "xenos-vulkan") {
@@ -115,6 +122,7 @@ class Fable2App : public rex::ReXApp {
     }
     // Otherwise leave config.graphics null so ReXApp loads
     // LoadGpuPlugin("xenos") -> the prebuilt D3D12 plugin.
+#endif
 
     // Build on top of the default input system (SDL gamepad + NOP) and add a
     // synthetic "keyboard gamepad" driver so host keys/mouse buttons can drive
