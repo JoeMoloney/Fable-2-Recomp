@@ -104,8 +104,11 @@ The first clean-tree packaging run on source commit
 `ef2b28b475b85f300d16bc38406d7488a0c8f91b32b4cbd650161fe6dc9589ea`. The embedded
 manifest records `source_dirty: false`, source commit, builder image ID, package
 inventory, per-ELF SHA-256, `DT_NEEDED`, `$ORIGIN` RUNPATH and symbol requirements.
-A second package build with a distinct output tag is being used to verify byte-
-for-byte reproducibility; both archives remain ignored build outputs.
+A second clean package build with output tag `repro-check` produced a byte-for-
+byte identical archive (`cmp` succeeded): both SHA-256 values are
+`56746083a3cc2a6d42e70a941a989542f4d899b511035356d9249d9eeb908652`. The
+verified archive is `out/artifacts/fable2-experimental-0bc408572782.tar.gz` and
+its `.sha256` check passed. Both archives/manifests remain ignored build outputs.
 
 ## Deck transfer and Vulkan/RADV boundary
 
@@ -133,6 +136,19 @@ execution test was performed. A Deck runtime must use the host Vulkan loader/ICD
 and must not carry desktop NVIDIA driver libraries. Vulkan/RADV renderer
 compatibility remains unverified.
 
+## Compatibility verdict
+
+**CONDITIONALLY READY — ABI probe only.** The desktop-produced probe's interpreter,
+system dependencies, and required GLIBC/GLIBCXX/CXXABI versions are present in
+the live SteamOS host's inspected ABI exports. Static evidence therefore favors
+direct host execution of this probe; it was not transferred or executed on Deck.
+The same conclusion does **not** yet apply to a Fable executable, which has not
+been built in this task. A future artifact must be checked individually against
+the host's exported symbol versions and dependencies. The pinned Arch builder is
+available if an artifact needs container userspace, but Deck-side use of that
+container is not tested. Vulkan/RADV compatibility for renderer work is still
+unverified despite successful host device enumeration.
+
 ## Remaining blockers and next smallest step
 
 - The desktop ABI probe's symbol requirements fit the live Deck host exports,
@@ -140,8 +156,9 @@ compatibility remains unverified.
   has been built or ABI-audited.
 - The Arch builder image digest matches the stopped Deck Distrobox base, but the
   derived desktop builder image was not exported/imported and run on Deck.
-- Package reproducibility remains under test via two output tags with normalized
-  archive paths/timestamps; no artifact is deployed.
-- The next **smallest validation step** is to compare both package SHA-256 values
-  from clean builds; a later separately authorized step can run only the harmless
-  ABI probe on Deck, followed by isolated RADV smoke testing.
+- The two clean package archives were byte-identical and their checksum verified;
+  no artifact was deployed.
+- The next **smallest validation step** is a separately authorized, isolated
+  RADV smoke test using a minimal Vulkan program and the Deck host ICD—no game or
+  production installation changes. A Deck executable run remains outside the
+  current authorization.
