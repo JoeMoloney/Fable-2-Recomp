@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.20)
+project(fable_draw_identity_tests LANGUAGES CXX)
+
+if(NOT DEFINED REXGLUE_SDK_ROOT OR NOT EXISTS "${REXGLUE_SDK_ROOT}/include/rex/graphics/vulkan/draw_identity_capture.h")
+  message(FATAL_ERROR "Set REXGLUE_SDK_ROOT to the isolated, patch-applied ReXGlue SDK worktree")
+endif()
+find_package(Threads REQUIRED)
+enable_testing()
+
+foreach(test_name IN ITEMS draw_identity_filter_test draw_identity_selector_test)
+  add_executable(${test_name} "tests/${test_name}.cpp")
+  target_include_directories(${test_name} PRIVATE "${REXGLUE_SDK_ROOT}/include")
+  target_compile_features(${test_name} PRIVATE cxx_std_20)
+  target_compile_options(${test_name} PRIVATE -Wall -Wextra -Wpedantic)
+  target_link_libraries(${test_name} PRIVATE Threads::Threads)
+  add_test(NAME ${test_name} COMMAND ${test_name})
+endforeach()

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "sdk_base_commit": "521aa5906e8aa138870bf8d36bd602eef590ed55",
+  "sdk_patch": {
+    "path": "patches/rexglue-draw-identity.patch",
+    "sha256": "7ee7833a833a6986ac16ee2fc8f3d1d1f27f88d48823ed8baad83bc2ad4ef1c1",
+    "isolated_worktree_tested_at": "521aa5906e8aa138870bf8d36bd602eef590ed55"
+  },
+  "recovered_from": "/home/deck/Documents/fable2-native-shadow-live-draw-20261027T182808Z/source/thirdparty/rexglue-sdk",
+  "capture_header": {
+    "path": "include/rex/graphics/vulkan/draw_identity_capture.h",
+    "sha256": "95187fbb01ee7989f06802c01013b14f2bdc6ae413d2c16036fd5fb78f4a7a66"
+  },
+  "patched_capture_header_sha256": "1968c6c529c86eab8966b6ef6abad9e037666dc098664f3ebaf51d8b9d315ba1",
+  "target_selector_sha256": "c3bfe1db44aed8e6dc6c71d703c0ccfd6419c1ea388043aa22cebed4a0d4535a",
+  "upstream_test_sources": {
+    "draw_identity_capture_selftest.cpp": "2a4ca2e77026505f59c9ff8f73646c75588c343777b1f268d3cfb57b728c4f62",
+    "draw_identity_filter_test.cpp": "c4de2572edf1edebebfd445137008033ac318e0287dd2d93988855db6c0c4616"
+  },
+  "retained_selector_sample": {
+    "sha256": "a644e1c24cb93e72f95dd85b28ba0e96097f5414e145b8e1f5d15cedae8eabcf",
+    "record_ordinal": 1641,
+    "full_state_match_count": 18,
+    "raw_jsonl_committed": false
+  }
+}

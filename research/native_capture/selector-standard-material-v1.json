@@ -1,0 +1,205 @@
+{
+  "match": {
+    "guest_vertex_count": 192,
+    "host_index_endian": 1,
+    "host_index_format": 0,
+    "host_vertex_count": 192,
+    "host_vertex_shader_type": 0,
+    "index_base": 468390400,
+    "index_buffer_count": 192,
+    "index_buffer_type": 1,
+    "index_count": 192,
+    "index_endian": 1,
+    "index_format": 0,
+    "index_info_present": 1,
+    "index_length": 384,
+    "major_mode": 0,
+    "major_mode_explicit": 0,
+    "primitive": 4,
+    "processed_guest_index_base": 468390400,
+    "render_target_registers": [
+      12582916,
+      1,
+      0,
+      4,
+      293667936,
+      4,
+      7374659,
+      66544,
+      15,
+      16776978,
+      786432,
+      0,
+      0,
+      0,
+      117507841,
+      4,
+      330301458,
+      524288,
+      2195462,
+      524288,
+      1087,
+      274799368,
+      8
+    ],
+    "scissor": [
+      0,
+      0,
+      1120,
+      144
+    ],
+    "source_select": 0,
+    "tessellation_mode": 0,
+    "texture_fetch_mask": 25335,
+    "texture_fetches": [
+      {
+        "index": 0,
+        "words": [
+          2281701378,
+          426901588,
+          8381439,
+          11013392,
+          195,
+          427952664
+        ]
+      },
+      {
+        "index": 1,
+        "words": [
+          2281701378,
+          426901588,
+          8381439,
+          11013392,
+          195,
+          427952664
+        ]
+      },
+      {
+        "index": 2,
+        "words": [
+          2214592514,
+          381812849,
+          4186623,
+          11013392,
+          195,
+          382077464
+        ]
+      },
+      {
+        "index": 4,
+        "words": [
+          8407382,
+          531304541,
+          63,
+          2624785,
+          3,
+          24
+        ]
+      },
+      {
+        "index": 5,
+        "words": [
+          33572866,
+          531300486,
+          255,
+          2624532,
+          3,
+          24
+        ]
+      },
+      {
+        "index": 6,
+        "words": [
+          2281719810,
+          314445975,
+          8381439,
+          8391953,
+          0,
+          536
+        ]
+      },
+      {
+        "index": 7,
+        "words": [
+          2281719810,
+          318640279,
+          8381439,
+          8391953,
+          0,
+          536
+        ]
+      },
+      {
+        "index": 9,
+        "words": [
+          2151696386,
+          532938886,
+          0,
+          8391700,
+          0,
+          536
+        ]
+      },
+      {
+        "index": 13,
+        "words": [
+          2214592514,
+          441720955,
+          2089471,
+          11013392,
+          3,
+          536
+        ]
+      },
+      {
+        "index": 14,
+        "words": [
+          2181038082,
+          373948498,
+          337633535,
+          11013392,
+          387,
+          374148632
+        ]
+      }
+    ],
+    "vertex_fetch_mask": [
+      0,
+      0,
+      3221225472
+    ],
+    "vertex_fetches": [
+      {
+        "index": 94,
+        "words": [
+          468199363,
+          268436258
+        ]
+      },
+      {
+        "index": 95,
+        "words": [
+          468119107,
+          268436458
+        ]
+      }
+    ],
+    "viewport": [
+      0,
+      0,
+      1120,
+      144,
+      0.5,
+      0
+    ]
+  },
+  "ps_hash": "401a01fd4e5f8757",
+  "schema": 1,
+  "selector_id": "town_square_standard_material_1d_v1",
+  "source_capture_sha256": "a644e1c24cb93e72f95dd85b28ba0e96097f5414e145b8e1f5d15cedae8eabcf",
+  "source_sample_equal_state_records": 18,
+  "source_sample_ordinal": 1641,
+  "state_signature_algorithm": "FNV-1a-64 over canonical little-endian draw state; excludes host handles and ordinal",
+  "state_signature_fnv64": "2cbe39913b642d9e",
+  "vs_hash": "79eac49585797037"
+}
