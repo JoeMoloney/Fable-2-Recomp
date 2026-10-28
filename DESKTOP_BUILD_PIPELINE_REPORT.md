@@ -81,9 +81,16 @@ validating that runtime setup.
   It refuses a dirty tree unless explicitly overridden.
 - `tools/deck-build/README.md`: build use, isolation and future transfer guidance.
 
-The ABI executable/library and their readelf/CTest logs are local ignored test
-outputs under `out/deck-build/abi-probe/`; they are not committed. Packaging the
-probe is the next pipeline check after these scripts are committed.
+The ABI executable/library and their readelf/CTest/`ldd -v` logs are local
+ignored test outputs under `out/deck-build/abi-probe/`; they are not committed.
+The packaging script was then run on the clean source commit
+`e304f8dd492e3512fde022d939c007b2e9142091` using the ABI probe pair. It produced
+`out/artifacts/fable2-experimental-e304f8dd492e.tar.gz`; its checksum verified as
+`ef2b28b475b85f300d16bc38406d7488a0c8f91b32b4cbd650161fe6dc9589ea`. The
+embedded manifest records `source_dirty: false`, the source commit, local builder
+image ID, package inventory, per-ELF SHA-256, `DT_NEEDED`, `$ORIGIN` RUNPATH and
+symbol requirements. The archive and manifest are ignored build artifacts, not
+Git-tracked deliverables.
 
 ## Deck transfer and Vulkan/RADV boundary
 
