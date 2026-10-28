@@ -26,10 +26,22 @@ outputs are under ignored `out/`.
   `2.44+r50+g1848099f063e-1` and gcc-libs `16.2.1+r23+gd564253eb6c8-1`.
   The package inventory is recorded locally in ignored
   `out/deck-build/container-manifest.txt`.
-- The retained Deck audit reports host SteamOS glibc 2.43 and gcc-libs
-  `16.1.1+r346`, and a stopped `fable2-build` Distrobox based on this Arch image.
-  These are **historical retained observations**, not a live recheck: read-only
-  `ssh deck` failed because the hostname did not resolve during this task.
+- Read-only SSH to `deck@192.168.1.54` succeeded. The SteamOS host reports glibc
+  `2.43+r37+gfdf10644d6ee-1`, gcc-libs `16.1.1+r346+g4e03491b401d-4`, Mesa
+  `26.1.2.221562.radeonsi_26.1.2-2.1`, Vulkan RADV package
+  `26.2.0_devel.222147.steamos_26.05.19-1`, and Vulkan loader/tools
+  `1.4.350.1-1`. This confirms the prior retained host-version notes.
+- Deck `libstdc++.so.6` resolves to `libstdc++.so.6.0.35`; its ELF version
+  definitions export through GLIBCXX `3.4.35` and CXXABI `1.3.17`. Deck libc
+  exports through GLIBC `2.43`. The installed dynamic loader path
+  `/lib64/ld-linux-x86-64.so.2` and standard dependencies are present.
+- The Deck's `fable2-build` Distrobox is **stopped** (`Exited (143)`), based on
+  image config `c22c3194...`, matching the exact pinned Arch base digest used on
+  desktop. Read-only inspect showed `network=host`, `userns=private`, `/dev` and
+  `/sys` mounts, and the host root mounted at `/run/host`; no `LD_LIBRARY_PATH`
+  override was present in its configured environment. The container was not
+  started. Its mounted host-root means container commands must still avoid
+  accidentally resolving host libraries.
 
 ## ABI probe results
 
@@ -47,20 +59,23 @@ ELF inspection (`readelf`, plus `ldd -v` inside the builder) verified:
 | ABI executable | ELF64 x86-64 PIE; `/lib64/ld-linux-x86-64.so.2` | probe library, `libstdc++.so.6`, `libm.so.6`, `libgcc_s.so.1`, `libc.so.6` | GLIBC 2.34; GLIBCXX 3.4.32 |
 | Probe shared library | ELF64 x86-64 shared object | `libstdc++.so.6`, `libm.so.6`, `libgcc_s.so.1`, `libc.so.6` | GLIBC 2.14; GLIBCXX 3.4; CXXABI 1.3.9 |
 
-The builder’s transitive runtime libraries request at most GLIBC 2.38 in the
-captured `ldd -v` output. These ABI requirements are below the retained Deck host
-glibc 2.43 observation and below the GLIBCXX 3.4.36 requirement seen in the
-retained existing Deck-compatible executable. This is encouraging evidence for
-the probe, **not a complete Deck compatibility certification**: the Deck was
-unreachable, its exact `libstdc++.so.6` exports were not inspected, and its
-CXXABI export set is unknown. Do not infer all future Fable binaries will have
-the same low symbol requirements.
+The builder's transitive runtime libraries require at most GLIBC 2.38 in the
+captured `ldd -v` output. The live Deck exports GLIBC 2.43, GLIBCXX 3.4.35 and
+CXXABI 1.3.17, so the probe's GLIBC 2.34, GLIBCXX 3.4.32 and CXXABI 1.3.9
+requirements fit the **observed** Deck host symbol versions. Its direct system
+dependencies are installed on Deck, and the probe shared library is packaged
+beside the executable with `$ORIGIN` RUNPATH. Thus the ABI probe is a strong
+candidate for direct SteamOS-host execution. It was not copied to or executed on
+Deck, so actual loader resolution remains untested. Do not generalize this result
+to a future Fable binary without inspecting its complete ELF dependency closure.
 
-The container’s own glibc 2.44 and gcc-libs 16.2.1 are newer than the reported
-Deck host. Thus container compilation alone does not prove a binary can run
-directly on the Deck host. Keep host-linked artifacts below verified host symbol
-ceilings, or run them inside the exact container runtime on Deck after separately
-validating that runtime setup.
+The builder's own glibc 2.44 and gcc-libs 16.2.1 are newer than the live Deck
+host. The ABI probe happens to need older symbols and appears host-compatible;
+other desktop-built artifacts may not. Package metadata now records the observed
+host exports (GLIBC 2.43, GLIBCXX 3.4.35, CXXABI 1.3.17), and the ABI test checks
+all three. An artifact exceeding those exports requires a compatible sysroot or
+execution inside the matching Arch container, whose Deck-side execution has not
+been tested.
 
 ## Scripts and artifacts
 
@@ -83,14 +98,14 @@ validating that runtime setup.
 
 The ABI executable/library and their readelf/CTest/`ldd -v` logs are local
 ignored test outputs under `out/deck-build/abi-probe/`; they are not committed.
-The packaging script was then run on the clean source commit
-`e304f8dd492e3512fde022d939c007b2e9142091` using the ABI probe pair. It produced
-`out/artifacts/fable2-experimental-e304f8dd492e.tar.gz`; its checksum verified as
-`ef2b28b475b85f300d16bc38406d7488a0c8f91b32b4cbd650161fe6dc9589ea`. The
-embedded manifest records `source_dirty: false`, the source commit, local builder
-image ID, package inventory, per-ELF SHA-256, `DT_NEEDED`, `$ORIGIN` RUNPATH and
-symbol requirements. The archive and manifest are ignored build artifacts, not
-Git-tracked deliverables.
+The first clean-tree packaging run on source commit
+`e304f8dd492e3512fde022d939c007b2e9142091` produced
+`out/artifacts/fable2-experimental-e304f8dd492e.tar.gz` with checksum
+`ef2b28b475b85f300d16bc38406d7488a0c8f91b32b4cbd650161fe6dc9589ea`. The embedded
+manifest records `source_dirty: false`, source commit, builder image ID, package
+inventory, per-ELF SHA-256, `DT_NEEDED`, `$ORIGIN` RUNPATH and symbol requirements.
+A second package build with a distinct output tag is being used to verify byte-
+for-byte reproducibility; both archives remain ignored build outputs.
 
 ## Deck transfer and Vulkan/RADV boundary
 
@@ -102,25 +117,31 @@ container’s newer userspace, separately export/load the exact builder image an
 run from a matching Deck container, not from the host filesystem runtime. Any
 execution or Vulkan test still requires separate authorization.
 
-The ABI probe does not load Vulkan. The retained audit reports Deck RADV on the
-AMD Van Gogh APU, while the desktop offers NVIDIA and Intel implementations; no
-RADV device, host-loader pass-through, Vulkan extension/feature set, WSI, shader
-pipeline, or rendering behavior was tested here. A pinned build image must use
-the Deck host’s Vulkan loader/ICD/device interfaces at runtime and must not carry
-desktop NVIDIA driver libraries. Vulkan/RADV runtime parity remains a distinct
-validation gate after static ABI checks.
+The ABI probe does not load Vulkan. Read-only Deck `vulkaninfo --summary` reported
+loader 1.4.350, RADV driver 26.1.99 / Mesa `26.2.0-devel` on AMD Custom GPU 0932
+(RADV VANGOGH), and enumerated the device without a game. The active ICD JSON
+`/usr/share/vulkan/icd.d/radeon_icd.x86_64.json` loads `/usr/lib/libvulkan_radeon.so`
+and advertises API 1.4.350. Installed loader and RADV libraries resolve through
+`ldconfig`. `vulkaninfo` also reported a duplicate 32-bit RenderDoc layer and an
+LSFG layer `vkGetInstanceProcAddr` initialization error; it skipped the broken
+layer and still enumerated RADV. These are relevant host-layer warnings, not a
+render test. The stopped container's `/dev` and host-root mounts suggest device
+visibility but do not establish Vulkan access from inside that container.
+
+No Vulkan rendering, WSI, shader-pipeline, extension-feature parity, or RADV
+execution test was performed. A Deck runtime must use the host Vulkan loader/ICD
+and must not carry desktop NVIDIA driver libraries. Vulkan/RADV renderer
+compatibility remains unverified.
 
 ## Remaining blockers and next smallest step
 
-- Obtain a read-only Deck connection and record the exact `fable2-build` image ID,
-  installed package manifest, host `libstdc++.so.6`/CXXABI exports and RADV
-  loader/ICD metadata. Current SSH alias resolution blocks those checks.
-- Validate package creation with the already-built ABI probe after committing
-  this pipeline, and inspect the resulting archive/manifest/checksum. Do not use
-  a Fable executable or deploy it.
-- The build image’s package set is fixed by the immutable archive snapshot and
-  enforced tool versions, but a byte-for-byte export/import test of the derived
-  builder image on Deck has not occurred.
-- The next **smallest validation step** is read-only Deck access to compare the
-  ABI probe’s GLIBC/GLIBCXX/CXXABI requirements and transitive dependencies
-  against the actual Deck host/runtime, without executing or installing it.
+- The desktop ABI probe's symbol requirements fit the live Deck host exports,
+  but direct Deck execution was intentionally not attempted. No full Fable binary
+  has been built or ABI-audited.
+- The Arch builder image digest matches the stopped Deck Distrobox base, but the
+  derived desktop builder image was not exported/imported and run on Deck.
+- Package reproducibility remains under test via two output tags with normalized
+  archive paths/timestamps; no artifact is deployed.
+- The next **smallest validation step** is to compare both package SHA-256 values
+  from clean builds; a later separately authorized step can run only the harmless
+  ABI probe on Deck, followed by isolated RADV smoke testing.

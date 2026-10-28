@@ -24,4 +24,4 @@ podman run --rm --network=none --userns=keep-id \
 
 python3 "$ROOT/tools/deck-build/inspect_elf.py" \
   "$ROOT/$BUILD_DIR/deck_abi_probe_test" "$ROOT/$BUILD_DIR/libdeck_abi_probe.so" \
-  --max-glibc 2.43 --max-glibcxx 3.4.36
+  --max-glibc 2.43 --max-glibcxx 3.4.35 --max-cxxabi 1.3.17

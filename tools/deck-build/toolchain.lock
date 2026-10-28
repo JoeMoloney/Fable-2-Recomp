@@ -7,4 +7,5 @@ expected_cmake=4.4.4
 expected_ninja=1.13.2
 target_isa=x86-64-v2
 deck_host_glibc_ceiling=2.43
-deck_host_glibcxx_ceiling=3.4.36
+deck_host_glibcxx_ceiling=3.4.35
+deck_host_cxxabi_ceiling=1.3.17

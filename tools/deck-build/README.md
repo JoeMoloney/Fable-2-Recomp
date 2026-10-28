@@ -8,8 +8,8 @@ builds and packages go under ignored `out/`.
 
 `Containerfile` is pinned to the Arch image digest observed in the retained Deck
 build audit and uses the matching 2026-10-18 Arch Archive repository snapshot.
-`toolchain.lock` records the audited compiler/CMake/Ninja versions and known Deck
-host symbol ceilings. Run `build-image.sh` to create the local cached image and
+`toolchain.lock` records the audited compiler/CMake/Ninja versions and the
+currently inspected Deck host symbol exports. Run `build-image.sh` to create the local cached image and
 record its ID/package inventory under `out/deck-build/`. The build wrapper does
 not pull or update packages implicitly. If package versions differ from the lock,
 stop and reconcile the toolchain rather than proceeding with an unreviewed drift.
@@ -31,10 +31,10 @@ bash tools/deck-build/abi-test.sh
 
 The test builds a tiny C++ executable and shared library with `-march=x86-64-v2`,
 runs it inside the container, and records ELF interpreter, `DT_NEEDED`, and
-GLIBC/GLIBCXX/CXXABI version requirements. The current target ceilings use the
-retained Deck audit; `abi-test.sh` is expected to fail the native-host ceiling
-check when the image needs newer GLIBC. That is a useful compatibility failure,
-not evidence that the binary cannot run inside its matching container.
+GLIBC/GLIBCXX/CXXABI version requirements. The target ceilings were read from
+the Deck host during the final compatibility check. `abi-test.sh` enforces those
+GLIBC/GLIBCXX/CXXABI ceilings. A failure means that ELF is not verified for
+direct host use, not that it cannot run inside its matching container.
 
 ## Incremental builds and packages
 

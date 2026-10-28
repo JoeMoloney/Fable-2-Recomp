@@ -85,7 +85,7 @@ manifest = {
         ["podman", "image", "inspect", image, "--format", "{{.Id}}"], text=True
     ).strip() if subprocess.run(["podman", "image", "exists", image], capture_output=True).returncode == 0 else None,
     "toolchain_package_manifest": package_text,
-    "deck_host_reference_ceilings": {"GLIBC": "2.43", "GLIBCXX": "3.4.36", "CXXABI": "not verified"},
+    "deck_host_reference_exports": {"GLIBC": "2.43", "GLIBCXX": "3.4.35", "CXXABI": "1.3.17"},
     "files": files,
 }
 (out / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
@@ -94,6 +94,7 @@ PY
 SOURCE_DATE_EPOCH="$(git -C "$ROOT" show -s --format=%ct "$COMMIT")"
 ARCHIVE="$ROOT/out/artifacts/fable2-experimental-$TAG.tar.gz"
 tar --sort=name --mtime="@$SOURCE_DATE_EPOCH" --owner=0 --group=0 --numeric-owner \
+  --transform="s,^$TAG,$SHORT," \
   -C "$ROOT/out/artifacts" -cf - "$TAG" | gzip -n > "$ARCHIVE"
 sha256sum "$ARCHIVE" > "$ARCHIVE.sha256"
 printf 'Packaged: %s\nChecksum: %s\n' "$ARCHIVE" "$ARCHIVE.sha256"
