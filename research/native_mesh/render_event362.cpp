@@ -149,14 +149,33 @@ static VkStencilOp stencil_op(int value) {
     case 6:return VK_STENCIL_OP_DECREMENT_AND_WRAP;case 7:return VK_STENCIL_OP_INVERT;
     default:throw std::runtime_error("Unsupported stencil operation");}
 }
+static VkBlendFactor blend_factor(int value) {
+  switch(value){case 0:return VK_BLEND_FACTOR_ZERO;case 1:return VK_BLEND_FACTOR_ONE;
+    case 2:return VK_BLEND_FACTOR_SRC_COLOR;case 3:return VK_BLEND_FACTOR_ONE_MINUS_SRC_COLOR;
+    case 4:return VK_BLEND_FACTOR_DST_COLOR;case 5:return VK_BLEND_FACTOR_ONE_MINUS_DST_COLOR;
+    case 6:return VK_BLEND_FACTOR_SRC_ALPHA;case 7:return VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+    case 8:return VK_BLEND_FACTOR_DST_ALPHA;case 9:return VK_BLEND_FACTOR_ONE_MINUS_DST_ALPHA;
+    case 10:return VK_BLEND_FACTOR_SRC_ALPHA_SATURATE;case 11:return VK_BLEND_FACTOR_CONSTANT_COLOR;
+    case 12:return VK_BLEND_FACTOR_ONE_MINUS_CONSTANT_COLOR;case 13:return VK_BLEND_FACTOR_CONSTANT_ALPHA;
+    case 14:return VK_BLEND_FACTOR_ONE_MINUS_CONSTANT_ALPHA;case 15:return VK_BLEND_FACTOR_SRC1_COLOR;
+    case 16:return VK_BLEND_FACTOR_ONE_MINUS_SRC1_COLOR;case 17:return VK_BLEND_FACTOR_SRC1_ALPHA;
+    case 18:return VK_BLEND_FACTOR_ONE_MINUS_SRC1_ALPHA;default:throw std::runtime_error("Unsupported blend factor");}
+}
+static VkBlendOp blend_op(int value) {
+  switch(value){case 0:return VK_BLEND_OP_ADD;case 1:return VK_BLEND_OP_SUBTRACT;
+    case 2:return VK_BLEND_OP_REVERSE_SUBTRACT;case 3:return VK_BLEND_OP_MIN;
+    case 4:return VK_BLEND_OP_MAX;default:throw std::runtime_error("Unsupported blend operation");}
+}
 
 static PreparedDraw prepare_draw(Context& c,const fs::path& fixture,VkRenderPass pass) {
   const DrawConfig cfg=read_config(fixture);
   auto load=[&](const char* name){return read(fixture/name);};
+  const bool fullShared=cfg.count("shared_memory_full")&&cfg_bool(cfg,"shared_memory_full");
   const uint32_t indexCount=cfg_u32(cfg,"index_count"), indexStride=cfg_u32(cfg,"index_stride");
   if(!indexCount||indexCount>1000000||(indexStride!=2&&indexStride!=4))
     throw std::runtime_error("Invalid indexed draw contract");
-  auto indices=load("indices.raw"),fetch=load("vertex-fetch95.raw");
+  auto indices=load("indices.raw");
+  auto fetch=fullShared?read(fixture/"shared-memory.raw",512ull*1024*1024):load("vertex-fetch95.raw");
   auto fetchConstants=load("vertex-fetch-constants.bin");
   auto vsSystem=load("vertex-constant-0.bin"),vsFloat=load("vertex-constant-1.bin");
   auto vsBool=load("vertex-constant-2.bin"),vsFetch=fetchConstants;
@@ -167,7 +186,7 @@ static PreparedDraw prepare_draw(Context& c,const fs::path& fixture,VkRenderPass
      psFloat.empty()||psBool.size()!=160||psFetch.size()!=768||
      vsSystem!=psSystem||vsBool!=psBool||fetchConstants!=psFetch)
     throw std::runtime_error("Captured draw buffer ranges are incomplete or inconsistent");
-  uint32_t rebased=3;std::memcpy(vsFetch.data()+47*16+2*4,&rebased,4);
+   if(!fullShared){uint32_t rebased=3;std::memcpy(vsFetch.data()+47*16+2*4,&rebased,4);}
   Buffer shared=c.buffer(fetch.size(),VK_BUFFER_USAGE_STORAGE_BUFFER_BIT);c.upload(shared,fetch.data(),fetch.size());
   Buffer index=c.buffer(indices.size(),VK_BUFFER_USAGE_INDEX_BUFFER_BIT);c.upload(index,indices.data(),indices.size());
   Buffer uboSys=c.buffer(vsSystem.size(),VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT);c.upload(uboSys,vsSystem.data(),vsSystem.size());
@@ -184,6 +203,7 @@ static PreparedDraw prepare_draw(Context& c,const fs::path& fixture,VkRenderPass
   };
   auto format=[](const std::string& name)->VkFormat {
     if(name=="R8G8B8A8_UNORM")return VK_FORMAT_R8G8B8A8_UNORM;
+    if(name=="R8G8_UNORM")return VK_FORMAT_R8G8_UNORM;
     if(name=="R16G16B16A16_FLOAT")return VK_FORMAT_R16G16B16A16_SFLOAT;
     if(name=="BC1_UNORM")return VK_FORMAT_BC1_RGBA_UNORM_BLOCK;
     if(name=="BC5_UNORM")return VK_FORMAT_BC5_UNORM_BLOCK;
@@ -256,7 +276,14 @@ static PreparedDraw prepare_draw(Context& c,const fs::path& fixture,VkRenderPass
   auto writeSampler=[&](uint32_t set,uint32_t binding,VkSampler s){ii.push_back({s,VK_NULL_HANDLE,VK_IMAGE_LAYOUT_UNDEFINED});VkWriteDescriptorSet w{VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET};w.dstSet=draw.sets[set];w.dstBinding=binding;w.descriptorCount=1;w.descriptorType=VK_DESCRIPTOR_TYPE_SAMPLER;w.pImageInfo=&ii.back();writes.push_back(w);};
   writeImage(2,0,vImages[0]);writeImage(2,1,dummy);writeImage(2,2,dummy);writeImage(2,3,vImages[1]);
   writeSampler(2,4,vSamplers[0]);writeSampler(2,5,vSamplers[1]);
-  for(uint32_t slot=0;slot<npt;slot++){writeImage(3,2*slot,pImages[slot]);writeImage(3,2*slot+1,dummy);writeSampler(3,2*npt+slot,pSamplers[slot]);}
+  for(uint32_t binding=0;binding<npt*2;binding++)writeImage(3,binding,dummy);
+  for(uint32_t slot=0;slot<npt;slot++){
+    const std::string bindingKey="pixel_textures."+std::to_string(slot)+".binding";
+    const uint32_t imageBinding=cfg.count(bindingKey)?cfg_u32(cfg,bindingKey):slot*2;
+    if(imageBinding>=npt*2)throw std::runtime_error("Captured pixel image binding out of range");
+    writeImage(3,imageBinding,pImages[slot]);
+    writeSampler(3,2*npt+slot,pSamplers[slot]);
+  }
   vkUpdateDescriptorSets(c.device,static_cast<uint32_t>(writes.size()),writes.data(),0,nullptr);
   VkPipelineLayoutCreateInfo pli{VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO};pli.setLayoutCount=4;pli.pSetLayouts=layouts.data();
   check(vkCreatePipelineLayout(c.device,&pli,nullptr,&draw.layout));c.retire.push_back([d=c.device,h=draw.layout]{vkDestroyPipelineLayout(d,h,nullptr);});
@@ -286,7 +313,14 @@ static PreparedDraw prepare_draw(Context& c,const fs::path& fixture,VkRenderPass
     s.passOp=stencil_op(cfg_int(cfg,p+"pass_operation"));s.compareOp=compare_op(cfg_int(cfg,p+"function"));
     s.compareMask=cfg_u32(cfg,p+"compare_mask");s.writeMask=cfg_u32(cfg,p+"write_mask");s.reference=cfg_u32(cfg,p+"reference");return s;};
   ds.front=makeFace("front");ds.back=makeFace("back");
-  VkPipelineColorBlendAttachmentState blend{};blend.blendEnable=cfg_bool(cfg,"color_blends.0.enabled");blend.colorWriteMask=cfg_u32(cfg,"color_blends.0.write_mask");
+   VkPipelineColorBlendAttachmentState blend{};blend.blendEnable=cfg_bool(cfg,"color_blends.0.enabled");blend.colorWriteMask=cfg_u32(cfg,"color_blends.0.write_mask");
+   auto blendInt=[&](const std::string& key,int fallback){return cfg.count(key)?cfg_int(cfg,key):fallback;};
+   blend.srcColorBlendFactor=blend_factor(blendInt("color_blends.0.color.source",1));
+   blend.dstColorBlendFactor=blend_factor(blendInt("color_blends.0.color.destination",0));
+   blend.colorBlendOp=blend_op(blendInt("color_blends.0.color.operation",0));
+   blend.srcAlphaBlendFactor=blend_factor(blendInt("color_blends.0.alpha.source",1));
+   blend.dstAlphaBlendFactor=blend_factor(blendInt("color_blends.0.alpha.destination",0));
+   blend.alphaBlendOp=blend_op(blendInt("color_blends.0.alpha.operation",0));
   VkPipelineColorBlendStateCreateInfo bs{VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO};bs.attachmentCount=1;bs.pAttachments=&blend;
   VkGraphicsPipelineCreateInfo gpi{VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO};gpi.stageCount=2;gpi.pStages=stages;
   gpi.pVertexInputState=&vi;gpi.pInputAssemblyState=&ia;gpi.pViewportState=&vp;gpi.pRasterizationState=&rs;
@@ -312,6 +346,7 @@ int main(int argc,char** argv) {
     DrawConfig cfgA=read_config(fixtureA);
     uint32_t width=cfg_u32(cfgA,"render_width"),height=cfg_u32(cfgA,"render_height");
     if(!width||!height||width>4096||height>4096)throw std::runtime_error("Unsupported render extent");
+    const bool capturedFloat16Color=!floatDebug&&cfgA.count("color_float16")&&cfg_bool(cfgA,"color_float16");
     if(sequence){
       DrawConfig cfgB=read_config(fixtureB);
       if(cfg_u32(cfgB,"render_width")!=width||cfg_u32(cfgB,"render_height")!=height)
@@ -323,13 +358,17 @@ int main(int argc,char** argv) {
     }
 
     auto initialDepth=read(fixtureA/"depth-stencil-before.d32s8");
-    auto initialColor=floatDebug?std::vector<uint8_t>{}:read(fixtureA/"color-before.rgba");
+    auto initialColor=floatDebug?std::vector<uint8_t>{}:
+        read(fixtureA/(capturedFloat16Color?"color-before.rgba16f":"color-before.rgba"));
     const size_t pixelCount=size_t(width)*height;
-    if(initialDepth.size()!=pixelCount*8||(!floatDebug&&initialColor.size()!=pixelCount*4))
+    const size_t colorBytesPerPixel=capturedFloat16Color?8u:4u;
+    if(initialDepth.size()!=pixelCount*8||
+       (!floatDebug&&initialColor.size()!=pixelCount*colorBytesPerPixel))
       throw std::runtime_error("Initial attachment crop size mismatch");
 
     Context c;c.init();auto d=c.device;
-    const VkFormat colorFormat=floatDebug?VK_FORMAT_R32G32B32A32_SFLOAT:VK_FORMAT_R8G8B8A8_UNORM;
+    const VkFormat colorFormat=floatDebug?VK_FORMAT_R32G32B32A32_SFLOAT:
+        (capturedFloat16Color?VK_FORMAT_R16G16B16A16_SFLOAT:VK_FORMAT_R8G8B8A8_UNORM);
     VkFormatProperties colorProperties{};vkGetPhysicalDeviceFormatProperties(c.physical,colorFormat,&colorProperties);
     if(!(colorProperties.optimalTilingFeatures&VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT)||
        !(colorProperties.optimalTilingFeatures&VK_FORMAT_FEATURE_TRANSFER_SRC_BIT))
@@ -389,7 +428,7 @@ int main(int argc,char** argv) {
     PreparedDraw first=prepare_draw(c,fixtureA,pass);
     PreparedDraw second{};
     if(sequence)second=prepare_draw(c,fixtureB,pass);
-    const size_t outputBytes=pixelCount*(floatDebug?16u:4u);
+    const size_t outputBytes=pixelCount*(floatDebug?16u:colorBytesPerPixel);
     Buffer readback=c.buffer(outputBytes,VK_BUFFER_USAGE_TRANSFER_DST_BIT);
     c.begin();
     if(!floatDebug){
@@ -450,7 +489,9 @@ int main(int argc,char** argv) {
     host.srcQueueFamilyIndex=host.dstQueueFamilyIndex=VK_QUEUE_FAMILY_IGNORED;
     vkCmdPipelineBarrier(c.command,VK_PIPELINE_STAGE_TRANSFER_BIT,VK_PIPELINE_STAGE_HOST_BIT,0,0,nullptr,1,&host,0,nullptr);
     c.submit();void* outData=nullptr;check(vkMapMemory(d,readback.memory,0,outputBytes,0,&outData));
-    std::ofstream file(output/(floatDebug?"native.shader.rgba32f":"native.rgba"),std::ios::binary);
+    const char* outputName=floatDebug?"native.shader.rgba32f":
+        (capturedFloat16Color?"native.rgba16f":"native.rgba");
+    std::ofstream file(output/outputName,std::ios::binary);
     file.write(static_cast<char*>(outData),outputBytes);bool ok=bool(file);vkUnmapMemory(d,readback.memory);
     if(!ok)throw std::runtime_error("native output write failed");
     std::cout<<"native_draws="<<(sequence?2:1)<<" event="<<cfg_u32(cfgA,"event")

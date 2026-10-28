@@ -19,11 +19,12 @@ namespace fs = std::filesystem;
 static void check(VkResult r) {
   if (r != VK_SUCCESS) throw std::runtime_error("Vulkan result " + std::to_string(r));
 }
-static std::vector<uint8_t> read(const fs::path& p) {
+static std::vector<uint8_t> read(const fs::path& p, size_t max_bytes = 16 * 1024 * 1024) {
   std::ifstream f(p, std::ios::binary | std::ios::ate);
   if (!f) throw std::runtime_error("Cannot read " + p.string());
   auto length = f.tellg();
-  if (length < 0 || length > 16 * 1024 * 1024) throw std::runtime_error("Input size limit");
+  if (length < 0 || static_cast<uint64_t>(length) > max_bytes)
+    throw std::runtime_error("Input size limit: " + p.string());
   std::vector<uint8_t> b(static_cast<size_t>(length));
   f.seekg(0); f.read(reinterpret_cast<char*>(b.data()), b.size());
   if (!f) throw std::runtime_error("Short read");
