@@ -1,0 +1,4533 @@
+{
+  "dxc_archive_sha256": "96faadc7f5c282d2ffda49804beb4c3ee38127bc252b723234e3c5cdf7aa39a1",
+  "scope": "retained shaders whose prior emitted HLSL uses tfetch1D; no GPU execution or semantic parity claim",
+  "shaders": [
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "9c06b5741264a297bd0ea693f957c08ae238c6a9cf94015ee882508a08773c93",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPE_BACKGROUND_RENDER"
+      ],
+      "slot": 7,
+      "spirv_sha256": "8ac3756e4f1bcd4479c8626c209c8ca938600659d1bf0feaeb4b2a5525d1b6cf",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "0be87fb9613924bb33f00e2ec6c4c9915c4e1d2aa014520c6818700c4976f50b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPE_BACKGROUND_LIGHTMAPPED_RENDER"
+      ],
+      "slot": 8,
+      "spirv_sha256": "0e42685aa154dfd445a213ba9661ad1f1f66a9acd1200fb5fd16b58e48cad83a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "423d5575ab6b66abd787a4a430397e03989b7aa78b95caf1ad72ed821515de73",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPE_BACKGROUND_BLENDING_RENDER"
+      ],
+      "slot": 9,
+      "spirv_sha256": "e5878bbbe7353340e21b6ed7a50d13b006dbbf8fbd63dd8d0546e6436d81e04d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "532f23f3316c183dbfde18545e9a88ffa984e8563a7c9396a746a5871b908f0a",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPE_BACKGROUND_BLENDING_LIGHTMAPPED_RENDER"
+      ],
+      "slot": 10,
+      "spirv_sha256": "a732d0054fe3156b35b6f4b122de64e5511454e4dd105254a933a929abe6087a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "3053bb399925b51254d0952c321dcd34560b5805de4f7f4b532a8d89374cb3eb",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPE_BACKGROUND_MIST_RENDER"
+      ],
+      "slot": 11,
+      "spirv_sha256": "7e5c64f39067f602a79a706cadde983629c6748bb62f9675d9dc9a9fe6e62417",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "7f49a8b5841a283d646c9a22a8e74d9fb21a8b27884b27b3569deecbd0c959fc",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPE_BACKGROUND_MIST_LIGHTMAPPED_RENDER"
+      ],
+      "slot": 12,
+      "spirv_sha256": "d3ef6ce2937623591ccb7ca3b1c6e6dbea1fbfdcc936fda23983dc4b78ff677b",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "955ae51afa4d8c49f0799bb2cb26941050a0ccf83e5cba357eaf5ee18005fd9b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPE_BACKGROUND_MIST_BLENDING_RENDER"
+      ],
+      "slot": 13,
+      "spirv_sha256": "a52cada9643f242f15ddb4f5da273cb6ef612647843ebad2192466b9dcd5c4e8",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a54dcd3da2fc1ac2cd3f094a2e19d9ab8bf3cc9cf7e45b7276261011b02cbd9f",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPE_BACKGROUND_MIST_BLENDING_LIGHTMAPPED_RENDER"
+      ],
+      "slot": 14,
+      "spirv_sha256": "da991b10cff06b671857e13e6c2345580478eb89c94af9d9a0a2619433f54796",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "4053eac4762d0d208c40e70a15e02df5d060f44456b23703dab4bc5721fc74f2",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_OCEAN_WATER"
+      ],
+      "slot": 57,
+      "spirv_sha256": "449ae47b8fe1bdb15d1fc503984cb2eeaf286f434fe742ef6052ea7cad211007",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "33d981e40695be9353a1876ba826276837753878bb2cc9262e7b6746c8e1edc6",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_OCEAN_WATER_MISTED"
+      ],
+      "slot": 58,
+      "spirv_sha256": "d260e8cc3abb2b992fe50e9c349549c6ec3bba8fd41502daae17bbef4a903580",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "bc2101f51d50c62fc3fc10fd48df84a26d9a38da24a446c1aa3ec48b84b415ee",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_OCEAN_WATER_BLEND"
+      ],
+      "slot": 59,
+      "spirv_sha256": "acaacf4d46808403c087c261684a6980a49b7aed564219c91c9000c635c959a6",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c6106b8edb5898e058b2fcb1c19bbb42f21ab53a58897034650013a13818bf68",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_OCEAN_WATER_MISTED_BLEND"
+      ],
+      "slot": 60,
+      "spirv_sha256": "181bcb2ad00e1f307e2352150fac87baf08f5cb56fb8e2279dbde5458936e1ed",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "e57391bfd6a143b852943bafb2eb59d0048665b1e35f18ebf046611a4f244691",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_MIST_EVOLVE_DENSITY"
+      ],
+      "slot": 72,
+      "spirv_sha256": "e7a4edc08fe24cbb0d7b176f5f2e87b15801f0615580c30227567f81ad1307d6",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "c31de0adaa8b6f051dd3f7a337064c2932b77d35673a70dc062283605e490706",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEBILLBOARD",
+        "VSHADER_TREEBILLBOARD_Z_WRITE_PASS"
+      ],
+      "slot": 92,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "638f2b93864e025bf0a49ac3a10d1c2c396233e0f2ce5901f6419c7f48824dce",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_SHELL_FUR_SIMPLE"
+      ],
+      "slot": 105,
+      "spirv_sha256": "a3988ad46694fd79662e3cc39821a4db928cdaab440a9a45bdf993b26cf62062",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "5e900b80de269864f29d1ad085cb3134e7322c8a2b8135580a6df711cf42f225",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_SHELL_FUR_SIMPLE_MIST"
+      ],
+      "slot": 106,
+      "spirv_sha256": "cfd919b53d27e9b71a6cac44fe82da774caf19009225d81b99debf74027e6c3f",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "fc52928511858bc7e47add9ba2cd512513d89cfd0e19fcf6c7614bd7b037be92",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_SKYCOLOUR"
+      ],
+      "slot": 111,
+      "stage": "ps"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "c190990237823f81a4d2c98f45e4f0e49e63b63253acb606974329c168ebff6e",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_SKY_OCEANWATER"
+      ],
+      "slot": 130,
+      "stage": "ps"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "22d6391ad8e71767ea18b98730025d1185aba728c9efd82fa2e947845ec616a7",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT1_GLT1_MIST1"
+      ],
+      "slot": 177,
+      "spirv_sha256": "bede95a8f553545b9b0027a95f653f76d9cebf83fea18ff1c1627dfe744b5bc1",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a9a3d0ce41793da7ca28639079cc15f3950dcba0c9e751dbb0665a8518d2e250",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT2_GLT1_MIST0"
+      ],
+      "slot": 178,
+      "spirv_sha256": "7d31f8ec382639e347556ae243acd899391890f77aac0fe25e8dd7ddb5c56dc6",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "571e444f391909850749ddd2a36387c59a64e14b0a35011f63c38bbc1f870216",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT4_GLT1_MIST0"
+      ],
+      "slot": 179,
+      "spirv_sha256": "2dd332dba0cb462567273e5dad7476284c625ea9f94af6028bcf76704a679219",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "05e70c9f7a18c4aff8dc49f18d66b82ab00e86df74dd3cede2d5505e3ad71ba3",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT7_GLT1_MIST0"
+      ],
+      "slot": 180,
+      "spirv_sha256": "9d1904154a48701f2820283d063f942045892fb6490124720d75a90fcaa81608",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "08d053511dae5d65608459b0563475e665b2df01044505caededd04ffc88d3eb",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT1_GLT1_MIST0"
+      ],
+      "slot": 181,
+      "spirv_sha256": "bee6da624b655e54ff198f4e67b1d2e619b41a5da7e26b0f9d1d0e21a93a0867",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "4397d44d2ede488366b1f4becc1c17d14e660c8be01ab0f9371b7384a677466d",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT4_GLT1_MIST1"
+      ],
+      "slot": 182,
+      "spirv_sha256": "a6b78702ed72b0048cd75f21dcfe2441dd1485ba864c71f07930934250a8bbc2",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "3e6547c1678e6adf27cbca3b3ac7de6ed49c7a6f2bbdb3069695299ad8734b18",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT7_GLT1_MIST1"
+      ],
+      "slot": 183,
+      "spirv_sha256": "3045022d4c70799e71e1de618e2a557af1b5a0d53d4855a6d4e83ed14d160b87",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "ba9cf623fc8b4c911931a3480c248b8ed9f1471f511e53b7bb937a5efff1523b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT2_GLT1_MIST1"
+      ],
+      "slot": 184,
+      "spirv_sha256": "b30155341b1f971c4084d42cba9c44ee45039917278e3fa59027f4df145c7559",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c05dd38146befc27fab4ee4fa44ae7ca08100390a11579cc131f67c5ea99648a",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT1_GLT1_MIST1_AMB1"
+      ],
+      "slot": 185,
+      "spirv_sha256": "ca83c6b2ef2177f6940e30a2c6f3fad4dae6db7f94c717c03f632a1b08691ee8",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "b82a6e47e2ba57cc71b5cc3ccdf511eae6040f5a99b8d56b182632f90e2d2446",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT2_GLT1_MIST0_AMB1"
+      ],
+      "slot": 186,
+      "spirv_sha256": "01ff52ac92ebaf324655fb7a97ff336020156fc064f56da218e3a4cb6bf9607d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "13be119e8e27a160131ae4d19344676b442677c5cb363ac9e43f1ab92c865dbc",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT4_GLT1_MIST0_AMB1"
+      ],
+      "slot": 187,
+      "spirv_sha256": "62358dec47a11413d26ab9d1f011585ce881b4b057c371af238f20f39fc5c56f",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "e0e2796619500a8d1adcdb28b78f0e2328350c550e698fa2e1d59c117fcd533f",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT7_GLT1_MIST0_AMB1"
+      ],
+      "slot": 188,
+      "spirv_sha256": "7b89703f449ca5650f4fb6c1d04639fb05c86f328bdf4066a20733c9ed9ba555",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "158c5f1445e6a94b655beb986b811081c0c5d5057576bb64a316d0dd20d3cd4c",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT1_GLT1_MIST0_AMB1"
+      ],
+      "slot": 189,
+      "spirv_sha256": "e33c9b40e4dd04bac022fbd3dbf66825e7be15864d2ecee08188daa07846fe35",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "1c263e9d4c342c3ea245ae68d66fc0d3feea7b101b1b5d89500deedadad7ebef",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT4_GLT1_MIST1_AMB1"
+      ],
+      "slot": 190,
+      "spirv_sha256": "3925db2d08809f2f9a022c99d182bad37a00ce19c0d33f47920ef2187c9c0f7b",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "38f738421713f98cf8adc7bff4d789931b39b09e726964c5aaa3bbd413b60bf5",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT7_GLT1_MIST1_AMB1"
+      ],
+      "slot": 191,
+      "spirv_sha256": "a04f040cc9b049c75bfd09a7d5554fe1922ae98361613b84d342784b01f8db86",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "307c8425f4fa45e2dea5b1c4b5bdd6d190d247b9126d11283e39ceb719821765",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT2_GLT1_MIST1_AMB1"
+      ],
+      "slot": 192,
+      "spirv_sha256": "67ca02257846ae9bdcce7edebbc6e71e0903c4c56ce89de44a02fd686873b52c",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "d3918020a7aa81963e99cf58ca3c59d17245e010a410b16dae6c770e2f1654c8",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT1_GLT1_MIST1_CLF1"
+      ],
+      "slot": 193,
+      "spirv_sha256": "88d5dd00643709cda4c0e59951f466f20fcbfe1410aed2c6b6265b0635a57299",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "4295496b5d0a7811f1ca92d017bbbe78193f925e9179aee385f71f08d9495a4e",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT2_GLT1_MIST0_CLF1"
+      ],
+      "slot": 194,
+      "spirv_sha256": "6208c1cb706b36d9d85dc6f781df08ae312aa046a8541b7f863edf7ffab74ac2",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "2e6cf6769b87918704d851b08a20186305997db2f1d0ba8c0f45a2841af427a1",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT4_GLT1_MIST0_CLF1"
+      ],
+      "slot": 195,
+      "spirv_sha256": "cfb5ac574200113414fd05ff34d7c439145adeeb55e8fa23fd9700105e40f1de",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "9fd2127cadc5602bafe383360923aff74671156c60c60224cb5aab043494141d",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT7_GLT1_MIST0_CLF1"
+      ],
+      "slot": 196,
+      "spirv_sha256": "8497af6ccc01e670f108fc904fc10093ec18c7098dfbedc96b51dec541500ef4",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c6f5f6f581f6ff84bda7c4cd5306ad1fccb685c1b1f489380b26ca43c6f5e5bb",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT1_GLT1_MIST0_CLF1"
+      ],
+      "slot": 197,
+      "spirv_sha256": "f6eadcf1364155f822c6318a992ae6024c67f9359d046ce685e9b36010338324",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f6678674136068d883090ff67874a821093f27e3bfa870adb600a11166a4143f",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT4_GLT1_MIST1_CLF1"
+      ],
+      "slot": 198,
+      "spirv_sha256": "5a86bd4124bfabca9728c9f7aebf7a94ae1d011d205449c8496119b3363b707b",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "b89004ab66015c1cc2798df8df455f10d240183dcccba7c6c902d5491ecf6c57",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT7_GLT1_MIST1_CLF1"
+      ],
+      "slot": 199,
+      "spirv_sha256": "e2b5e39a4a5018950ffb0437c3aae092c54c808ae3b6e3f5cd8b0f7a11c2aa76",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "ace459fd578516e32433307cb82d8201695b6ddf5790da4831bb9526fc8cb271",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT2_GLT1_MIST1_CLF1"
+      ],
+      "slot": 200,
+      "spirv_sha256": "3896430b256ae7ae53a6fe007a4e06905a2cb81f8b78bcdcc3df130442e50b0a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "1ab18111e7b5cbfbe732dc8f9489ae31fc01eb281d77f2755088dd93dd3ad128",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT1_GLT1_MIST1_AMB1_CLF1"
+      ],
+      "slot": 201,
+      "spirv_sha256": "1936eb7de42b483769920a5d3b612a9c4661ddfd3409397ce8f6e4808dd41b45",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "92eb7f842f6c24c22728a239bc9e4e617e91d446ab4928ddbf55c3810ac881fb",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT2_GLT1_MIST0_AMB1_CLF1"
+      ],
+      "slot": 202,
+      "spirv_sha256": "51c02397558ee8cfd7ff94b8f3cd692e855d9073ae0702b3e9d40006a508904d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "7109e59bc759977f26fb2f536f92955e9bc9ce45f0e9f7a5d27e6042643c77b0",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT4_GLT1_MIST0_AMB1_CLF1"
+      ],
+      "slot": 203,
+      "spirv_sha256": "05966ffcfcae51af96db1785422996f2eab1e9df792612313cf9c09af7874664",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a95cadc00b9285f1c52549f1019df73cf1ea39bb4ae923d3e59c63993f238c7b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT7_GLT1_MIST0_AMB1_CLF1"
+      ],
+      "slot": 204,
+      "spirv_sha256": "805547d06ec77573d2f7622d511ecbb303cf4b44de3f26c4c3680d6709594c6e",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "ad2fe10e1986d4f28acbe7ef32e86d13f866bde4d1a3f1a06199710756f91cd4",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT1_GLT1_MIST0_AMB1_CLF1"
+      ],
+      "slot": 205,
+      "spirv_sha256": "e7520103e0de0e2bf94fbabfb65373e6eb44dfb5e5ec9d717bc05b1755cf9373",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "9f16773aec8076a64979e12b4f45c27c2a8456dd5741614a5109616b49ff8393",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT4_GLT1_MIST1_AMB1_CLF1"
+      ],
+      "slot": 206,
+      "spirv_sha256": "b666175d265ff2cc235e00f4516da70c5048533ddc9d33d83821233ec277cd25",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "0869ecb32352bb416206161746b423a1d2fa78d82436a4e308abbe062571bad9",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT7_GLT1_MIST1_AMB1_CLF1"
+      ],
+      "slot": 207,
+      "spirv_sha256": "0facf873aa1b32c53387ec2f8d42f1861b6b29aee15c6b69b26c43029dc3988a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f624eabf65d3687195020469f25e53c329f74e05e94f1b3e7b65e509ede4a35b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_LANDSCAPEMATERIAL_BLT2_GLT1_MIST1_AMB1_CLF1"
+      ],
+      "slot": 208,
+      "spirv_sha256": "6ee94ef60aedfcdad905dfb53dccadad8456f1bbd6b314468adb2699d9248ec9",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "3b0e34b3b97993578ec5c885b5ff295e7e2fd64ab6a245c1491f728819346603",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_SDIF1"
+      ],
+      "slot": 259,
+      "spirv_sha256": "805a862746398ce20fae4b41cd52ce82f056243f5169f8febdce11aacd837df4",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "b8d7472c6830cdfaaf543535171cb0d670b22c63bc4ad6ce64d3b3975c90c510",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_SDIF1"
+      ],
+      "slot": 260,
+      "spirv_sha256": "30596479d0020f35bf0d2f51e956b744be27704e02bdeb1f44d8719f6b12f6fe",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "8e6f9059cda4beaed414f770a3dd53c0f2684de7c32c1fb65ab7b459668a5ee4",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_SDIF1"
+      ],
+      "slot": 261,
+      "spirv_sha256": "f33290bf81600748ad529d35edf33001f66f10931f0bd85116a2deb039eecb61",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "2a1b5ffb237c4abebbbc0c042ab88afde50e931af069082999bc9758083eeeff",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_SDIF1"
+      ],
+      "slot": 262,
+      "spirv_sha256": "1d6a3db605bcca7323a5f64e177d89b41bb58ef8dd1d54e790c98e1197f40a46",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "21da338ff833b5da4955b068c690c66574ec0803348fb28f9a04bd533059b3c1",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_SDIF1"
+      ],
+      "slot": 263,
+      "spirv_sha256": "9bd575483318a5d2c9264eff40936c6dc25fda45d4d76f278ae0b33dac6d4945",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "383063c676dd0887286afa8a399fd528a45d66187a93e205289f62d4e6ce05f1",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_SDIF1"
+      ],
+      "slot": 264,
+      "spirv_sha256": "fc560bf8f021b3d549670d1692e290f70d3fd41471befd9964d98959a1fbc521",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "ea84093a29776cded396b7395b7fc793a54076c2b92d778237236c4738da03fe",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_SDIF1"
+      ],
+      "slot": 265,
+      "spirv_sha256": "dc50d2131fc4f3f5c04c2eadc913bcf0194f3073a833180da70a276a871bcd04",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "87050f435e21195f8af20950638058f4756a2850c35d07e37d57ef29b5895ed7",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_SDIF1"
+      ],
+      "slot": 266,
+      "spirv_sha256": "008c92a4e8304746cc1c55d3754d6cdbaf0b5fc389159bc5fd03652a6de21af3",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "e4ca75ff4c06832beb5f89b9e5a53000d37d2c467970ffd185ee34e398a709ff",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_NRM1_SDIF1"
+      ],
+      "slot": 267,
+      "spirv_sha256": "56a4c4cc252b2bd88867bf12cabe89b9f9d8df366dfb95f2fae85c3d930d2c09",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "932f45fdb365410ad6374ccb402b7f24aa7af96ab92552b827e91ec8b1da5126",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_NRM1_SDIF1"
+      ],
+      "slot": 268,
+      "spirv_sha256": "ff2ba74d0b7d0c28ad66d08f9a9af4c46183930a0ebf72b2a611c6fb75cc7d18",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "83d08adffb7e8f6a8dcf49bf43586ba0a92d5300df34cd9e028f209bbc21f8f8",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_NRM1_SDIF1"
+      ],
+      "slot": 269,
+      "spirv_sha256": "6c70790e7cfcac61d1778c46427c677024338a7a66c01752932cfcc850db1841",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "95e000c5d17091a6b06593d35a4c76811b8651987ebea652607a599d7d0728ec",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_NRM1_SDIF1"
+      ],
+      "slot": 270,
+      "spirv_sha256": "1d8a275dc51b6abd455ff5f1bde4f1401a4940222f705b4f4e3792860868e2b8",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "5e3c04e148cace4d6e65e6740a1b06fad1402a9d34dad1a9af538a3c0bda94ae",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_NRM1_SDIF1"
+      ],
+      "slot": 271,
+      "spirv_sha256": "7cd18b88b3c26c70e41badf447f0a3fe8581109eb79e471a202f3806f612a9a8",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "617e857831edb4f8bf5740a8a218e20d9ef36937ddd9edb46b9e9068312b5c12",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_NRM1_SDIF1"
+      ],
+      "slot": 272,
+      "spirv_sha256": "9cb9d7234b293c2d76bb42e7b0eec9066c50789bd5e13033e1330d072e00e7a4",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "9ab533efa0dc21c4dcdc4ff5dcd0841827c24eeccb6b1d0f729597250704004f",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_NRM1_SDIF1"
+      ],
+      "slot": 273,
+      "spirv_sha256": "058bcc0d5eab9ee45c385a81380fac8751bd4a6647c30363d4907d323a861414",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a6ecc11e7b3bd85993d5e79b6b932caffe3aa8ad7f09e7059430e37b8120095c",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_NRM1_SDIF1"
+      ],
+      "slot": 274,
+      "spirv_sha256": "6e8d31b9a19e9ee71dcbaf622bb306cb5970e98045aa92159922a8c834ec9d13",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "22d26b246e28248a6eed0a9b3ab86bb142e1b618ff1d9262557c7f1211238d46",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_NRM1_SDIF1_SP1"
+      ],
+      "slot": 275,
+      "spirv_sha256": "e4ead09988ea55e4f56e77516e7832f9335eb0d89f82f44fc6ebe668d3953152",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "ff07b4020d35b348782138eb9c1310ea5f03aab014b14515dde1c757db033615",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_NRM1_SDIF1_SP1"
+      ],
+      "slot": 276,
+      "spirv_sha256": "3055eac1a752188eaf1812f94b80ca8645ce0a097604ef4412776232c0f2558c",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "dbb8db178de4d78c7ac366fea18c4df9049af419177b59aac1206ac8f747a50b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_NRM1_SDIF1_SP1"
+      ],
+      "slot": 277,
+      "spirv_sha256": "ad49b4ac038f96ca037741adc85fac0cb4a8bbe4f2aab617b349f415799f135a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "0b16db77d066f3ec1cf878819683fe4c1a64763e393ddd27032f30290fea0f93",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_NRM1_SDIF1_SP1"
+      ],
+      "slot": 278,
+      "spirv_sha256": "0ac2cf9a45f4ee56035eb998e69c7af9ccbbeee2f5fce878f3ab5ea78c36abbb",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "ff21a6ac52ad4037e82351418f581dd2bc4b035f2c15ebf1478e7f863e988151",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_NRM1_SDIF1_SP1"
+      ],
+      "slot": 279,
+      "spirv_sha256": "a77512f3fd00e75195046775efc10a7c5222db02e5becb21d95729d8f5a9d439",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "13aed0d3df48f2b5f6b75fcb636bc38758b01a19f46f6d6f401429c57defc740",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_NRM1_SDIF1_SP1"
+      ],
+      "slot": 280,
+      "spirv_sha256": "de7fb5eaa5b272f29f6cac6812e09bea2c612fb2382521ffd190d9c323a5c909",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "9ee5fcbd6377a5688770f393cbd6671cf665ceb059a706b0570ef412da7de475",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_NRM1_SDIF1_SP1"
+      ],
+      "slot": 281,
+      "spirv_sha256": "eafa39409ee0e6e466abfec3c7c265945aac06852fcedc9b78c31b1b5e08db5f",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "31c423dbe70eb22f7e4686281afebd2052e6902bad4e26189c22996c527bbfce",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_NRM1_SDIF1_SP1"
+      ],
+      "slot": 282,
+      "spirv_sha256": "ae3a09143a165d63300444cb7ff149a2830047dd1d25c624c6e683237324d25d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "062cd9c85cb7629cebf772dd1adee2acc8cf93e0dd7d48b4a45404f1e2962003",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_NRM1_SDIF1_SP2"
+      ],
+      "slot": 283,
+      "spirv_sha256": "1b572d1b4168e76fdf0d2bf9e76abc31ebce04a99bb81507392e96aa29c6b156",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "8c8c7bf4d048ad966af88e88b307c1beb2d9f24327706b0ffc23d865d4c09cbd",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_NRM1_SDIF1_SP2"
+      ],
+      "slot": 284,
+      "spirv_sha256": "c42b0bdca54f4df2510fcec133df146d082e0c33f04a3a5262f5b5f5ea97f126",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "ea81a517895b161cea0a84b0278b210c777859d4a509cd363baaddd5ee2ba159",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_NRM1_SDIF1_SP2"
+      ],
+      "slot": 285,
+      "spirv_sha256": "2626d1773c15af81a4ee0d4ffb647c532190ffb5ad5761dcfdccb14a6bd6b2cb",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "fa44a0950fa41ccc6486abef3f470a244631aa32e4ac566125d4b4737aced059",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_NRM1_SDIF1_SP2"
+      ],
+      "slot": 286,
+      "spirv_sha256": "3838970528f827109274e3ffe9341353e87ee5bb2a73d9b7532f5ce37fe629e5",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a43b8d2532a2b0dea7a372c2a3639ab99c0d786ca98c34cb07d479f2e2924808",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_NRM1_SDIF1_SP2"
+      ],
+      "slot": 287,
+      "spirv_sha256": "2102e645ead484a1a9da720aa4362244080210d82d001ed7168592e9430d5a5a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "6e78dcea75e7ecc11968564dd0d743ba8850418ec36ef0d632726b50060508ca",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_NRM1_SDIF1_SP2"
+      ],
+      "slot": 288,
+      "spirv_sha256": "3c72d824af271ff5dc319c6cd368e3e7f9ee9df67119cca3495400a6cee4ba6c",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "3106e49e3515564a5a8af50463fd2f998547a460697050c17c70de6c75f0e2d2",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_NRM1_SDIF1_SP2"
+      ],
+      "slot": 289,
+      "spirv_sha256": "32420bf8bf5b535e2b34840000698cb96d601241a402b59dbe4411203373868b",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c3f535dba435db20781d16a32dfdaef997a387b7460444f8a66dfa5bae2a55e7",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_NRM1_SDIF1_SP2"
+      ],
+      "slot": 290,
+      "spirv_sha256": "dde60cc155241a824a3aa37ac21607266d9b320beae4b2f18de6ae51cca83511",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "954e1fb3d2c468eddb68b581515876c6ebd081e58d2c65125f7773716d6ff63a",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_SDIF1_SCR1"
+      ],
+      "slot": 291,
+      "spirv_sha256": "566cb9f8034e639cb6180878e51937c71cee999b0e7b54a35538dbedb9d4b51a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c854c8ec5e62a738a43251ce028e15a16c6896eedf4243d7bd45afa3c77e3778",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_SDIF1_SCR1"
+      ],
+      "slot": 292,
+      "spirv_sha256": "db4ec12feab27661aeee964966573a74bc1cce49a96796dcf96d3cd65ebf4d07",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "4567d5896911d848d8b31847b07544d2cc14dcc29f8266a399ccd1d942a604e1",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_SDIF1_SCR1"
+      ],
+      "slot": 293,
+      "spirv_sha256": "34165cfce1b94d3c818f26ff8e82f55f35b5831563324bef6b3dd42b48f290eb",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "3d381dd64735fb3c2d08e2615582376147d787d84b62c0378fea356f1f36070e",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_SDIF1_SCR1"
+      ],
+      "slot": 294,
+      "spirv_sha256": "a59934e6ec17fdbc854abe6b574aec161e68db4f8fba52b2e8679a4601b5eb7a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "e24d9d266fd93c44263bbbe74ce0ce5ca0a4f9ed36507723ad67d1fe11a46fe0",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_SDIF1_SCR1"
+      ],
+      "slot": 295,
+      "spirv_sha256": "6e55db7027cbddf8f9dc85b34e4cc0521da3cd2798d8fd6747a0a4f78f617952",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f1f15859da1d8326f72d5029b0002747ebf57f93517b28e819af27132b5f8c21",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_SDIF1_SCR1"
+      ],
+      "slot": 296,
+      "spirv_sha256": "f20a4f8e00964a7de362f6e9d939e626f1cc42fa2692bd8d8477f4e59b036902",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "8eb5023b54962c89540db086aa10d7b660eee53d1612ee9fc0dd408d3a549fb4",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_SDIF1_SCR1"
+      ],
+      "slot": 297,
+      "spirv_sha256": "e2520d64ee648b4250b1213789e6e95a711eb0ff2b23d45a6e687baf6e26ac6e",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c4ee76c1c7bb4f4ada9b9bbf18ca66bed081ce16cd2e51dd0fe3de60f297dbf4",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_SDIF1_SCR1"
+      ],
+      "slot": 298,
+      "spirv_sha256": "5851fc335113e9dc79c22a0fc0a5a5dc838979611c5304e4e0e0fc41e8fee700",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a8c5c9f3cd6facad18debc6c8694a4688698e00aa82a68c9aa9854994a48723e",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 299,
+      "spirv_sha256": "38e30f01882a96f288a6d89ad949e78b39823d0a459fc57369eaeea584a924a1",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "1debf5b9e1c87208f4fe341471087c557549cb097bd2f547d33f5c5c08c69468",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 300,
+      "spirv_sha256": "eb95587f5080e7d80cf2724052d1d43632a1b3fe4abc969054273cff7619abd7",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "5aa529e658ce57ef25a503a827e0f96394b7fa9873184c7bd0ea64dca1135b7a",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 301,
+      "spirv_sha256": "20358a7b4a40aa19fb1e93538425fba2be8de1fd53b29daac82fd25f1095b169",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "be473924f2993194f54ad698c8f9196a42ab5fc96e3a1fcbca0b9657246bcd2d",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 302,
+      "spirv_sha256": "206d2dce6e28ac3a9819c5ca0699cc554e1836e230125cc27b63daf71d047a42",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c554f22a1a204d141f4feb1e71f3d08d6a13d30c7a762f09c6d896906ee753bc",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 303,
+      "spirv_sha256": "3fecf74fa5cbd48c9d2828b26197ddc2ac015b52c52601b6a480549dcb121872",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "2c75d4be5a8907e05e9a5402b852386564edfa314fd2bbd545561470fcd38075",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 304,
+      "spirv_sha256": "71c7349f935d67b5a2a1a6f0ceaaed99265b0ae4a8d1b9953ac70cb6e4cdb972",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "b051d2352f99a03caff007ce172ed704497b26f37391288f1f78bbd7d06a89f6",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 305,
+      "spirv_sha256": "5a6864b02f4ed0c2c897a8250d07e0283fc5c1aa234d5d4cc8041e048153ba17",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "96c6382dc0697a4b43aebc4776050e2daef9b939f121156f391cd135d060ebec",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 306,
+      "spirv_sha256": "d81114bf015599278ea810f9a735de41232e20f4751ada5a13becb4394870c05",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "bbaec1cd22cd5073056de766021b382b10829af9255dbbd8ef43507777742080",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 307,
+      "spirv_sha256": "4f7327ec16659e7e33add7e5179f60bc365bed79a5e678ca1fda73de7835bbdb",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "90cbd308d5ae3b89863b21d2769e846437271944bdfb701668e16a0853c60fb0",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 308,
+      "spirv_sha256": "7c4bb041c9c9b9c5aa04111b259b24e2f3dd58577555abf872267f521f1d945f",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "5a42a7210701245917f00e091be4c5178e1195f170e5892adf5f5eb9591a73db",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 309,
+      "spirv_sha256": "ce4d8c5761a87cd740ccd2141beb14952bc3adb7358f9b83b61bfcc38aac483d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c8a283fdb9ce5ad29f656f0830fbd714ff48c74656401c9fd563eea9648a682e",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 310,
+      "spirv_sha256": "c3093c92d3429aa54b6f7fd4ec1beef1ca92c8f874663f6564345fdd24ac8e70",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "199192fa3b03aa9bfe4164180660c18d7036ee09fc12185c696ca5988fc5c7d9",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 311,
+      "spirv_sha256": "9bb66cf8d7a693c64d805ca3ae0cebdd61f5687ac410d66c1228456b9af9e7d2",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a48d76c9d68cabd9eb19ba925d995492d58a452ef65412cab7f7dc0373516d41",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 312,
+      "spirv_sha256": "ed1ed092744d407ede76727d86cd36899dbb9cffd8ea3ca22606002aaa5474b5",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f6b9846d67eab5f658bfbb29b8e90f793654849696355ace52b4d1ce6a80213b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 313,
+      "spirv_sha256": "dd292a894a0db12aeef75aea3aac86b6372cc22cc08c92f1d82c7dca6835e363",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "7adab544738e33c02a52783757956d8d418c8c6d4ec3f4bc966e65d7c3ac2d01",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 314,
+      "spirv_sha256": "59b03038a9c59143df40ed556c629aefe67be383bf67aa83494fb31b9edca30e",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c60dc899da4970f2db0c644747663584f262c5d69f4dcd79089727a863b70587",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 315,
+      "spirv_sha256": "6ddd33bcf3109631cd6c4608654b67a5a404d449b4a184ad8b909b6c13f7af69",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f06e40517121c30035e01950dd12479a265dc9af8bbcb5463b0a48693794db61",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 316,
+      "spirv_sha256": "ee4ae828d40f17eb2ef34bb99bcdc01b06173ec9ec50318d4f15b32622a3b576",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "5e4afc48e27688bb09a28fd29cb027281ea110e5f2be1e993d34ea62de1a76f5",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 317,
+      "spirv_sha256": "a49b82bd7684d611df801c58b803a7a334f0ef97b086683fcd51880ef10890d8",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "43dafbbd0b166a6c945b4a65dd06d2257378206fbe515765d6d257656d1b0268",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 318,
+      "spirv_sha256": "9091103fae82234237bfaf8ecaea9dc9b0b5e7f14170615182a1324f73d53205",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "5426c5354725ad8c42f718641c43f23883d64a0b5e031b0ec0dd95a3da02eb5a",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 319,
+      "spirv_sha256": "a334e196b0647827d58849b70f9d2fcb40af58a27ff64a58dd13ae26abda2d87",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a10b21e8bf97bee50a4f9773620407bd23d5b790382465a2da282e161ee71a65",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 320,
+      "spirv_sha256": "587a122ae64c525bcce333af6e1ebd6798961533dbdf2922cff951bb561473fb",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "d62d9a27c96c05f510605b8c812a0f81aa5f9055613af660cced94f831b9f5d7",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 321,
+      "spirv_sha256": "d628322a6995b74ce2e9999c05a2e7972d05f9f305dfa78f43d6f4044c518899",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "4e886515ede0ca46879817fef571bf6b76169277be9c8487a222b29aedecbe5d",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 322,
+      "spirv_sha256": "981bcef2f623ab58c61bec218caea8da6df17acfad1f62a35a6ed5a91437a600",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "6e9cc1c5e9073f6a0405810e2c9b606a249094fc030deac1fe06ebe59b635994",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_SDIF1"
+      ],
+      "slot": 323,
+      "spirv_sha256": "4d5c0bd4313b4c620011296b2ee3e71834d781718d8b7af8f910a33c28af1c27",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "1106bd515f19a10b0db08d9f046f581e49ce7dd06c6aff08d948705cc365d3af",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_SDIF1"
+      ],
+      "slot": 324,
+      "spirv_sha256": "f8bc63ec2db75a184a3dc759c6874b8002826acb7754c2d7be6a29fd6053eb57",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "d0957845b1e8b0222008b35b730a05de617d3f4039eb7ce78aa3447b958a6e9f",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_SDIF1"
+      ],
+      "slot": 325,
+      "spirv_sha256": "25d0e9c00f9e632cdec837a6f29b3b0036c6a1edce1284171d4963412631e320",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c140307dcf9c4ea704524c2b182435873832b9be2cdedbfd987e4ac6c7d2271e",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_SDIF1"
+      ],
+      "slot": 326,
+      "spirv_sha256": "e26f981d20261ad1027f93637d5e70f748988c7055515fc06b4f7e00947a837d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "7f9fd76d4ce79bf1eb2098f51101e5feda0e838955659bbd879a13e2bdc8acd9",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_SDIF1"
+      ],
+      "slot": 327,
+      "spirv_sha256": "a9fdae2dcafdfc0c67f9eada119399fd0ecd45342fbf464fe9d6b4ebb67cf33c",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "eecb5b2d670f274ef2d4dcc7e4b032c98d3ee9a02d79fa6fd64765569979d312",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_SDIF1"
+      ],
+      "slot": 328,
+      "spirv_sha256": "85f857b15062c8d1e2fcb76d01b90432cc2545545c8f51013ae3231342482e60",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "99822aeeb79830c10b6f1bb1f031591cd61064d3ffd9cea2ceae9e4768aaa2fb",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_SDIF1"
+      ],
+      "slot": 329,
+      "spirv_sha256": "433b21cf17f70ecf88bd2559a9d5fafca08f08e2164e6ff4766e3ac8ed70e542",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a6b2467a183611d742ca800d1a251705e821423ed1106b129c870ee22984075d",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_SDIF1"
+      ],
+      "slot": 330,
+      "spirv_sha256": "78289da678a359ecfdc1f05f1f4afb211770f12f840cd38bf5be188962bdcb6b",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "1465f5954ea39ed3b8c9d60dad13c5c283dc4faa9459fce4b4e19d8bd29561e7",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_NRM1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_NRM1_SDIF1"
+      ],
+      "slot": 331,
+      "spirv_sha256": "ca8f3e187cbc8adbc55049ff2cf4d064291b88f8e4ffc6a5bf1a3ef3db2aada0",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "d8252782bfedd2aaedd7d1a19059b712b31d1a21f24bdce4f60140c6fa58b45f",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SDIF1"
+      ],
+      "slot": 332,
+      "spirv_sha256": "6bdd43dd9e0619f87ccee419324bbeac6fde8392db387826361775c281f0271b",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "fa9e23d177395479c400e67a18ad3a91a5d04cc75f2c1acbd0e6025794ed0ae7",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1_SDIF1"
+      ],
+      "slot": 333,
+      "spirv_sha256": "d636ad8b982fc00c56b115cf449c739cabafe1fa058401f2288224c23c7314ce",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "7e55a9447e1d2cea04fe5c85b7ebe201ee2515b13939c35ab11d28e2a40ae638",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1_SDIF1"
+      ],
+      "slot": 334,
+      "spirv_sha256": "a3de445f50955547c7e129a76ee9dc886a49829f154ebffd0a63d3ebd1085f00",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "b98ae993a1154eaadbd5d130e254e1ec49cc5d9a9b3b8bf4a8ab92bbfe84ce8b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SDIF1"
+      ],
+      "slot": 335,
+      "spirv_sha256": "316e0943bae27e1c3ee8f9108d832271a6d84b60803e897561bbafe1853999e5",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "426ffabd42daccb79e153bad41003e365f37c5a8462d955c03123df0100ae7b7",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_NRM1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_NRM1_SDIF1"
+      ],
+      "slot": 336,
+      "spirv_sha256": "44365668255abf8cf2faa7ceda2c81ebc79a05923ac186171629554a87372e84",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "058d97fba72b7f276de17f042435cc75e4c3cdbf3ed1e9e4b4aacd13f4afe2fd",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_NRM1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_NRM1_SDIF1"
+      ],
+      "slot": 337,
+      "spirv_sha256": "82e2e3a32bdf1239f4a9f16fb35571520ea25829310247c179c2df546991199d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "551df393c132efc0dff65fe7048f90decae0369a3f2c53e4cb88b68906e05598",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_NRM1_SDIF1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_NRM1_SDIF1"
+      ],
+      "slot": 338,
+      "spirv_sha256": "a845cc42753951fe310e26f7c2c55c22173490ee2349e607baed6f08636b2109",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "fcb32d8b2c3f4fa08e5d667aa9139a301ff8d76364270cdc7c7c1ca9aa71e8b8",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_NRM1_SDIF1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_NRM1_SDIF1_SP1"
+      ],
+      "slot": 339,
+      "spirv_sha256": "fad2c283eab1b0b4ce31787e0c04e0dad0ff24b6853be7261fdcb0dedad89995",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "726aab28644a83e721c6a81008624e21696d4988cdd28592680f69d698834409",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1_SDIF1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SDIF1_SP1"
+      ],
+      "slot": 340,
+      "spirv_sha256": "962e39dec006e27f05ff7cd55f57f0eaa538d6dfb4fc1e4ebbf7b6440b5ab249",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "8d9d23771fcfb2a7546e18b0ed276c6df277c9a0ec7b7cfe2fd47a2c8cc9b505",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1_SDIF1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1_SDIF1_SP1"
+      ],
+      "slot": 341,
+      "spirv_sha256": "19f8774a6b1de14e0f91f3805445a2ba8801b18ccc85c139476fd208ac2bf577",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "bce080fadb0445a31999d43011d5fa6f014f8622183d6c57eb3ca85dcf9b31b8",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1_SDIF1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1_SDIF1_SP1"
+      ],
+      "slot": 342,
+      "spirv_sha256": "319590c6cf34c0399535e5b11cc7bc792ee7d14352dec725bf928477bd6d9a30",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "4e54bfcd87faf36a3eedbd44f10f9e3bcd38087bece6f055a030311e7a5fb65c",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SDIF1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SDIF1_SP1"
+      ],
+      "slot": 343,
+      "spirv_sha256": "392872c6e448545af6fc8e6b3e6ff34c60834323ed451ef3471de8bd1ca68755",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "6a13a4c26b0de2936e7d9e83c3f472c08215bb998e4f3ac213e1b69772998633",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_NRM1_SDIF1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_NRM1_SDIF1_SP1"
+      ],
+      "slot": 344,
+      "spirv_sha256": "f1f81e4ebfb501306cd21f9415323e8bb7c08697e9efa4039a1dc3eea5ae73b4",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "3348d5c7dde771016fc5f31fb5a4bcb5e8d71dfd02ac6611a4b6f7698eecd9c6",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_NRM1_SDIF1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_NRM1_SDIF1_SP1"
+      ],
+      "slot": 345,
+      "spirv_sha256": "c78e7602fe35ffd80050b9c0a2be496ba52e5a2041539721d0d30c75837b9d77",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "af581b3e329074a6c1aede39259658f39e7eca1c7200045ee66e392be23da2c4",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_NRM1_SDIF1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_NRM1_SDIF1_SP1"
+      ],
+      "slot": 346,
+      "spirv_sha256": "01adeaef88d38e57db02a0612067dfc79f9e4ddfeb9a18a53607f2d0bf0e960b",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "6e12b4ce64d9529b3341c02a3dffc22c7014e331fe89302e5ba773e140877d38",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_NRM1_SDIF1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_NRM1_SDIF1_SP2"
+      ],
+      "slot": 347,
+      "spirv_sha256": "7923cc494e0de90de41184b39f911a96173c52b9d3de94c478c8c3581a1711ca",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c3feb466d852b6691391e2801cf2c7050cac4a3bd2ff901482f9ff80e6912539",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1_SDIF1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SDIF1_SP2"
+      ],
+      "slot": 348,
+      "spirv_sha256": "262c98e479bab952288158971fa665c7f31b636094bd5e01874cf3bf30bff386",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "403aad2cb17d529096f394a1a87321f0a694a6fba368336597de59ae380a6990",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1_SDIF1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1_SDIF1_SP2"
+      ],
+      "slot": 349,
+      "spirv_sha256": "e22f22dea029fed9f0bde15a20e31d0f39681d251925bcf78fb5dbd7169e96f9",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "06665e126c72c8e13aa17e5f915650591360fd52ef37708a7ba32106d8959083",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1_SDIF1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1_SDIF1_SP2"
+      ],
+      "slot": 350,
+      "spirv_sha256": "bf1d1f1fe2e3587c1cda37b49571b343c71ea2ba7e8506ab2bba0a85a54a4edc",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "45da3e4c9e16d218f805e8bc4716d516b26adfc7afa01a029b1419bc3436ca09",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SDIF1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SDIF1_SP2"
+      ],
+      "slot": 351,
+      "spirv_sha256": "57899217312741f331cc87a42e274e5bbc756dfe60933ac961baf0224601aa5e",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "4390607ee4be8cd6eec539d21724f2be95ff0a9c598157c331899732f2e04c72",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_NRM1_SDIF1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_NRM1_SDIF1_SP2"
+      ],
+      "slot": 352,
+      "spirv_sha256": "916c1e3c73b85ca1616ef541899b001abb475b735111c5c59fc93d13a17558cd",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "3f95b217e84058fb6744ce7248474f0b92e68cbefd6e74d85c694d768c7dc4a8",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_NRM1_SDIF1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_NRM1_SDIF1_SP2"
+      ],
+      "slot": 353,
+      "spirv_sha256": "575c1f45773e71ffcf7be721c3a2920d5c6ba27f49ba31e3426b778e0f52b2e6",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "469c4ad606af5e3d3fd4a1bcd85d1c175f1c3dc723ce08d4ac77a1cd07430afe",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_NRM1_SDIF1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_NRM1_SDIF1_SP2"
+      ],
+      "slot": 354,
+      "spirv_sha256": "0bdb116b80f2ba9409c90d501bbfb1f0da22a2310231baa9182439b78b398009",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "6eebb83ae4ac364994839989e620f93c63afef1e71d88687b550e8fea326eb9c",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_SDIF1_SCR1"
+      ],
+      "slot": 355,
+      "spirv_sha256": "b7426fef3783a5014d4d59bde07aa638e5e39b7da7ea61042824a479be4f63a2",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c2fcf343215c07e3a70ae9b9f5d4292231c92d8e1042e3fa8d80e37d7fe478d6",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_SDIF1_SCR1"
+      ],
+      "slot": 356,
+      "spirv_sha256": "b63ac0171c9ebf5abfdb3bb6aefe43652ef4a868a4b40a32ac865ee719820185",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "e042d259d496372f87f4d3bec5328bc4779c6de5e8ecae1f570239769a04b989",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_SDIF1_SCR1"
+      ],
+      "slot": 357,
+      "spirv_sha256": "a2b99f0c1013be34d724f049ae6ea1bba2601802a6ed10946a4ef8a55e0afd6d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "40295fc08fe685a9d7ddc9685d4dcdc0ee412e5b968e9acb7ca5eafa5dc5e5e8",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_SDIF1_SCR1"
+      ],
+      "slot": 358,
+      "spirv_sha256": "3f3aae93383858ceb8bccb63a257b810e8f3e2fbe87a4926874a64a15398b899",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "116ffbf15e2b6b6d55439f4b6425b08809b0233fc8abc275e2b8a6b64ba98b31",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_SDIF1_SCR1"
+      ],
+      "slot": 359,
+      "spirv_sha256": "5fd3cd929798a990389044f115f2de7e1cb5074bf2112aa1a41cfcef71ba8963",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "e10a3be8f053acabc6ff6c1d9ab1f88fa1353f442462cf9e50678507cd23822b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_SDIF1_SCR1"
+      ],
+      "slot": 360,
+      "spirv_sha256": "6dc1ab27915cdce99009474a9e7beb58213dd7fe547b4e4dbfa8a7626f7cbaf9",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "7f33eb75232e6e0c013ad324b55638f7e6e7730b37aeca9de2634b934455fea8",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_SDIF1_SCR1"
+      ],
+      "slot": 361,
+      "spirv_sha256": "854a32b1d44b3ff34a39fec4c393b4c3aa39692f54f8113e961b9c70cae3a854",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "91b3f67c038ffad6e43fba62c5d8d7571b62027359d1bb240ffd83538a390185",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_SDIF1_SCR1"
+      ],
+      "slot": 362,
+      "spirv_sha256": "f6eada08c10cf1c827b0a7f4378d81ee5c2d72796ce8c33ec1343239c3f54900",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "cb0c0dd05c0a7031fcfb9578fb8c8b38ff5aa5a2d8e5c8cc813b70aa595183d8",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_NRM1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 363,
+      "spirv_sha256": "c4c0e9bbc6e6025e442ada249e32b99e84f63f4557449a73dc012d63d69f8ace",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "9187720091ea98392e557d411aa4d8cf160f6146a0e7a1c4b05ab84987af693a",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 364,
+      "spirv_sha256": "55f9336af0a9ac91ac19a3d51adfd5390fe089d0347d923ba1e9459ee3925f3d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "0c0f5ac39005a08d46e3282377ab4a9839e68a40e05affdc868e875c1352cda7",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 365,
+      "spirv_sha256": "833f8042147140c028a1f09ff79e14d0782161801d7d0625623c23d104b0f925",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "8146211a055cfbcfbbacaf1cd9bcaaf335bda1f114b388a0a28b53177206d1f3",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 366,
+      "spirv_sha256": "5ec6a62156a057b042d466d0849791163313b59438dd8429c0fea37c49777cb8",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "65f7e465aca95d1c5346ec7a7285380b0df4e08c917dc003b398ee435243581c",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 367,
+      "spirv_sha256": "ca40611a831d851696cccfc7b97fabf205745dd09b3166bb909f2d4690457345",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "94faf103d8f005716f8730855d21e30f21537f7525da8a97317a6e43567d0ff4",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_NRM1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 368,
+      "spirv_sha256": "174fad4eb064ceff06c5429c5676c57c9dbb5f71b8ae2d7b7674ea3208d31cfe",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "9db33e9ea709192cc1aaca612fe63c9a8d92a0b11fa349bd39245cffd05698fe",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_NRM1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 369,
+      "spirv_sha256": "fbcbd3348846cea0e563445368d05d65acc740c80a82be052a55ab5898a9c94f",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "9b6d2bdb5c2d16c52715b420c9eac7514fefc4803a4c5f6e7091072b2bdecaf5",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_NRM1_SDIF1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 370,
+      "spirv_sha256": "505fdb02e89bb319a9397164607c20f0c36cfdfab23e32b6338834f799dde1d7",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "08d8bf0025b30db3286afb6254cfca8132d92ca025bcedfdc506df809191da2e",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_NRM1_SDIF1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 371,
+      "spirv_sha256": "c1cfe9918d1a2145f471d88e53833c454ce05e7c6e4699e588e789a85c859cd3",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "da1b24fa94cd3174d3324b5afde0d52005335e3e228d86273d2030808252258d",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1_SDIF1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 372,
+      "spirv_sha256": "a371dd6b78dca0e1d98f62c7a2654facebdbcb4a3fa9656c0f6a08a5b9c6dc20",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f72813ad35dc03f9d8fba646065efb4b99aa3805be95559c83d82a61d79d0142",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1_SDIF1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 373,
+      "spirv_sha256": "97b5b6cb0f2b9f405728b325015c2d02a6537237a34a18591785aaceb6d8cf23",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "3a40a660b1f19931220dbd743c5d66077f973cbf78899554886583aede700b8c",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1_SDIF1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 374,
+      "spirv_sha256": "3b30c8a5658944ec728fab4e4b84513fdebc66e4e1b212ebfdeb7d3c254b15fc",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a8d57db49551f292deb55ab533c80db653eb3f565751a48b7bd1b3b3340d90f7",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SDIF1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 375,
+      "spirv_sha256": "2f0bfb9b8642e478168d457be4d3bb4c3ade8d86e1ecda2a4d2cda06aa28a906",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "093d4b5d54560d9474d11074e885703e8cd29f768257119113e145a7c526ae36",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_NRM1_SDIF1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 376,
+      "spirv_sha256": "71c96294e25f1d9470027d5d0ca1cc72326af169063d5b5247bcadaaac0ab855",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "febcb2d030458ac3a66357e7f344d301b195674d93985af1f55cd91d6baac708",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_NRM1_SDIF1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 377,
+      "spirv_sha256": "a1410f8ce1c2a8e683dcb5fdce9d7abb3d49141e3f544aea510e193ff877ca62",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "27619271fe69921641f5167e39aae6f75b548ba3a95f3487bc6dafefcb6ef7f6",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_NRM1_SDIF1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 378,
+      "spirv_sha256": "6b3d01518e6933f99f01c0dad0ee0daec0a3021a759fdd91130cdabeeca2d6a7",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "5600272eff829628be150c77f7cdddd6b9d02f474d137281781d073a580f4086",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB1_NRM1_SDIF1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB2_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 379,
+      "spirv_sha256": "c32182f8fcdd578829ffbc584b3be89ef4e5bf38f4a78029e45c57758a945e69",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "942c72cc2053603241bce450c12969ce2d82012d9361201bf77da63d2d03c4d9",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1_SDIF1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 380,
+      "spirv_sha256": "c6d9790c288fc1e652ccb5b38c04cec7bbc68065a9bf9dead1b6f1fdbe37ade8",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "8abfdf50ad38183a2796e6bd15dd31ae5d2eb2634eb183cabdc567f0ab41d160",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1_SDIF1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 381,
+      "spirv_sha256": "1e5786cb039425f53f0a02b91f11a9582f914e168723c4ed178eb489db25914d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "43d84dc984537f2947c8ae1f084240d7ccf2dd70bab6de4ce4f86fa59cb59098",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1_SDIF1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 382,
+      "spirv_sha256": "a7904d7257122c751d943495bba6464062a258b9a3ea086832a1d893e2307f9d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f213a51522dd69bc678800ebb538209914523d5a6641f1a70483fb08f5602cc2",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SDIF1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 383,
+      "spirv_sha256": "50bc1aaae62ce4c337f95dfa781a2fb484fd26fbc2330a7084aebf2f943bad3c",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "92ce4f7d3fc5a32c25c2af6a03fceb7129524ec4a24d78da7db94660f6b415ff",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB1_NRM1_SDIF1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB2_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 384,
+      "spirv_sha256": "ed4577e0e673351940cfcda25cb4d12ded2353949d07fe809f7c64fdae0d58b3",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "72375bdd4f6c578207a435464a4b63dc0210d758db62cbbebb4f792bc1246640",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB1_NRM1_SDIF1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB2_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 385,
+      "spirv_sha256": "aaf89cee1311d70e4b93866390eb2ba1d448609cd09fad8d14bab42b68361b63",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "d481fd4c0edbe5cad9d000eecce88466b32a95dd88534dc68807c19f22d15611",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB1_NRM1_SDIF1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB2_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 386,
+      "spirv_sha256": "0517845c2de0f0584e9b7c721949780bbd1b99fdc168f603b93aa0437d51f37d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "aa31bc097130c5f5e751d6387ae08754776875ebd78cec69c9c0b660502b0696",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_SDIF1"
+      ],
+      "slot": 387,
+      "spirv_sha256": "c9788ed8afddf28b2bce43753783a4b86a5b5b72d8e34836b0261d7c2912fca3",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "98c1891320193ab91e6ea738fb923ec3a2b0e7f2b45d4d35ee175449b0d7ca41",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_SDIF1"
+      ],
+      "slot": 388,
+      "spirv_sha256": "b8cc85da602d5ce17ff16422464d34b831635092ea42c7e7139a681e93a44c0f",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f029fe855b39b3a764cddf9bdc850dc8021de96c44f0ec47fbf34ce5a3880a51",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_SDIF1"
+      ],
+      "slot": 389,
+      "spirv_sha256": "a54a3e7bc630da19e1d0c19383f72753a4ce319bb15476149df40d3ba5575a9c",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "faea87b24f991aaaa4097d4c278f81cf1cfdde5c90db24681022cf5c352f5a17",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_SDIF1"
+      ],
+      "slot": 390,
+      "spirv_sha256": "235b1448579d5137fb0c3a0872bee8a84a5b7a186e2f17633e73cfe323cb6556",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "12f6f82d9a146cb484d6654164758e9adad041dcfbc00a8d8282f24f38b62574",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_SDIF1"
+      ],
+      "slot": 391,
+      "spirv_sha256": "e7109c775c7cdd788e353a1b406e413821b0f3686964cdc60a6b159320485b70",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "dac6fbb7e48d1f5e776ec487a4eb1d75fc275ddb9f7e8fee7ce07729f37fc84d",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_SDIF1"
+      ],
+      "slot": 392,
+      "spirv_sha256": "a5dd79a2fe3f3c31cb9878e382d210b5097c17a1b9ec2678a664f3f99ab45f5f",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "6e05fc104805cb29b95905511dd42dddf12ade2089d4cde8511b6b44dfe20a32",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_SDIF1"
+      ],
+      "slot": 393,
+      "spirv_sha256": "d2546bcf01d7e8ecb6eb4580d75d19a7e78cc72c41fddbae03a6e0004321698a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "5429fde8811a6a08de8cf306a7bcf08c97cdc48e2ed98a24b466d46ef484ec2d",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_SDIF1"
+      ],
+      "slot": 394,
+      "spirv_sha256": "ba7afcb2f4593278be3dab620bbd58a8d6f714b53dd039482dd48cdc1f57f1b3",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "61f8a48f5e8e139e7eb8e5fbd144bcb9b54db27c7a1f688857e3248afffbebf5",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_NRM1_SDIF1"
+      ],
+      "slot": 395,
+      "spirv_sha256": "684b0e209f3a753d7bfd948a7f74156413960900808eb1c8226c120490af7aa4",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "d804d1b96b8ea45e4bb57fa883bdb8bee7fcb3800d00a7c1e91627d371482ce9",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1_SDIF1"
+      ],
+      "slot": 396,
+      "spirv_sha256": "28cac61ef3546c5bcf32e712bea2d12f468dc0c2eb7d5b25c7adb06ba529353a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c14d314ea67bf0cd3211c75dfa3c1e6d32f688e0f2134e85623c552253364dff",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1_SDIF1"
+      ],
+      "slot": 397,
+      "spirv_sha256": "78b41e741198fabad07f4c0e2dff78593cf684565056db78e5dd720ead71e29a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "17bd607923f41c8065c7ce85e328fd1841f11dc5fcf1b568b3e57ff4abf6d5da",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1_SDIF1"
+      ],
+      "slot": 398,
+      "spirv_sha256": "92c5a7f0a6914a90489e10526159ad38eda57306cbac5f794590c17034086fba",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "e231a4e93d6bf58a506c4ad422ab35966e02e1e8f2837010489bf977d00d8403",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SDIF1"
+      ],
+      "slot": 399,
+      "spirv_sha256": "4dd4c585f01974d331e17c3ec33a9daa0875233123667d571b3d8fe89279ad47",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "d8d7aae33a7dfe6a82e519faae15029d22e9c6e3e3b1c398e910a51b583ac2c5",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_NRM1_SDIF1"
+      ],
+      "slot": 400,
+      "spirv_sha256": "ac6704720e2e88d76f313ef7d413ef164181cf528f4c1b8f2c264aaa2d283a48",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f374cac71c24c1e39fcf97daa9b069f77aa57cb3a37eb773ba1472e16f0c5c11",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_NRM1_SDIF1"
+      ],
+      "slot": 401,
+      "spirv_sha256": "a7af14109cae42f93ed3936a65bf5dda24504c51e6ba3d112c25a637364530b5",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "adc4af73c9db2d339ac7b18efd6c463bf6aff4dbc17e8a1e77d88f6e0802140b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_NRM1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_NRM1_SDIF1"
+      ],
+      "slot": 402,
+      "spirv_sha256": "2cb3e2dca05ae696a2a16369947ea4f69fac63d91d45c887f16a6d67404b0349",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "3d82b17d90b3046f2bc8a87bf1033e9fd0042825d9faacc8a437c35c5c4f2e65",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_NRM1_SDIF1_SP1"
+      ],
+      "slot": 403,
+      "spirv_sha256": "b5c9afe754469279c7a0288d62cbc6f79fdea3efc99110a6ca1427c440eff0a9",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "de94bd7fb29a69017ab0c7d07aea0226520df1b75d5d79d12a5811b23eb48b3d",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1_SDIF1_SP1"
+      ],
+      "slot": 404,
+      "spirv_sha256": "4b7c3650fa68da4140cc305c855745af0fcdaf6a73ea0a589000f6ca4687af64",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "7fa64c5e4b294f469699415591649e45751ce37fa5d68ffb9399a5cd230eda1f",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1_SDIF1_SP1"
+      ],
+      "slot": 405,
+      "spirv_sha256": "eb889f98b803c4753ebaa8ebfeec18545625c4de0fab13512a5d655bcd980e40",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "ef79fc4ef220642150d938085c9c506c31e068172209a3527311dbfdb972f5b0",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1_SDIF1_SP1"
+      ],
+      "slot": 406,
+      "spirv_sha256": "d229c3c0830efdff391e961e322121e5ea949301a76d19b22539305c5133ba1b",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "961da54041f423fcdae7ece040cfd7299c5da0420cd9911ec398b18aefb64065",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SDIF1_SP1"
+      ],
+      "slot": 407,
+      "spirv_sha256": "87924364b41f085078469888d4f536d820766a5b322415a907e55c0681877718",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "af97853f3ea608f1c0f53a5dd0ed4decd85566212292e1e2cf8fefed1396881c",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_NRM1_SDIF1_SP1"
+      ],
+      "slot": 408,
+      "spirv_sha256": "79e0ae1de41f222b2543386e5ea47a2e294634af88f8810ce8f208b8485eac1e",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "11a4dff597ef9a1dafae04e253555b7299384f7126faeef4ddf54c322f764ff5",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_NRM1_SDIF1_SP1"
+      ],
+      "slot": 409,
+      "spirv_sha256": "55e167bf011542ce61a9d090e5cfdf15d763da9dd30ded19f93dee862d649f35",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "d78178405e76deff2ef6ab5d734065536c1d5d3afe63ca97207e640ec705be0a",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_NRM1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_NRM1_SDIF1_SP1"
+      ],
+      "slot": 410,
+      "spirv_sha256": "d04604241b21f0a2433155a45210c49e16a0c1e3196201e74f7b2c16c9d9a166",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "3239e19c904799b75239f0c36340012ba888fab7d95d02c3fb1d6a30c8081957",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_NRM1_SDIF1_SP2"
+      ],
+      "slot": 411,
+      "spirv_sha256": "a37a5c11028ddffa456c4d4a3c7305dfe64a75ff4eecf0ad919f8bb8b35d2d83",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "bf553085a3820698235cdc0e34b57f9a48642e70856145b4dec6d7f445a39203",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1_SDIF1_SP2"
+      ],
+      "slot": 412,
+      "spirv_sha256": "4afb4aed520094167b7aa1d99400e6ef3c4e931163e61382c7d8fc734de386dc",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a42fce9bd40970328bc52e95d733f8e3f774353200f9def971adf62695b3df79",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1_SDIF1_SP2"
+      ],
+      "slot": 413,
+      "spirv_sha256": "516502f5c4c94e5574b83a080464769e56c5ecbfa1743e9baf761307dc8b23b1",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "da972f8436d7b9dcce4d1e272f41265b7ba5c8d78c977bb255f1d0338087fc5f",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1_SDIF1_SP2"
+      ],
+      "slot": 414,
+      "spirv_sha256": "96a93a454f0306d30d17632b0c65e8cc4d012adba5a63ba2253375e09ec2ec9d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "b7bf098a1541c2e6c91265a4b3cb3b3810b589f7515c4b0426011f88beef99c3",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SDIF1_SP2"
+      ],
+      "slot": 415,
+      "spirv_sha256": "adb9e043282a802aa31fc97614921c2bb211f4bc75f930399dfc577fc19b30c2",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "103487fc30cbe8176a9439bba6a654f195652cebe6f503fc5046766565c4608a",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_NRM1_SDIF1_SP2"
+      ],
+      "slot": 416,
+      "spirv_sha256": "9a39bdb36bc8e7571e98b7e50558618651013f3856a38f5a60a146f562dd06e5",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "bf3315b3aa80a34636f688b2aa946e86c33b7b7ae7a952b6df2f4de895288f77",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_NRM1_SDIF1_SP2"
+      ],
+      "slot": 417,
+      "spirv_sha256": "823ef5b65f6e14a2a6f4fb8ce86ed00d9e3daf85e616f81099d199ede58f606f",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f8c9eb30b7d827e7efd0f19c680fdef1693e2eab76539e1c932c915b16dbfcf2",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_NRM1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_NRM1_SDIF1_SP2"
+      ],
+      "slot": 418,
+      "spirv_sha256": "d04747fb567d07ac252b71d34ca61a211c8d7765ec4b8c8c29dcf2dcfc42b3b2",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "229148300e05b4bde0a2c6e99c1496d535a3c1713fcd0358772f7a36ec97c2b4",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_SDIF1_SCR1"
+      ],
+      "slot": 419,
+      "spirv_sha256": "0bfc787028207e05ffdff7aa100d53927bfb74ac1b61a8ac32e9e7bb8604b32e",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "62bea3b9793d8a8afc6195039f73e27100b8cc4c7759b20401a867cea4154e96",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_SDIF1_SCR1"
+      ],
+      "slot": 420,
+      "spirv_sha256": "2eaba0b4764ade0a326348668cfe7783274add49a8933ca92138df2727ab19d3",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "2eee6690d069572382cc33e2989a450e9673ae65634902cb9d2cec835f1ee0ef",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_SDIF1_SCR1"
+      ],
+      "slot": 421,
+      "spirv_sha256": "b1a23f5ee5fc0da9a1e3525fe98f048edb20330c8c0ec4e60b279bc011c9219b",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "3df31d75ab95320d428e708f6f9c503c85cf35ba8a1be959c237c091a43b39d2",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_SDIF1_SCR1"
+      ],
+      "slot": 422,
+      "spirv_sha256": "66afc1369b931bbf49d066257368534d2f6529860baf68f3a6afaeb497c32cda",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "157c7490a49fb195cc56835f5ee6a2c3acc8a0520878f72efeec72276ed321f5",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_SDIF1_SCR1"
+      ],
+      "slot": 423,
+      "spirv_sha256": "15f656fab594d258d0295d382d667951c94cc140c579807e4c2507de22cb3c61",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a89b4701b82984697571419413ff9471d908af11fa849b27a2f3af672e58b883",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_SDIF1_SCR1"
+      ],
+      "slot": 424,
+      "spirv_sha256": "e9438f23adf1f3847597d6265f9d03564223c3a7adbcabd998d83296c66eec53",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "43da9ea1588d5233206ef2cd10d3be4510cc6643244175a82a447cd35e89fcb3",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_SDIF1_SCR1"
+      ],
+      "slot": 425,
+      "spirv_sha256": "37501928294e4ee35980118817f4a562811a256779a15812f3f31528edf1b7d8",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f58cac1083a1a6e94c2c6a1fd56b2b7291bea9607d5a1f59f48c12bd29585250",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_SDIF1_SCR1"
+      ],
+      "slot": 426,
+      "spirv_sha256": "cc82f803710268677ab083286ec0e02b4ba47d4e66f9bd51aa9a9a9f898323b3",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "7bbadb82fb62cd5afa6684132cebf3833a170962d8ec0f6b28cfbe2748e43be1",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 427,
+      "spirv_sha256": "7b835f008f5a7479c02d8dfe16c2aa2e680a660d686fbc713e24f8f372e31554",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "efd3b384feba9bd45ac04a54557a3a65c5a0665772eb2c4320b1ff3e556c0837",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 428,
+      "spirv_sha256": "746e46b7f04d11eaacf23b649c4fbcbcc3e140c7627c40e4a3ed80d9e017e553",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "152771c4d091c023b089460fa384f9a9cc9a18ffd7b8a776fe10ca2eeaa5736b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 429,
+      "spirv_sha256": "15fc191e9d39eb151e5fcb3c2f6f9b68104f3e6be4339be41773a66bcfdabbb8",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "28fa34a215f576056a95936d4c9ab7b77ae1a040e92330ac176b74c4b362730f",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 430,
+      "spirv_sha256": "d03e04364ab637ba346b9d09223a8d262ffdb4527a75f65f6a252a305fae32b7",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "e1266e5baf7e333d04b791e2f946b20e3d0eb612435110ddce26c40bb68475f3",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 431,
+      "spirv_sha256": "1b4ff202079ed0ba0f9a83535eadeb144a8d26d5803a20fd94ea957477cd40a1",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "0596caeefcea0810ea74f6bcdbd967ddc649d051542f2fbe0c397b511e1ba6e4",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 432,
+      "spirv_sha256": "1b47c555feb6c6b90c566c1c66b0e9df2a265b7dee961ca4dbbec73b61f2b347",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "7d3054023fc370a9a20e580372e8c57772049f372b603e8bd29804fdd1c3b92b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 433,
+      "spirv_sha256": "17b6ac84951d5a95e5407a0c853b3af1ab4d3d8daf0c7cad47901b232b521121",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a309f5d1fb73a3318e95d9ee703e1a37b3855ce6086479a8ef326177cb8bbefd",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_NRM1_SCR1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_NRM1_SDIF1_SCR1"
+      ],
+      "slot": 434,
+      "spirv_sha256": "c44e9bf21cfa26f0cad0e89af146c02c890d8983e5af6662bb1f38f7d595a6d2",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "6a8753e8c5b01c1943996155fd91efef8b0f815f7ee3358f0907dd2b79754a0a",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 435,
+      "spirv_sha256": "c363bf963a37864cd7929e33983eada23d97030e734ed809143db659b5197527",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "7466f0b27cd4e56aa7025d79c9adabdc0ee7da7f006d53ae7c6c03f4efddb0e5",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 436,
+      "spirv_sha256": "970616a462c347b2802d237e2a145eee06ab66be8fec0d5575e1480210739e96",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "94dfc22e2fedefad299a651540e6d52cf493e4266379e42419e0b45024b96164",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 437,
+      "spirv_sha256": "821d7aa9f8eb5ff6a655c9f74c57bc94f3f85cf98ecef2d8ec847385a6891449",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "536312bd7d549a5e5f96c929c0b5219f71c5219a48f5b9823ae7224961edc168",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 438,
+      "spirv_sha256": "1cc874eeb69e8ddcea3c85ae5c54f2d8a2e64cf8cd712f76eb1917040430ebb1",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a5c087f2f7271ac7e9b2ba1fe3cf2b3f150ae872c57431b0e41d6a2e42a5e51a",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 439,
+      "spirv_sha256": "0ff7ca2ab9c14180d12273cc3baad865a739f658421160990f20f9983092806f",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f127ed0a1d136b2a1660eb7a3a610f40f8f2861e383c5e52757e491c3b71a9db",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 440,
+      "spirv_sha256": "4a104f7f6d169341ab62be4076780c41e6cc3844bbbc73975b74d54d84db5e0d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "57a43f8a92da918887a1d480aab8f78ce7d22c5d6a795fd1999710e75601ec89",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 441,
+      "spirv_sha256": "3f3f76c047dffedf07e4802a6b72761eb6eb1f5be04cc7894465a7c5d727facb",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "6b4a8a4b8254f559ce3c5bccbb14ccce320c9bffa92375001f4f6bedea1048fb",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_NRM1_SCR1_SP1",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_NRM1_SDIF1_SCR1_SP1"
+      ],
+      "slot": 442,
+      "spirv_sha256": "3573eb518103981458d45dcb94e97b3bd2b07530aa63b55835fc56f56a952d24",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "11d49c18eba5ec0be76bd0850008202f4d7048ca8e7e1fb0501b68f1bb424b2e",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST1_AMB3_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 443,
+      "spirv_sha256": "cce8f6c6555efc07dd7eb0f5c08f9e127cac9b2ba3bcff28eca330708cd284c2",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "e67b7866db532de997dd37be43e8d27e87062f254628412822929e4968d30584",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 444,
+      "spirv_sha256": "634b7ba24a04b7d5fff7eb914508046d66382d60c0831011e8c75270c5cf003d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "82d712694733fad537748c4ce134e5558db270fa5ae237a3d0f6d1520c02788c",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 445,
+      "spirv_sha256": "058ae91e29bd7b40081b1740c251bcccfce26f396498929470790624782cfff9",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "bde6279b31d37231c43a17a05191f7c51265bdb5d126661277ee226cca2a3d17",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 446,
+      "spirv_sha256": "c91bbc1d3d71e6c874f30f734463a4833301ee836008227c0c000182fd51202d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "907063c3585527c5e4cf1304e3ee79d7a6a940aa283c805682f5285836b43f70",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 447,
+      "spirv_sha256": "96f6f18964cfe9d7af2255f19dca92287ba1c212d8e328c1d5adcb25578e6462",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c684dbbf8f04a671eee5f05c6a56ca17fdf279974802c04bfa24120fffd6536e",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT4_GLT1_MIST1_AMB3_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 448,
+      "spirv_sha256": "684b189003307291c5a23a6a71e724c6c064a6bcb4b70c5d8e2fd7f0967ed55f",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "57a0c99bfef09600a654edcc7e17fd69fae6daea901658e754f89313eb81e2b6",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT7_GLT1_MIST1_AMB3_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 449,
+      "spirv_sha256": "bf0a8087c3b77e5fc4a4784230f7513cae9cbf0333b2d0795cdd3eda0e54f194",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "4e3b15b56ba0c3f5a38185071b8b86c7ef185698e9f074e354d0190652719570",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_NRM1_SCR1_SP2",
+        "PSHADER_STANDARDMATERIAL_BLT2_GLT1_MIST1_AMB3_NRM1_SDIF1_SCR1_SP2"
+      ],
+      "slot": 450,
+      "spirv_sha256": "0bae2caaa41ea2e8c286fb074a7a3d94f7960a4293a9d294f8c0aabdfbd36cbb",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "8b1e79c63e64dd8d7e155d9a3e6f42e80c09021218bed3265b46041acb969e1f",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_COLL1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_COLL1_WIND1"
+      ],
+      "slot": 467,
+      "spirv_sha256": "920ce4ab3800b2652e84c002441781c6981cc96805e31f11f900671e882aa2e3",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "bd1a824014ea595f0e2bc05c71c6008f21605a00ac432f65b2b9bd22997f324e",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_COLL1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_COLL1_WIND1"
+      ],
+      "slot": 468,
+      "spirv_sha256": "2fffe74feed22e8dd8cd329ce2a56c8d9d07c51bad7646cfbd68a70721847bc8",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "2687ca17007265056d4b4d6d85cebbce83bf6aad82bbbb1dca5af0b38e0327bd",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_COLL1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_COLL1_WIND1"
+      ],
+      "slot": 469,
+      "spirv_sha256": "53f9f309008c5142db060e255add6393422eea4871753eebe7039e39e426565d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "e0302ac1972a58bfc6cd5dae733888ae340b2c632bdb3132440edca343f1af1f",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_COLL1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_COLL1_WIND1"
+      ],
+      "slot": 470,
+      "spirv_sha256": "ce9a6978d0a23b87415c58303b65aa47d0333afcfb1ca85a8dfd2d481503e516",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "9a9bdd8158f6ee03640eb72c40f392763d6ad547fdc0d22dfe93d29f8f248d74",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_COLL1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_COLL1_WIND1"
+      ],
+      "slot": 471,
+      "spirv_sha256": "dbb2c825ab63201fb22c1651d078767cd0c7e31fa27d2c65dd71654b3c4ffe47",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "5cb744b380354ef91d8f1c78bccd63ad38719c05a536d9af5b2f9edd0a3ab638",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_COLL1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_COLL1_WIND1"
+      ],
+      "slot": 472,
+      "spirv_sha256": "bde80fb071a8d4ebdcdc135848efcd5117ec764c267a93ff760982fd200f02c7",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "c1e0cd3e3317b9a65a7a6163d24d6cc13eabda1fd9c1e63fceabbe47ed8e62ae",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_COLL1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_COLL1_WIND1"
+      ],
+      "slot": 473,
+      "spirv_sha256": "26946a36e0270f865bddd0e2c1ca5f874c33104261517e3bebd2f87fcddf19fc",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "1f27f9b463f65569db42c758b05fbc1d8d302e3dc3c60e34973f07653d1c771b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_COLL1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_COLL1_WIND1"
+      ],
+      "slot": 474,
+      "spirv_sha256": "244e24e6b660825f5a5694b76de53500dc856104ee05dbb1a12dfcb84e4beec0",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "cd21787084bfb5af079081ce49b87117827cef2c01fc1b3ac52a196ca2e1a843",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_COLL1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_COLL1_NRM1_WIND1"
+      ],
+      "slot": 475,
+      "spirv_sha256": "1a6940aab72ff7b3145f99e184ea608100c03e89b07083fde932836c2149ee7c",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "98d46898d617fa8a95b1f6f62275e5ae9c473bb474e136cf40eafdca63c99865",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_COLL1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_COLL1_NRM1_WIND1"
+      ],
+      "slot": 476,
+      "spirv_sha256": "8ff491a51fb31bbb952eb8321e910022760a192395436a9ab3862c732a1479ae",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "393a3857ee7aaa7709ec1a1d7aa607550c47c2ecd6a6f74d99962566badb1abc",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_COLL1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_COLL1_NRM1_WIND1"
+      ],
+      "slot": 477,
+      "spirv_sha256": "098d345bb0fbae3bf99520bc481fe07a502638dfe08b402c732bce64de6f4a1e",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "2d0e351ddceb9f0bb176d877dbeef39abc7720c4f6a954de23a8345ee8327f8a",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_COLL1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_COLL1_NRM1_WIND1"
+      ],
+      "slot": 478,
+      "spirv_sha256": "8bbcb12e95ea447f50e43ad12e7750a9107ef68329daef417d7b0b41595a7e0d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "8ab5da623390321a584a17ed7bb39ae9ffbcfb09a6c22f7380bde7a517ef5585",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_COLL1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_COLL1_NRM1_WIND1"
+      ],
+      "slot": 479,
+      "spirv_sha256": "9773944bc3c2dcecdd6e2fec45dd29e2fa91205d49ca50d6cf2c07cd55b63e76",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "50bbbab8c5a2b22dbfc52a8daaea0be1148a65ba62ed9f585e8430c1a1d62970",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_COLL1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_COLL1_NRM1_WIND1"
+      ],
+      "slot": 480,
+      "spirv_sha256": "a33e785a115ed46fa2cf5f2ffc76640472dad5e1c9b04d5259ad0b29847244c8",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "89897d734be94acf8a2f42aa263464f993fa271aee3addb23498229b6d326367",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_COLL1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_COLL1_NRM1_WIND1"
+      ],
+      "slot": 481,
+      "spirv_sha256": "ecb194d74d542b2be3a86c44a09e4c62d04755eb92b840ffe870a41c860133e3",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "6a7d3b59f529e3f92529025df3abbcd2ec2fa82acca050055440d3970b094dbf",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_COLL1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_COLL1_NRM1_WIND1"
+      ],
+      "slot": 482,
+      "spirv_sha256": "20c36f7d36c947d3cff7aad25e71a871065313b0432e4a4667a82548a0d5502f",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "734cf8894b0dd124041afb8b6aeb76698b01c7463e7ccb475128a723966a61bf",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_GRASS1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_COLL1_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_COLL1_GRASS1_WIND1"
+      ],
+      "slot": 483,
+      "spirv_sha256": "d5d19a6550ab7d9ec99934093e5e8a171d98be520acd8b7b32777d9d8dcc3951",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "fe683243a92f88a4fd168657f7816b178e6c5d35df06a12454b4e51d61c5f6c5",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_GRASS1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_COLL1_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_COLL1_GRASS1_WIND1"
+      ],
+      "slot": 484,
+      "spirv_sha256": "0274f0756a852fdb9bb14db8950eab33993ab990b8f2db9c320affa13a3db53d",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "57d2b5b36ac40bc26e0860c363e83c97aba37acbe6907c6d4197b2bce49db39f",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_GRASS1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_COLL1_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_COLL1_GRASS1_WIND1"
+      ],
+      "slot": 485,
+      "spirv_sha256": "c4ddbd22792838e00d490741d2106ee185b2ae926986bf53770c1cf00ab1ae66",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "b8808884b329482890b1c6d29847304b28bb3f5e81713334e719ff79b3c61b2c",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_GRASS1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_COLL1_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_COLL1_GRASS1_WIND1"
+      ],
+      "slot": 486,
+      "spirv_sha256": "ccdb520f65ece2476208dabf2c7e630e1382e55dd4367fa206d8eb24ec0ac9b7",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "b51ee42bfeb7cc9ec4516f016103a69ff91ad63ece30a43b897a6021c8321f96",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_GRASS1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_COLL1_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_COLL1_GRASS1_WIND1"
+      ],
+      "slot": 487,
+      "spirv_sha256": "36fb950d3e8e34c49a7f6ba336d3bc117b516516d80a085ebcfb516cc9ae0065",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "10c7ee6230a78fd0e409eb75cb67171b93f464dba307d700ac752204f5d6a428",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_GRASS1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_COLL1_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_COLL1_GRASS1_WIND1"
+      ],
+      "slot": 488,
+      "spirv_sha256": "4ffc63098da0b1b0aedeb0bf4ce023bf8c2cd899cab406a2e911eda23c64c1be",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "6aef7dba7bc36b22d72d32df67f0faf13e2d28fd70aa2f23dffd53a9314d1b2b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_GRASS1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_COLL1_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_COLL1_GRASS1_WIND1"
+      ],
+      "slot": 489,
+      "spirv_sha256": "b04b3a49d06c38e892df6d7dd4953a4b3791c523af3c36c5e0b11cb5e0f137e3",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "f3a00fa401b3efb7eaeca3babe1b0d1d0389efb8578dcbde306b21993f0de19b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_GRASS1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_COLL1_GRASS1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_COLL1_GRASS1_WIND1"
+      ],
+      "slot": 490,
+      "spirv_sha256": "8f0b00dd6f3b339b286941e3259081c32a1690fdaa0b5afde413a19393a2d742",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "41673d39a5c3fc7bb37f9c1952f276afdc39bdfcfc152ee0397e993f681a1539",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_GRASS1_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_COLL1_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST1_COLL1_GRASS1_NRM1_WIND1"
+      ],
+      "slot": 491,
+      "spirv_sha256": "6b4c9b59ab14d7bd7290dc3d0acbb38e55d86ac810b8784f0ffa1b960a4d26e0",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "2b3b03a7732c3a3825595c072e90f13b08f1b1cac48038ed3b77f60607a89150",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_GRASS1_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_COLL1_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST0_COLL1_GRASS1_NRM1_WIND1"
+      ],
+      "slot": 492,
+      "spirv_sha256": "afd76f68dee5c549c0d7221217f7600d8146e29e3844cf2a7bc67c601668c0af",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "57d671ead1fab2eb7efc1d9a2089c1b9aa821e193dabde4950b005a03adc03f4",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_GRASS1_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_COLL1_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST0_COLL1_GRASS1_NRM1_WIND1"
+      ],
+      "slot": 493,
+      "spirv_sha256": "8868929a264ab0c5b04834fbf0e009d4f68926559e60225b34e55a72cc0e30c5",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "1b840e71f967c18db75517283ed94122303dcbae4015b39531c932f2186b98ff",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_GRASS1_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_COLL1_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST0_COLL1_GRASS1_NRM1_WIND1"
+      ],
+      "slot": 494,
+      "spirv_sha256": "d7e55e5e076a841ce614aca776463c37e8253bd25656c41eb46576540f40b545",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "3128f92a61a190fd581e2f972e60aa671c043336206c1db56956970202cc21a5",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_GRASS1_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_COLL1_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_COLL1_GRASS1_NRM1_WIND1"
+      ],
+      "slot": 495,
+      "spirv_sha256": "5886340534a464e1eb2f42b9c785bd962119e2f82b945a23a25ea31c4269fc80",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "343a03a7e6760d77e020c23293251da36b52c26dadd4304ea514face5950d4a7",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_GRASS1_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_COLL1_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT4_GLT1_MIST1_COLL1_GRASS1_NRM1_WIND1"
+      ],
+      "slot": 496,
+      "spirv_sha256": "36f1cb8ccbb5faa6fd0518807f2413468f4cc2978cdb62510af8d2a161ad9678",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "4dff31c9e35f68820471d773343dc91891d1679a16d1b3a2520475f983e22616",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_GRASS1_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_COLL1_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT7_GLT1_MIST1_COLL1_GRASS1_NRM1_WIND1"
+      ],
+      "slot": 497,
+      "spirv_sha256": "db0458242259a50b32750ae3a2ce1dfdcc444ff559255d2302fe2b869c7576d4",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "8e5bac5a12082cf9c17bc11caf703f37a30793033c8e27930827956ebe484192",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_GRASS1_NRM1_WIND1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_COLL1_GRASS1_NRM1",
+        "PSHADER_REPEATEDMATERIAL_BLT2_GLT1_MIST1_COLL1_GRASS1_NRM1_WIND1"
+      ],
+      "slot": 498,
+      "spirv_sha256": "f304fdd9edaefb0b60b94c3756e29feee7cb588daf249f7b89a686d16b977d24",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "4502f8ace9c7008cce98847b52cb89458ffa031c9afbd10873fcb364c7e4337a",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_TONEMAP1"
+      ],
+      "slot": 500,
+      "spirv_sha256": "3ac61ff3ca8e8edeafbfd59436ac9c649b20004d8df4f705e3a9be6bdd35c8f8",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a871bb478633de58f052f7f90eae52988e6982e2461118bce85a71cdec92667b",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_DOF1_TONEMAP1"
+      ],
+      "slot": 501,
+      "spirv_sha256": "06315d3826aa11aab0fdbe2efc53a650d92da3c004ad04c221a3298b78e0b729",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "15ed6e6aeb189b0a3664556e1bf1d182a9e5ce870e74f5a665d0293b865645c6",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_DISPLACEMENT1_TONEMAP1"
+      ],
+      "slot": 503,
+      "spirv_sha256": "4e5d756ea025c3fde9cd39f7c90ef4ac18ba9c2e532c7b3625c1dec3bd77acdb",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "152d3899599e36213856a33fda1d3a4e84dc8b2460e118d4ccfe2fa323ba9ddc",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_DOF1_DISPLACEMENT1_TONEMAP1"
+      ],
+      "slot": 504,
+      "spirv_sha256": "27e149dbf6cdac74b67e6e13aea946758f45fcecf5faa8bfeb53f7f383f5d127",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "452ec3258744a0274eba087316956d87348338ba9a448ebd3b8c020934c792e5",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_SATURATIONMASK1_TONEMAP1"
+      ],
+      "slot": 505,
+      "spirv_sha256": "5308ee49e56751514627726466fdac69ed5d8a57b1bef85499fe2e68167a2dc3",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "bdba5b0676c49e0d94663491446776073b02c028dcdd2d23ff2fb7d71cad6531",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_DOF1_SATURATIONMASK1_TONEMAP1"
+      ],
+      "slot": 506,
+      "spirv_sha256": "900bd8d90faeb868e94e26c9154d0b71d6c9e0967a48e6b53c3dbd46347cb365",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "951d4d06f72834d1083d42de1feb597fe2327afe40227aaeaead984d865597b7",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_DISPLACEMENT1_SATURATIONMASK1_TONEMAP1"
+      ],
+      "slot": 507,
+      "spirv_sha256": "f8b90e87b9d0ebfbd421c117ea2a5079bd0f910eb3ec686e20e7996edd9b5242",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "30507609d976e80c3d8932432a938ac6b8661856ea2cc8a5aed15a8212030096",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_DOF1_DISPLACEMENT1_SATURATIONMASK1_TONEMAP1"
+      ],
+      "slot": 508,
+      "spirv_sha256": "918c46aed5648016eb45fa3e09fd7197cc39ccdaeda6ddcbbc078a1f6140c940",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "84d1f8b7a423b708a4a8513f35fd72fd3cebe70f96aee6cffc0a76cbd9029d88",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_ADDITIVEEFFECTS1_TONEMAP1"
+      ],
+      "slot": 509,
+      "spirv_sha256": "4bb76c2801c2b31d54c1e5bb65bba1c5adc35b213d837475582622ca6ec54163",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "bc238338e148d20ad7304e8ddbfc2a17cf2ec1622fc7aea1e260fab76e0e1fe4",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_ADDITIVEEFFECTS1_DOF1_TONEMAP1"
+      ],
+      "slot": 510,
+      "spirv_sha256": "7ae25b49fc98ff016b816542e5355e78c2f7437c4a7745b38fa3d911eae2d759",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "9cadac1135a3c7196d86ab95e3155f3eecb8fcf7e01adfa1e0d905791e48a9b4",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_ADDITIVEEFFECTS1_DISPLACEMENT1_TONEMAP1"
+      ],
+      "slot": 511,
+      "spirv_sha256": "feb0f718743f7f4e1d23699bf31bcc110697e8a9f4430c79d63cb2d4716e7e2c",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "9e89c3fbd47c1fff8e27e936876ba3d29bfba3a89befd3d201dac6bc01b74049",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_ADDITIVEEFFECTS1_DOF1_DISPLACEMENT1_TONEMAP1"
+      ],
+      "slot": 512,
+      "spirv_sha256": "9b497637804a4da379abe29d9b6861e9c97b7dad49c7ebd29c7395ede8ee575f",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "cb9d224fcfb4002786a8bedbea5054200c218b1e1a3dcb3c7403ac831551bd08",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_ADDITIVEEFFECTS1_SATURATIONMASK1_TONEMAP1"
+      ],
+      "slot": 513,
+      "spirv_sha256": "ccc698d90a78602b1fa1aeae98c61db2e15992bafcd756269112dd3d9afb61fe",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "7618902122a16fd793a96e18e3be43fe8b233b1a786db8bf4fe15e8e37da4449",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_ADDITIVEEFFECTS1_DOF1_SATURATIONMASK1_TONEMAP1"
+      ],
+      "slot": 514,
+      "spirv_sha256": "3e6abaf7b7d9c2491983ad4b6bd1ae2770a7c6c1b2ae952ce8ee587c1e5d339b",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "a9d6c419727ce1bb973ccb9842804b74da33ce2d2711e174554609e4e1658fe3",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_ADDITIVEEFFECTS1_DISPLACEMENT1_SATURATIONMASK1_TONEMAP1"
+      ],
+      "slot": 515,
+      "spirv_sha256": "bccdd42e6e3ccc2030ad043c0ca1dc0ed2c11b808231f53e1c0dffe164d0aa7e",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 0,
+      "container_sha256": "6829fab8bc2d70ed7c2c3f517654585f743d21a0aaaae9629d10e6e7b33712b4",
+      "emit_exit": 0,
+      "names": [
+        "PSHADER_POSTPROCESSINGMATERIAL_ADDITIVEEFFECTS1_DOF1_DISPLACEMENT1_SATURATIONMASK1_TONEMAP1"
+      ],
+      "slot": 516,
+      "spirv_sha256": "69984c6982e1c4cd2409df8293a2f39d911913e044b35328de344575094a4d10",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "e395894e0843a8741f29968c9bf73aacdb95fd128b53e8eea3d92aaf0e1e8de9",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0",
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_NRM1",
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_SP1",
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_NRM1_SP1"
+      ],
+      "slot": 521,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "4f200db9751b5a5fe5df310b52c406df8d27f71c926c98f5002f088ae8f8510d",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0",
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_NRM1",
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_SP1",
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_NRM1_SP1"
+      ],
+      "slot": 522,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "ac71405cbfe32c84ab409bde74bf95039400c4372a7babe0cd9ac1e504d398ec",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0",
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_NRM1",
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_SP1",
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_NRM1_SP1"
+      ],
+      "slot": 523,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "c570ac7a6fa963a3955bda9b05470ab601002ed1cd1e64466449fe4508740a26",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_NRM1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_SP1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_NRM1_SP1"
+      ],
+      "slot": 524,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "e1c805c5851b480f6f9e7968669081e077c18311a747c3e8aaa581dee2b5877a",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_TRUNK1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_SP1_TRUNK1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB1_TRUNK1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB1_SP1_TRUNK1"
+      ],
+      "slot": 525,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "3bf153c111ce0c979c602e53360a5e41eff51227b4aa09c68d10e4cc73e32bb3",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_NRM1_TRUNK1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_NRM1_SP1_TRUNK1"
+      ],
+      "slot": 526,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "6e0935846a20090211386e8704234855c7ee1771eefa39c571a6872fca7732e6",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB1",
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1",
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB1_SP1",
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB1_NRM1_SP1"
+      ],
+      "slot": 527,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "32014893e53b5c28302369f91e0a12d669bd15bb2521718d42d96fab6d7508f0",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_AMB1",
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1",
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_AMB1_SP1",
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_AMB1_NRM1_SP1"
+      ],
+      "slot": 528,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "f9aab0e2a3ef23f002a0512981a7c8b62e176cc4cff348b5ccbfc057b239076e",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_AMB1",
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1",
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_AMB1_SP1",
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_AMB1_NRM1_SP1"
+      ],
+      "slot": 529,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "a5cdf637c4b93b6d8dfc255de3073445ca79611cdcd24000fd3a6226a2a1e585",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB1_SP1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SP1"
+      ],
+      "slot": 530,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "91cf5cad1a31cf18709de467882a96abe895ec6a7aa00c6a7f459fa10228ca39",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_TRUNK1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SP1_TRUNK1"
+      ],
+      "slot": 531,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "200d0c9006c3b3e94fde709a49dcfeada900bb5558eed6011e1bf3a96c4dba03",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB2",
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1",
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB2_SP1",
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SP1"
+      ],
+      "slot": 532,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "8cd69a1d52d150576ad1aa5046bd97a96b39b3ef54f2bf0f4d15407bcfd443a8",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_AMB2",
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1",
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_AMB2_SP1",
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_AMB2_NRM1_SP1"
+      ],
+      "slot": 533,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "a1946331163cf5cc4625353f3bc2d460d4eddf505cdddde534d301fd46a30079",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_AMB2",
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1",
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_AMB2_SP1",
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_AMB2_NRM1_SP1"
+      ],
+      "slot": 534,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "041cf4c08a568a973d9b9f8cbbeff5defb83c39e02953a66cf2137fcfd05eb38",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB2",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB2_SP1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SP1"
+      ],
+      "slot": 535,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "458cefc3ae688aad69399be087612f332032b909e3ed3aac33a2501c7023c5e1",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB2_TRUNK1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB2_SP1_TRUNK1"
+      ],
+      "slot": 536,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "7448eaef9fe22c1b226d32f8fe4322aea245e5fcbe6f8a1ed14dfff801ee7091",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_TRUNK1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SP1_TRUNK1"
+      ],
+      "slot": 537,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "e04a5a678b5167b6a34a3eaa8bcf5d73aa8bb100c11b96a8d8913e8276aa1bd3",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB3",
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1",
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB3_SP1",
+        "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB3_NRM1_SP1"
+      ],
+      "slot": 538,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "2aeb70749c365104c82f26e60390575ddaad1f410bc57ae93e2e3f19e767b2c5",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_AMB3",
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1",
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_AMB3_SP1",
+        "VSHADER_TREEMATERIAL_BLT4_GLT1_MIST0_AMB3_NRM1_SP1"
+      ],
+      "slot": 539,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "648ca469fc92d52bec22750393fee6f97f1b2f5fa056bdcc5423f7f058e265b3",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_AMB3",
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1",
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_AMB3_SP1",
+        "VSHADER_TREEMATERIAL_BLT7_GLT1_MIST0_AMB3_NRM1_SP1"
+      ],
+      "slot": 540,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "51d2253f7a6682cf205454bcb6ce4b17b7483d04a6c17ff301dae31c127fd34f",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB3",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB3_SP1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SP1"
+      ],
+      "slot": 541,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "71bd381efad87cfa78011542e23922bc1f5bcae8e639393da4797d8f63b2e75a",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB3_TRUNK1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB3_SP1_TRUNK1"
+      ],
+      "slot": 542,
+      "stage": "vs"
+    },
+    {
+      "baseline_compile_exit": 5,
+      "compile_exit": 5,
+      "container_sha256": "cfa088c1f8baf185c58645159625aa03ff974f45a7a21a43be463aec1aa23d50",
+      "emit_exit": 0,
+      "names": [
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_TRUNK1",
+        "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB3_NRM1_SP1_TRUNK1"
+      ],
+      "slot": 543,
+      "stage": "vs"
+    }
+  ],
+  "source_bank_sha256": "c2732102a0aedb8c7a950e5781fa15092a3c12c2721380944c4e717dade5e736",
+  "summary": {
+    "baseline_compiled": 0,
+    "baseline_failed_but_new_compiled": 287,
+    "fixture_count": 313,
+    "new_compiled": 287,
+    "new_failures": [
+      92,
+      111,
+      130,
+      521,
+      522,
+      523,
+      524,
+      525,
+      526,
+      527,
+      528,
+      529,
+      530,
+      531,
+      532,
+      533,
+      534,
+      535,
+      536,
+      537,
+      538,
+      539,
+      540,
+      541,
+      542,
+      543
+    ],
+    "new_validated": 287
+  }
+}

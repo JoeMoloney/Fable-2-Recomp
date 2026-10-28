@@ -1,0 +1,590 @@
+{
+  "inputs": {
+    "bank_249_vs_sha256": "a089b6cb21c9fb049f17160e691351f836c299e45f9ddf1d746358bb91f2b670",
+    "bank_343_ps_sha256": "e13407365e53659c9d7e1db2babc7d3c3a98ad1938ecab0c3b53b40b2bcaf87d",
+    "debug_bank_sha256": "60d1e468c909c1403758f54ee1df50de500c28604ade01acf174a79106621fa7",
+    "release_bank_sha256": "c2732102a0aedb8c7a950e5781fa15092a3c12c2721380944c4e717dade5e736",
+    "runtime_draw_jsonl_sha256": "a644e1c24cb93e72f95dd85b28ba0e96097f5414e145b8e1f5d15cedae8eabcf",
+    "runtime_ps_cache_sources": [
+      "4D5307F1.xsh",
+      "4D5307F1.xsh",
+      "shader-storage-4D5307F1.xsh"
+    ],
+    "runtime_ps_sha256": "e13407365e53659c9d7e1db2babc7d3c3a98ad1938ecab0c3b53b40b2bcaf87d",
+    "runtime_ps_xxh3": "401a01fd4e5f8757",
+    "runtime_vs_cache_sources": [
+      "4D5307F1.xsh",
+      "4D5307F1.xsh",
+      "shader-storage-4D5307F1.xsh"
+    ],
+    "runtime_vs_sha256": "0e9540f8fc2ac9643d44db8ae879e9064c6b582a3b769b7444ecb1d7b581dbd6",
+    "runtime_vs_xxh3": "79eac49585797037"
+  },
+  "scope": "offline shader translation/validation only; no game, renderer, GPU execution or draw replay",
+  "shader_results": [
+    {
+      "bank_parent_slot": 249,
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "compile_exit": 0,
+      "container_sha256": "150c5349a7d91cf6d0edd753c346f93561ca8199cc19de6d2f416fd600a9847f",
+      "emit_exit": 0,
+      "hlsl_sha256": "5ff2eb5b401e59fafd977d219c451065491984cc55f4c76d371931fea765c4e2",
+      "role": "exact runtime XSH bytecode inserted into its verified bank-249 parent container",
+      "runtime_hash": "79eac49585797037",
+      "spirv_bytes": 11884,
+      "spirv_descriptor_bindings": [],
+      "spirv_sha256": "48daa08bbcb8334c2a23032339a535bf4d0f8ae2a237b676db0d8e8968802a18",
+      "stage": "vs",
+      "validate_exit": 0
+    },
+    {
+      "bank_parent_slot": 343,
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "compile_exit": 0,
+      "container_sha256": "4e54bfcd87faf36a3eedbd44f10f9e3bcd38087bece6f055a030311e7a5fb65c",
+      "emit_exit": 0,
+      "hlsl_sha256": "8f5680254ad58c05da51d673fe2a63e0ad24a9b5e7772ab54587a0e408ae3742",
+      "role": "exact raw bank container; runtime identity equals bank-343 microcode",
+      "runtime_hash": "401a01fd4e5f8757",
+      "spirv_bytes": 50624,
+      "spirv_descriptor_bindings": [
+        {
+          "Binding": 0,
+          "DescriptorSet": 0,
+          "id": "%12"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 2,
+          "id": "%13"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 3,
+          "id": "%14"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 5,
+          "id": "%15"
+        }
+      ],
+      "spirv_sha256": "392872c6e448545af6fc8e6b3e6ff34c60834323ed451ef3471de8bd1ca68755",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "bank_parent_slot": 20,
+      "compile_exit": 0,
+      "container_sha256": "f890e98f6ab190d3008e7e4aba5b5747b29951b5406efb766bb13b0ea2153be8",
+      "emit_exit": 0,
+      "hlsl_sha256": "c9cc0d891ef38c3876cf1db73dc4cfbf9bbb57072a10cf8ad7ba320b9c6484ac",
+      "role": "existing immutable survey fixture",
+      "spirv_bytes": 4100,
+      "spirv_descriptor_bindings": [],
+      "spirv_sha256": "29bd8a363852eac65615d3873c44752b23494744867b5349a383a8e09d28d398",
+      "stage": "vs",
+      "validate_exit": 0
+    },
+    {
+      "bank_parent_slot": 86,
+      "compile_exit": 0,
+      "container_sha256": "f3c09e1f968fde4536eb74f59b5bafe9576edc60bfb51a9a632e5742bc98a76b",
+      "emit_exit": 0,
+      "hlsl_sha256": "9a3791aaaa6c3689a0b3fc57491a157017ef4209e81d08031bbe9562555b1a39",
+      "role": "existing immutable survey fixture",
+      "spirv_bytes": 3652,
+      "spirv_descriptor_bindings": [
+        {
+          "Binding": 0,
+          "DescriptorSet": 0,
+          "id": "%6"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 3,
+          "id": "%7"
+        }
+      ],
+      "spirv_sha256": "5201d8da3f6a172c8ac22fe444d657548519d96703f8788af4affb732ddf9b8b",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "bank_parent_slot": 89,
+      "compile_exit": 0,
+      "container_sha256": "6abab63615bb4e7fe38c795becb88300ffcdb30522643b9977fb3b174d37101f",
+      "emit_exit": 0,
+      "hlsl_sha256": "f5dac8c47519ae5d70d49715074ee5e35f7e76e4a64bb7af39316b62865ef6c2",
+      "role": "existing immutable survey fixture",
+      "spirv_bytes": 12108,
+      "spirv_descriptor_bindings": [],
+      "spirv_sha256": "0a412c14796c0da4c6e395ad91ba192fe2abe2ae6da1ff08f371845fe0adc21e",
+      "stage": "vs",
+      "validate_exit": 0
+    },
+    {
+      "bank_parent_slot": 90,
+      "compile_exit": 0,
+      "container_sha256": "abb48671bb91e821c1bececabef12a1eb7d9527adb2a1b3b4144de6c12ec610a",
+      "emit_exit": 0,
+      "hlsl_sha256": "0d65d6c6d4bb67ca6c0827def4836b8ebb166045f020d53161d8e5b620ac2a82",
+      "role": "existing immutable survey fixture",
+      "spirv_bytes": 13332,
+      "spirv_descriptor_bindings": [
+        {
+          "Binding": 0,
+          "DescriptorSet": 0,
+          "id": "%13"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 3,
+          "id": "%14"
+        }
+      ],
+      "spirv_sha256": "de756facf0c8d0a0496333f8d522d4d024a8282279f0dbc8a61bf6e675485ad2",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "bank_parent_slot": 71,
+      "compile_exit": 0,
+      "container_sha256": "9b9b88247c7a16efa576338ddae5b228be395dd3520651fec2d4a5930e5c5706",
+      "emit_exit": 0,
+      "hlsl_sha256": "49cc2e9b77f083b0d74708445c6575918dc3c5b3610ac7a788cebac7450a2f91",
+      "role": "existing immutable survey fixture",
+      "spirv_bytes": 3392,
+      "spirv_descriptor_bindings": [],
+      "spirv_sha256": "5cf63a23c7c362d9c1702b6f704fa76922218b134ca705d86d51b459aad83754",
+      "stage": "vs",
+      "validate_exit": 0
+    },
+    {
+      "bank_parent_slot": 132,
+      "compile_exit": 0,
+      "container_sha256": "36b9e36dff56e3ec71f171b5c4a5286461b5de3c45a22413122b639e3a6abbc6",
+      "emit_exit": 0,
+      "hlsl_sha256": "caa469759c4c35db7bd8ef1bf5fa247c71091cdf170754c7575e3763f4ab8b43",
+      "role": "existing immutable survey fixture",
+      "spirv_bytes": 2164,
+      "spirv_descriptor_bindings": [
+        {
+          "Binding": 0,
+          "DescriptorSet": 0,
+          "id": "%6"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 3,
+          "id": "%7"
+        }
+      ],
+      "spirv_sha256": "dc31f49b52590e113faa3725df5a7f063dd9694828dc61f97c4c6ea9d7a0c612",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "bank_parent_slot": 10,
+      "compile_exit": 0,
+      "container_sha256": "532f23f3316c183dbfde18545e9a88ffa984e8563a7c9396a746a5871b908f0a",
+      "emit_exit": 0,
+      "hlsl_sha256": "f577cb1894fbd5cb03de2980ef138e435908b53e62e93a8bec2f8ad6bf3ed03f",
+      "role": "existing immutable survey fixture",
+      "spirv_bytes": 11656,
+      "spirv_descriptor_bindings": [
+        {
+          "Binding": 0,
+          "DescriptorSet": 0,
+          "id": "%8"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 3,
+          "id": "%9"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 5,
+          "id": "%10"
+        }
+      ],
+      "spirv_sha256": "a732d0054fe3156b35b6f4b122de64e5511454e4dd105254a933a929abe6087a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "bank_parent_slot": 294,
+      "compile_exit": 0,
+      "container_sha256": "3d381dd64735fb3c2d08e2615582376147d787d84b62c0378fea356f1f36070e",
+      "emit_exit": 0,
+      "hlsl_sha256": "aec350cf46be85f175ff22940ef63f025da60ba485be65f522e52cd9becf858e",
+      "role": "existing immutable survey fixture",
+      "spirv_bytes": 31800,
+      "spirv_descriptor_bindings": [
+        {
+          "Binding": 0,
+          "DescriptorSet": 0,
+          "id": "%10"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 2,
+          "id": "%11"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 3,
+          "id": "%12"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 5,
+          "id": "%13"
+        }
+      ],
+      "spirv_sha256": "a59934e6ec17fdbc854abe6b574aec161e68db4f8fba52b2e8679a4601b5eb7a",
+      "stage": "ps",
+      "validate_exit": 0
+    },
+    {
+      "bank_parent_slot": 506,
+      "compile_exit": 0,
+      "container_sha256": "bdba5b0676c49e0d94663491446776073b02c028dcdd2d23ff2fb7d71cad6531",
+      "emit_exit": 0,
+      "hlsl_sha256": "1a16844d1397a863adc97841495a812e3280483f0ac00ee1e5aebaac4589ad37",
+      "role": "existing immutable survey fixture",
+      "spirv_bytes": 10952,
+      "spirv_descriptor_bindings": [
+        {
+          "Binding": 0,
+          "DescriptorSet": 0,
+          "id": "%6"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 3,
+          "id": "%7"
+        },
+        {
+          "Binding": 0,
+          "DescriptorSet": 5,
+          "id": "%8"
+        }
+      ],
+      "spirv_sha256": "900bd8d90faeb868e94e26c9154d0b71d6c9e0967a48e6b53c3dbd46347cb365",
+      "stage": "ps",
+      "validate_exit": 0
+    }
+  ],
+  "toolchain": {
+    "dxc": "1.9.2609",
+    "dxc_archive_sha256": "96faadc7f5c282d2ffda49804beb4c3ee38127bc252b723234e3c5cdf7aa39a1",
+    "target": "SPIR-V Vulkan 1.2, SM 6.0, HLSL 2021, DX layout, scalar-block-layout validation"
+  },
+  "vs_fetch_patch_comparison": {
+    "changed_instruction_dwords": {
+      "5": {
+        "bank_parent": [
+          "05f82000",
+          "0000008b",
+          "00000000"
+        ],
+        "runtime_xsh": [
+          "25f82000",
+          "002032c2",
+          "00000005"
+        ]
+      },
+      "6": {
+        "bank_parent": [
+          "05f88000",
+          "00000e88",
+          "00000000"
+        ],
+        "runtime_xsh": [
+          "05f88000",
+          "40101e88",
+          "00000205"
+        ]
+      },
+      "7": {
+        "bank_parent": [
+          "05f87000",
+          "00000fc8",
+          "00000000"
+        ],
+        "runtime_xsh": [
+          "05f87000",
+          "401f3fc1",
+          "00000305"
+        ]
+      },
+      "8": {
+        "bank_parent": [
+          "05f81000",
+          "00000688",
+          "00000000"
+        ],
+        "runtime_xsh": [
+          "05f81000",
+          "40071688",
+          "00000405"
+        ]
+      },
+      "9": {
+        "bank_parent": [
+          "05f83000",
+          "00000688",
+          "00000000"
+        ],
+        "runtime_xsh": [
+          "03f83000",
+          "00263688",
+          "00000004"
+        ]
+      }
+    },
+    "changed_three_dword_instruction_indices": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "differing_dword_indices": [
+      15,
+      16,
+      17,
+      19,
+      20,
+      22,
+      23,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "dword_count": 126,
+    "nonfetch_dwords_identical": true,
+    "pair_capture_draw_records": 64,
+    "pair_capture_texture_fetch_signatures_count": 18,
+    "pair_capture_vertex_fetch_signatures": [
+      {
+        "fetches": [
+          {
+            "index": 94,
+            "words": [
+              468199363,
+              268436258
+            ]
+          },
+          {
+            "index": 95,
+            "words": [
+              468119107,
+              268436458
+            ]
+          }
+        ],
+        "records": 44
+      },
+      {
+        "fetches": [
+          {
+            "index": 94,
+            "words": [
+              467449987,
+              268438146
+            ]
+          },
+          {
+            "index": 95,
+            "words": [
+              467157315,
+              268438818
+            ]
+          }
+        ],
+        "records": 5
+      },
+      {
+        "fetches": [
+          {
+            "index": 94,
+            "words": [
+              449847555,
+              268557074
+            ]
+          },
+          {
+            "index": 95,
+            "words": [
+              448607875,
+              268587478
+            ]
+          }
+        ],
+        "records": 4
+      },
+      {
+        "fetches": [
+          {
+            "index": 94,
+            "words": [
+              468355203,
+              268435938
+            ]
+          },
+          {
+            "index": 95,
+            "words": [
+              468305795,
+              268436058
+            ]
+          }
+        ],
+        "records": 2
+      },
+      {
+        "fetches": [
+          {
+            "index": 94,
+            "words": [
+              468280003,
+              268436162
+            ]
+          },
+          {
+            "index": 95,
+            "words": [
+              468174467,
+              268436338
+            ]
+          }
+        ],
+        "records": 2
+      },
+      {
+        "fetches": [
+          {
+            "index": 94,
+            "words": [
+              467687747,
+              268437474
+            ]
+          },
+          {
+            "index": 95,
+            "words": [
+              467514947,
+              268437978
+            ]
+          }
+        ],
+        "records": 2
+      },
+      {
+        "fetches": [
+          {
+            "index": 94,
+            "words": [
+              468323715,
+              268435986
+            ]
+          },
+          {
+            "index": 95,
+            "words": [
+              468271555,
+              268436118
+            ]
+          }
+        ],
+        "records": 2
+      },
+      {
+        "fetches": [
+          {
+            "index": 94,
+            "words": [
+              463326467,
+              268448178
+            ]
+          },
+          {
+            "index": 95,
+            "words": [
+              462400131,
+              268451358
+            ]
+          }
+        ],
+        "records": 2
+      },
+      {
+        "fetches": [
+          {
+            "index": 94,
+            "words": [
+              468457027,
+              268435586
+            ]
+          },
+          {
+            "index": 95,
+            "words": [
+              468441859,
+              268435618
+            ]
+          }
+        ],
+        "records": 1
+      }
+    ],
+    "parent_candidates_by_fetch_only_byte_diff": [
+      {
+        "changed_vertex_fetch_instruction_indices": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "differing_dword_indices": [
+          15,
+          16,
+          17,
+          19,
+          20,
+          22,
+          23,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "names": [
+          "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1",
+          "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SP1",
+          "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SP2",
+          "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1",
+          "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1_SP1",
+          "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1_SP2"
+        ],
+        "slot": 249
+      }
+    ],
+    "parent_slot": 249
+  }
+}

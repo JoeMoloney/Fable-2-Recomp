@@ -1,0 +1,59 @@
+{
+  "files": {
+    "xenosrecomp/LICENSE.md": {
+      "bytes": 1089,
+      "origin": "https://raw.githubusercontent.com/hedge-dev/XenosRecomp/990d03b28a27b50277ee5d8d942e1c5f873869d1/LICENSE.md",
+      "sha256": "bcb33ae2cbc6c0f2818712d806112e774e684fce01ce80573f92adf80b7487f4"
+    },
+    "xenosrecomp/README.md": {
+      "bytes": 12007,
+      "origin": "https://raw.githubusercontent.com/hedge-dev/XenosRecomp/990d03b28a27b50277ee5d8d942e1c5f873869d1/README.md",
+      "sha256": "56a7c5074c166377554822b2812830d4f889844c39c10ae89ed5998b29a8f5e1"
+    },
+    "xenosrecomp/XenosRecomp/constant_table.h": {
+      "bytes": 1584,
+      "origin": "https://raw.githubusercontent.com/hedge-dev/XenosRecomp/990d03b28a27b50277ee5d8d942e1c5f873869d1/XenosRecomp/constant_table.h",
+      "sha256": "675397e4faaec7deb68001e934decca9a1bc08f30ecf58c38bfab8c4688ffbb3"
+    },
+    "xenosrecomp/XenosRecomp/dxc_compiler.cpp": {
+      "bytes": 2390,
+      "origin": "https://raw.githubusercontent.com/hedge-dev/XenosRecomp/990d03b28a27b50277ee5d8d942e1c5f873869d1/XenosRecomp/dxc_compiler.cpp",
+      "sha256": "34e7ea968cc3075a167981f139d41650ed1772162e2bc9e6d03d02b6f5a68f97"
+    },
+    "xenosrecomp/XenosRecomp/pch.h": {
+      "bytes": 1140,
+      "origin": "https://raw.githubusercontent.com/hedge-dev/XenosRecomp/990d03b28a27b50277ee5d8d942e1c5f873869d1/XenosRecomp/pch.h",
+      "sha256": "481c9d289c87e17682607d36186eecd8186810904c8b82af4934b1507f58829a"
+    },
+    "xenosrecomp/XenosRecomp/shader.h": {
+      "bytes": 2188,
+      "origin": "https://raw.githubusercontent.com/hedge-dev/XenosRecomp/990d03b28a27b50277ee5d8d942e1c5f873869d1/XenosRecomp/shader.h",
+      "sha256": "4e2807363c5e4439d8dd278ee4c865324f80739a03bdccabc5f17c039f426a28"
+    },
+    "xenosrecomp/XenosRecomp/shader_code.h": {
+      "bytes": 9810,
+      "origin": "https://raw.githubusercontent.com/hedge-dev/XenosRecomp/990d03b28a27b50277ee5d8d942e1c5f873869d1/XenosRecomp/shader_code.h",
+      "sha256": "f7e748314222a92f7ffb60263a19f797184ce0e02fcbecd32bb121e9295d8b58"
+    },
+    "xenosrecomp/XenosRecomp/shader_common.h": {
+      "bytes": 6393,
+      "origin": "https://raw.githubusercontent.com/hedge-dev/XenosRecomp/990d03b28a27b50277ee5d8d942e1c5f873869d1/XenosRecomp/shader_common.h",
+      "sha256": "8130e8914491879a3905512c941f5a603b789d36edd97913879eeca691f32a43"
+    },
+    "xenosrecomp/XenosRecomp/shader_recompiler.cpp": {
+      "bytes": 56444,
+      "origin": "https://raw.githubusercontent.com/hedge-dev/XenosRecomp/990d03b28a27b50277ee5d8d942e1c5f873869d1/XenosRecomp/shader_recompiler.cpp",
+      "sha256": "025afceba969e505f10af1220cb4dca603966e71464bff3fc24419f7b2224b70"
+    },
+    "xenosrecomp/XenosRecomp/shader_recompiler.h": {
+      "bytes": 1716,
+      "origin": "https://raw.githubusercontent.com/hedge-dev/XenosRecomp/990d03b28a27b50277ee5d8d942e1c5f873869d1/XenosRecomp/shader_recompiler.h",
+      "sha256": "746939804d199c0368c2b9eac1aeadd87d38876c71974c3b15d92622e6a76a69"
+    }
+  },
+  "revisions": {
+    "skate_sdk": "7eb0faf7787f5e01333c228b8e3f03c32f7295ea",
+    "unleashed": "cf829a9eca8fb680fba4b0409ddeb6ca92f22e3c",
+    "xenosrecomp": "990d03b28a27b50277ee5d8d942e1c5f873869d1"
+  }
+}
