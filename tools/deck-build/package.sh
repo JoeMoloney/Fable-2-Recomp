@@ -96,5 +96,5 @@ ARCHIVE="$ROOT/out/artifacts/fable2-experimental-$TAG.tar.gz"
 tar --sort=name --mtime="@$SOURCE_DATE_EPOCH" --owner=0 --group=0 --numeric-owner \
   --transform="s,^$TAG,$SHORT," \
   -C "$ROOT/out/artifacts" -cf - "$TAG" | gzip -n > "$ARCHIVE"
-sha256sum "$ARCHIVE" > "$ARCHIVE.sha256"
+(cd "$ROOT/out/artifacts" && sha256sum "$(basename "$ARCHIVE")" > "$(basename "$ARCHIVE").sha256")
 printf 'Packaged: %s\nChecksum: %s\n' "$ARCHIVE" "$ARCHIVE.sha256"
