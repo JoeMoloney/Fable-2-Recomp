@@ -1,0 +1,78 @@
+{
+  "counts": {
+    "hlsl_emitted": 569,
+    "pixel_slots": 451,
+    "slots": 588,
+    "spirv_compiled": 154,
+    "spirv_validated": 154,
+    "vertex_slots": 137
+  },
+  "inputs": {
+    "debug_bank": {
+      "path": "/mnt/HDD/git_stuff/my_git/Fable-2-Recomp/data/Shaders/Shaders.sbk",
+      "sha256": "60d1e468c909c1403758f54ee1df50de500c28604ade01acf174a79106621fa7"
+    },
+    "release_bank": {
+      "path": "/mnt/HDD/git_stuff/my_git/Fable-2-Recomp/data/Shaders/ShadersRelease.sbk",
+      "sha256": "c2732102a0aedb8c7a950e5781fa15092a3c12c2721380944c4e717dade5e736"
+    },
+    "runtime_draw_jsonl": {
+      "capture_id": "20261027T195223Z",
+      "header": {
+        "dropped_records": 1,
+        "max_records": 2048,
+        "records": 2048,
+        "schema": 1,
+        "status": "capacity_reached_truncated",
+        "type": "header",
+        "window_ms": 3000
+      },
+      "path": "research/native_shader_catalogue/input/draws-20261027T195223Z.jsonl",
+      "sha256": "a644e1c24cb93e72f95dd85b28ba0e96097f5414e145b8e1f5d15cedae8eabcf"
+    },
+    "shader_survey": {
+      "path": "research/native_reference/corpus-1/results/survey.json",
+      "sha256": "e7f6868215096326b6da513d4647e5b96df8c8295736a33451ec1bc763943b11"
+    },
+    "xsh_inventory": {
+      "path": "/mnt/HDD/git_stuff/my_git/Fable-2-Recomp/out/performance/native-renderer-feasibility-20261026/phase2/shader-inventory.json",
+      "sha256": "fc2962f09c841c43d17044a37118548957a684007b91478de3601ead579be0fe"
+    }
+  },
+  "outputs": {
+    "runtime_shader_matches.json": "057b29ca7a0a7cc7ae782d16666979f9ff1c12a589f4f9d07f9e6373e06ecfdd",
+    "runtime_shader_pairs.csv": "458e177556c225b554bf2c0fb2f3a7eff75a1137273c67dc01c7d37a79568cbb",
+    "runtime_shader_pairs.json": "f4418aa78d3e0c3084349a860458400cf46153a3c7761c71e052b26612af1537",
+    "shader_catalogue.json": "380063a201052b55fe4c7e14a682feacdeda2c14b1523f4fe04799a2ebed6623"
+  },
+  "runtime_pair_summary": {
+    "candidate_pairs_with_validated_spirv_both_stages": 22,
+    "draw_count": 2048,
+    "draws_with_zero_pixel_hash": 297,
+    "exact_pairs_with_validated_spirv_both_stages": 0,
+    "unique_exact_pairs_with_validated_spirv_both_stages": 0,
+    "unique_pairs_including_zero_pixel_hash": 67,
+    "unique_pairs_nonzero_pixel_hash": 62
+  },
+  "runtime_stage_statistics": {
+    "pixel": {
+      "cache_hashes": 49,
+      "draw_records": 2048,
+      "exact_bank_hashes": 49,
+      "no_exact_bank_or_fetch_patch_candidate": 0,
+      "nonbank_exact_but_fetch_patch_candidates": 0,
+      "unique_nonzero_hashes": 49,
+      "zero_hash_records": 297
+    },
+    "vertex": {
+      "cache_hashes": 31,
+      "draw_records": 2048,
+      "exact_bank_hashes": 4,
+      "no_exact_bank_or_fetch_patch_candidate": 6,
+      "nonbank_exact_but_fetch_patch_candidates": 21,
+      "unique_nonzero_hashes": 31,
+      "zero_hash_records": 0
+    }
+  },
+  "schema": 1
+}

@@ -1,0 +1,1107 @@
+{
+  "capture_header": {
+    "dropped_records": 1,
+    "max_records": 2048,
+    "records": 2048,
+    "schema": 1,
+    "status": "capacity_reached_truncated",
+    "type": "header",
+    "window_ms": 3000
+  },
+  "pairs": [
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 851,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        375
+      ],
+      "ps_hash": "8d900846800943c8",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        245
+      ],
+      "vs_hash": "ecd66a10092e6562"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 193,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [],
+      "ps_hash": "0000000000000000",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        151
+      ],
+      "vs_hash": "87d4404fb36af71d"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 104,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        372
+      ],
+      "ps_hash": "648b965c200a5113",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        245
+      ],
+      "vs_hash": "ecd66a10092e6562"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 74,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        375
+      ],
+      "ps_hash": "8d900846800943c8",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        249
+      ],
+      "vs_hash": "79eac49585797037"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 72,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [],
+      "ps_hash": "0000000000000000",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "b6c9863f710683ec"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 64,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        343
+      ],
+      "ps_hash": "401a01fd4e5f8757",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        249
+      ],
+      "vs_hash": "79eac49585797037"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 49,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        373
+      ],
+      "ps_hash": "789266c3e42d7e59",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        245
+      ],
+      "vs_hash": "ecd66a10092e6562"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 46,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        186
+      ],
+      "ps_hash": "af1e16ee57e4bb06",
+      "vs_bank_match_kind": "exact_bank_microcode",
+      "vs_candidate_slots": [
+        174
+      ],
+      "vs_hash": "fb68a7f2301210e1"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 43,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        375
+      ],
+      "ps_hash": "8d900846800943c8",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        252
+      ],
+      "vs_hash": "d4d558da6a82bdc8"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 42,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        372
+      ],
+      "ps_hash": "648b965c200a5113",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        249
+      ],
+      "vs_hash": "79eac49585797037"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 36,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        372
+      ],
+      "ps_hash": "648b965c200a5113",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        251
+      ],
+      "vs_hash": "a1f7e9885ec466df"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 33,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        437
+      ],
+      "ps_hash": "469633bdc6911834",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "1c10625fd961f82d"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 30,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        374
+      ],
+      "ps_hash": "fc0922a3a8d8da7a",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        245
+      ],
+      "vs_hash": "ecd66a10092e6562"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 27,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        375
+      ],
+      "ps_hash": "8d900846800943c8",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        251
+      ],
+      "vs_hash": "a1f7e9885ec466df"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 26,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [],
+      "ps_hash": "0000000000000000",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        18
+      ],
+      "vs_hash": "f160b4da459a6d40"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 24,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        85
+      ],
+      "ps_hash": "a4a965c189287b99",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "b6c9863f710683ec"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 23,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        203
+      ],
+      "ps_hash": "04f23292b2f44077",
+      "vs_bank_match_kind": "exact_bank_microcode",
+      "vs_candidate_slots": [
+        176
+      ],
+      "vs_hash": "c30a97d946fa2be4"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 21,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        8
+      ],
+      "ps_hash": "7ddad5c29b3f56ee",
+      "vs_bank_match_kind": "exact_bank_microcode",
+      "vs_candidate_slots": [
+        15
+      ],
+      "vs_hash": "5003700b7c9b1c16"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 15,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        105
+      ],
+      "ps_hash": "014f8a02db7b19ca",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        104
+      ],
+      "vs_hash": "7c5710def3ee33c4"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 14,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        340
+      ],
+      "ps_hash": "44b567635eb10620",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        249
+      ],
+      "vs_hash": "79eac49585797037"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 14,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        343
+      ],
+      "ps_hash": "401a01fd4e5f8757",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        252
+      ],
+      "vs_hash": "d4d558da6a82bdc8"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 13,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        311
+      ],
+      "ps_hash": "8c512607225ec5c7",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "65834a8405d40e53"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 13,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        343
+      ],
+      "ps_hash": "401a01fd4e5f8757",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        251
+      ],
+      "vs_hash": "a1f7e9885ec466df"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 13,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        189
+      ],
+      "ps_hash": "4755a2e4a05ba678",
+      "vs_bank_match_kind": "exact_bank_microcode",
+      "vs_candidate_slots": [
+        174
+      ],
+      "vs_hash": "fb68a7f2301210e1"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 13,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        187
+      ],
+      "ps_hash": "578342593a37dd35",
+      "vs_bank_match_kind": "exact_bank_microcode",
+      "vs_candidate_slots": [
+        174
+      ],
+      "vs_hash": "fb68a7f2301210e1"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 11,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        210
+      ],
+      "ps_hash": "dbfd88a80edbce36",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "29b6506fbaceb93a"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 11,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        10
+      ],
+      "ps_hash": "2f8a0341e8c09698",
+      "vs_bank_match_kind": "exact_bank_microcode",
+      "vs_candidate_slots": [
+        15
+      ],
+      "vs_hash": "5003700b7c9b1c16"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 11,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        343
+      ],
+      "ps_hash": "401a01fd4e5f8757",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        245
+      ],
+      "vs_hash": "ecd66a10092e6562"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 10,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        279
+      ],
+      "ps_hash": "95ed70bd54b49d5e",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "65834a8405d40e53"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 10,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        487,
+        495
+      ],
+      "ps_hash": "a7e45d07f5cf6627",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "8123c16dbf583f92"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 10,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        59
+      ],
+      "ps_hash": "a17d8aec3a817d45",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        56
+      ],
+      "vs_hash": "bead84bd72072e0e"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 10,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        57
+      ],
+      "ps_hash": "f6d98c7b4d98438b",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        56
+      ],
+      "vs_hash": "bead84bd72072e0e"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 9,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        436
+      ],
+      "ps_hash": "4f4b14d7bfa4dd5f",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "1c10625fd961f82d"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 8,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        484,
+        492
+      ],
+      "ps_hash": "e99f4acc7a3c78b4",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "8123c16dbf583f92"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 8,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        373
+      ],
+      "ps_hash": "789266c3e42d7e59",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        251
+      ],
+      "vs_hash": "a1f7e9885ec466df"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 8,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        204
+      ],
+      "ps_hash": "e0996bf4d9539d38",
+      "vs_bank_match_kind": "exact_bank_microcode",
+      "vs_candidate_slots": [
+        176
+      ],
+      "vs_hash": "c30a97d946fa2be4"
+    },
+    {
+      "candidate_compilable_slot_combinations": [
+        {
+          "ps_slot": 25,
+          "vs_slot_candidate": 20
+        }
+      ],
+      "candidate_pair_has_validated_spirv_both_stages": true,
+      "draw_frequency": 6,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        25
+      ],
+      "ps_hash": "33477588a5c01c7c",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        20
+      ],
+      "vs_hash": "57818a7fd1c4f026"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 6,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        383
+      ],
+      "ps_hash": "2fd24989ab04a475",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        249
+      ],
+      "vs_hash": "79eac49585797037"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 6,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        341
+      ],
+      "ps_hash": "f2f103f16764043b",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        249
+      ],
+      "vs_hash": "79eac49585797037"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 5,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        439
+      ],
+      "ps_hash": "edac95d2244c4fa0",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "1c10625fd961f82d"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 5,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        214
+      ],
+      "ps_hash": "c300519ec8915346",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "29b6506fbaceb93a"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 5,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        373
+      ],
+      "ps_hash": "789266c3e42d7e59",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        249
+      ],
+      "vs_hash": "79eac49585797037"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 5,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        188
+      ],
+      "ps_hash": "0981301d645e2517",
+      "vs_bank_match_kind": "exact_bank_microcode",
+      "vs_candidate_slots": [
+        174
+      ],
+      "vs_hash": "fb68a7f2301210e1"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 4,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        93
+      ],
+      "ps_hash": "4b1d3e6e8e58d3ac",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        92
+      ],
+      "vs_hash": "129f7f2793da9084"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 4,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [],
+      "ps_hash": "0000000000000000",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "1e6883fccde1f688"
+    },
+    {
+      "candidate_compilable_slot_combinations": [
+        {
+          "ps_slot": 147,
+          "vs_slot_candidate": 18
+        }
+      ],
+      "candidate_pair_has_validated_spirv_both_stages": true,
+      "draw_frequency": 4,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        147
+      ],
+      "ps_hash": "7f65142c12beb353",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        18
+      ],
+      "vs_hash": "43ed37430887a46c"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 4,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        340
+      ],
+      "ps_hash": "44b567635eb10620",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        251
+      ],
+      "vs_hash": "a1f7e9885ec466df"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 4,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        205
+      ],
+      "ps_hash": "9c2144e42e95a76f",
+      "vs_bank_match_kind": "exact_bank_microcode",
+      "vs_candidate_slots": [
+        176
+      ],
+      "vs_hash": "c30a97d946fa2be4"
+    },
+    {
+      "candidate_compilable_slot_combinations": [
+        {
+          "ps_slot": 155,
+          "vs_slot_candidate": 154
+        }
+      ],
+      "candidate_pair_has_validated_spirv_both_stages": true,
+      "draw_frequency": 3,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        155
+      ],
+      "ps_hash": "983e61968e915ed9",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        154
+      ],
+      "vs_hash": "7d1c707013a556bb"
+    },
+    {
+      "candidate_compilable_slot_combinations": [
+        {
+          "ps_slot": 114,
+          "vs_slot_candidate": 113
+        }
+      ],
+      "candidate_pair_has_validated_spirv_both_stages": true,
+      "draw_frequency": 3,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        114
+      ],
+      "ps_hash": "61976295517d7015",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        113
+      ],
+      "vs_hash": "c304c6a1af18b46f"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 3,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        340
+      ],
+      "ps_hash": "44b567635eb10620",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        245
+      ],
+      "vs_hash": "ecd66a10092e6562"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 2,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [],
+      "ps_hash": "0000000000000000",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        22
+      ],
+      "vs_hash": "5f4416192e87005f"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 2,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        477
+      ],
+      "ps_hash": "14217f5c1118d00f",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        452
+      ],
+      "vs_hash": "6ad4108c3ff07966"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 2,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        485,
+        493
+      ],
+      "ps_hash": "09cb69bd265b58d1",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "8123c16dbf583f92"
+    },
+    {
+      "candidate_compilable_slot_combinations": [
+        {
+          "ps_slot": 117,
+          "vs_slot_candidate": 20
+        }
+      ],
+      "candidate_pair_has_validated_spirv_both_stages": true,
+      "draw_frequency": 2,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        117
+      ],
+      "ps_hash": "04985a0f7296e130",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        20
+      ],
+      "vs_hash": "81bade63a169e3dc"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 2,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        372
+      ],
+      "ps_hash": "648b965c200a5113",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        252
+      ],
+      "vs_hash": "d4d558da6a82bdc8"
+    },
+    {
+      "candidate_compilable_slot_combinations": [
+        {
+          "ps_slot": 135,
+          "vs_slot_candidate": 71
+        },
+        {
+          "ps_slot": 135,
+          "vs_slot_candidate": 108
+        }
+      ],
+      "candidate_pair_has_validated_spirv_both_stages": true,
+      "draw_frequency": 2,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        135
+      ],
+      "ps_hash": "5d6768847b0602b8",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        71,
+        108
+      ],
+      "vs_hash": "d5e12a97b3a84881"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 1,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        127
+      ],
+      "ps_hash": "732a6fa31708767c",
+      "vs_bank_match_kind": "exact_bank_microcode",
+      "vs_candidate_slots": [
+        126
+      ],
+      "vs_hash": "218ad033d3d0528a"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 1,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        570
+      ],
+      "ps_hash": "58d3faaaa84a48aa",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        537
+      ],
+      "vs_hash": "475ec9f795e5edbb"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 1,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        130
+      ],
+      "ps_hash": "2b091bd0c45a7454",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        129
+      ],
+      "vs_hash": "5763211d63bbfa3d"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 1,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        479
+      ],
+      "ps_hash": "165edcd2cb963868",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        452
+      ],
+      "vs_hash": "6ad4108c3ff07966"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 1,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        476
+      ],
+      "ps_hash": "f525e023e08ac9bb",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        452
+      ],
+      "vs_hash": "6ad4108c3ff07966"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 1,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        486,
+        494
+      ],
+      "ps_hash": "c0715ed52ce7ecf2",
+      "vs_bank_match_kind": "unresolved",
+      "vs_candidate_slots": [],
+      "vs_hash": "8123c16dbf583f92"
+    },
+    {
+      "candidate_compilable_slot_combinations": [
+        {
+          "ps_slot": 119,
+          "vs_slot_candidate": 20
+        }
+      ],
+      "candidate_pair_has_validated_spirv_both_stages": true,
+      "draw_frequency": 1,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        119
+      ],
+      "ps_hash": "18d39dcebee4c2fc",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        20
+      ],
+      "vs_hash": "81bade63a169e3dc"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 1,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        111
+      ],
+      "ps_hash": "f7601fbe485936fd",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        110
+      ],
+      "vs_hash": "8262e1111c273b50"
+    },
+    {
+      "candidate_compilable_slot_combinations": [
+        {
+          "ps_slot": 116,
+          "vs_slot_candidate": 113
+        }
+      ],
+      "candidate_pair_has_validated_spirv_both_stages": true,
+      "draw_frequency": 1,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        116
+      ],
+      "ps_hash": "3ff79524fcdb71c5",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        113
+      ],
+      "vs_hash": "c304c6a1af18b46f"
+    },
+    {
+      "candidate_compilable_slot_combinations": [],
+      "candidate_pair_has_validated_spirv_both_stages": false,
+      "draw_frequency": 1,
+      "exact_compilable_slot_combinations": [],
+      "exact_pair_has_validated_spirv_both_stages": false,
+      "ps_exact_bank_slots": [
+        544,
+        573
+      ],
+      "ps_hash": "7cd57b81550f19e3",
+      "vs_bank_match_kind": "fetch-patch-parent-candidate",
+      "vs_candidate_slots": [
+        532
+      ],
+      "vs_hash": "d7dd31b9bf194de8"
+    }
+  ],
+  "schema": 1,
+  "summary": {
+    "candidate_pairs_with_validated_spirv_both_stages": 22,
+    "draw_count": 2048,
+    "draws_with_zero_pixel_hash": 297,
+    "exact_pairs_with_validated_spirv_both_stages": 0,
+    "unique_exact_pairs_with_validated_spirv_both_stages": 0,
+    "unique_pairs_including_zero_pixel_hash": 67,
+    "unique_pairs_nonzero_pixel_hash": 62
+  }
+}

@@ -1,0 +1,5803 @@
+{
+  "capture_header": {
+    "dropped_records": 1,
+    "max_records": 2048,
+    "records": 2048,
+    "schema": 1,
+    "status": "capacity_reached_truncated",
+    "type": "header",
+    "window_ms": 3000
+  },
+  "observed_unique_shaders": [
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [],
+      "cache_dword_counts": [],
+      "cache_sources": [],
+      "draw_count": 297,
+      "dword_counts": [
+        0
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "0000000000000000",
+      "stage": "pixel",
+      "zero_hash": true
+    },
+    {
+      "bank_exact_slots": [
+        105
+      ],
+      "cache_bytecode_sha256": [
+        "1fe7d08174f1b5501e07bf41819c6f884f1003910487bffc541883da225e3ba4"
+      ],
+      "cache_dword_counts": [
+        87
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 15,
+      "dword_counts": [
+        87
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "014f8a02db7b19ca",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        117
+      ],
+      "cache_bytecode_sha256": [
+        "5cbf1c61702aec0e82cdfe170d3cedf4dbb9d1f6cda25a687f52bca3cbffb1c4"
+      ],
+      "cache_dword_counts": [
+        15
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 2,
+      "dword_counts": [
+        15
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "04985a0f7296e130",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        203
+      ],
+      "cache_bytecode_sha256": [
+        "51e5e9e5aac67960d54804afd2249011c2d94d5d3dbfe3ad8f52a9767e054432"
+      ],
+      "cache_dword_counts": [
+        420
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 23,
+      "dword_counts": [
+        420
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "04f23292b2f44077",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        188
+      ],
+      "cache_bytecode_sha256": [
+        "ad3dc814cb50f2fd7a8e357a96556f4a8a243668c46914625679706c05a1fe72"
+      ],
+      "cache_dword_counts": [
+        492
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 5,
+      "dword_counts": [
+        492
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "0981301d645e2517",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        485,
+        493
+      ],
+      "cache_bytecode_sha256": [
+        "7293bf1b850e0fd685ff26743c2bbfe7ffbd21635656735f199ef38b3e789b00"
+      ],
+      "cache_dword_counts": [
+        297
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 2,
+      "dword_counts": [
+        297
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "09cb69bd265b58d1",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        477
+      ],
+      "cache_bytecode_sha256": [
+        "53a9b9308ac8ad4417c7365ed62b75aa5030d4e8b4f8d0344efdcbfd19083aec"
+      ],
+      "cache_dword_counts": [
+        432
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 2,
+      "dword_counts": [
+        432
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "14217f5c1118d00f",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        479
+      ],
+      "cache_bytecode_sha256": [
+        "d5e13553bc480da64bdb607d18e29a4247224675f3dba9e9f5c4c5cf9f226e40"
+      ],
+      "cache_dword_counts": [
+        225
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        225
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "165edcd2cb963868",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        119
+      ],
+      "cache_bytecode_sha256": [
+        "66ee1fe078d77f33fe71b5c5e08a5b6805ab7eff8af0ed488c337143b2a14d39"
+      ],
+      "cache_dword_counts": [
+        21
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        21
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "18d39dcebee4c2fc",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        130
+      ],
+      "cache_bytecode_sha256": [
+        "3148126e2f34d9a7ccbf955da149a8671d38d0deffb8bc064fecde30723c78de"
+      ],
+      "cache_dword_counts": [
+        501
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        501
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "2b091bd0c45a7454",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        10
+      ],
+      "cache_bytecode_sha256": [
+        "ddaea4bf909345a7891eb989a32d11e8f64725e5c14ea4f97a6686f16a0e6b1e"
+      ],
+      "cache_dword_counts": [
+        117
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 11,
+      "dword_counts": [
+        117
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "2f8a0341e8c09698",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        383
+      ],
+      "cache_bytecode_sha256": [
+        "fa138b251121bfb46f30b9b7dd0cef6ba187fcf7dc9072bcf03da1e34c1b2caf"
+      ],
+      "cache_dword_counts": [
+        261
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 6,
+      "dword_counts": [
+        261
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "2fd24989ab04a475",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        25
+      ],
+      "cache_bytecode_sha256": [
+        "e6414d4ffa8eb79a9b501373e087e5f2c57e201526e1abbd924ab5f6e5ee0300"
+      ],
+      "cache_dword_counts": [
+        18
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 6,
+      "dword_counts": [
+        18
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "33477588a5c01c7c",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        116
+      ],
+      "cache_bytecode_sha256": [
+        "054f69f3f536055be9e282805b9d272a37bc582900582f85ea51556e4b9951d5"
+      ],
+      "cache_dword_counts": [
+        36
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        36
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "3ff79524fcdb71c5",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        343
+      ],
+      "cache_bytecode_sha256": [
+        "e13407365e53659c9d7e1db2babc7d3c3a98ad1938ecab0c3b53b40b2bcaf87d"
+      ],
+      "cache_dword_counts": [
+        687
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 102,
+      "dword_counts": [
+        687
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "401a01fd4e5f8757",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        340
+      ],
+      "cache_bytecode_sha256": [
+        "ddeca136ea4115ab439c57326cf6c855c16805c3ab21e2f60d730d1d31eef3cf"
+      ],
+      "cache_dword_counts": [
+        732
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 21,
+      "dword_counts": [
+        732
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "44b567635eb10620",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        437
+      ],
+      "cache_bytecode_sha256": [
+        "585598e40d4aabd10c5cf8ce5cdea38d05ae61362a414ed0904202892c0cb904"
+      ],
+      "cache_dword_counts": [
+        489
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 33,
+      "dword_counts": [
+        489
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "469633bdc6911834",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        189
+      ],
+      "cache_bytecode_sha256": [
+        "1c8e7d0fd49b0e5851c1524321953cc93f5d43b627335433dc168f245bc7dd86"
+      ],
+      "cache_dword_counts": [
+        165
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 13,
+      "dword_counts": [
+        165
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "4755a2e4a05ba678",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        93
+      ],
+      "cache_bytecode_sha256": [
+        "db70beb3a98626900e5e9009a3c6a201ea087d79c51e9104b54ac11eacf06e72"
+      ],
+      "cache_dword_counts": [
+        186
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 4,
+      "dword_counts": [
+        186
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "4b1d3e6e8e58d3ac",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        436
+      ],
+      "cache_bytecode_sha256": [
+        "18fda6f999b6edb355749db03b8ad99a24f663f5698bd54773f0b053ee9c74e7"
+      ],
+      "cache_dword_counts": [
+        414
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 9,
+      "dword_counts": [
+        414
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "4f4b14d7bfa4dd5f",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        187
+      ],
+      "cache_bytecode_sha256": [
+        "1e29d4c034ad960f54dd5d0df975a4cea708dbf4f7b7eee24c246d5487a4dd8f"
+      ],
+      "cache_dword_counts": [
+        333
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 13,
+      "dword_counts": [
+        333
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "578342593a37dd35",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        570
+      ],
+      "cache_bytecode_sha256": [
+        "6fc4668cce11822f4c130cea9a958ad1dade4f3b102cc355d67fb0401da7f6bf"
+      ],
+      "cache_dword_counts": [
+        462
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        462
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "58d3faaaa84a48aa",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        135
+      ],
+      "cache_bytecode_sha256": [
+        "a3bd60675d31e8ad8486b977c486f75c013b87f047c466f9dd31c97ca5ff820a"
+      ],
+      "cache_dword_counts": [
+        18
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 2,
+      "dword_counts": [
+        18
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "5d6768847b0602b8",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        114
+      ],
+      "cache_bytecode_sha256": [
+        "a8b70a854523b93cf77613d80e1f16823b9895284f8557ae6bd196aa73a663a9"
+      ],
+      "cache_dword_counts": [
+        129
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 3,
+      "dword_counts": [
+        129
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "61976295517d7015",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        372
+      ],
+      "cache_bytecode_sha256": [
+        "b49c600930f9d945620e9be0c4d98cdb73005c67a6d54ab18e836f85b7c82566"
+      ],
+      "cache_dword_counts": [
+        411
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 184,
+      "dword_counts": [
+        411
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "648b965c200a5113",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        127
+      ],
+      "cache_bytecode_sha256": [
+        "b328729f6fc464a9cbd21a760ab960e0ee44655f4381a7b7b17f7d5cf41a3d64"
+      ],
+      "cache_dword_counts": [
+        9
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        9
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "732a6fa31708767c",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        373
+      ],
+      "cache_bytecode_sha256": [
+        "ef67966661bc13f76b1a1c56cb7a371238e15f9fe7e7256e7e26b3d5fd68a559"
+      ],
+      "cache_dword_counts": [
+        483
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 62,
+      "dword_counts": [
+        483
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "789266c3e42d7e59",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        544,
+        573
+      ],
+      "cache_bytecode_sha256": [
+        "8261478764b33b749359f79485190afc521692035b8c12259e00be0f450a0e6e"
+      ],
+      "cache_dword_counts": [
+        213
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        213
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "7cd57b81550f19e3",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        8
+      ],
+      "cache_bytecode_sha256": [
+        "233142bdaa86bc310cc2d5f0f7b421e5dffb7143fd3f69362c467de0d0cada09"
+      ],
+      "cache_dword_counts": [
+        111
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 21,
+      "dword_counts": [
+        111
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "7ddad5c29b3f56ee",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        147
+      ],
+      "cache_bytecode_sha256": [
+        "4368b4e2545dd75bc5fe5b5f895527c163275537683bc9b392598e6dfc2adb65"
+      ],
+      "cache_dword_counts": [
+        63
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 4,
+      "dword_counts": [
+        63
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "7f65142c12beb353",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        311
+      ],
+      "cache_bytecode_sha256": [
+        "19859501adc35ad89d2d4d7ff4f1146f47ebae43014a3ae6b5b4ed49eed9ed89"
+      ],
+      "cache_dword_counts": [
+        234
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 13,
+      "dword_counts": [
+        234
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "8c512607225ec5c7",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        375
+      ],
+      "cache_bytecode_sha256": [
+        "c722eff9722b949cf7dca93341c9a2a1a9a4d5ff6756387381cc7c839ceaa8c4"
+      ],
+      "cache_dword_counts": [
+        261
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 995,
+      "dword_counts": [
+        261
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "8d900846800943c8",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        279
+      ],
+      "cache_bytecode_sha256": [
+        "b3713cb73aa8ccd86bd0778a2918eda472fb4299615d2cc9c5fe4a1b3f6eeb27"
+      ],
+      "cache_dword_counts": [
+        675
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 10,
+      "dword_counts": [
+        675
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "95ed70bd54b49d5e",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        155
+      ],
+      "cache_bytecode_sha256": [
+        "a56235f483a2267ce4cc5e280bb33beb25078396707b4a7d72c1cd4e95e7b958"
+      ],
+      "cache_dword_counts": [
+        42
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 3,
+      "dword_counts": [
+        42
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "983e61968e915ed9",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        205
+      ],
+      "cache_bytecode_sha256": [
+        "1c40cd1193792f2a4c04952184985565aef503ed429cf775d13378b484763fbc"
+      ],
+      "cache_dword_counts": [
+        255
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 4,
+      "dword_counts": [
+        255
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "9c2144e42e95a76f",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        59
+      ],
+      "cache_bytecode_sha256": [
+        "267689c1dda9425cd8326a9cafdd27f9015de13dd33b101ee97be4525092c5b7"
+      ],
+      "cache_dword_counts": [
+        273
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 10,
+      "dword_counts": [
+        273
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "a17d8aec3a817d45",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        85
+      ],
+      "cache_bytecode_sha256": [
+        "9d4a64e81064abb794c5cba3642feda86a5a1e6b75a13cd4c4d7917bea83e01e"
+      ],
+      "cache_dword_counts": [
+        9
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 24,
+      "dword_counts": [
+        9
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "a4a965c189287b99",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        487,
+        495
+      ],
+      "cache_bytecode_sha256": [
+        "3c2d26f58ba730f01eb0d0e143b35f55dd646a30052df712d628dd35f3cda9c7"
+      ],
+      "cache_dword_counts": [
+        135
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 10,
+      "dword_counts": [
+        135
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "a7e45d07f5cf6627",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        186
+      ],
+      "cache_bytecode_sha256": [
+        "a317539bd0f3459d6da893c32af00767629554d87133b99494c1f05a73d7df28"
+      ],
+      "cache_dword_counts": [
+        285
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 46,
+      "dword_counts": [
+        285
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "af1e16ee57e4bb06",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        486,
+        494
+      ],
+      "cache_bytecode_sha256": [
+        "c7df5d12ea9814f26e5a8260d3a9fd8e381377c33f53808c86c9cc7288bffcd2"
+      ],
+      "cache_dword_counts": [
+        456
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        456
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "c0715ed52ce7ecf2",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        214
+      ],
+      "cache_bytecode_sha256": [
+        "ed56ce02f85176eab80d6b82063c623bf3ce157ba457beae5eff33b86d6fc58b"
+      ],
+      "cache_dword_counts": [
+        33
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 5,
+      "dword_counts": [
+        33
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "c300519ec8915346",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        210
+      ],
+      "cache_bytecode_sha256": [
+        "b1b190908ece7d3fc9947c5b71c7957454bae5391c668245fe2642b5d28ae947"
+      ],
+      "cache_dword_counts": [
+        24
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 11,
+      "dword_counts": [
+        24
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "dbfd88a80edbce36",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        204
+      ],
+      "cache_bytecode_sha256": [
+        "d7c03502cea4791e744c66ebeebb7f168b332b2a85c0d719960307cb30d58d3a"
+      ],
+      "cache_dword_counts": [
+        582
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 8,
+      "dword_counts": [
+        582
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "e0996bf4d9539d38",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        484,
+        492
+      ],
+      "cache_bytecode_sha256": [
+        "d12b7fdcab88405611cdc8ca2ea0a7dc240a3e436762900bde92216433e64e82"
+      ],
+      "cache_dword_counts": [
+        252
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 8,
+      "dword_counts": [
+        252
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "e99f4acc7a3c78b4",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        439
+      ],
+      "cache_bytecode_sha256": [
+        "a5ebe0bc125725a1c4295b6739f42e5f61ffd2b77d5b721acc74ea0e3232e822"
+      ],
+      "cache_dword_counts": [
+        264
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 5,
+      "dword_counts": [
+        264
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "edac95d2244c4fa0",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        341
+      ],
+      "cache_bytecode_sha256": [
+        "4268aeed4ecf5ccb0681815bc39c0a55a1e1b4ff437a96060c11ed002ac9c057"
+      ],
+      "cache_dword_counts": [
+        804
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 6,
+      "dword_counts": [
+        804
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "f2f103f16764043b",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        476
+      ],
+      "cache_bytecode_sha256": [
+        "4a79aff12303d4442521c9b8d80439a2c2d8512862c6c902b378270680a0c37b"
+      ],
+      "cache_dword_counts": [
+        357
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        357
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "f525e023e08ac9bb",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        57
+      ],
+      "cache_bytecode_sha256": [
+        "cdd9e560033d4ccc14e07a691c2934c6ef70e5a2bfacbec4ffbc90bf977b448a"
+      ],
+      "cache_dword_counts": [
+        273
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 10,
+      "dword_counts": [
+        273
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "f6d98c7b4d98438b",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        111
+      ],
+      "cache_bytecode_sha256": [
+        "36fb7c988e382626939f7f8b6a46bea802004a79696af4e59c278a2da52c3ae3"
+      ],
+      "cache_dword_counts": [
+        306
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        306
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "f7601fbe485936fd",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        374
+      ],
+      "cache_bytecode_sha256": [
+        "faea443485abe3e6225829ad3a5d04d67ea1624ee78513a94c7cea7ca1ab4a66"
+      ],
+      "cache_dword_counts": [
+        699
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 30,
+      "dword_counts": [
+        699
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "fc0922a3a8d8da7a",
+      "stage": "pixel",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "994596fe2a0156089fccc6e6c91a1784484e23dec7ae678c669c3f8cbc45bdd3"
+      ],
+      "cache_dword_counts": [
+        276
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 4,
+      "dword_counts": [
+        276
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            12
+          ],
+          "debug_names": [
+            "VSHADER_TREEBILLBOARD",
+            "VSHADER_TREEBILLBOARD_Z_WRITE_PASS"
+          ],
+          "differing_dword_indices": [
+            37,
+            38
+          ],
+          "slot": 92
+        }
+      ],
+      "runtime_hash": "129f7f2793da9084",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "3255459902be7fd901e9b9b9c7307312e2d7eb4ee231e160f5f3e0b094c990e8"
+      ],
+      "cache_dword_counts": [
+        114
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 47,
+      "dword_counts": [
+        114
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "1c10625fd961f82d",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "abfec28e9858fd1b9b27afd527f08421c38f288e9333cc7fc10d6391ac190fa9"
+      ],
+      "cache_dword_counts": [
+        27
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 4,
+      "dword_counts": [
+        27
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "1e6883fccde1f688",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        126
+      ],
+      "cache_bytecode_sha256": [
+        "01c4ece300322080b3d178c5991386383c2019e85146e63d0384ff9031c1d5a7"
+      ],
+      "cache_dword_counts": [
+        60
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        60
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "218ad033d3d0528a",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "6d7b341de4e586d467376f741478d1ca498fe45d7e6ab12ccb8ac3daa6ee48d1"
+      ],
+      "cache_dword_counts": [
+        285
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 16,
+      "dword_counts": [
+        285
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "29b6506fbaceb93a",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "2f9477c10faf14af9693630c845caef761e88c5b351fb8282d347dd104f6f618"
+      ],
+      "cache_dword_counts": [
+        27
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 4,
+      "dword_counts": [
+        27
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            3
+          ],
+          "debug_names": [
+            "VSHADER_BOUNDING_VOLUME_TEST",
+            "VSHADER_DEBUGMESH_ZPASS",
+            "VSHADER_DIFFUSE_3D",
+            "VSHADER_MESH_BASIC_ZPASS",
+            "VSHADER_PRESKINNED_MESH_BASIC_ZPASS",
+            "VSHADER_SPHERE_SSAO"
+          ],
+          "differing_dword_indices": [
+            10,
+            11
+          ],
+          "slot": 18
+        }
+      ],
+      "runtime_hash": "43ed37430887a46c",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "4e916730a8f3878e945f907bdf2ea123b4a4af10ede42938a0aba6c46764f0ee"
+      ],
+      "cache_dword_counts": [
+        324
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        324
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "debug_names": [
+            "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SP1_TRUNK1",
+            "VSHADER_TREEMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_TRUNK1"
+          ],
+          "differing_dword_indices": [
+            33,
+            34,
+            35,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50
+          ],
+          "slot": 537
+        }
+      ],
+      "runtime_hash": "475ec9f795e5edbb",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        15
+      ],
+      "cache_bytecode_sha256": [
+        "ae59fc403c350ff8e92aef052627847b6205cc5a13f2c82a882aff698be03c33"
+      ],
+      "cache_dword_counts": [
+        123
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 32,
+      "dword_counts": [
+        123
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "5003700b7c9b1c16",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "a99d83c17be2a4bd4d36c42f5c2d1ff88b466ddf5b62ebb10f08e95b56d3a81d"
+      ],
+      "cache_dword_counts": [
+        111
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        111
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            5
+          ],
+          "debug_names": [
+            "VSHADER_SKY_OCEANWATER"
+          ],
+          "differing_dword_indices": [
+            16,
+            17
+          ],
+          "slot": 129
+        }
+      ],
+      "runtime_hash": "5763211d63bbfa3d",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "76532ce956bc9b6363355cc66debbb72bc55d98aee5e36e7719e4979616e2461"
+      ],
+      "cache_dword_counts": [
+        33
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 6,
+      "dword_counts": [
+        33
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            3,
+            4
+          ],
+          "debug_names": [
+            "VSHADER_GUIMASK",
+            "VSHADER_LIGHTHALO",
+            "VSHADER_MESH_BASIC_ALPHA_ZPASS",
+            "VSHADER_MESH_DISPLACEMENT_PASS",
+            "VSHADER_MOONDISC",
+            "VSHADER_PRESKINNED_MESH_BASIC_ALPHA_ZPASS",
+            "VSHADER_SUNGLARE",
+            "VSHADER_TEXTURE_DIFFUSE_3D"
+          ],
+          "differing_dword_indices": [
+            9,
+            10,
+            11,
+            13,
+            14
+          ],
+          "slot": 20
+        }
+      ],
+      "runtime_hash": "57818a7fd1c4f026",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "bcfe6d4ee9766aed26e605a0e626cb6704bc532d861a13ab6a0a251e1049df66"
+      ],
+      "cache_dword_counts": [
+        57
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 2,
+      "dword_counts": [
+        57
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "debug_names": [
+            "VSHADER_ONE_BONE_MESH_BASIC_ZPASS"
+          ],
+          "differing_dword_indices": [
+            12,
+            13,
+            14,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26
+          ],
+          "slot": 22
+        }
+      ],
+      "runtime_hash": "5f4416192e87005f",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "2e9e1a946b7df92dad02021980711e3aa43c6a727c4877b8d7b6cb29ac97aff4"
+      ],
+      "cache_dword_counts": [
+        93
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 23,
+      "dword_counts": [
+        93
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "65834a8405d40e53",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "68e6118635762a19abf3a4b31e25567962c0196adb7a01ff87bc820b9e82bf88"
+      ],
+      "cache_dword_counts": [
+        255
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 4,
+      "dword_counts": [
+        255
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            15,
+            16,
+            17,
+            18,
+            20,
+            21,
+            22
+          ],
+          "debug_names": [
+            "VSHADER_REPEATEDMATERIAL_BLT1_GLT1_MIST0_NRM1"
+          ],
+          "differing_dword_indices": [
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            60,
+            61,
+            62,
+            64,
+            65,
+            67,
+            68
+          ],
+          "slot": 452
+        }
+      ],
+      "runtime_hash": "6ad4108c3ff07966",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "0e9540f8fc2ac9643d44db8ae879e9064c6b582a3b769b7444ecb1d7b581dbd6"
+      ],
+      "cache_dword_counts": [
+        126
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 211,
+      "dword_counts": [
+        126
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "debug_names": [
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1_SP1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1_SP2",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SP1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SP2"
+          ],
+          "differing_dword_indices": [
+            15,
+            16,
+            17,
+            19,
+            20,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29
+          ],
+          "slot": 249
+        }
+      ],
+      "runtime_hash": "79eac49585797037",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "5f2537086b550277a8ffe7ca5aa4a805aaaf39227ed8ce06d5ef0f2e7d2ec039"
+      ],
+      "cache_dword_counts": [
+        126
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 15,
+      "dword_counts": [
+        126
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "debug_names": [
+            "VSHADER_SHELL_FUR_SIMPLE_PRESKINNED"
+          ],
+          "differing_dword_indices": [
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ],
+          "slot": 104
+        }
+      ],
+      "runtime_hash": "7c5710def3ee33c4",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "b72f513f194de2e692090a89aac3df095b561dd805ec7b05cb14c92bcd1fe701"
+      ],
+      "cache_dword_counts": [
+        75
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 3,
+      "dword_counts": [
+        75
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            4,
+            5,
+            6
+          ],
+          "debug_names": [
+            "VSHADER_SCREENFACINGSPRITE"
+          ],
+          "differing_dword_indices": [
+            12,
+            13,
+            14,
+            16,
+            17,
+            19,
+            20
+          ],
+          "slot": 154
+        }
+      ],
+      "runtime_hash": "7d1c707013a556bb",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "588ad384284736cf038844660ca8d275180ef056b980022bd3c19cb8733381fc"
+      ],
+      "cache_dword_counts": [
+        237
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 21,
+      "dword_counts": [
+        237
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "8123c16dbf583f92",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "b998e84841407d82a938d18d5ddd9a0b33281aee50de8ef91e61ea25ee91f562"
+      ],
+      "cache_dword_counts": [
+        33
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 3,
+      "dword_counts": [
+        33
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            3,
+            4
+          ],
+          "debug_names": [
+            "VSHADER_GUIMASK",
+            "VSHADER_LIGHTHALO",
+            "VSHADER_MESH_BASIC_ALPHA_ZPASS",
+            "VSHADER_MESH_DISPLACEMENT_PASS",
+            "VSHADER_MOONDISC",
+            "VSHADER_PRESKINNED_MESH_BASIC_ALPHA_ZPASS",
+            "VSHADER_SUNGLARE",
+            "VSHADER_TEXTURE_DIFFUSE_3D"
+          ],
+          "differing_dword_indices": [
+            9,
+            10,
+            11,
+            13,
+            14
+          ],
+          "slot": 20
+        }
+      ],
+      "runtime_hash": "81bade63a169e3dc",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "68a4e2ef7591db837c9c12f68392ed954772f3fdf14e47fd402586a926c73483"
+      ],
+      "cache_dword_counts": [
+        39
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        39
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            3
+          ],
+          "debug_names": [
+            "VSHADER_SKYCOLOUR"
+          ],
+          "differing_dword_indices": [
+            10,
+            11
+          ],
+          "slot": 110
+        }
+      ],
+      "runtime_hash": "8262e1111c273b50",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "071329ed2e881aa76196c943e3750b7ca5cad7b456a11b23010a2b5c0f579ad1"
+      ],
+      "cache_dword_counts": [
+        57
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 193,
+      "dword_counts": [
+        57
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            6,
+            7,
+            10,
+            11
+          ],
+          "debug_names": [
+            "VSHADER_OCCLUSION_AABB_QUERY"
+          ],
+          "differing_dword_indices": [
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            30,
+            31,
+            32,
+            34,
+            35
+          ],
+          "slot": 151
+        }
+      ],
+      "runtime_hash": "87d4404fb36af71d",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "38ba133dbce7f55b2e45a8f57728d6635312b042978d3a1275294c0532f2d253"
+      ],
+      "cache_dword_counts": [
+        198
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 88,
+      "dword_counts": [
+        198
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "debug_names": [
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1_SKN1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1_SKN1_SP1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1_SKN1_SP2",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SKN1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SKN1_SP1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SKN1_SP2"
+          ],
+          "differing_dword_indices": [
+            21,
+            22,
+            23,
+            25,
+            26,
+            28,
+            29,
+            31,
+            32,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ],
+          "slot": 251
+        }
+      ],
+      "runtime_hash": "a1f7e9885ec466df",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "a5ffccb2a2cdccd0093b55f9051330166881a987052e76249b4841ee7170c608"
+      ],
+      "cache_dword_counts": [
+        24
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 96,
+      "dword_counts": [
+        24
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "b6c9863f710683ec",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "59325efb6c92263571d4927eb13058123880ca68fc92e5fd21e63644102a34a2"
+      ],
+      "cache_dword_counts": [
+        63
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 20,
+      "dword_counts": [
+        63
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            3,
+            4
+          ],
+          "debug_names": [
+            "VSHADER_OCEAN_WATER",
+            "VSHADER_OCEAN_WATER_MISTED",
+            "VSHADER_OCEAN_WATER_MISTED_ZPASS",
+            "VSHADER_OCEAN_WATER_ZPASS"
+          ],
+          "differing_dword_indices": [
+            9,
+            10,
+            11,
+            13,
+            14
+          ],
+          "slot": 56
+        }
+      ],
+      "runtime_hash": "bead84bd72072e0e",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "b5f73dfc78b3d90be6973c756666794e4cde3cedf5303f395c1b4ee0afa93ce3"
+      ],
+      "cache_dword_counts": [
+        36
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 4,
+      "dword_counts": [
+        36
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            3,
+            4
+          ],
+          "debug_names": [
+            "VSHADER_CLOUDS"
+          ],
+          "differing_dword_indices": [
+            9,
+            10,
+            11,
+            13,
+            14
+          ],
+          "slot": 113
+        }
+      ],
+      "runtime_hash": "c304c6a1af18b46f",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        176
+      ],
+      "cache_bytecode_sha256": [
+        "81ea2e15cc2ed4c3f50254fc7ed52cf11458dc9a44eae255daac65897d1a61e9"
+      ],
+      "cache_dword_counts": [
+        258
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 35,
+      "dword_counts": [
+        258
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "c30a97d946fa2be4",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "bcca917acec3e6c25cdcbe7aedd2872abd619f66329bea2ce83e9a082e4a9d27"
+      ],
+      "cache_dword_counts": [
+        270
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 59,
+      "dword_counts": [
+        270
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27
+          ],
+          "debug_names": [
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1_SKN2",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1_SKN2_SP1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SCR1_SKN2_SP2",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SKN2",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SKN2_SP1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB2_NRM1_SKN2_SP2"
+          ],
+          "differing_dword_indices": [
+            27,
+            28,
+            29,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83
+          ],
+          "slot": 252
+        }
+      ],
+      "runtime_hash": "d4d558da6a82bdc8",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "952212c71bae82509df3d563c6f7dba964f4f577c4b25feb2dd5539a0c99200d"
+      ],
+      "cache_dword_counts": [
+        24
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 2,
+      "dword_counts": [
+        24
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            3,
+            4
+          ],
+          "debug_names": [
+            "DISPLACETARGET_VERTEX_SHADER",
+            "VSHADER_OUTLINEQUAD",
+            "VSHADER_PASSTHROUGH_POS_TEX1",
+            "VSHADER_TEXTUREDQUAD",
+            "VSHADER_TEXTURE_MORPH"
+          ],
+          "differing_dword_indices": [
+            9,
+            10,
+            11,
+            13,
+            14
+          ],
+          "slot": 71
+        },
+        {
+          "changed_instruction_indices": [
+            3,
+            4
+          ],
+          "debug_names": [
+            "VSHADER_BORDER_DILATE"
+          ],
+          "differing_dword_indices": [
+            9,
+            10,
+            11,
+            13,
+            14
+          ],
+          "slot": 108
+        }
+      ],
+      "runtime_hash": "d5e12a97b3a84881",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "84fc1f2be956263019ef7638d5128a710b98a6c280973f8e070665fb13dd0093"
+      ],
+      "cache_dword_counts": [
+        495
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1,
+      "dword_counts": [
+        495
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          "debug_names": [
+            "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB2",
+            "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1",
+            "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB2_NRM1_SP1",
+            "VSHADER_TREEMATERIAL_BLT2_GLT1_MIST0_AMB2_SP1"
+          ],
+          "differing_dword_indices": [
+            45,
+            46,
+            47,
+            49,
+            50,
+            51,
+            52,
+            53,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65
+          ],
+          "slot": 532
+        }
+      ],
+      "runtime_hash": "d7dd31b9bf194de8",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "110ff24f335e1a22bd7963da46a870c3533e68558300bd44513b2235caf74b7e"
+      ],
+      "cache_dword_counts": [
+        132
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 1048,
+      "dword_counts": [
+        132
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            5,
+            6,
+            7,
+            8,
+            14
+          ],
+          "debug_names": [
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SCR1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SCR1_SP1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SCR1_SP2",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SP1",
+            "VSHADER_STANDARDMATERIAL_BLT1_GLT1_MIST0_AMB1_NRM1_SP2"
+          ],
+          "differing_dword_indices": [
+            15,
+            16,
+            17,
+            19,
+            20,
+            22,
+            23,
+            25,
+            26,
+            42,
+            43,
+            44
+          ],
+          "slot": 245
+        }
+      ],
+      "runtime_hash": "ecd66a10092e6562",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [],
+      "cache_bytecode_sha256": [
+        "4ae7f8323c7e081a79c75478a825599ae0c9a95518f9d097852a20dd21796bd4"
+      ],
+      "cache_dword_counts": [
+        27
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 26,
+      "dword_counts": [
+        27
+      ],
+      "fetch_patch_parent_candidates": [
+        {
+          "changed_instruction_indices": [
+            3
+          ],
+          "debug_names": [
+            "VSHADER_BOUNDING_VOLUME_TEST",
+            "VSHADER_DEBUGMESH_ZPASS",
+            "VSHADER_DIFFUSE_3D",
+            "VSHADER_MESH_BASIC_ZPASS",
+            "VSHADER_PRESKINNED_MESH_BASIC_ZPASS",
+            "VSHADER_SPHERE_SSAO"
+          ],
+          "differing_dword_indices": [
+            10,
+            11
+          ],
+          "slot": 18
+        }
+      ],
+      "runtime_hash": "f160b4da459a6d40",
+      "stage": "vertex",
+      "zero_hash": false
+    },
+    {
+      "bank_exact_slots": [
+        174
+      ],
+      "cache_bytecode_sha256": [
+        "40d49d6dcc4310805bf5f8f3a0903cc5b9f2518e9c7073cc25a66e1a02294cca"
+      ],
+      "cache_dword_counts": [
+        246
+      ],
+      "cache_sources": [
+        "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh",
+        "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh",
+        "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+      ],
+      "draw_count": 77,
+      "dword_counts": [
+        246
+      ],
+      "fetch_patch_parent_candidates": [],
+      "runtime_hash": "fb68a7f2301210e1",
+      "stage": "vertex",
+      "zero_hash": false
+    }
+  ],
+  "schema": 1,
+  "stage_statistics": {
+    "pixel": {
+      "cache_hashes": 49,
+      "draw_records": 2048,
+      "exact_bank_hashes": 49,
+      "no_exact_bank_or_fetch_patch_candidate": 0,
+      "nonbank_exact_but_fetch_patch_candidates": 0,
+      "unique_nonzero_hashes": 49,
+      "zero_hash_records": 297
+    },
+    "vertex": {
+      "cache_hashes": 31,
+      "draw_records": 2048,
+      "exact_bank_hashes": 4,
+      "no_exact_bank_or_fetch_patch_candidate": 6,
+      "nonbank_exact_but_fetch_patch_candidates": 21,
+      "unique_nonzero_hashes": 31,
+      "zero_hash_records": 0
+    }
+  },
+  "xsh_cache_sources": [
+    {
+      "bytes": 258752,
+      "entries": [
+        {
+          "bytecode_sha256": "abfec28e9858fd1b9b27afd527f08421c38f288e9333cc7fc10d6391ac190fa9",
+          "dwords": 27,
+          "hash": "1e6883fccde1f688",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "9d4a64e81064abb794c5cba3642feda86a5a1e6b75a13cd4c4d7917bea83e01e",
+          "dwords": 9,
+          "hash": "a4a965c189287b99",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a5ffccb2a2cdccd0093b55f9051330166881a987052e76249b4841ee7170c608",
+          "dwords": 24,
+          "hash": "b6c9863f710683ec",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "6826a89ccb4a981f3c2b2c66f8b785519c1b84fbb4572df70880b01cec7098ea",
+          "dwords": 27,
+          "hash": "bd2477fede6beab1",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "d30a381a6c0926b71de3dd06e9669a91fdd952d08cb76e288b34a9626d91d488",
+          "dwords": 36,
+          "hash": "130dca19b2727f68",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "952212c71bae82509df3d563c6f7dba964f4f577c4b25feb2dd5539a0c99200d",
+          "dwords": 24,
+          "hash": "d5e12a97b3a84881",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "a3bd60675d31e8ad8486b977c486f75c013b87f047c466f9dd31c97ca5ff820a",
+          "dwords": 18,
+          "hash": "5d6768847b0602b8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5201c53ca27bd1f47ba999f626188853988879dcddf8795a8b262d38c8f51094",
+          "dwords": 27,
+          "hash": "b2d99ac2c7fb40d6",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "abdb220fccb569a5cd79bd3b81659338d057a763c17d6e4bfa5b1c85851717de",
+          "dwords": 15,
+          "hash": "0a96b3fd5121e331",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "fcf7228371659426a93e8e4f05167454ad25eed3b0ef9c4e973c8d12e58255bf",
+          "dwords": 204,
+          "hash": "4be4344c27016e04",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d207fc9b0700bd1ad708a9267ef76f46349e48032a0073918a6f04cbf0406832",
+          "dwords": 27,
+          "hash": "5181317ca0e65be9",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "9fec99d496f591177b70dc9231f674a6afcf736cf698f073cccf4b4b47a3457a",
+          "dwords": 36,
+          "hash": "87e85199e1e9b260",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ddc139d209649515eaea261caaa37a7ad35bdb9e71e37cd59ee2012bdb6f68e3",
+          "dwords": 15,
+          "hash": "5821366ee8fde893",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5439dabf30def503622a68ec172938059553cc37437c23f71db0ce975c8268e4",
+          "dwords": 42,
+          "hash": "ee922cfb4426ea83",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d2845371b5aeaf08f01ee5edad0dabfae0ce25214278b49d49e8fe5eb667ec49",
+          "dwords": 93,
+          "hash": "ea83c7e7e24ec4c8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "776982d07ddd9d4b6ed231aa4847ca681779a0c23d1dbdba4051005297423e99",
+          "dwords": 93,
+          "hash": "28dbe18f313350bf",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "7e533a0c25fd73520b2527038403b2b8129c4e50e3ac18c165ee74307abfc146",
+          "dwords": 75,
+          "hash": "37b186f4bd3288f7",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "2c5be2e5742b8cff7d6a9ec60feba5c0c22c4a5dde89f9eca128043ce7cb1b3e",
+          "dwords": 27,
+          "hash": "95503a81ae52ea05",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "711152f8f70535b65c734ee76bb1cbcbbc447f6b99846f646789b8d3020e96c3",
+          "dwords": 51,
+          "hash": "7b22146d51e0e4f5",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "3cc0c990f07f8eaf3786c87a3bdec88b94ead178d31c5b814b03930531361e6a",
+          "dwords": 108,
+          "hash": "0542ffdf2b118509",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "6d7b341de4e586d467376f741478d1ca498fe45d7e6ab12ccb8ac3daa6ee48d1",
+          "dwords": 285,
+          "hash": "29b6506fbaceb93a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "b1b190908ece7d3fc9947c5b71c7957454bae5391c668245fe2642b5d28ae947",
+          "dwords": 24,
+          "hash": "dbfd88a80edbce36",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ed56ce02f85176eab80d6b82063c623bf3ce157ba457beae5eff33b86d6fc58b",
+          "dwords": 33,
+          "hash": "c300519ec8915346",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "1581e0cf85795c9c44fdaba43181828ddee6ce739e6e104650c281e6bd56dd26",
+          "dwords": 45,
+          "hash": "a753a2072f78f00f",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a86186e3a93455a58879cfbc4d8274644286377ef25999df9ff0387a27469436",
+          "dwords": 27,
+          "hash": "901891d9b86c181a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "74cd93c4f4974ffc881af7dad1cc9e25cc3ed904c410b66a09cde27d4271e71e",
+          "dwords": 114,
+          "hash": "94c373ab309f37db",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "28b965ec9592f0f2584d3c0576e2c854ba26c9d58e3f51b8d60a22690a2bfab7",
+          "dwords": 33,
+          "hash": "93e7f7b5d05626aa",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c064fcc39ab5f942622b87fc0da298c470e943c420b6332c8b15e0667a8c4c07",
+          "dwords": 33,
+          "hash": "5f329db1e7f0dd5c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "3628f73b1308ae136a6fe26c620006dadeb542f18bb7903968dbf94859e656a9",
+          "dwords": 969,
+          "hash": "695413a9831d88da",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "071329ed2e881aa76196c943e3750b7ca5cad7b456a11b23010a2b5c0f579ad1",
+          "dwords": 57,
+          "hash": "87d4404fb36af71d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "4ae7f8323c7e081a79c75478a825599ae0c9a95518f9d097852a20dd21796bd4",
+          "dwords": 27,
+          "hash": "f160b4da459a6d40",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "76532ce956bc9b6363355cc66debbb72bc55d98aee5e36e7719e4979616e2461",
+          "dwords": 33,
+          "hash": "57818a7fd1c4f026",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "e6414d4ffa8eb79a9b501373e087e5f2c57e201526e1abbd924ab5f6e5ee0300",
+          "dwords": 18,
+          "hash": "33477588a5c01c7c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "bcfe6d4ee9766aed26e605a0e626cb6704bc532d861a13ab6a0a251e1049df66",
+          "dwords": 57,
+          "hash": "5f4416192e87005f",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "31f4e548a0fd8ce85d188cf8cdb4aeffc504be787884f377ab896f6d5525152f",
+          "dwords": 126,
+          "hash": "82f6433a69263c75",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "12d51ff68a765e2f4dc04a78c7f82379669214710e917412ecaaabf54e55c421",
+          "dwords": 135,
+          "hash": "3a0f9098b839ddbc",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "8e1f4a8b0d95075e1bbb86d3a51110ba87095e3e2f61d8fb5fe956ea610a8665",
+          "dwords": 165,
+          "hash": "a8a5b2a89f70336a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "18fc352455ead8255d77d78cf0bf56553311843b1933a7b7234f67299c02a443",
+          "dwords": 48,
+          "hash": "85a9a5ec510a9700",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "20b5dbb6e2513a4f8afb2f9f50381911606c66e9c4f9656eaa62991b138c2007",
+          "dwords": 63,
+          "hash": "87e0db8b7c32f6a5",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "cc348dd1e3f4d4e6e9bb63083788515990e6b2aecc5a579ecc22b9f8dff69586",
+          "dwords": 171,
+          "hash": "fbd39c64463e180b",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "aa85e2957587e693728ae7158cceb31b112c3cbc8202b7ac04644ec1f85d5828",
+          "dwords": 282,
+          "hash": "432563420047c96c",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "5f9e26296676d1e3f95a44a2bc2a104b96fb3a8682c0f4654e21814a03edcee0",
+          "dwords": 21,
+          "hash": "f1eb2497108f159d",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "13ed2c34aa9e52165872a7aef790066bd73096336b19ca026753e09ac377f49c",
+          "dwords": 27,
+          "hash": "7a6e981fc4d0a375",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "4e6d081c930d7ca1df1b7388cffb612d4c418c95b312931b1493b8c5ed8edf7b",
+          "dwords": 123,
+          "hash": "1b4b5ae12ef270ca",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "24ad1fddb8d9e5b129158146a49c2831fd18a2705145b39329b584ef0de4b366",
+          "dwords": 27,
+          "hash": "b1d7f0d4330bbd7d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "c61c23904eafcfde3206ff914d6c65bd9b196d7d2115b85a31684d976293de26",
+          "dwords": 345,
+          "hash": "0f99810f072bf0fc",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "110ff24f335e1a22bd7963da46a870c3533e68558300bd44513b2235caf74b7e",
+          "dwords": 132,
+          "hash": "ecd66a10092e6562",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "faea443485abe3e6225829ad3a5d04d67ea1624ee78513a94c7cea7ca1ab4a66",
+          "dwords": 699,
+          "hash": "fc0922a3a8d8da7a",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c722eff9722b949cf7dca93341c9a2a1a9a4d5ff6756387381cc7c839ceaa8c4",
+          "dwords": 261,
+          "hash": "8d900846800943c8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b49c600930f9d945620e9be0c4d98cdb73005c67a6d54ab18e836f85b7c82566",
+          "dwords": 411,
+          "hash": "648b965c200a5113",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "e13407365e53659c9d7e1db2babc7d3c3a98ad1938ecab0c3b53b40b2bcaf87d",
+          "dwords": 687,
+          "hash": "401a01fd4e5f8757",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "0e9540f8fc2ac9643d44db8ae879e9064c6b582a3b769b7444ecb1d7b581dbd6",
+          "dwords": 126,
+          "hash": "79eac49585797037",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "38ba133dbce7f55b2e45a8f57728d6635312b042978d3a1275294c0532f2d253",
+          "dwords": 198,
+          "hash": "a1f7e9885ec466df",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "bcca917acec3e6c25cdcbe7aedd2872abd619f66329bea2ce83e9a082e4a9d27",
+          "dwords": 270,
+          "hash": "d4d558da6a82bdc8",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "ddeca136ea4115ab439c57326cf6c855c16805c3ab21e2f60d730d1d31eef3cf",
+          "dwords": 732,
+          "hash": "44b567635eb10620",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "588ad384284736cf038844660ca8d275180ef056b980022bd3c19cb8733381fc",
+          "dwords": 237,
+          "hash": "8123c16dbf583f92",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "3c2d26f58ba730f01eb0d0e143b35f55dd646a30052df712d628dd35f3cda9c7",
+          "dwords": 135,
+          "hash": "a7e45d07f5cf6627",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d12b7fdcab88405611cdc8ca2ea0a7dc240a3e436762900bde92216433e64e82",
+          "dwords": 252,
+          "hash": "e99f4acc7a3c78b4",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4e916730a8f3878e945f907bdf2ea123b4a4af10ede42938a0aba6c46764f0ee",
+          "dwords": 324,
+          "hash": "475ec9f795e5edbb",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "21a3552a6b684f3a69a6bf18bcab7ccca45edad6be1c8314e6d8f5500ff4c0ca",
+          "dwords": 537,
+          "hash": "2fbe9b4ee822609a",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "f8ca2bf1b51fc41443544c49295700d7d8a35f7e209f9deb40353ae259eaff89",
+          "dwords": 558,
+          "hash": "2d40b53c926109be",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "8261478764b33b749359f79485190afc521692035b8c12259e00be0f450a0e6e",
+          "dwords": 213,
+          "hash": "7cd57b81550f19e3",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "68a4e2ef7591db837c9c12f68392ed954772f3fdf14e47fd402586a926c73483",
+          "dwords": 39,
+          "hash": "8262e1111c273b50",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "36fb7c988e382626939f7f8b6a46bea802004a79696af4e59c278a2da52c3ae3",
+          "dwords": 306,
+          "hash": "f7601fbe485936fd",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a99d83c17be2a4bd4d36c42f5c2d1ff88b466ddf5b62ebb10f08e95b56d3a81d",
+          "dwords": 111,
+          "hash": "5763211d63bbfa3d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "3148126e2f34d9a7ccbf955da149a8671d38d0deffb8bc064fecde30723c78de",
+          "dwords": 501,
+          "hash": "2b091bd0c45a7454",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "e942693d72b183161f4ebf5805df1ffccf04241ec4502e3853a758e70a337096",
+          "dwords": 111,
+          "hash": "d1cc6dc28244c55a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "38e83e0a4214aade165f85a0ca2a81ccc9a3796de8383f8138833b9f3f3bdf8d",
+          "dwords": 15,
+          "hash": "686de15fc84d8b73",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ef67966661bc13f76b1a1c56cb7a371238e15f9fe7e7256e7e26b3d5fd68a559",
+          "dwords": 483,
+          "hash": "789266c3e42d7e59",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "7293bf1b850e0fd685ff26743c2bbfe7ffbd21635656735f199ef38b3e789b00",
+          "dwords": 297,
+          "hash": "09cb69bd265b58d1",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "fbbae1ba82893b314d0cb4d0649de0cd5c512d0f9f847515ae10181c4635847d",
+          "dwords": 177,
+          "hash": "be53d33b25e4f39e",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "b5f73dfc78b3d90be6973c756666794e4cde3cedf5303f395c1b4ee0afa93ce3",
+          "dwords": 36,
+          "hash": "c304c6a1af18b46f",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "a8b70a854523b93cf77613d80e1f16823b9895284f8557ae6bd196aa73a663a9",
+          "dwords": 129,
+          "hash": "61976295517d7015",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b72f513f194de2e692090a89aac3df095b561dd805ec7b05cb14c92bcd1fe701",
+          "dwords": 75,
+          "hash": "7d1c707013a556bb",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "a56235f483a2267ce4cc5e280bb33beb25078396707b4a7d72c1cd4e95e7b958",
+          "dwords": 42,
+          "hash": "983e61968e915ed9",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b998e84841407d82a938d18d5ddd9a0b33281aee50de8ef91e61ea25ee91f562",
+          "dwords": 33,
+          "hash": "81bade63a169e3dc",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "5cbf1c61702aec0e82cdfe170d3cedf4dbb9d1f6cda25a687f52bca3cbffb1c4",
+          "dwords": 15,
+          "hash": "04985a0f7296e130",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ac6ea5fcb5aae9094c6c530784004652fe30d3d4aa089c1de3f44411fd367622",
+          "dwords": 1899,
+          "hash": "19a01c01290e20a7",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "25abe709772f53a6d722816d744c24bf5c1d7225356c9b5b23f3973e82c71536",
+          "dwords": 30,
+          "hash": "718c12ff9e1b888b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "054f69f3f536055be9e282805b9d272a37bc582900582f85ea51556e4b9951d5",
+          "dwords": 36,
+          "hash": "3ff79524fcdb71c5",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "08fb552043bdef0db5b96b5ded12f86c1b9aed856401aec9c67bb512f0dafded",
+          "dwords": 18,
+          "hash": "8e4dbb9e9a63ef67",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b29817fb84e92e994376bb5fcbc0bc681927034128eecfae40f9f02dc3793f84",
+          "dwords": 15,
+          "hash": "d72fd0903cce7dd6",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4d630f482042c426c0340829e3d2620ac6bdd8fc5acfe62f2294099a358cdde6",
+          "dwords": 21,
+          "hash": "3e77b1ad4bc5b900",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ae59fc403c350ff8e92aef052627847b6205cc5a13f2c82a882aff698be03c33",
+          "dwords": 123,
+          "hash": "5003700b7c9b1c16",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "ddaea4bf909345a7891eb989a32d11e8f64725e5c14ea4f97a6686f16a0e6b1e",
+          "dwords": 117,
+          "hash": "2f8a0341e8c09698",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "81ea2e15cc2ed4c3f50254fc7ed52cf11458dc9a44eae255daac65897d1a61e9",
+          "dwords": 258,
+          "hash": "c30a97d946fa2be4",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "1c40cd1193792f2a4c04952184985565aef503ed429cf775d13378b484763fbc",
+          "dwords": 255,
+          "hash": "9c2144e42e95a76f",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "40d49d6dcc4310805bf5f8f3a0903cc5b9f2518e9c7073cc25a66e1a02294cca",
+          "dwords": 246,
+          "hash": "fb68a7f2301210e1",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "1c8e7d0fd49b0e5851c1524321953cc93f5d43b627335433dc168f245bc7dd86",
+          "dwords": 165,
+          "hash": "4755a2e4a05ba678",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "51e5e9e5aac67960d54804afd2249011c2d94d5d3dbfe3ad8f52a9767e054432",
+          "dwords": 420,
+          "hash": "04f23292b2f44077",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "1e29d4c034ad960f54dd5d0df975a4cea708dbf4f7b7eee24c246d5487a4dd8f",
+          "dwords": 333,
+          "hash": "578342593a37dd35",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "72adb6dc2f53ef43a0535b559bdbd8d100b25d847ce15ac1e356001ae7cc9315",
+          "dwords": 378,
+          "hash": "45243b758f9272ab",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a317539bd0f3459d6da893c32af00767629554d87133b99494c1f05a73d7df28",
+          "dwords": 285,
+          "hash": "af1e16ee57e4bb06",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "8ae48a11dcb0e976142ee7eee9a060ba2f6edf8e437bbcb81a1cb74d72630afd",
+          "dwords": 312,
+          "hash": "da7ce2be224e68ce",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "233142bdaa86bc310cc2d5f0f7b421e5dffb7143fd3f69362c467de0d0cada09",
+          "dwords": 111,
+          "hash": "7ddad5c29b3f56ee",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d7c995e1acd8c2700d6b01ab0cb283e234f79760a2fb70c34a034f4976fa3877",
+          "dwords": 414,
+          "hash": "f96a4494958bfa12",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b4a88e9d569177a51f22760b4055364631951bc8d93914ac7f6c658516e1fe7e",
+          "dwords": 474,
+          "hash": "48d30eccf684f488",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "14f8183e54c4067d63bc084799355d8e795a1f913d43614cb559061c00a24102",
+          "dwords": 69,
+          "hash": "26052defba688af2",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "2f9477c10faf14af9693630c845caef761e88c5b351fb8282d347dd104f6f618",
+          "dwords": 27,
+          "hash": "43ed37430887a46c",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "4368b4e2545dd75bc5fe5b5f895527c163275537683bc9b392598e6dfc2adb65",
+          "dwords": 63,
+          "hash": "7f65142c12beb353",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "68e6118635762a19abf3a4b31e25567962c0196adb7a01ff87bc820b9e82bf88",
+          "dwords": 255,
+          "hash": "6ad4108c3ff07966",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "d5e13553bc480da64bdb607d18e29a4247224675f3dba9e9f5c4c5cf9f226e40",
+          "dwords": 225,
+          "hash": "165edcd2cb963868",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "aeda9bd88f2f24263ffc3f8627e079c02dcf5dda984af8c1eca8c4a76b5b2f0d",
+          "dwords": 96,
+          "hash": "577cb5267a8c92c3",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "317856c5c5d40d64366a92831743117e08a08c60449d736b487a26ea10d42d2d",
+          "dwords": 165,
+          "hash": "00d85b797ecddf7b",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "91d005c1deaaba58fb9963d79d613a01c5ed4e306130830b8e80e00207455446",
+          "dwords": 18,
+          "hash": "8d2cb9bc0f8d6bda",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4d58c111975994bc8f9393d6bdc344cca052d0b40c3915c2ac104a86bd08eba9",
+          "dwords": 72,
+          "hash": "f186d27249b462f8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "fd99162f8b62822b0cd20a212b46e52088383394cb08239b6c39280769bccc14",
+          "dwords": 63,
+          "hash": "c47236e5a9b00356",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "f2479e907b406b0fb50710cfb43d382b440fd582ac5f436b1cf26c92a4a27324",
+          "dwords": 33,
+          "hash": "37caf82f552893ee",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "59325efb6c92263571d4927eb13058123880ca68fc92e5fd21e63644102a34a2",
+          "dwords": 63,
+          "hash": "bead84bd72072e0e",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "cdd9e560033d4ccc14e07a691c2934c6ef70e5a2bfacbec4ffbc90bf977b448a",
+          "dwords": 273,
+          "hash": "f6d98c7b4d98438b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b746fce9b0979a03e5d640fbc8ac3b065602f9bd4d4b21b39a9101995c3df631",
+          "dwords": 468,
+          "hash": "a5846836c90e1192",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "5f8e275873e76e6568125f18a30783e0eb42d4cd3fdc48f1c62b96004fdaa068",
+          "dwords": 273,
+          "hash": "00e09d1bc5295d52",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "267689c1dda9425cd8326a9cafdd27f9015de13dd33b101ee97be4525092c5b7",
+          "dwords": 273,
+          "hash": "a17d8aec3a817d45",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "91c9bf1b0aa5b2b00fdb14cf95582cd3ab8efebb0634993bf601721f57f8d469",
+          "dwords": 15,
+          "hash": "06547412e4b72251",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "994596fe2a0156089fccc6e6c91a1784484e23dec7ae678c669c3f8cbc45bdd3",
+          "dwords": 276,
+          "hash": "129f7f2793da9084",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "403a20d4d4dc1ab13276036b90a18d072cc2b066b528727445ef1dac4974fb02",
+          "dwords": 33,
+          "hash": "c915912c36588d26",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "db70beb3a98626900e5e9009a3c6a201ea087d79c51e9104b54ac11eacf06e72",
+          "dwords": 186,
+          "hash": "4b1d3e6e8e58d3ac",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b2109f9ba4a8f4f84c639997c8123288f31077cd777b3de092410387d7792561",
+          "dwords": 27,
+          "hash": "b12db91e7f8f4977",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "fd8cbfd38a653d5d511f5768c08bc228ef14346b1f567df7ae1d13c4935d82a7",
+          "dwords": 132,
+          "hash": "83569f66d81a3549",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "53b2797fb3ad4fb61d9957a016d6891eac886c0f9f8bdd1f2bf0cad2b5a520aa",
+          "dwords": 417,
+          "hash": "775c6085fbb9d676",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "9ed2583b84dfaa8880a977bb5ecf95550a2b0a1af0bd8ca835147e92a33b05b0",
+          "dwords": 123,
+          "hash": "f51af7db09eded71",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "84fc1f2be956263019ef7638d5128a710b98a6c280973f8e070665fb13dd0093",
+          "dwords": 495,
+          "hash": "d7dd31b9bf194de8",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "6fc4668cce11822f4c130cea9a958ad1dade4f3b102cc355d67fb0401da7f6bf",
+          "dwords": 462,
+          "hash": "58d3faaaa84a48aa",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "7a0f236d68601c786a0b5c810d4899e023229ba39055c1f3736c15bea5b8aaa9",
+          "dwords": 150,
+          "hash": "15675eb73fb39170",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "766f1521002f75b5757c501eaf6e693c2882d4170e4533f62a4a2d996eaa8a38",
+          "dwords": 285,
+          "hash": "563e3be17857db59",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "7a63bcb15dd53713057c1cec97057c84f5b25f3596587513f236145d36891426",
+          "dwords": 93,
+          "hash": "ff19ce696f916e0c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "2e9e1a946b7df92dad02021980711e3aa43c6a727c4877b8d7b6cb29ac97aff4",
+          "dwords": 93,
+          "hash": "65834a8405d40e53",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "19859501adc35ad89d2d4d7ff4f1146f47ebae43014a3ae6b5b4ed49eed9ed89",
+          "dwords": 234,
+          "hash": "8c512607225ec5c7",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "fa138b251121bfb46f30b9b7dd0cef6ba187fcf7dc9072bcf03da1e34c1b2caf",
+          "dwords": 261,
+          "hash": "2fd24989ab04a475",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ef6567715ad83a7615a8bd1ba790a587f819ccf43ebd802b2259c25e3d41c0f6",
+          "dwords": 132,
+          "hash": "9ed0ba440dbd51d4",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "beec4b6cca947132b1062655a2f578160d1511414421793bf4619117c491fd9b",
+          "dwords": 42,
+          "hash": "4e027276ff1a2f49",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "02a21d7206a5a70e744955345524a880e28eb83de8658205b6d59a91c797584a",
+          "dwords": 33,
+          "hash": "1e6798c9d0f65784",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "18949828690c154ca6f4d99b5589e254affd42078d148d140f91e39068c83138",
+          "dwords": 27,
+          "hash": "fa331dbbf0b904a1",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "6fe7b4e3f89aa3647b3188382a05aca1a32f8dcffce9791ead5133a8023c187b",
+          "dwords": 108,
+          "hash": "9a14c8f2c1d70f17",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "3cd7ff874e8bc8114e4314cc4f9cc8c1a5449c0fcab4bbb91e3b32fc4458619f",
+          "dwords": 108,
+          "hash": "2b0d798010709cbb",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "6095cc7389da937fcaace3212be6a30ae25007b4b6c2976313574eed06496e81",
+          "dwords": 15,
+          "hash": "7dc68bed8253f7ce",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "8d3d7961b08c42133fe9f62960055941ea0461be7e75ef2353d80252f2c00222",
+          "dwords": 39,
+          "hash": "668f55159955ed9c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "01a79dfd4990b09f33feae36081f6b34ab66fd361fcf7f26673e483b2b852830",
+          "dwords": 156,
+          "hash": "f6ee6651bb3e2745",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c8dd2820bd40367784a16c2fe870f0108a0d4b8ecae6ada86ebfcf549952b75f",
+          "dwords": 129,
+          "hash": "b6e85fba051568c0",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4268aeed4ecf5ccb0681815bc39c0a55a1e1b4ff437a96060c11ed002ac9c057",
+          "dwords": 804,
+          "hash": "f2f103f16764043b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "0edb4b952ffcacea885cda6dbe03982dadbdfcefd0cd33c28c590653fcf16db2",
+          "dwords": 486,
+          "hash": "a22982e86122da41",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d7c03502cea4791e744c66ebeebb7f168b332b2a85c0d719960307cb30d58d3a",
+          "dwords": 582,
+          "hash": "e0996bf4d9539d38",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ad3dc814cb50f2fd7a8e357a96556f4a8a243668c46914625679706c05a1fe72",
+          "dwords": 492,
+          "hash": "0981301d645e2517",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c3234cd94627c565e40309ea4be9ceed76a2bff036c4a7722a9dfb29b0b4da09",
+          "dwords": 312,
+          "hash": "db22f44fe07d6a5b",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "fbc145212298da8c052a11e7ba5d8e38db75c1d751e7ca68836e9a89da169c6b",
+          "dwords": 477,
+          "hash": "fc4f2ef6930768be",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "7865a7a36ac558684a41e5b9a1373f2604f4453038526115d58d5dc6bd8f1ce7",
+          "dwords": 381,
+          "hash": "f98433ec8c4a4740",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "64c0f747bfb3f391c18113dc56ebdf27025238dd19adfb3e50d4528d66bb22a2",
+          "dwords": 705,
+          "hash": "827b878f3d404635",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b3713cb73aa8ccd86bd0778a2918eda472fb4299615d2cc9c5fe4a1b3f6eeb27",
+          "dwords": 675,
+          "hash": "95ed70bd54b49d5e",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4e766bd5ca897228adef0261fc0266c20349c2b9b4241a79baf2611bd8ad1afd",
+          "dwords": 807,
+          "hash": "a7a88924c272f438",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d000cb52001fd5bc2e2c65090760ac9832013fe0fd66323c738fff5bec5b306a",
+          "dwords": 1014,
+          "hash": "20055f971bb9e749",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "49d5f1dadf6cdc9fe26233d899c047a965ee9bb1b14ccae65365427c48e8b33e",
+          "dwords": 33,
+          "hash": "46ab120bb77bc270",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "8b789d04575765587ef42eabca3e2e2ead1851155cd14215fe48062f559c5eb7",
+          "dwords": 735,
+          "hash": "3275a966f62ea3b1",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4ffaed092e93caff9f4e4662aa5e9d10f31ed06afc18e62734f0ed8e410068cc",
+          "dwords": 699,
+          "hash": "90b310ae5d5890f3",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "9d3f48439442f196db811159a2e3d9a616d961c5f78979c12726ab2e099c7e7d",
+          "dwords": 33,
+          "hash": "5f56704a2343bf3a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "316e7647bcd6fce1f5ab57e15e58da5acf51a5c7824297e84621019e2462baab",
+          "dwords": 63,
+          "hash": "8db1452c88ddc047",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "69d0b7a7ca0947983094ea9a1dd2b85771299b86b9407f929f1730b25ad741ad",
+          "dwords": 84,
+          "hash": "13229207e0088afd",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "55a7ea86e9911448c257bd35fcb2dae0e0df05d3b6c3f49f2eee1b1f64255a9c",
+          "dwords": 159,
+          "hash": "39460e3e8fbc3102",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "bdbe6794e895103467dc5075fced68a7e60e9aafe9eaed8891c95c41c56acb1c",
+          "dwords": 132,
+          "hash": "135fc519ea8644d8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5f6c2fc025ae408f2c4a5792287e154864f56c0b3ca337c4b7d4f25024258a15",
+          "dwords": 81,
+          "hash": "b863fdd3469557d4",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "6626ef82c6dd8df0943ca9d0025c6d1dfb8fd96d5ef369d24c1c0bd2b355b660",
+          "dwords": 255,
+          "hash": "f6c546d6c2645541",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "987313ef2e6b14f20711b6e01e6d0133073ff39e2ca180e6d6aa3563c959411f",
+          "dwords": 204,
+          "hash": "eba6cc6389b0548d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "5cd48f8095f247dd573b95c81819dd39aceecdba6336dc639d8f52cc55cec5c9",
+          "dwords": 612,
+          "hash": "39b39197b46eca72",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ce1f00382488101b3f9854f22e98fceb145235af93745e62c388ad8db7d1848d",
+          "dwords": 111,
+          "hash": "1b52aa35a311938d",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "f3bc10d38c7b863fbcf00bc9828c7080b1030b434bae0671e55feaf017e69fa8",
+          "dwords": 18,
+          "hash": "e2120feafa4cf565",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "3641751cb2cfe74e51cfa1e0cce63b694969dbfd14661a7005ef9ef0d0581d70",
+          "dwords": 285,
+          "hash": "8e31515b5f92f4f4",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "1a4d6c332665ba649f55ccbecfe47badebc996f51235e00489709bcf3257f41a",
+          "dwords": 39,
+          "hash": "e60259ee0391a7f2",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "be398ddb189bf330fba452a2b9961fbdc43f0ce054f3226eb8a8f324342a6695",
+          "dwords": 108,
+          "hash": "661b966052f8dc8e",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "186a9e4bc7236e66d174c82a7e325f433bcdcf8994862c4d0a31c47e075a3a20",
+          "dwords": 105,
+          "hash": "35be4fc4b0ec491b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5f2537086b550277a8ffe7ca5aa4a805aaaf39227ed8ce06d5ef0f2e7d2ec039",
+          "dwords": 126,
+          "hash": "7c5710def3ee33c4",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "1fe7d08174f1b5501e07bf41819c6f884f1003910487bffc541883da225e3ba4",
+          "dwords": 87,
+          "hash": "014f8a02db7b19ca",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "87c28301902d8b02c53cfb23da704d894631c4838cf536f834ca5abb81436ca8",
+          "dwords": 414,
+          "hash": "87d12b6dec03f597",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "d66851dc164640ce35c42c1420ebc4766d092ae838500262e76f1cddec274cbf",
+          "dwords": 126,
+          "hash": "b6de6fca418c4484",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "1ed8d0e3ac2cf0af460278ba7ba9d0f1965fc22bab2dea671337aaedb073e01b",
+          "dwords": 708,
+          "hash": "31ae85a9275b4a29",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "edab071b48997d32c87ba67bf072b94eeaf151a4d54bea99bb91357c320c3ad8",
+          "dwords": 570,
+          "hash": "6d6bd7173f4af967",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "980ed5c74da7162a4bc1c603ac9966f2d5347243cd30ad4ee4c38438f63810b2",
+          "dwords": 1023,
+          "hash": "c0108405deca669f",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "01c4ece300322080b3d178c5991386383c2019e85146e63d0384ff9031c1d5a7",
+          "dwords": 60,
+          "hash": "218ad033d3d0528a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "b328729f6fc464a9cbd21a760ab960e0ee44655f4381a7b7b17f7d5cf41a3d64",
+          "dwords": 9,
+          "hash": "732a6fa31708767c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "66ee1fe078d77f33fe71b5c5e08a5b6805ab7eff8af0ed488c337143b2a14d39",
+          "dwords": 21,
+          "hash": "18d39dcebee4c2fc",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "bbcccc2e798b8c0bb3efefa2aaab3ebe442c11916dc3b0ec885822296bc4aa98",
+          "dwords": 18,
+          "hash": "4b58837d42f08c89",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "28a59c71f23589a5738da640698e20ddcead8901a4a340efce6d34d887c5213e",
+          "dwords": 30,
+          "hash": "70f756ed96f944ff",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "107a6ec5443f5016e7292a41e602e908af808f1dc8f534a95b8dcb20de7d20d1",
+          "dwords": 492,
+          "hash": "36b543cecae5c781",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "3693e94ffebd8bc69f9ddd5d2762174800804b25579312ee3b9e86f2573c01b6",
+          "dwords": 297,
+          "hash": "b636821f95dc9d8e",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "92a183d8f5fcd22dd4ab6529b395b5d3ff0f64260b939aba58dde4dccec1ab67",
+          "dwords": 486,
+          "hash": "33c00226c154c1f2",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "4a79aff12303d4442521c9b8d80439a2c2d8512862c6c902b378270680a0c37b",
+          "dwords": 357,
+          "hash": "f525e023e08ac9bb",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a1126c048cb8cabafd5191574ea248876b4ba4593c1862ae61cf23e9ab2ba109",
+          "dwords": 192,
+          "hash": "5df7a6cdfb278e98",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "ab4da4bf4edf7edb5d363922914709dd670b89242f5c345551c57d9aa9b90cd9",
+          "dwords": 117,
+          "hash": "bb432a3fdce052d6",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "53a9b9308ac8ad4417c7365ed62b75aa5030d4e8b4f8d0344efdcbfd19083aec",
+          "dwords": 432,
+          "hash": "14217f5c1118d00f",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a12af66409b013c60128c6774a8f5653a2f612f3d917728d654dabd6294a8c25",
+          "dwords": 681,
+          "hash": "d57e7e65f94cbb2c",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "37b534befcca6834c74f07449942c56d7aaa12668e2a08410752c92110adb98b",
+          "dwords": 756,
+          "hash": "7928baa7a6691a5d",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c7df5d12ea9814f26e5a8260d3a9fd8e381377c33f53808c86c9cc7288bffcd2",
+          "dwords": 456,
+          "hash": "c0715ed52ce7ecf2",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "edf70e6ac77c63d1d8a77bdb42f6ebda3ddc25f665c496b96314e387038aae42",
+          "dwords": 78,
+          "hash": "201c64d265f2d201",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "90061c0bbc5f562fb822dea58879771bea49e7bd20a78851d2422b9971502169",
+          "dwords": 1641,
+          "hash": "bac4e55f76ef5fb5",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "2b23fcc266392c44d7b24c81777e68588a6e7554e673c064b6118a5d6746f5e7",
+          "dwords": 168,
+          "hash": "0a403afe3e772e09",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "70ed20ff802fa0b4c95458a0b26fac9f006c2e76fa33d2456082b68885ad0728",
+          "dwords": 30,
+          "hash": "d89dab45724754f4",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "3fb8d1b392e49ba87029bc62c90f88be5daedda2bbc52986a40e0d7922d1fd11",
+          "dwords": 390,
+          "hash": "2e7f2d6b5d14ca9d",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "053a10135847422af0f52bfebc827b4a716dfe947e55a03487914b193f8f4551",
+          "dwords": 705,
+          "hash": "0f3bcb61ea809692",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "f4c5341f42342a00128d067ef7017128c524b3cf64ed81ef110ee186c4f2b413",
+          "dwords": 420,
+          "hash": "4ce6eb1f62420a0c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "7dea5e9050f0b4984652d1a2c2a393408741c641cd148cbad1b3ff558a495949",
+          "dwords": 402,
+          "hash": "999604e7f8eae7cc",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d207b35893c537bc26fb766f3d61c9bcdb9d10e9f6174460a96c456b61decb07",
+          "dwords": 420,
+          "hash": "b7ee7b63044ce726",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "8758c717096d26a29ffa9a172ec716d2d485ef35ad396ab8345d908ac72cbc1f",
+          "dwords": 255,
+          "hash": "ed872ed6d8b96630",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "213100363b1f30178bb3192217ee846104232a13b9f763afd78c4546e07de035",
+          "dwords": 957,
+          "hash": "7b718253031ac33f",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "324e0456c4fa1286285b8182ce9fcefee02a7e9a9429689fe6fdbde3813ce768",
+          "dwords": 552,
+          "hash": "cd2ce6d440b77bce",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "1c0ab0650e9603e05701aa9482ef93e592e3be194bb0ec6a845fa77770088549",
+          "dwords": 258,
+          "hash": "1d66265b2da1479b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "eb6c5760113ddd2f0b653d309f9f3edda18f4e1f92a2ca044b2d98b1dead1411",
+          "dwords": 828,
+          "hash": "47c31392065e956d",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "015b95fcc5fced91885a4ce860df293fa511dc43e2e2998fb0a323039a1c3481",
+          "dwords": 390,
+          "hash": "cb5bea2cba544edb",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "2ade110e2be8cd0bc7181ecd64f72dc3b84abc1d67d388ddd1b1c4204c7aa02e",
+          "dwords": 138,
+          "hash": "7a480c1357d0bdb7",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "2a7e6a8837541bf94bbaf3a2dbc5806a52489ebb2dfe0bb40198e61dbb323bcf",
+          "dwords": 165,
+          "hash": "32ccebec8732a713",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a11019b95af4a2f4c158cd0654428a7828a5269d21c2bf4febd779a778a0e2f8",
+          "dwords": 300,
+          "hash": "b3f5dd8b6d9e888a",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "34e83c090052f6dae3f5dc6ad9323baac105a30254d285b379bde118b1457361",
+          "dwords": 510,
+          "hash": "9e35b9aa373712fe",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "cd3f82a8f45fd3adfca6ad21699ce016d5e92ac12a1bc479a80c637787e49d6a",
+          "dwords": 564,
+          "hash": "9e32db07ad1de7df",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5fa3becdcbf2e8c418c233367219df047d40976374653c769c01653217e5f121",
+          "dwords": 417,
+          "hash": "ae9a682b1b694289",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "2bbcaef4bed9ee7d7fc54baf539ee4d6a171e7ad0f524c2ce2cafd496fba777c",
+          "dwords": 477,
+          "hash": "437f0b3fe52ca38d",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "23287d88f81f590053c84904153f5cbc5a3366de6dbba2373d40e8473f306527",
+          "dwords": 624,
+          "hash": "28e202861d3e2411",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "f22dd659d6f280ebdb4c7628db964bc9e83c42b2fbe1f20865ce8a1f4e8b1cf4",
+          "dwords": 840,
+          "hash": "356e4e7b9e2b36e6",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "72ffd3293f2cb9622831590e3a520a763d0f50804397c68e239a13509c953894",
+          "dwords": 714,
+          "hash": "c8bafdfd424ae99d",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "f886382938c21c103aefbbc033259308b39c74c4b0d00293d128222fa253378c",
+          "dwords": 624,
+          "hash": "75bfa76c4a34b9f5",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "67d66dfb9d2e8fccc7bc864c7ab4a2c7551305a883fe7db2523c31ae6b9af4b1",
+          "dwords": 873,
+          "hash": "b33a3dc944240ed5",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "9e88b09b38edfe3e87118c5117be43023e5e98a1a564ea34b17a32827359c63f",
+          "dwords": 90,
+          "hash": "4b396f75580a3744",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "fb9e43b1ed9d8fed81f45943671817d6cc4b671e12c6364dd242340c7eb05207",
+          "dwords": 57,
+          "hash": "cdd7d1cc2abd4a34",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "88de3aa349499ece34af01eefa3f0213df1fad9a20acde477127da0ac6aec4d3",
+          "dwords": 114,
+          "hash": "d0b5bc5eb60dde01",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "3255459902be7fd901e9b9b9c7307312e2d7eb4ee231e160f5f3e0b094c990e8",
+          "dwords": 114,
+          "hash": "1c10625fd961f82d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "a5ebe0bc125725a1c4295b6739f42e5f61ffd2b77d5b721acc74ea0e3232e822",
+          "dwords": 264,
+          "hash": "edac95d2244c4fa0",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "18fda6f999b6edb355749db03b8ad99a24f663f5698bd54773f0b053ee9c74e7",
+          "dwords": 414,
+          "hash": "4f4b14d7bfa4dd5f",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "585598e40d4aabd10c5cf8ce5cdea38d05ae61362a414ed0904202892c0cb904",
+          "dwords": 489,
+          "hash": "469633bdc6911834",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "047bdf99b50f75032b6e5d7a8109b7c82bb90a14722b44052b687c77cd514177",
+          "dwords": 705,
+          "hash": "11422b9454b9fe3a",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "1e09448095d30975dd432d29ca2aa55d912286afe4aeace6db91f4f7ef027467",
+          "dwords": 648,
+          "hash": "755b8388d731ff1b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "25e1afc6e6533465e8c86871568f611a1c3dc1149b05845a3ec74b51152328e6",
+          "dwords": 453,
+          "hash": "5d2c828587df274c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c70cc04f433bb3e72b9bbd526be77e489e52562e3cad4174bc651f470d8a561b",
+          "dwords": 777,
+          "hash": "5f5e1f508bdb8fb8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "8b115c8f70bfd0828d1c619a3810e7e80db865372a73719f64b360bfeb67b0c8",
+          "dwords": 384,
+          "hash": "39d4f857ef9d5852",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "75605503b3cc1cfaf7b7d514b0496ab747bb741480a5c60fb540bf3d77b68a8f",
+          "dwords": 237,
+          "hash": "f44a1b775a3c1201",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "81a77b422fce4f2cbaeaaed6bd9ab296056d88d962e986ade8bfa5dd118a87d6",
+          "dwords": 96,
+          "hash": "4ccba2c846af3f4d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "93a89bc28ddce1b9b8e0443bfc2ea2c1ae9f32a5f0c780d5b3fc996e90c62aa2",
+          "dwords": 51,
+          "hash": "200c146a247fb113",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "820bfede9149fbedfb7aabe3fbcb26efca298ce419a10d98328118dfe001672d",
+          "dwords": 90,
+          "hash": "6f82a06c66b915e0",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "86a89ed699c6238f3240e3e4a838ea7aac0df368b9a5b72ceb4637034107184b",
+          "dwords": 105,
+          "hash": "c14e33dfc80e5e14",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "af4be5a0fffb9a5a100f79b31950db5fa7a13afe3c8d8bdb45f5582a1f438c2e",
+          "dwords": 225,
+          "hash": "03d91b35acd56079",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c3e01abc651bd52ac459aeeaa111a78f04426ded2e42489640e7ff500e36a86e",
+          "dwords": 945,
+          "hash": "85e6e3b91a4cc4c5",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5591a730a7c31274a8959bb2d0badd5a5a01671dad24b559b1c95758ff2f571c",
+          "dwords": 1185,
+          "hash": "790669d52037a4f3",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "13932df59b9e1d908089d3844742be0e2424098cc48cc5c0a810a864387f98dd",
+          "dwords": 15,
+          "hash": "6e57a6e305d5d69b",
+          "stage": "pixel"
+        }
+      ],
+      "entry_count": 238,
+      "sha256": "cc00f7e8f7f5c3af419add0995218f43620a4d87847116b233cf4a74a1a80283",
+      "source": "out/build/linux-amd64-release/cache/shaders/shareable/4D5307F1.xsh"
+    },
+    {
+      "bytes": 91568,
+      "entries": [
+        {
+          "bytecode_sha256": "abfec28e9858fd1b9b27afd527f08421c38f288e9333cc7fc10d6391ac190fa9",
+          "dwords": 27,
+          "hash": "1e6883fccde1f688",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "9d4a64e81064abb794c5cba3642feda86a5a1e6b75a13cd4c4d7917bea83e01e",
+          "dwords": 9,
+          "hash": "a4a965c189287b99",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a5ffccb2a2cdccd0093b55f9051330166881a987052e76249b4841ee7170c608",
+          "dwords": 24,
+          "hash": "b6c9863f710683ec",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "6826a89ccb4a981f3c2b2c66f8b785519c1b84fbb4572df70880b01cec7098ea",
+          "dwords": 27,
+          "hash": "bd2477fede6beab1",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "d30a381a6c0926b71de3dd06e9669a91fdd952d08cb76e288b34a9626d91d488",
+          "dwords": 36,
+          "hash": "130dca19b2727f68",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "952212c71bae82509df3d563c6f7dba964f4f577c4b25feb2dd5539a0c99200d",
+          "dwords": 24,
+          "hash": "d5e12a97b3a84881",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "a3bd60675d31e8ad8486b977c486f75c013b87f047c466f9dd31c97ca5ff820a",
+          "dwords": 18,
+          "hash": "5d6768847b0602b8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5201c53ca27bd1f47ba999f626188853988879dcddf8795a8b262d38c8f51094",
+          "dwords": 27,
+          "hash": "b2d99ac2c7fb40d6",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "abdb220fccb569a5cd79bd3b81659338d057a763c17d6e4bfa5b1c85851717de",
+          "dwords": 15,
+          "hash": "0a96b3fd5121e331",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "fcf7228371659426a93e8e4f05167454ad25eed3b0ef9c4e973c8d12e58255bf",
+          "dwords": 204,
+          "hash": "4be4344c27016e04",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d207fc9b0700bd1ad708a9267ef76f46349e48032a0073918a6f04cbf0406832",
+          "dwords": 27,
+          "hash": "5181317ca0e65be9",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "9fec99d496f591177b70dc9231f674a6afcf736cf698f073cccf4b4b47a3457a",
+          "dwords": 36,
+          "hash": "87e85199e1e9b260",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ddc139d209649515eaea261caaa37a7ad35bdb9e71e37cd59ee2012bdb6f68e3",
+          "dwords": 15,
+          "hash": "5821366ee8fde893",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5439dabf30def503622a68ec172938059553cc37437c23f71db0ce975c8268e4",
+          "dwords": 42,
+          "hash": "ee922cfb4426ea83",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d2845371b5aeaf08f01ee5edad0dabfae0ce25214278b49d49e8fe5eb667ec49",
+          "dwords": 93,
+          "hash": "ea83c7e7e24ec4c8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "776982d07ddd9d4b6ed231aa4847ca681779a0c23d1dbdba4051005297423e99",
+          "dwords": 93,
+          "hash": "28dbe18f313350bf",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "7e533a0c25fd73520b2527038403b2b8129c4e50e3ac18c165ee74307abfc146",
+          "dwords": 75,
+          "hash": "37b186f4bd3288f7",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "2c5be2e5742b8cff7d6a9ec60feba5c0c22c4a5dde89f9eca128043ce7cb1b3e",
+          "dwords": 27,
+          "hash": "95503a81ae52ea05",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "711152f8f70535b65c734ee76bb1cbcbbc447f6b99846f646789b8d3020e96c3",
+          "dwords": 51,
+          "hash": "7b22146d51e0e4f5",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "3cc0c990f07f8eaf3786c87a3bdec88b94ead178d31c5b814b03930531361e6a",
+          "dwords": 108,
+          "hash": "0542ffdf2b118509",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "6d7b341de4e586d467376f741478d1ca498fe45d7e6ab12ccb8ac3daa6ee48d1",
+          "dwords": 285,
+          "hash": "29b6506fbaceb93a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "b1b190908ece7d3fc9947c5b71c7957454bae5391c668245fe2642b5d28ae947",
+          "dwords": 24,
+          "hash": "dbfd88a80edbce36",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ed56ce02f85176eab80d6b82063c623bf3ce157ba457beae5eff33b86d6fc58b",
+          "dwords": 33,
+          "hash": "c300519ec8915346",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "1581e0cf85795c9c44fdaba43181828ddee6ce739e6e104650c281e6bd56dd26",
+          "dwords": 45,
+          "hash": "a753a2072f78f00f",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a86186e3a93455a58879cfbc4d8274644286377ef25999df9ff0387a27469436",
+          "dwords": 27,
+          "hash": "901891d9b86c181a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "74cd93c4f4974ffc881af7dad1cc9e25cc3ed904c410b66a09cde27d4271e71e",
+          "dwords": 114,
+          "hash": "94c373ab309f37db",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "28b965ec9592f0f2584d3c0576e2c854ba26c9d58e3f51b8d60a22690a2bfab7",
+          "dwords": 33,
+          "hash": "93e7f7b5d05626aa",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c064fcc39ab5f942622b87fc0da298c470e943c420b6332c8b15e0667a8c4c07",
+          "dwords": 33,
+          "hash": "5f329db1e7f0dd5c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "3628f73b1308ae136a6fe26c620006dadeb542f18bb7903968dbf94859e656a9",
+          "dwords": 969,
+          "hash": "695413a9831d88da",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "110ff24f335e1a22bd7963da46a870c3533e68558300bd44513b2235caf74b7e",
+          "dwords": 132,
+          "hash": "ecd66a10092e6562",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "c722eff9722b949cf7dca93341c9a2a1a9a4d5ff6756387381cc7c839ceaa8c4",
+          "dwords": 261,
+          "hash": "8d900846800943c8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "68a4e2ef7591db837c9c12f68392ed954772f3fdf14e47fd402586a926c73483",
+          "dwords": 39,
+          "hash": "8262e1111c273b50",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "36fb7c988e382626939f7f8b6a46bea802004a79696af4e59c278a2da52c3ae3",
+          "dwords": 306,
+          "hash": "f7601fbe485936fd",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4d58c111975994bc8f9393d6bdc344cca052d0b40c3915c2ac104a86bd08eba9",
+          "dwords": 72,
+          "hash": "f186d27249b462f8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "fd99162f8b62822b0cd20a212b46e52088383394cb08239b6c39280769bccc14",
+          "dwords": 63,
+          "hash": "c47236e5a9b00356",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "f2479e907b406b0fb50710cfb43d382b440fd582ac5f436b1cf26c92a4a27324",
+          "dwords": 33,
+          "hash": "37caf82f552893ee",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "bcfe6d4ee9766aed26e605a0e626cb6704bc532d861a13ab6a0a251e1049df66",
+          "dwords": 57,
+          "hash": "5f4416192e87005f",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "4ae7f8323c7e081a79c75478a825599ae0c9a95518f9d097852a20dd21796bd4",
+          "dwords": 27,
+          "hash": "f160b4da459a6d40",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "76532ce956bc9b6363355cc66debbb72bc55d98aee5e36e7719e4979616e2461",
+          "dwords": 33,
+          "hash": "57818a7fd1c4f026",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "e6414d4ffa8eb79a9b501373e087e5f2c57e201526e1abbd924ab5f6e5ee0300",
+          "dwords": 18,
+          "hash": "33477588a5c01c7c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "12d51ff68a765e2f4dc04a78c7f82379669214710e917412ecaaabf54e55c421",
+          "dwords": 135,
+          "hash": "3a0f9098b839ddbc",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "31f4e548a0fd8ce85d188cf8cdb4aeffc504be787884f377ab896f6d5525152f",
+          "dwords": 126,
+          "hash": "82f6433a69263c75",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "8e1f4a8b0d95075e1bbb86d3a51110ba87095e3e2f61d8fb5fe956ea610a8665",
+          "dwords": 165,
+          "hash": "a8a5b2a89f70336a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "18fc352455ead8255d77d78cf0bf56553311843b1933a7b7234f67299c02a443",
+          "dwords": 48,
+          "hash": "85a9a5ec510a9700",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "20b5dbb6e2513a4f8afb2f9f50381911606c66e9c4f9656eaa62991b138c2007",
+          "dwords": 63,
+          "hash": "87e0db8b7c32f6a5",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "aa85e2957587e693728ae7158cceb31b112c3cbc8202b7ac04644ec1f85d5828",
+          "dwords": 282,
+          "hash": "432563420047c96c",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "5f9e26296676d1e3f95a44a2bc2a104b96fb3a8682c0f4654e21814a03edcee0",
+          "dwords": 21,
+          "hash": "f1eb2497108f159d",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "cc348dd1e3f4d4e6e9bb63083788515990e6b2aecc5a579ecc22b9f8dff69586",
+          "dwords": 171,
+          "hash": "fbd39c64463e180b",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "fbbae1ba82893b314d0cb4d0649de0cd5c512d0f9f847515ae10181c4635847d",
+          "dwords": 177,
+          "hash": "be53d33b25e4f39e",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "59325efb6c92263571d4927eb13058123880ca68fc92e5fd21e63644102a34a2",
+          "dwords": 63,
+          "hash": "bead84bd72072e0e",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "cdd9e560033d4ccc14e07a691c2934c6ef70e5a2bfacbec4ffbc90bf977b448a",
+          "dwords": 273,
+          "hash": "f6d98c7b4d98438b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "38ba133dbce7f55b2e45a8f57728d6635312b042978d3a1275294c0532f2d253",
+          "dwords": 198,
+          "hash": "a1f7e9885ec466df",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "b49c600930f9d945620e9be0c4d98cdb73005c67a6d54ab18e836f85b7c82566",
+          "dwords": 411,
+          "hash": "648b965c200a5113",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ddeca136ea4115ab439c57326cf6c855c16805c3ab21e2f60d730d1d31eef3cf",
+          "dwords": 732,
+          "hash": "44b567635eb10620",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "faea443485abe3e6225829ad3a5d04d67ea1624ee78513a94c7cea7ca1ab4a66",
+          "dwords": 699,
+          "hash": "fc0922a3a8d8da7a",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "bcca917acec3e6c25cdcbe7aedd2872abd619f66329bea2ce83e9a082e4a9d27",
+          "dwords": 270,
+          "hash": "d4d558da6a82bdc8",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "0e9540f8fc2ac9643d44db8ae879e9064c6b582a3b769b7444ecb1d7b581dbd6",
+          "dwords": 126,
+          "hash": "79eac49585797037",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "d7c995e1acd8c2700d6b01ab0cb283e234f79760a2fb70c34a034f4976fa3877",
+          "dwords": 414,
+          "hash": "f96a4494958bfa12",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "588ad384284736cf038844660ca8d275180ef056b980022bd3c19cb8733381fc",
+          "dwords": 237,
+          "hash": "8123c16dbf583f92",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "d12b7fdcab88405611cdc8ca2ea0a7dc240a3e436762900bde92216433e64e82",
+          "dwords": 252,
+          "hash": "e99f4acc7a3c78b4",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ef67966661bc13f76b1a1c56cb7a371238e15f9fe7e7256e7e26b3d5fd68a559",
+          "dwords": 483,
+          "hash": "789266c3e42d7e59",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "e13407365e53659c9d7e1db2babc7d3c3a98ad1938ecab0c3b53b40b2bcaf87d",
+          "dwords": 687,
+          "hash": "401a01fd4e5f8757",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "2e9e1a946b7df92dad02021980711e3aa43c6a727c4877b8d7b6cb29ac97aff4",
+          "dwords": 93,
+          "hash": "65834a8405d40e53",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "19859501adc35ad89d2d4d7ff4f1146f47ebae43014a3ae6b5b4ed49eed9ed89",
+          "dwords": 234,
+          "hash": "8c512607225ec5c7",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b746fce9b0979a03e5d640fbc8ac3b065602f9bd4d4b21b39a9101995c3df631",
+          "dwords": 468,
+          "hash": "a5846836c90e1192",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "8261478764b33b749359f79485190afc521692035b8c12259e00be0f450a0e6e",
+          "dwords": 213,
+          "hash": "7cd57b81550f19e3",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4e916730a8f3878e945f907bdf2ea123b4a4af10ede42938a0aba6c46764f0ee",
+          "dwords": 324,
+          "hash": "475ec9f795e5edbb",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "5f8e275873e76e6568125f18a30783e0eb42d4cd3fdc48f1c62b96004fdaa068",
+          "dwords": 273,
+          "hash": "00e09d1bc5295d52",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "2f9477c10faf14af9693630c845caef761e88c5b351fb8282d347dd104f6f618",
+          "dwords": 27,
+          "hash": "43ed37430887a46c",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "4368b4e2545dd75bc5fe5b5f895527c163275537683bc9b392598e6dfc2adb65",
+          "dwords": 63,
+          "hash": "7f65142c12beb353",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "267689c1dda9425cd8326a9cafdd27f9015de13dd33b101ee97be4525092c5b7",
+          "dwords": 273,
+          "hash": "a17d8aec3a817d45",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a99d83c17be2a4bd4d36c42f5c2d1ff88b466ddf5b62ebb10f08e95b56d3a81d",
+          "dwords": 111,
+          "hash": "5763211d63bbfa3d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "3148126e2f34d9a7ccbf955da149a8671d38d0deffb8bc064fecde30723c78de",
+          "dwords": 501,
+          "hash": "2b091bd0c45a7454",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "e942693d72b183161f4ebf5805df1ffccf04241ec4502e3853a758e70a337096",
+          "dwords": 111,
+          "hash": "d1cc6dc28244c55a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "38e83e0a4214aade165f85a0ca2a81ccc9a3796de8383f8138833b9f3f3bdf8d",
+          "dwords": 15,
+          "hash": "686de15fc84d8b73",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "91c9bf1b0aa5b2b00fdb14cf95582cd3ab8efebb0634993bf601721f57f8d469",
+          "dwords": 15,
+          "hash": "06547412e4b72251",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "071329ed2e881aa76196c943e3750b7ca5cad7b456a11b23010a2b5c0f579ad1",
+          "dwords": 57,
+          "hash": "87d4404fb36af71d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "ae59fc403c350ff8e92aef052627847b6205cc5a13f2c82a882aff698be03c33",
+          "dwords": 123,
+          "hash": "5003700b7c9b1c16",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "233142bdaa86bc310cc2d5f0f7b421e5dffb7143fd3f69362c467de0d0cada09",
+          "dwords": 111,
+          "hash": "7ddad5c29b3f56ee",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "994596fe2a0156089fccc6e6c91a1784484e23dec7ae678c669c3f8cbc45bdd3",
+          "dwords": 276,
+          "hash": "129f7f2793da9084",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "403a20d4d4dc1ab13276036b90a18d072cc2b066b528727445ef1dac4974fb02",
+          "dwords": 33,
+          "hash": "c915912c36588d26",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "13ed2c34aa9e52165872a7aef790066bd73096336b19ca026753e09ac377f49c",
+          "dwords": 27,
+          "hash": "7a6e981fc4d0a375",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "4e6d081c930d7ca1df1b7388cffb612d4c418c95b312931b1493b8c5ed8edf7b",
+          "dwords": 123,
+          "hash": "1b4b5ae12ef270ca",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "24ad1fddb8d9e5b129158146a49c2831fd18a2705145b39329b584ef0de4b366",
+          "dwords": 27,
+          "hash": "b1d7f0d4330bbd7d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "c61c23904eafcfde3206ff914d6c65bd9b196d7d2115b85a31684d976293de26",
+          "dwords": 345,
+          "hash": "0f99810f072bf0fc",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ddaea4bf909345a7891eb989a32d11e8f64725e5c14ea4f97a6686f16a0e6b1e",
+          "dwords": 117,
+          "hash": "2f8a0341e8c09698",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "db70beb3a98626900e5e9009a3c6a201ea087d79c51e9104b54ac11eacf06e72",
+          "dwords": 186,
+          "hash": "4b1d3e6e8e58d3ac",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "81ea2e15cc2ed4c3f50254fc7ed52cf11458dc9a44eae255daac65897d1a61e9",
+          "dwords": 258,
+          "hash": "c30a97d946fa2be4",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "1c40cd1193792f2a4c04952184985565aef503ed429cf775d13378b484763fbc",
+          "dwords": 255,
+          "hash": "9c2144e42e95a76f",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "40d49d6dcc4310805bf5f8f3a0903cc5b9f2518e9c7073cc25a66e1a02294cca",
+          "dwords": 246,
+          "hash": "fb68a7f2301210e1",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "1c8e7d0fd49b0e5851c1524321953cc93f5d43b627335433dc168f245bc7dd86",
+          "dwords": 165,
+          "hash": "4755a2e4a05ba678",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "72adb6dc2f53ef43a0535b559bdbd8d100b25d847ce15ac1e356001ae7cc9315",
+          "dwords": 378,
+          "hash": "45243b758f9272ab",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a317539bd0f3459d6da893c32af00767629554d87133b99494c1f05a73d7df28",
+          "dwords": 285,
+          "hash": "af1e16ee57e4bb06",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "51e5e9e5aac67960d54804afd2249011c2d94d5d3dbfe3ad8f52a9767e054432",
+          "dwords": 420,
+          "hash": "04f23292b2f44077",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "1e29d4c034ad960f54dd5d0df975a4cea708dbf4f7b7eee24c246d5487a4dd8f",
+          "dwords": 333,
+          "hash": "578342593a37dd35",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ad3dc814cb50f2fd7a8e357a96556f4a8a243668c46914625679706c05a1fe72",
+          "dwords": 492,
+          "hash": "0981301d645e2517",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "02a21d7206a5a70e744955345524a880e28eb83de8658205b6d59a91c797584a",
+          "dwords": 33,
+          "hash": "1e6798c9d0f65784",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "beec4b6cca947132b1062655a2f578160d1511414421793bf4619117c491fd9b",
+          "dwords": 42,
+          "hash": "4e027276ff1a2f49",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ef6567715ad83a7615a8bd1ba790a587f819ccf43ebd802b2259c25e3d41c0f6",
+          "dwords": 132,
+          "hash": "9ed0ba440dbd51d4",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "18949828690c154ca6f4d99b5589e254affd42078d148d140f91e39068c83138",
+          "dwords": 27,
+          "hash": "fa331dbbf0b904a1",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "6fe7b4e3f89aa3647b3188382a05aca1a32f8dcffce9791ead5133a8023c187b",
+          "dwords": 108,
+          "hash": "9a14c8f2c1d70f17",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "3cd7ff874e8bc8114e4314cc4f9cc8c1a5449c0fcab4bbb91e3b32fc4458619f",
+          "dwords": 108,
+          "hash": "2b0d798010709cbb",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "6095cc7389da937fcaace3212be6a30ae25007b4b6c2976313574eed06496e81",
+          "dwords": 15,
+          "hash": "7dc68bed8253f7ce",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b998e84841407d82a938d18d5ddd9a0b33281aee50de8ef91e61ea25ee91f562",
+          "dwords": 33,
+          "hash": "81bade63a169e3dc",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "b29817fb84e92e994376bb5fcbc0bc681927034128eecfae40f9f02dc3793f84",
+          "dwords": 15,
+          "hash": "d72fd0903cce7dd6",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "fa138b251121bfb46f30b9b7dd0cef6ba187fcf7dc9072bcf03da1e34c1b2caf",
+          "dwords": 261,
+          "hash": "2fd24989ab04a475",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "3c2d26f58ba730f01eb0d0e143b35f55dd646a30052df712d628dd35f3cda9c7",
+          "dwords": 135,
+          "hash": "a7e45d07f5cf6627",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b5f73dfc78b3d90be6973c756666794e4cde3cedf5303f395c1b4ee0afa93ce3",
+          "dwords": 36,
+          "hash": "c304c6a1af18b46f",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "a8b70a854523b93cf77613d80e1f16823b9895284f8557ae6bd196aa73a663a9",
+          "dwords": 129,
+          "hash": "61976295517d7015",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5cbf1c61702aec0e82cdfe170d3cedf4dbb9d1f6cda25a687f52bca3cbffb1c4",
+          "dwords": 15,
+          "hash": "04985a0f7296e130",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ac6ea5fcb5aae9094c6c530784004652fe30d3d4aa089c1de3f44411fd367622",
+          "dwords": 1899,
+          "hash": "19a01c01290e20a7",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "25abe709772f53a6d722816d744c24bf5c1d7225356c9b5b23f3973e82c71536",
+          "dwords": 30,
+          "hash": "718c12ff9e1b888b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "054f69f3f536055be9e282805b9d272a37bc582900582f85ea51556e4b9951d5",
+          "dwords": 36,
+          "hash": "3ff79524fcdb71c5",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "08fb552043bdef0db5b96b5ded12f86c1b9aed856401aec9c67bb512f0dafded",
+          "dwords": 18,
+          "hash": "8e4dbb9e9a63ef67",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4d630f482042c426c0340829e3d2620ac6bdd8fc5acfe62f2294099a358cdde6",
+          "dwords": 21,
+          "hash": "3e77b1ad4bc5b900",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "766f1521002f75b5757c501eaf6e693c2882d4170e4533f62a4a2d996eaa8a38",
+          "dwords": 285,
+          "hash": "563e3be17857db59",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "7a63bcb15dd53713057c1cec97057c84f5b25f3596587513f236145d36891426",
+          "dwords": 93,
+          "hash": "ff19ce696f916e0c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "53b2797fb3ad4fb61d9957a016d6891eac886c0f9f8bdd1f2bf0cad2b5a520aa",
+          "dwords": 417,
+          "hash": "775c6085fbb9d676",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "8d3d7961b08c42133fe9f62960055941ea0461be7e75ef2353d80252f2c00222",
+          "dwords": 39,
+          "hash": "668f55159955ed9c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5f6c2fc025ae408f2c4a5792287e154864f56c0b3ca337c4b7d4f25024258a15",
+          "dwords": 81,
+          "hash": "b863fdd3469557d4",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "8b789d04575765587ef42eabca3e2e2ead1851155cd14215fe48062f559c5eb7",
+          "dwords": 735,
+          "hash": "3275a966f62ea3b1",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4268aeed4ecf5ccb0681815bc39c0a55a1e1b4ff437a96060c11ed002ac9c057",
+          "dwords": 804,
+          "hash": "f2f103f16764043b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "7865a7a36ac558684a41e5b9a1373f2604f4453038526115d58d5dc6bd8f1ce7",
+          "dwords": 381,
+          "hash": "f98433ec8c4a4740",
+          "stage": "pixel"
+        }
+      ],
+      "entry_count": 123,
+      "sha256": "2cfbd0c38573e0b04fdb3c17fef6b60436bd8d79c01bc443ed0c12c6821b5856",
+      "source": "out/build/linux-amd64-debug/cache/shaders/shareable/4D5307F1.xsh"
+    },
+    {
+      "bytes": 155864,
+      "entries": [
+        {
+          "bytecode_sha256": "abfec28e9858fd1b9b27afd527f08421c38f288e9333cc7fc10d6391ac190fa9",
+          "dwords": 27,
+          "hash": "1e6883fccde1f688",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "9d4a64e81064abb794c5cba3642feda86a5a1e6b75a13cd4c4d7917bea83e01e",
+          "dwords": 9,
+          "hash": "a4a965c189287b99",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a5ffccb2a2cdccd0093b55f9051330166881a987052e76249b4841ee7170c608",
+          "dwords": 24,
+          "hash": "b6c9863f710683ec",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "6826a89ccb4a981f3c2b2c66f8b785519c1b84fbb4572df70880b01cec7098ea",
+          "dwords": 27,
+          "hash": "bd2477fede6beab1",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "d30a381a6c0926b71de3dd06e9669a91fdd952d08cb76e288b34a9626d91d488",
+          "dwords": 36,
+          "hash": "130dca19b2727f68",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "952212c71bae82509df3d563c6f7dba964f4f577c4b25feb2dd5539a0c99200d",
+          "dwords": 24,
+          "hash": "d5e12a97b3a84881",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "a3bd60675d31e8ad8486b977c486f75c013b87f047c466f9dd31c97ca5ff820a",
+          "dwords": 18,
+          "hash": "5d6768847b0602b8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5201c53ca27bd1f47ba999f626188853988879dcddf8795a8b262d38c8f51094",
+          "dwords": 27,
+          "hash": "b2d99ac2c7fb40d6",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "abdb220fccb569a5cd79bd3b81659338d057a763c17d6e4bfa5b1c85851717de",
+          "dwords": 15,
+          "hash": "0a96b3fd5121e331",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "fcf7228371659426a93e8e4f05167454ad25eed3b0ef9c4e973c8d12e58255bf",
+          "dwords": 204,
+          "hash": "4be4344c27016e04",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d207fc9b0700bd1ad708a9267ef76f46349e48032a0073918a6f04cbf0406832",
+          "dwords": 27,
+          "hash": "5181317ca0e65be9",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "9fec99d496f591177b70dc9231f674a6afcf736cf698f073cccf4b4b47a3457a",
+          "dwords": 36,
+          "hash": "87e85199e1e9b260",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ddc139d209649515eaea261caaa37a7ad35bdb9e71e37cd59ee2012bdb6f68e3",
+          "dwords": 15,
+          "hash": "5821366ee8fde893",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5439dabf30def503622a68ec172938059553cc37437c23f71db0ce975c8268e4",
+          "dwords": 42,
+          "hash": "ee922cfb4426ea83",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d2845371b5aeaf08f01ee5edad0dabfae0ce25214278b49d49e8fe5eb667ec49",
+          "dwords": 93,
+          "hash": "ea83c7e7e24ec4c8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "776982d07ddd9d4b6ed231aa4847ca681779a0c23d1dbdba4051005297423e99",
+          "dwords": 93,
+          "hash": "28dbe18f313350bf",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "7e533a0c25fd73520b2527038403b2b8129c4e50e3ac18c165ee74307abfc146",
+          "dwords": 75,
+          "hash": "37b186f4bd3288f7",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "2c5be2e5742b8cff7d6a9ec60feba5c0c22c4a5dde89f9eca128043ce7cb1b3e",
+          "dwords": 27,
+          "hash": "95503a81ae52ea05",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "711152f8f70535b65c734ee76bb1cbcbbc447f6b99846f646789b8d3020e96c3",
+          "dwords": 51,
+          "hash": "7b22146d51e0e4f5",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "3cc0c990f07f8eaf3786c87a3bdec88b94ead178d31c5b814b03930531361e6a",
+          "dwords": 108,
+          "hash": "0542ffdf2b118509",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "6d7b341de4e586d467376f741478d1ca498fe45d7e6ab12ccb8ac3daa6ee48d1",
+          "dwords": 285,
+          "hash": "29b6506fbaceb93a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "b1b190908ece7d3fc9947c5b71c7957454bae5391c668245fe2642b5d28ae947",
+          "dwords": 24,
+          "hash": "dbfd88a80edbce36",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ed56ce02f85176eab80d6b82063c623bf3ce157ba457beae5eff33b86d6fc58b",
+          "dwords": 33,
+          "hash": "c300519ec8915346",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "1581e0cf85795c9c44fdaba43181828ddee6ce739e6e104650c281e6bd56dd26",
+          "dwords": 45,
+          "hash": "a753a2072f78f00f",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a86186e3a93455a58879cfbc4d8274644286377ef25999df9ff0387a27469436",
+          "dwords": 27,
+          "hash": "901891d9b86c181a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "74cd93c4f4974ffc881af7dad1cc9e25cc3ed904c410b66a09cde27d4271e71e",
+          "dwords": 114,
+          "hash": "94c373ab309f37db",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "28b965ec9592f0f2584d3c0576e2c854ba26c9d58e3f51b8d60a22690a2bfab7",
+          "dwords": 33,
+          "hash": "93e7f7b5d05626aa",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c064fcc39ab5f942622b87fc0da298c470e943c420b6332c8b15e0667a8c4c07",
+          "dwords": 33,
+          "hash": "5f329db1e7f0dd5c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "3628f73b1308ae136a6fe26c620006dadeb542f18bb7903968dbf94859e656a9",
+          "dwords": 969,
+          "hash": "695413a9831d88da",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "071329ed2e881aa76196c943e3750b7ca5cad7b456a11b23010a2b5c0f579ad1",
+          "dwords": 57,
+          "hash": "87d4404fb36af71d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "4ae7f8323c7e081a79c75478a825599ae0c9a95518f9d097852a20dd21796bd4",
+          "dwords": 27,
+          "hash": "f160b4da459a6d40",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "76532ce956bc9b6363355cc66debbb72bc55d98aee5e36e7719e4979616e2461",
+          "dwords": 33,
+          "hash": "57818a7fd1c4f026",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "e6414d4ffa8eb79a9b501373e087e5f2c57e201526e1abbd924ab5f6e5ee0300",
+          "dwords": 18,
+          "hash": "33477588a5c01c7c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "bcfe6d4ee9766aed26e605a0e626cb6704bc532d861a13ab6a0a251e1049df66",
+          "dwords": 57,
+          "hash": "5f4416192e87005f",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "31f4e548a0fd8ce85d188cf8cdb4aeffc504be787884f377ab896f6d5525152f",
+          "dwords": 126,
+          "hash": "82f6433a69263c75",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "12d51ff68a765e2f4dc04a78c7f82379669214710e917412ecaaabf54e55c421",
+          "dwords": 135,
+          "hash": "3a0f9098b839ddbc",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "8e1f4a8b0d95075e1bbb86d3a51110ba87095e3e2f61d8fb5fe956ea610a8665",
+          "dwords": 165,
+          "hash": "a8a5b2a89f70336a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "18fc352455ead8255d77d78cf0bf56553311843b1933a7b7234f67299c02a443",
+          "dwords": 48,
+          "hash": "85a9a5ec510a9700",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "20b5dbb6e2513a4f8afb2f9f50381911606c66e9c4f9656eaa62991b138c2007",
+          "dwords": 63,
+          "hash": "87e0db8b7c32f6a5",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "cc348dd1e3f4d4e6e9bb63083788515990e6b2aecc5a579ecc22b9f8dff69586",
+          "dwords": 171,
+          "hash": "fbd39c64463e180b",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "aa85e2957587e693728ae7158cceb31b112c3cbc8202b7ac04644ec1f85d5828",
+          "dwords": 282,
+          "hash": "432563420047c96c",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "5f9e26296676d1e3f95a44a2bc2a104b96fb3a8682c0f4654e21814a03edcee0",
+          "dwords": 21,
+          "hash": "f1eb2497108f159d",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "13ed2c34aa9e52165872a7aef790066bd73096336b19ca026753e09ac377f49c",
+          "dwords": 27,
+          "hash": "7a6e981fc4d0a375",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "4e6d081c930d7ca1df1b7388cffb612d4c418c95b312931b1493b8c5ed8edf7b",
+          "dwords": 123,
+          "hash": "1b4b5ae12ef270ca",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "24ad1fddb8d9e5b129158146a49c2831fd18a2705145b39329b584ef0de4b366",
+          "dwords": 27,
+          "hash": "b1d7f0d4330bbd7d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "c61c23904eafcfde3206ff914d6c65bd9b196d7d2115b85a31684d976293de26",
+          "dwords": 345,
+          "hash": "0f99810f072bf0fc",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "110ff24f335e1a22bd7963da46a870c3533e68558300bd44513b2235caf74b7e",
+          "dwords": 132,
+          "hash": "ecd66a10092e6562",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "faea443485abe3e6225829ad3a5d04d67ea1624ee78513a94c7cea7ca1ab4a66",
+          "dwords": 699,
+          "hash": "fc0922a3a8d8da7a",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c722eff9722b949cf7dca93341c9a2a1a9a4d5ff6756387381cc7c839ceaa8c4",
+          "dwords": 261,
+          "hash": "8d900846800943c8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b49c600930f9d945620e9be0c4d98cdb73005c67a6d54ab18e836f85b7c82566",
+          "dwords": 411,
+          "hash": "648b965c200a5113",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "e13407365e53659c9d7e1db2babc7d3c3a98ad1938ecab0c3b53b40b2bcaf87d",
+          "dwords": 687,
+          "hash": "401a01fd4e5f8757",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "0e9540f8fc2ac9643d44db8ae879e9064c6b582a3b769b7444ecb1d7b581dbd6",
+          "dwords": 126,
+          "hash": "79eac49585797037",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "38ba133dbce7f55b2e45a8f57728d6635312b042978d3a1275294c0532f2d253",
+          "dwords": 198,
+          "hash": "a1f7e9885ec466df",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "bcca917acec3e6c25cdcbe7aedd2872abd619f66329bea2ce83e9a082e4a9d27",
+          "dwords": 270,
+          "hash": "d4d558da6a82bdc8",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "ddeca136ea4115ab439c57326cf6c855c16805c3ab21e2f60d730d1d31eef3cf",
+          "dwords": 732,
+          "hash": "44b567635eb10620",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "588ad384284736cf038844660ca8d275180ef056b980022bd3c19cb8733381fc",
+          "dwords": 237,
+          "hash": "8123c16dbf583f92",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "3c2d26f58ba730f01eb0d0e143b35f55dd646a30052df712d628dd35f3cda9c7",
+          "dwords": 135,
+          "hash": "a7e45d07f5cf6627",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d12b7fdcab88405611cdc8ca2ea0a7dc240a3e436762900bde92216433e64e82",
+          "dwords": 252,
+          "hash": "e99f4acc7a3c78b4",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4e916730a8f3878e945f907bdf2ea123b4a4af10ede42938a0aba6c46764f0ee",
+          "dwords": 324,
+          "hash": "475ec9f795e5edbb",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "21a3552a6b684f3a69a6bf18bcab7ccca45edad6be1c8314e6d8f5500ff4c0ca",
+          "dwords": 537,
+          "hash": "2fbe9b4ee822609a",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "f8ca2bf1b51fc41443544c49295700d7d8a35f7e209f9deb40353ae259eaff89",
+          "dwords": 558,
+          "hash": "2d40b53c926109be",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "8261478764b33b749359f79485190afc521692035b8c12259e00be0f450a0e6e",
+          "dwords": 213,
+          "hash": "7cd57b81550f19e3",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "68a4e2ef7591db837c9c12f68392ed954772f3fdf14e47fd402586a926c73483",
+          "dwords": 39,
+          "hash": "8262e1111c273b50",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "36fb7c988e382626939f7f8b6a46bea802004a79696af4e59c278a2da52c3ae3",
+          "dwords": 306,
+          "hash": "f7601fbe485936fd",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a99d83c17be2a4bd4d36c42f5c2d1ff88b466ddf5b62ebb10f08e95b56d3a81d",
+          "dwords": 111,
+          "hash": "5763211d63bbfa3d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "3148126e2f34d9a7ccbf955da149a8671d38d0deffb8bc064fecde30723c78de",
+          "dwords": 501,
+          "hash": "2b091bd0c45a7454",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "e942693d72b183161f4ebf5805df1ffccf04241ec4502e3853a758e70a337096",
+          "dwords": 111,
+          "hash": "d1cc6dc28244c55a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "38e83e0a4214aade165f85a0ca2a81ccc9a3796de8383f8138833b9f3f3bdf8d",
+          "dwords": 15,
+          "hash": "686de15fc84d8b73",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ef67966661bc13f76b1a1c56cb7a371238e15f9fe7e7256e7e26b3d5fd68a559",
+          "dwords": 483,
+          "hash": "789266c3e42d7e59",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "7293bf1b850e0fd685ff26743c2bbfe7ffbd21635656735f199ef38b3e789b00",
+          "dwords": 297,
+          "hash": "09cb69bd265b58d1",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b5f73dfc78b3d90be6973c756666794e4cde3cedf5303f395c1b4ee0afa93ce3",
+          "dwords": 36,
+          "hash": "c304c6a1af18b46f",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "a8b70a854523b93cf77613d80e1f16823b9895284f8557ae6bd196aa73a663a9",
+          "dwords": 129,
+          "hash": "61976295517d7015",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b72f513f194de2e692090a89aac3df095b561dd805ec7b05cb14c92bcd1fe701",
+          "dwords": 75,
+          "hash": "7d1c707013a556bb",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "a56235f483a2267ce4cc5e280bb33beb25078396707b4a7d72c1cd4e95e7b958",
+          "dwords": 42,
+          "hash": "983e61968e915ed9",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b998e84841407d82a938d18d5ddd9a0b33281aee50de8ef91e61ea25ee91f562",
+          "dwords": 33,
+          "hash": "81bade63a169e3dc",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "5cbf1c61702aec0e82cdfe170d3cedf4dbb9d1f6cda25a687f52bca3cbffb1c4",
+          "dwords": 15,
+          "hash": "04985a0f7296e130",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ac6ea5fcb5aae9094c6c530784004652fe30d3d4aa089c1de3f44411fd367622",
+          "dwords": 1899,
+          "hash": "19a01c01290e20a7",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "25abe709772f53a6d722816d744c24bf5c1d7225356c9b5b23f3973e82c71536",
+          "dwords": 30,
+          "hash": "718c12ff9e1b888b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "054f69f3f536055be9e282805b9d272a37bc582900582f85ea51556e4b9951d5",
+          "dwords": 36,
+          "hash": "3ff79524fcdb71c5",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "08fb552043bdef0db5b96b5ded12f86c1b9aed856401aec9c67bb512f0dafded",
+          "dwords": 18,
+          "hash": "8e4dbb9e9a63ef67",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b29817fb84e92e994376bb5fcbc0bc681927034128eecfae40f9f02dc3793f84",
+          "dwords": 15,
+          "hash": "d72fd0903cce7dd6",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4d630f482042c426c0340829e3d2620ac6bdd8fc5acfe62f2294099a358cdde6",
+          "dwords": 21,
+          "hash": "3e77b1ad4bc5b900",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "fbbae1ba82893b314d0cb4d0649de0cd5c512d0f9f847515ae10181c4635847d",
+          "dwords": 177,
+          "hash": "be53d33b25e4f39e",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "ae59fc403c350ff8e92aef052627847b6205cc5a13f2c82a882aff698be03c33",
+          "dwords": 123,
+          "hash": "5003700b7c9b1c16",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "ddaea4bf909345a7891eb989a32d11e8f64725e5c14ea4f97a6686f16a0e6b1e",
+          "dwords": 117,
+          "hash": "2f8a0341e8c09698",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "81ea2e15cc2ed4c3f50254fc7ed52cf11458dc9a44eae255daac65897d1a61e9",
+          "dwords": 258,
+          "hash": "c30a97d946fa2be4",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "1c40cd1193792f2a4c04952184985565aef503ed429cf775d13378b484763fbc",
+          "dwords": 255,
+          "hash": "9c2144e42e95a76f",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "40d49d6dcc4310805bf5f8f3a0903cc5b9f2518e9c7073cc25a66e1a02294cca",
+          "dwords": 246,
+          "hash": "fb68a7f2301210e1",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "1c8e7d0fd49b0e5851c1524321953cc93f5d43b627335433dc168f245bc7dd86",
+          "dwords": 165,
+          "hash": "4755a2e4a05ba678",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "51e5e9e5aac67960d54804afd2249011c2d94d5d3dbfe3ad8f52a9767e054432",
+          "dwords": 420,
+          "hash": "04f23292b2f44077",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "1e29d4c034ad960f54dd5d0df975a4cea708dbf4f7b7eee24c246d5487a4dd8f",
+          "dwords": 333,
+          "hash": "578342593a37dd35",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "72adb6dc2f53ef43a0535b559bdbd8d100b25d847ce15ac1e356001ae7cc9315",
+          "dwords": 378,
+          "hash": "45243b758f9272ab",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a317539bd0f3459d6da893c32af00767629554d87133b99494c1f05a73d7df28",
+          "dwords": 285,
+          "hash": "af1e16ee57e4bb06",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ef6567715ad83a7615a8bd1ba790a587f819ccf43ebd802b2259c25e3d41c0f6",
+          "dwords": 132,
+          "hash": "9ed0ba440dbd51d4",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "beec4b6cca947132b1062655a2f578160d1511414421793bf4619117c491fd9b",
+          "dwords": 42,
+          "hash": "4e027276ff1a2f49",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "18949828690c154ca6f4d99b5589e254affd42078d148d140f91e39068c83138",
+          "dwords": 27,
+          "hash": "fa331dbbf0b904a1",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "6fe7b4e3f89aa3647b3188382a05aca1a32f8dcffce9791ead5133a8023c187b",
+          "dwords": 108,
+          "hash": "9a14c8f2c1d70f17",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "3cd7ff874e8bc8114e4314cc4f9cc8c1a5449c0fcab4bbb91e3b32fc4458619f",
+          "dwords": 108,
+          "hash": "2b0d798010709cbb",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "2f9477c10faf14af9693630c845caef761e88c5b351fb8282d347dd104f6f618",
+          "dwords": 27,
+          "hash": "43ed37430887a46c",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "4368b4e2545dd75bc5fe5b5f895527c163275537683bc9b392598e6dfc2adb65",
+          "dwords": 63,
+          "hash": "7f65142c12beb353",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "6095cc7389da937fcaace3212be6a30ae25007b4b6c2976313574eed06496e81",
+          "dwords": 15,
+          "hash": "7dc68bed8253f7ce",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b2109f9ba4a8f4f84c639997c8123288f31077cd777b3de092410387d7792561",
+          "dwords": 27,
+          "hash": "b12db91e7f8f4977",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "02a21d7206a5a70e744955345524a880e28eb83de8658205b6d59a91c797584a",
+          "dwords": 33,
+          "hash": "1e6798c9d0f65784",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "fd8cbfd38a653d5d511f5768c08bc228ef14346b1f567df7ae1d13c4935d82a7",
+          "dwords": 132,
+          "hash": "83569f66d81a3549",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "d7c995e1acd8c2700d6b01ab0cb283e234f79760a2fb70c34a034f4976fa3877",
+          "dwords": 414,
+          "hash": "f96a4494958bfa12",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "aeda9bd88f2f24263ffc3f8627e079c02dcf5dda984af8c1eca8c4a76b5b2f0d",
+          "dwords": 96,
+          "hash": "577cb5267a8c92c3",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "8ae48a11dcb0e976142ee7eee9a060ba2f6edf8e437bbcb81a1cb74d72630afd",
+          "dwords": 312,
+          "hash": "da7ce2be224e68ce",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "b4a88e9d569177a51f22760b4055364631951bc8d93914ac7f6c658516e1fe7e",
+          "dwords": 474,
+          "hash": "48d30eccf684f488",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "14f8183e54c4067d63bc084799355d8e795a1f913d43614cb559061c00a24102",
+          "dwords": 69,
+          "hash": "26052defba688af2",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "233142bdaa86bc310cc2d5f0f7b421e5dffb7143fd3f69362c467de0d0cada09",
+          "dwords": 111,
+          "hash": "7ddad5c29b3f56ee",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "68e6118635762a19abf3a4b31e25567962c0196adb7a01ff87bc820b9e82bf88",
+          "dwords": 255,
+          "hash": "6ad4108c3ff07966",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "d5e13553bc480da64bdb607d18e29a4247224675f3dba9e9f5c4c5cf9f226e40",
+          "dwords": 225,
+          "hash": "165edcd2cb963868",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "317856c5c5d40d64366a92831743117e08a08c60449d736b487a26ea10d42d2d",
+          "dwords": 165,
+          "hash": "00d85b797ecddf7b",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "91d005c1deaaba58fb9963d79d613a01c5ed4e306130830b8e80e00207455446",
+          "dwords": 18,
+          "hash": "8d2cb9bc0f8d6bda",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4d58c111975994bc8f9393d6bdc344cca052d0b40c3915c2ac104a86bd08eba9",
+          "dwords": 72,
+          "hash": "f186d27249b462f8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "fd99162f8b62822b0cd20a212b46e52088383394cb08239b6c39280769bccc14",
+          "dwords": 63,
+          "hash": "c47236e5a9b00356",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "f2479e907b406b0fb50710cfb43d382b440fd582ac5f436b1cf26c92a4a27324",
+          "dwords": 33,
+          "hash": "37caf82f552893ee",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "59325efb6c92263571d4927eb13058123880ca68fc92e5fd21e63644102a34a2",
+          "dwords": 63,
+          "hash": "bead84bd72072e0e",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "cdd9e560033d4ccc14e07a691c2934c6ef70e5a2bfacbec4ffbc90bf977b448a",
+          "dwords": 273,
+          "hash": "f6d98c7b4d98438b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b746fce9b0979a03e5d640fbc8ac3b065602f9bd4d4b21b39a9101995c3df631",
+          "dwords": 468,
+          "hash": "a5846836c90e1192",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "5f8e275873e76e6568125f18a30783e0eb42d4cd3fdc48f1c62b96004fdaa068",
+          "dwords": 273,
+          "hash": "00e09d1bc5295d52",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "267689c1dda9425cd8326a9cafdd27f9015de13dd33b101ee97be4525092c5b7",
+          "dwords": 273,
+          "hash": "a17d8aec3a817d45",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "91c9bf1b0aa5b2b00fdb14cf95582cd3ab8efebb0634993bf601721f57f8d469",
+          "dwords": 15,
+          "hash": "06547412e4b72251",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "994596fe2a0156089fccc6e6c91a1784484e23dec7ae678c669c3f8cbc45bdd3",
+          "dwords": 276,
+          "hash": "129f7f2793da9084",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "403a20d4d4dc1ab13276036b90a18d072cc2b066b528727445ef1dac4974fb02",
+          "dwords": 33,
+          "hash": "c915912c36588d26",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "db70beb3a98626900e5e9009a3c6a201ea087d79c51e9104b54ac11eacf06e72",
+          "dwords": 186,
+          "hash": "4b1d3e6e8e58d3ac",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "53b2797fb3ad4fb61d9957a016d6891eac886c0f9f8bdd1f2bf0cad2b5a520aa",
+          "dwords": 417,
+          "hash": "775c6085fbb9d676",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "9ed2583b84dfaa8880a977bb5ecf95550a2b0a1af0bd8ca835147e92a33b05b0",
+          "dwords": 123,
+          "hash": "f51af7db09eded71",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "6fc4668cce11822f4c130cea9a958ad1dade4f3b102cc355d67fb0401da7f6bf",
+          "dwords": 462,
+          "hash": "58d3faaaa84a48aa",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "84fc1f2be956263019ef7638d5128a710b98a6c280973f8e070665fb13dd0093",
+          "dwords": 495,
+          "hash": "d7dd31b9bf194de8",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "7a0f236d68601c786a0b5c810d4899e023229ba39055c1f3736c15bea5b8aaa9",
+          "dwords": 150,
+          "hash": "15675eb73fb39170",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "766f1521002f75b5757c501eaf6e693c2882d4170e4533f62a4a2d996eaa8a38",
+          "dwords": 285,
+          "hash": "563e3be17857db59",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "7a63bcb15dd53713057c1cec97057c84f5b25f3596587513f236145d36891426",
+          "dwords": 93,
+          "hash": "ff19ce696f916e0c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "2e9e1a946b7df92dad02021980711e3aa43c6a727c4877b8d7b6cb29ac97aff4",
+          "dwords": 93,
+          "hash": "65834a8405d40e53",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "19859501adc35ad89d2d4d7ff4f1146f47ebae43014a3ae6b5b4ed49eed9ed89",
+          "dwords": 234,
+          "hash": "8c512607225ec5c7",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "fa138b251121bfb46f30b9b7dd0cef6ba187fcf7dc9072bcf03da1e34c1b2caf",
+          "dwords": 261,
+          "hash": "2fd24989ab04a475",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "8d3d7961b08c42133fe9f62960055941ea0461be7e75ef2353d80252f2c00222",
+          "dwords": 39,
+          "hash": "668f55159955ed9c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "01a79dfd4990b09f33feae36081f6b34ab66fd361fcf7f26673e483b2b852830",
+          "dwords": 156,
+          "hash": "f6ee6651bb3e2745",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c8dd2820bd40367784a16c2fe870f0108a0d4b8ecae6ada86ebfcf549952b75f",
+          "dwords": 129,
+          "hash": "b6e85fba051568c0",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "0edb4b952ffcacea885cda6dbe03982dadbdfcefd0cd33c28c590653fcf16db2",
+          "dwords": 486,
+          "hash": "a22982e86122da41",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4268aeed4ecf5ccb0681815bc39c0a55a1e1b4ff437a96060c11ed002ac9c057",
+          "dwords": 804,
+          "hash": "f2f103f16764043b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "8b789d04575765587ef42eabca3e2e2ead1851155cd14215fe48062f559c5eb7",
+          "dwords": 735,
+          "hash": "3275a966f62ea3b1",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "f3bc10d38c7b863fbcf00bc9828c7080b1030b434bae0671e55feaf017e69fa8",
+          "dwords": 18,
+          "hash": "e2120feafa4cf565",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d7c03502cea4791e744c66ebeebb7f168b332b2a85c0d719960307cb30d58d3a",
+          "dwords": 582,
+          "hash": "e0996bf4d9539d38",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ad3dc814cb50f2fd7a8e357a96556f4a8a243668c46914625679706c05a1fe72",
+          "dwords": 492,
+          "hash": "0981301d645e2517",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "7865a7a36ac558684a41e5b9a1373f2604f4453038526115d58d5dc6bd8f1ce7",
+          "dwords": 381,
+          "hash": "f98433ec8c4a4740",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c3234cd94627c565e40309ea4be9ceed76a2bff036c4a7722a9dfb29b0b4da09",
+          "dwords": 312,
+          "hash": "db22f44fe07d6a5b",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "fbc145212298da8c052a11e7ba5d8e38db75c1d751e7ca68836e9a89da169c6b",
+          "dwords": 477,
+          "hash": "fc4f2ef6930768be",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "64c0f747bfb3f391c18113dc56ebdf27025238dd19adfb3e50d4528d66bb22a2",
+          "dwords": 705,
+          "hash": "827b878f3d404635",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "b3713cb73aa8ccd86bd0778a2918eda472fb4299615d2cc9c5fe4a1b3f6eeb27",
+          "dwords": 675,
+          "hash": "95ed70bd54b49d5e",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "d000cb52001fd5bc2e2c65090760ac9832013fe0fd66323c738fff5bec5b306a",
+          "dwords": 1014,
+          "hash": "20055f971bb9e749",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "49d5f1dadf6cdc9fe26233d899c047a965ee9bb1b14ccae65365427c48e8b33e",
+          "dwords": 33,
+          "hash": "46ab120bb77bc270",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "9d3f48439442f196db811159a2e3d9a616d961c5f78979c12726ab2e099c7e7d",
+          "dwords": 33,
+          "hash": "5f56704a2343bf3a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "69d0b7a7ca0947983094ea9a1dd2b85771299b86b9407f929f1730b25ad741ad",
+          "dwords": 84,
+          "hash": "13229207e0088afd",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "bdbe6794e895103467dc5075fced68a7e60e9aafe9eaed8891c95c41c56acb1c",
+          "dwords": 132,
+          "hash": "135fc519ea8644d8",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "55a7ea86e9911448c257bd35fcb2dae0e0df05d3b6c3f49f2eee1b1f64255a9c",
+          "dwords": 159,
+          "hash": "39460e3e8fbc3102",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4e766bd5ca897228adef0261fc0266c20349c2b9b4241a79baf2611bd8ad1afd",
+          "dwords": 807,
+          "hash": "a7a88924c272f438",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4ffaed092e93caff9f4e4662aa5e9d10f31ed06afc18e62734f0ed8e410068cc",
+          "dwords": 699,
+          "hash": "90b310ae5d5890f3",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5f6c2fc025ae408f2c4a5792287e154864f56c0b3ca337c4b7d4f25024258a15",
+          "dwords": 81,
+          "hash": "b863fdd3469557d4",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "186a9e4bc7236e66d174c82a7e325f433bcdcf8994862c4d0a31c47e075a3a20",
+          "dwords": 105,
+          "hash": "35be4fc4b0ec491b",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "316e7647bcd6fce1f5ab57e15e58da5acf51a5c7824297e84621019e2462baab",
+          "dwords": 63,
+          "hash": "8db1452c88ddc047",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "6626ef82c6dd8df0943ca9d0025c6d1dfb8fd96d5ef369d24c1c0bd2b355b660",
+          "dwords": 255,
+          "hash": "f6c546d6c2645541",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "987313ef2e6b14f20711b6e01e6d0133073ff39e2ca180e6d6aa3563c959411f",
+          "dwords": 204,
+          "hash": "eba6cc6389b0548d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "edab071b48997d32c87ba67bf072b94eeaf151a4d54bea99bb91357c320c3ad8",
+          "dwords": 570,
+          "hash": "6d6bd7173f4af967",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "ce1f00382488101b3f9854f22e98fceb145235af93745e62c388ad8db7d1848d",
+          "dwords": 111,
+          "hash": "1b52aa35a311938d",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "4a79aff12303d4442521c9b8d80439a2c2d8512862c6c902b378270680a0c37b",
+          "dwords": 357,
+          "hash": "f525e023e08ac9bb",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "c7df5d12ea9814f26e5a8260d3a9fd8e381377c33f53808c86c9cc7288bffcd2",
+          "dwords": 456,
+          "hash": "c0715ed52ce7ecf2",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "3255459902be7fd901e9b9b9c7307312e2d7eb4ee231e160f5f3e0b094c990e8",
+          "dwords": 114,
+          "hash": "1c10625fd961f82d",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "047bdf99b50f75032b6e5d7a8109b7c82bb90a14722b44052b687c77cd514177",
+          "dwords": 705,
+          "hash": "11422b9454b9fe3a",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "585598e40d4aabd10c5cf8ce5cdea38d05ae61362a414ed0904202892c0cb904",
+          "dwords": 489,
+          "hash": "469633bdc6911834",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "a5ebe0bc125725a1c4295b6739f42e5f61ffd2b77d5b721acc74ea0e3232e822",
+          "dwords": 264,
+          "hash": "edac95d2244c4fa0",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "01c4ece300322080b3d178c5991386383c2019e85146e63d0384ff9031c1d5a7",
+          "dwords": 60,
+          "hash": "218ad033d3d0528a",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "b328729f6fc464a9cbd21a760ab960e0ee44655f4381a7b7b17f7d5cf41a3d64",
+          "dwords": 9,
+          "hash": "732a6fa31708767c",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "5f2537086b550277a8ffe7ca5aa4a805aaaf39227ed8ce06d5ef0f2e7d2ec039",
+          "dwords": 126,
+          "hash": "7c5710def3ee33c4",
+          "stage": "vertex"
+        },
+        {
+          "bytecode_sha256": "1fe7d08174f1b5501e07bf41819c6f884f1003910487bffc541883da225e3ba4",
+          "dwords": 87,
+          "hash": "014f8a02db7b19ca",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "53a9b9308ac8ad4417c7365ed62b75aa5030d4e8b4f8d0344efdcbfd19083aec",
+          "dwords": 432,
+          "hash": "14217f5c1118d00f",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "18fda6f999b6edb355749db03b8ad99a24f663f5698bd54773f0b053ee9c74e7",
+          "dwords": 414,
+          "hash": "4f4b14d7bfa4dd5f",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "66ee1fe078d77f33fe71b5c5e08a5b6805ab7eff8af0ed488c337143b2a14d39",
+          "dwords": 21,
+          "hash": "18d39dcebee4c2fc",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "bbcccc2e798b8c0bb3efefa2aaab3ebe442c11916dc3b0ec885822296bc4aa98",
+          "dwords": 18,
+          "hash": "4b58837d42f08c89",
+          "stage": "pixel"
+        },
+        {
+          "bytecode_sha256": "28a59c71f23589a5738da640698e20ddcead8901a4a340efce6d34d887c5213e",
+          "dwords": 30,
+          "hash": "70f756ed96f944ff",
+          "stage": "vertex"
+        }
+      ],
+      "entry_count": 180,
+      "sha256": "2f41b83f2b04561b2b425fa1a35ba85515dfddeffdda5b184ca47f5342f96134",
+      "source": "out/performance/steamdeck-investigation-20261025/shader-storage-4D5307F1.xsh"
+    }
+  ]
+}
