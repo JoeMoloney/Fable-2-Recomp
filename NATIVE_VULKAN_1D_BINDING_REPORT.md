@@ -51,8 +51,8 @@ recompiled successfully after the reusable `Context` changes.
 
 ## Steam Deck package
 
-The locally validated `native_texture_1d` executable is packaged, checksum-
-verified, and ready for approval-gated staging:
+The locally validated `native_texture_1d` executable was packaged, checksum-
+verified, and staged for approval-gated execution:
 
 - Archive: `out/artifacts/fable2-experimental-3504dbcdea09.tar.gz`
 - SHA-256: `975561d664f904464199e87c47e42913361d0e613af16a7cf91784088f0a9a2d`
@@ -62,8 +62,29 @@ verified, and ready for approval-gated staging:
   SPIR-V hashes, ELF dependencies, ABI requirements, and the 288/304/308/208/212
   SharedConstants layout. Sidecar checksum verification passed.
 
-The package has **not** been transferred to or run on the Steam Deck. Desktop
-NVIDIA/Intel results above are not RADV evidence for this 1D graphics pipeline.
+After explicit approval, only the archive and sidecar were transferred to
+`~/native-texture-1d-stage/`. Checksum, manifest, ELF dependencies and ABI were
+checked before execution. The one Deck run forced the Radeon ICD and disabled
+implicit layers; the existing Distrobox was not started.
+
+| Deck RADV result | Value |
+|---|---|
+| Exit status / stderr | `0` / empty |
+| Device | AMD Custom GPU 0932 (RADV VANGOGH), Mesa 26.2.0-devel (`git-5c65d4fc31`), Vulkan API 1.4.350 |
+| Descriptor sets | sampler heap set 3/binding 0; 1D image heap set 5/binding 0 |
+| Constants | 512 bytes; lane starts 288; InScattering index 304 / sampler 208; Extinction index 308 / sampler 212 |
+| Readback | All 16 float components in the 4x1 output exactly match; max error `0` |
+| 1D/descriptor features | 1D RGBA8 sampled image; runtime array, variable count, partially-bound, sampled-image nonuniform indexing and update-after-bind supported |
+| Update-after-bind limits | 8,388,606 sampled images per stage and per set |
+
+Returned JSON, stderr and exit status are in ignored
+`out/deck-build/native-texture-1d/deck/`. JSON SHA-256 is
+`dde2f4aa4b6fb7287a20d133b6279e898fb26e65c363a0eba99a5aa92aeb210e`; stderr is
+empty (SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`);
+exit-status file contains `0` (SHA-256
+`9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa`). The Deck
+staging directory is left intact for audit; no game or installed files were
+modified.
 
 ## Semantic and integration limits
 
