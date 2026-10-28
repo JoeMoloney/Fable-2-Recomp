@@ -25,7 +25,7 @@ if ! [[ "$TAG" =~ ^[A-Za-z0-9._-]+$ ]]; then
 fi
 OUT="$ROOT/out/artifacts/$TAG"
 IMAGE="${FABLE2_BUILDER_IMAGE:-localhost/fable2-deck-builder:arch-20261018}"
-PACKAGES="$ROOT/out/deck-build/container-manifest.txt"
+PACKAGES="${FABLE2_BUILDER_MANIFEST:-$ROOT/out/deck-build/container-manifest.txt}"
 mkdir -p "$ROOT/out/artifacts"
 if ! mkdir "$OUT"; then
   echo "Package output already exists: $OUT" >&2

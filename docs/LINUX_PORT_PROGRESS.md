@@ -10,6 +10,8 @@ diagnostic remain; audio, persistence of new saves and stable long-session
 performance are not yet verified. Earlier "pending" entries below
 are chronological experiment notes, not the latest status. Start with the
 [portable Linux workflow](LINUX.md) for current setup/run commands.
+[Steam Deck r9 deployment checkpoint](STEAM_DECK_NATIVE_VULKAN_R9.md) records
+the tested XWayland/Podman baseline and remaining caveats.
 
 ## Goal
 
@@ -435,6 +437,20 @@ progress survives normal quit/relaunch; compare the same trader/NPC scene on
 cold/warm runs with frame-time data and precise visual descriptions/screenshots.
 Keep synchronous shaders and the 30-FPS baseline until controlled measurements
 justify changing them. Record rendering, performance and input issues separately.
+
+### Steam Deck FPS discrepancy — 2026-10-28
+
+User-reported: Steam's in-game overlay showed 400+ FPS during the experimental
+Deck session. The r8 presenter probe separately counted about 143,000
+`PaintAndPresentImpl` calls in 29 seconds (~4,900 host paints/s) in native
+Wayland mode; XWayland also produced a high host paint rate. These are host UI
+presenter paints, not guest-rendered FPS, and do not establish the game's actual
+frame rate. For guest FPS, use the existing F3 `Guest` FPS/frame-time metric
+backed by `rex::perf::CounterId::kFrameTimeUs` (`src/core/fable_2_app.h`); the
+optional `FABLE2_FPS_METER=1` main-loop rate is a secondary cross-check, not a
+replacement for guest swap timing. Follow up by comparing Steam overlay FPS,
+F3 guest FPS/frame time, and host present rate in the same scene. Do not change
+frame pacing or optimize the presenter until this is measured.
 
 ### Content checkpoint — 2026-10-24
 

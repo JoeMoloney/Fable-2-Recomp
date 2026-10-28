@@ -64,6 +64,7 @@ __pycache__/
 !tools/create_app_icon.ps1
 !assets/app-icon.png
 !docs/screenshots/launcher.png
+!tools/deck-build/launch.sh
 
 # Linux build/run entry points (keep other shell helpers ignored).
 !/build-release-linux_amd64.sh

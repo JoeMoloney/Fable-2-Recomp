@@ -4,9 +4,9 @@ set -euo pipefail
 ROOT="$(git rev-parse --show-toplevel)"
 TOOL_DIR="$ROOT/tools/deck-build"
 LOCK="$TOOL_DIR/toolchain.lock"
-IMAGE="localhost/fable2-deck-builder:arch-20261018"
+IMAGE="${FABLE2_BUILDER_IMAGE:-localhost/fable2-deck-builder:arch-20261018}"
 BASE_IMAGE="docker.io/library/archlinux@sha256:dfb01267da058e5d08ffdc543bf484c9b404655b0bac1d0201d972bf950cdfd0"
-OUT="$ROOT/out/deck-build"
+OUT="${FABLE2_BUILDER_OUT:-$ROOT/out/deck-build}"
 
 mkdir -p "$OUT"
 if ! podman image exists "$BASE_IMAGE"; then
