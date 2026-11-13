@@ -20,20 +20,18 @@ At the end of every session Claude updates the status table and replaces the
 
 ```
 Continue Fable II desktop performance work. Read ONLY plans/PERF_SESSIONS.md
-(don't re-read older handoffs unless it says so). Unit 4 found the limiter: the 3D Engine
-thread (MainRenderLoop_82B9CD68) is saturated, and ~31% of it is write-watch page faults
-(~550 SIGSEGV/s). On Linux each fault calls memory::QueryProtect, which re-reads and
-sscanf-parses /proc/self/maps (2164 lines, ~0.5 ms) while holding the global critical
-region lock (thirdparty/rexglue-sdk/src/system/mmio_handler.cpp:411,
-src/core/memory_posix.cpp:174). Do unit 4b: make that fault path cheap. Read the
-QueryProtect callers and the access_violation_callback (PhysicalHeap::TriggerCallbacks)
-first, then replace the /proc/self/maps lookup with our own protection tracking (or prove
-the recheck can use the heap's page table). Keep behaviour identical; unit-test the
-lookup; rebuild; then tell me when to launch tools/perf/run-profile.sh and run
-`sudo tools/perf/waitprof.sh unit4b`. Compare against out/perf/unit4-210222 (18 FPS).
-Keep it focused, explain simply (I'm a Java dev). At the end: update the status
-table + this prompt, and store findings/lessons in the memory MCP (Fable II =
-projectId 3; reusable lessons GLOBAL).
+(don't re-read older handoffs unless it says so). Unit 4b fixed the write-watch fault path
+(18 -> 25 FPS). The frame is now a 3D Engine <-> GPU Commands ping-pong: GPU Commands
+does ~30 ms of host work per 40 ms frame (0.76 cores), and the 3D Engine spends ~70% of its time in
+FrameLimiterWait waiting for it. Do unit 4e: make GPU Commands cheaper per draw. Start by
+profiling the GPU Commands thread from out/perf/unit4b-211720/perf-kernel.data
+(--children, comm "GPU Commands (F"): break down IssueDraw / UpdateBindings / texture
+cache lookups / WriteRegister / SharedMemory::RequestRange. Pick the single biggest
+cheap win, keep behaviour identical, unit-test it if it's testable in isolation, rebuild, then tell
+me when to launch tools/perf/run-profile.sh and run `sudo tools/perf/waitprof.sh unit4e`.
+Compare against out/perf/unit4b-211720 (25 FPS). Keep it focused, explain simply (I'm a
+Java dev). At the end: update the status table + this prompt, and store findings/lessons
+in the memory MCP (Fable II = projectId 3; reusable lessons GLOBAL).
 ```
 
 ## How to run things
@@ -91,10 +89,10 @@ by **waiting and synchronization, not by slow recompiled code.** In order:
 | 2b | (small, optional) Alertable waits / `AlertableSleep` still wake every 1 ms (`kAlertablePollSlice`) to check for queued APCs. Make `QueueUserCallback` wake the thread's waiter instead. Only do this if a profile shows it. | Claude | ⏳ |
 | 3 | Cap the presenter: present only when there's a new guest frame and/or at the display refresh (FIFO/MAILBOX). Re-measure with MangoHud, which then becomes meaningful. | Claude + user test | ✅ 2026-11-13 — see "Unit 3 results" |
 | 4 | **Revised after 1b:** off-CPU/wait profile + trace what `GpuProgressCheck_82B9BF90` / `FrameLimiterWait_82242628` wait for and who signals it. | Claude + user test | ✅ 2026-11-13 — see "Unit 4 results" |
-| 4b | Make the write-watch fault path cheap: stop re-reading `/proc/self/maps` in `memory::QueryProtect` (Linux) on every SIGSEGV, under the global lock. | Claude + user test | ⏳ next |
+| 4b | Make the write-watch fault path cheap: stop re-reading `/proc/self/maps` in `memory::QueryProtect` (Linux) on every SIGSEGV, under the global lock. | Claude + user test | ✅ 2026-11-13 — see "Unit 4b results" (18 → 25 FPS) |
 | 4c | (later) Fewer faults per frame (~30/frame), and stop `FrameLimiterWait`'s `sched_yield` spin burning a core (matters on the Deck: block on the counter write instead). | Claude | ⏳ |
-| 4d | Re-measure after 4b (`sudo tools/perf/waitprof.sh`). Expected: limiter moves to GPU Commands (~32 ms of work/frame, i.e. ~30 FPS cap; estimate). | user + Claude | ⏳ |
-| 4e | Make GPU Commands cheaper per draw: SDK host code, readable C++. `IssueDraw` is ~65% of the thread (UpdateBindings, texture cache lookups, register writes, SharedMemory::RequestRanges). | Claude + user test | ⏳ |
+| 4d | Re-measure after 4b (`sudo tools/perf/waitprof.sh`). Expected: limiter moves to GPU Commands (~32 ms of work/frame, i.e. ~30 FPS cap; estimate). | user + Claude | ✅ 2026-11-13 — done as part of 4b: confirmed, ~30 ms GPU Commands work/frame |
+| 4e | ⏳ **next.** Make GPU Commands cheaper per draw: SDK host code, readable C++. `IssueDraw` is ~65% of the thread (UpdateBindings, texture cache lookups, register writes, SharedMemory::RequestRanges). | Claude + user test | ⏳ |
 | 4f | (riskier, only if still capped ~30 after 4e) Let 3D Engine and GPU Commands overlap: allow 2 frames in flight instead of the game's "wait until the GPU thread finished the previous frame" (`FrameLimiterWait_82242628` / `BeginFrame_82B9BA58` deadline = counter+2). It's one well-understood wait, but it changes the game's own sync, so check for visual/timing breakage. | Claude + user test | ⏳ |
 | 5 | Pipeline-creation hitches: persistent `VkPipelineCache` + async/background pipeline compile. | Claude + user test | ⏳ |
 | 6+ | Theseus: rewrite the top guest functions from the latest profile as readable C++ hotfuncs, verified against the originals. | together | ⏳ |
@@ -178,6 +176,31 @@ Order: 4b fault path → 4d re-measure → 4e GPU Commands per-draw cost → 4f 
 at GPU Commands (0.92 "cores" from `cycles:u`) only because kernel time wasn't sampled, and
 `capture.sh`'s per-thread snapshot had a parsing bug (comm names with spaces → 0); both fixed/avoided now.
 
+## Unit 4b results (2026-11-13, `out/perf/unit4b-211720/`, F3 = 25 FPS, was 18)
+
+Fix (SDK `src/core/memory_posix.cpp`): `FindEntryForAddress` (used by `QueryProtect` and
+`Protect`'s old-access query) now asks the kernel with the `PROCMAP_QUERY` ioctl
+(Linux 6.11+) on a /proc/self/maps fd opened once. That's one syscall for one address, and it reads the same
+kernel state as the text file, so behaviour is unchanged. If the kernel doesn't support it (ENOTTY/EINVAL), it falls back permanently
+to the old text scan, which matters for older Steam Deck kernels. Struct/ioctl number are declared locally (no new header dependency).
+Microbenchmark: ~0.2 µs per lookup vs ~500 µs. Test: `tests/unit/memory/query_protect_test.cpp`
+(5 cases, pass; run with the Catch2 stand-in header again).
+
+| Metric | Unit 4 | Unit 4b |
+|---|---|---|
+| Guest F3 FPS | 18 | **25** |
+| `MMIOHandler::ExceptionCallback` (incl., % of all samples) | 10.7% | 0.5% |
+| `QueryProtect` / `FindEntryForAddress` | 10.35% | 0.02% |
+| SIGSEGV/s | 551 (~30/frame) | 802 (~32/frame, more frames) |
+| 3D Engine cores (R%) | 0.99 (100%) | 0.99 (100%), ~73% of it `FrameLimiterWait` spin |
+| GPU Commands cores (R%) | 0.59 (59%) | 0.76 (77%) |
+| GameThread cores | 0.84 | 0.99 (its own `Yield` spin, harmless) |
+
+Read: GPU Commands now does ~30 ms of host work per 40 ms frame, and the 3D Engine mostly waits
+for it. Even with perfect overlap (4f) the cap would be about 33 FPS, so 60 FPS needs the GPU Commands per-frame
+cost cut roughly in half. **Next: 4e** (WriteRegister, UpdateBindings, texture-cache hash lookups,
+ExecutePacket are the top self-time symbols).
+
 ## A/B results (fill in)
 
 | Date | Flags | Guest FPS (F3) at test spot | Visual issues |
@@ -187,6 +210,7 @@ at GPU Commands (0.92 "cores" from `cycles:u`) only because kernel time wasn't s
 | 2026-11-13 | `--readback_memexport=false` (after unit 3) | 17 | none noted; MangoHud 70 but feels like 17 |
 | 2026-11-13 | `--occlusion_query_enable=false` (after unit 3) | 17 | none noted; MangoHud 70 but feels like 17 |
 | 2026-11-13 | (none, unit 4 wait profile run) | 18 | |
+| 2026-11-13 | (none, after unit 4b) | 25 | none noted |
 
 Conclusion: neither GPU readback nor occlusion queries limit the desktop (+1 FPS, within noise).
 MangoHud's ~70 is host presents: about 60 capped UI repaints plus forced presents for the ~17 guest
