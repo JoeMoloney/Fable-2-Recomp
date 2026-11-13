@@ -26,30 +26,28 @@ At the end of every session Claude updates the status table and replaces the
 ```
 Continue Fable II desktop performance work. Read ONLY plans/PERF_SESSIONS.md
 (don't re-read older handoffs unless it says so). Goal: a SOLID 30 FPS (game is 30-locked by
-design), see "Done when". After unit 4g the test spot runs 31 FPS, but a slightly different
-angle in the same scene shows 24. This session = unit 4v (one quick measurement) then unit 4g2
-(code fix). Walk me through it step by step, one step at a time, telling me exactly what to run
-and what to look at, and wait for me between steps:
- 1. Measure the 24-FPS angle (I do it, no code). Tell me the exact launch command
-    (tools/perf/run-profile.sh --vulkan_async_submit=true --gpu_shared_memory_stats=true),
-    to stand still at that angle, note F3 FPS, then run `sudo tools/perf/waitprof.sh 4v-angle2`.
-    Record the spot/angle in the A/B table.
- 2. You read it: tools/perf/frames.py + tools/perf/critpath.py (tids from waitprof.txt; run
-    loops under bash, not zsh) and the shared_memory_stats lines in the newest
-    out/build/linux-amd64-release/logs/fable_2_NNN.log. Tell me simply: is the frame long because
-    of GPU Commands (engine WAIT) or the game's own code (engine WORK)?
- 3. If GPU Commands: do unit 4g2. Skip per-draw state unchanged since the previous draw
-    (UpdateBindings ~3.5 ms/frame, RequestTextures ~2.3 ms/frame on the critical path at the test
-    spot). Read the code first, explain the plan in a few lines before editing, put it behind a
-    hot-reload cvar (default off), rebuild the GPU plugin, copy librexgpu-xenos.so by hand + md5.
-    If engine WORK is the long part instead, stop and explain (game code = Theseus, out of scope)
-    and suggest the next best option (4g-b fault widening or unit 5 hitches).
- 4. A/B (I do it): same spot AND angle, standing still, new cvar off vs on, each with
-    `sudo tools/perf/waitprof.sh 4g2-off|4g2-on`. Tell me what visuals to check (wrong/flickering
-    textures, stretched polygons, missing objects = stale bindings). Judge by frames.py
-    engine-wait median, not only F3.
- 5. If it's a clear win with no glitches: seed the cvar on for Fable in src/core/fable_2_app.h
-    OnPostSetup (like clear_memory_page_state), rebuild fable_2.
+design), see "Done when". Worst view so far ("angle 2", see A/B table) runs 26 FPS: frame ~39 ms =
+~21 ms GPU Commands (engine WAIT) + ~15 ms game code (engine WORK). Need ~6 ms off the WAIT part.
+4g2 (texture descriptor reuse) gave nothing. This session = unit 4g-b + the cheap cvar-lookup fix.
+Walk me through it step by step, one step at a time, telling me exactly what to run and what to
+look at, and wait for me between steps:
+ 1. You read code first (no game run): (a) `IsReadbackMemexportEnabled` in SDK
+    src/graphics/command_processor.cpp (~line 302) does `rex::cvar::HasNonDefaultValue(<string>)`
+    on every draw (~0.5-0.8 ms/frame); cache it (it's a legacy-name check, only needs re-checking
+    when cvars change). (b) the write-fault widening in SharedMemory / PhysicalHeap: a fault
+    invalidates up to 256 KB, so ~212 KB written -> ~12 MB invalidated/frame -> ~5 MB re-uploaded +
+    re-protected (`SharedMemory::RequestRanges` ~28% of IssueDraw). Explain the plan in a few lines
+    before editing: smaller widening (e.g. 64 KB / 16 KB) behind a hot-reload size cvar (default =
+    today's behaviour); trade-off is more faults on the 3D Engine thread.
+ 2. Rebuild the GPU plugin + whatever else changed (`cmake --build out/build/linux-amd64-release
+    --target rexgpu-xenos fable_2 -j12`), copy librexgpu-xenos.so by hand + md5.
+ 3. A/B (I do it): same spot AND "angle 2", standing still, F3 + `sudo tools/perf/waitprof.sh
+    4gb-<size>` with --vulkan_async_submit=true --gpu_shared_memory_stats=true, for 2-3 widening
+    sizes. Judge by frames.py period/engine-wait median AND shared_memory_stats (KB invalidated,
+    upload KB, faults/frame) AND 3D Engine work median (more faults = more engine work).
+    Visual check: stale/garbled geometry or textures after walking around.
+ 4. If a size wins: seed it for Fable in src/core/fable_2_app.h OnPostSetup (like
+    clear_memory_page_state), rebuild fable_2.
 Keep it focused, explain simply (I'm a Java dev). At the end: update the status table + this
 prompt, give me the git add/commit commands (SDK submodule first, then main repo, only files from
 this session), and store findings/lessons in the memory MCP (Fable II = projectId 3; reusable = GLOBAL).
@@ -117,10 +115,10 @@ by **waiting and synchronization, not by slow recompiled code.** In order:
 | 4d | Re-measure after 4b (`sudo tools/perf/waitprof.sh`). Expected: limiter moves to GPU Commands (~32 ms of work/frame, i.e. ~30 FPS cap; estimate). | user + Claude | ✅ 2026-11-13 — done as part of 4b: confirmed, ~30 ms GPU Commands work/frame |
 | 4e | Make GPU Commands cheaper per draw: batch type-0 register writes. | Claude + user test | ✅ 2026-11-13 — see "Unit 4e results" (A/B 21 → 27 FPS) |
 | 4f | Let 3D Engine and GPU Commands overlap. Found: the turn-taking is the game's own design (not fixable host-side without risking data races). Did the one safe host overlap: async Vulkan submit, cvar `--vulkan_async_submit`. | Claude + user test | ✅ 2026-11-13 — see "Unit 4f results" (−1.2 ms/frame critical path, 23 → 24 FPS, no visual issues) |
-| 4v | **next (with 4g2, same session).** Measure at 2–3 worst views with F3 (incl. the new angle that still showed 24 FPS after 4g). Pick spots and record them in the A/B table so later runs reuse them. Run with `--gpu_shared_memory_stats=true` + waitprof so we see which of 4g-b / 4g2 / 4g3 / 5 matters there. | user + Claude | ⏳ |
+| 4v | Measure the worst view after 4g ("angle 2", see A/B table). | user + Claude | ✅ 2026-11-13 — see "Unit 4v + 4g2 results": 26 FPS = ~21 ms engine wait + ~15 ms engine work |
 | 4g | Stop needless re-uploads / re-protection. Found the real cause with new upload stats: SDK cvar `clear_memory_page_state` (default true) marked all CPU-uploaded pages stale every frame → ~21 MB + ~1,130 mprotect ranges per frame. Fable now seeds it **false**. | Claude + user test | ✅ 2026-11-13 — see "Unit 4g results" (24 → **31 FPS** at the test spot) |
-| 4g-b | (optional, only if a worst view needs it) Narrow the write-fault widening: after 4g ~70 faults/frame write ~280 KB but invalidate ~16 MB (up to 256 KB each), ~6.6 MB/frame still uploaded. Try a smaller widening (e.g. 64 KB) behind a cvar; trade-off is more faults. | Claude + user test | ⏳ |
-| 4g2 | Fix 2: skip per-draw state that didn't change since the previous draw (`UpdateBindings` 12%, `RequestTextures` 9–10%, `GetSamplerParameters` 6%): cheap "same as last draw?" check before rebuilding descriptor sets / texture lookups. Cvar for A/B. Est. a few ms (unmeasured). Can share a session with 4g if 4g is quick. | Claude + user test | ⏳ |
+| 4g-b | **next.** Plus cache the per-draw `HasNonDefaultValue` string lookup in `IsReadbackMemexportEnabled`. Narrow the write-fault widening: after 4g ~70 faults/frame write ~280 KB but invalidate ~16 MB (up to 256 KB each), ~6.6 MB/frame still uploaded. Try a smaller widening (e.g. 64 KB) behind a cvar; trade-off is more faults. | Claude + user test | ⏳ |
+| 4g2 | Skip rewriting texture descriptor sets when unchanged since the previous draw (cvar `--vulkan_reuse_texture_bindings`, default off). | Claude + user test | ❌ 2026-11-13 — no gain (26 vs 26 FPS); see "Unit 4v + 4g2 results". Not seeded. |
 | 4g3 | (only if still < 30 after 4g+4g2) Smaller extras: memexport readback (~1–2 ms/frame; `--readback_memexport=false` only gave +1 FPS earlier, so look at the wait itself). Then the deeper option: **Fable-specific "don't watch" knowledge**: if 4g's counts show the same guest ranges re-protected every frame (e.g. static vertex data loaded once), reverse-engineer what they are and stop write-watching them. Needs RE, so higher effort/risk. | Claude + user test | ⏳ |
 | 4h | Turn guest vblank pacing back on (revert `ac6ba00` / `--guest_vblank_pacing=true`) so the game's own 30 FPS lock and vblank-based timing work as on the console. Verify F3 flat at 30 and correct game speed. | Claude + user test | ⏳ |
 | 5 | (only if there's stutter) Pipeline-creation hitches: persistent `VkPipelineCache` + async/background pipeline compile. | Claude + user test | ⏳ |
@@ -340,6 +338,40 @@ Hitching while moving is not yet explained (streaming, pipeline compiles → uni
 mprotects were caused by a per-frame "forget everything" flag, not by the protect code. (2) Check SDK "safety
 net" cvar defaults against upstream behaviour; one generic default cost ~8 ms/frame here.
 
+## Unit 4v + 4g2 results (2026-11-13, `out/perf/4v-angle2-230821/`, `out/perf/4g2-off-232329/` vs `out/perf/4g2-on-232552/`)
+
+**4v ("angle 2", same scene as the 4g test spot, the angle that showed 24 after 4g):** F3 26.
+frames.py: period med 38.7 ms, engine **wait 21.4 ms** (GPU Commands), engine **work 15.1 ms** (game code).
+vs 4g spot: wait 18.7 / work 11.0. Uploads only ~4.9 MB/frame (60% repeat), ~53 faults/frame,
+212 KB written -> **12.4 MB invalidated** per frame. Lionhead logo flickered at boot (pre-existing, not a regression).
+
+**4g2 (SDK `src/graphics/vulkan/command_processor.cpp` `UpdateBindings` + `include/rex/graphics/vulkan/command_processor.h`):**
+new hot-reload cvar `--vulkan_reuse_texture_bindings` (default off) keeps the per-stage texture/sampler
+descriptor set if the image views/samplers/layout equal the last written ones (resolves the upstream TODO).
+Also applies the computed-but-unused `descriptor_sets_kept` after a pipeline-layout change (as upstream
+Xenia; no effect when the cvar is off). Old plugin: `out/perf/4v-angle2-230821/librexgpu-xenos.so.pre4g2`.
+
+| Same spot/angle 2 | off | on |
+|---|---|---|
+| Guest F3 FPS | 26 | 26 |
+| frames.py period / engine wait / work (med) | 38.9 / 21.0 / 15.4 ms | 39.7 / 21.9 / 15.6 ms |
+| `vkUpdateDescriptorSets` samples (UpdateBindings+0x1859, NVIDIA driver) | 432 | 391 |
+| Visual issues | none | none reported |
+
+**Why no gain:** Fable changes material on nearly every draw, so consecutive texture sets rarely match;
+and the same `vkUpdateDescriptorSets` call also writes the constants set, which changes every draw.
+(Making the constants dynamic uniform buffers would avoid that, est. ~1.5 ms/frame, medium effort; parked.)
+
+**Where GPU Commands time goes at angle 2 (inclusive, % of IssueDraw ≈ 21 ms/frame):** `SharedMemory::RequestRanges`
+~28% (UploadRanges + `EnableAccessCallbacks`/mprotect) → **4g-b**; UpdateBindings ~18% (half driver
+descriptor writes); RequestTextures ~14%; PrimitiveProcessor ~13%; type-0 regs ~8%; RenderTargetCache ~7%;
+GetSamplerParameters ~7%; `cvar::HasNonDefaultValue` ~4% (string lookup per draw from
+`IsReadbackMemexportEnabled`, cheap fix).
+
+**Lessons:** (1) before building a "same as last time?" cache, measure the hit rate (one counter) first.
+(2) `[unknown]` frames under a host function are the NVIDIA driver; find the call with
+`perf script -F ip,sym,symoff` + `objdump` at that offset.
+
 ## A/B results (fill in)
 
 | Date | Flags | Guest FPS (F3) at test spot | Visual issues |
@@ -358,6 +390,9 @@ net" cvar defaults against upstream behaviour; one generic default cost ~8 ms/fr
 | 2026-11-13 | unit 4g A/B same spot: `--clear_memory_page_state` on (old default) | 24 | |
 | 2026-11-13 | unit 4g A/B same spot: `--clear_memory_page_state=false` (now Fable default) | **31** | none; some hitching while walking, settled |
 | 2026-11-13 | after 4g, slightly different angle in the same scene | 24 | |
+| 2026-11-13 | **"angle 2"** = 4g test spot, the slightly different angle above; stand still. 4v run, `--vulkan_async_submit=true --gpu_shared_memory_stats=true` | 26 | Lionhead logo flicker at boot (pre-existing) |
+| 2026-11-13 | angle 2, unit 4g2 `--vulkan_reuse_texture_bindings` off | 26 | none |
+| 2026-11-13 | angle 2, unit 4g2 `--vulkan_reuse_texture_bindings=true` | 26 | none reported |
 
 Conclusion: neither GPU readback nor occlusion queries limit the desktop (+1 FPS, within noise).
 MangoHud's ~70 is host presents: about 60 capped UI repaints plus forced presents for the ~17 guest
