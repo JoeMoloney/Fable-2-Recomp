@@ -177,6 +177,19 @@ class Fable2App : public rex::ReXApp {
                     "(SDK without depth_bias_shader?)");
       }
     }
+    // Perf (plans/PERF_SESSIONS.md unit 4g): the SDK default (true) marks every
+    // CPU-uploaded shared-memory page stale at each frame end, so ~13 MB/frame
+    // was re-uploaded and re-protected (~1100 mprotect ranges). Fable II's
+    // writes are caught by write-watch faults, so off is safe here: 24 -> 31 FPS
+    // at the test spot, no visual issues. --clear_memory_page_state=true or
+    // fable_2.toml still win (A/B, or if stale-data glitches ever show up).
+    if (rex::cvar::GetFlagSource("clear_memory_page_state") == rex::cvar::Source::kDefault) {
+      if (rex::cvar::SetFlagByName("clear_memory_page_state", "false")) {
+        REXSYS_INFO("[fable2-config] seeded clear_memory_page_state=false (perf)");
+      } else {
+        REXSYS_WARN("[fable2-config] cvar clear_memory_page_state missing; keeping SDK default");
+      }
+    }
 
     // Feed the F3 debug overlay with guest FPS (below). The GPU plugin
     // records per-guest-swap frame timing into the shared perf registry

@@ -25,20 +25,25 @@ At the end of every session Claude updates the status table and replaces the
 
 ```
 Continue Fable II desktop performance work. Read ONLY plans/PERF_SESSIONS.md
-(don't re-read older handoffs unless it says so). Goal is now a SOLID 30 FPS (game is
-30-locked by design), see "Done when". Unit 4e batched type-0 register writes (same-spot A/B
-21 -> 27 FPS; GPU Commands ~27 ms work per ~37 ms frame, idle ~26%). The 3D Engine (producer)
-and GPU Commands (consumer) mostly take turns. Do unit 4f: make them overlap.
-Step 1: confirm the serialization from out/perf/unit4e-new-215041/sched.data (perf sched
-timehist/latency for "GPU Commands (F" and "3D Engine (F800"): how long GPU Commands sleeps per
-frame and what wakes it. Step 2: find what holds the producer back (guest FrameLimiterWait /
-GpuProgressCheck deadline vs host-side command visibility) and pick the smallest fix, behind a
-cvar for A/B. Prefer host-side (SDK) over changing the game's own wait. Rebuild (GPU-plugin-only
-changes: copy librexgpu-xenos.so by hand + md5, see "How to run things"), then have me A/B at
-the SAME spot/view with the cvar on/off, each with `sudo tools/perf/waitprof.sh <label>`, and
-check visuals/animation timing. Keep it focused, explain simply (I'm a Java dev). At the end:
-update the status table + this prompt, and store findings/lessons in the memory MCP
-(Fable II = projectId 3; reusable lessons GLOBAL).
+(don't re-read older handoffs unless it says so). Goal: a SOLID 30 FPS (game is 30-locked by
+design), see "Done when". Unit 4g got the test spot from 24 to 31 FPS (Fable now seeds
+clear_memory_page_state=false; GPU Commands kick->swap 27 -> 18.7 ms). But a slightly different
+angle in the same scene still shows 24, and walking causes some hitches.
+This session = unit 4v: find the worst views and see what limits THEM.
+ - Have me pick 2-3 worst views (incl. that 24-FPS angle), record them in the A/B table.
+ - At each, standing still: launch with
+   tools/perf/run-profile.sh --vulkan_async_submit=true --gpu_shared_memory_stats=true
+   and `sudo tools/perf/waitprof.sh 4v-<view>`. Note F3 FPS. Stats go to the newest
+   out/build/linux-amd64-release/logs/fable_2_NNN.log (not stdout).
+ - Read tools/perf/frames.py (engine wait = GPU Commands kick->swap; engine work = game code)
+   and tools/perf/critpath.py per view (tids from waitprof.txt; run loops under bash, not zsh).
+ - Then pick the next fix from the data: 4g-b (narrow the 256 KB fault widening, if uploads are
+   still big), 4g2 (per-draw state caching: UpdateBindings/RequestTextures), 4g3 (memexport), or
+   unit 5 (pipeline-compile hitches) if the hitching is the main complaint. If engine WORK is
+   the long part, that's the game's own code (Theseus territory, out of scope) - say so.
+Rebuild notes in "How to run things" (GPU plugin: copy librexgpu-xenos.so by hand + md5).
+Keep it focused, explain simply (I'm a Java dev). At the end: update the status table + this
+prompt, and store findings/lessons in the memory MCP (Fable II = projectId 3; reusable = GLOBAL).
 ```
 
 ## How to run things
@@ -51,6 +56,7 @@ update the status table + this prompt, and store findings/lessons in the memory 
 | Launch with MangoHud overlay | `tools/perf/run-profile.sh [extra --flags]` |
 | 20 s CPU profile of the running game | `tools/perf/capture.sh <label>` → `out/perf/<label>-HHMMSS/` |
 | Wait profile (per-thread user/kernel CPU, R/S state, ctx switches; with sudo also perf sched, SIGSEGV rate, kernel-inclusive profile) | `sudo tools/perf/waitprof.sh <label>` → `<dir>/waitprof.txt`, `signals.txt`, `perf-kernel.data` |
+| CPU→GPU upload / write-fault stats (unit 4g) | add `--gpu_shared_memory_stats=true`; lines `shared_memory_stats` every 60 frames in the newest `out/build/linux-amd64-release/logs/fable_2_NNN.log` |
 | Read a profile | `perf report -i <dir>/perf.data --no-children -g none --sort comm,dso,sym --stdio` |
 
 - Test save: copied from `../Fable-2-Recomp-main/out/preserved-build-data-20261107/tested-tmp-release/saves`
@@ -101,12 +107,15 @@ by **waiting and synchronization, not by slow recompiled code.** In order:
 | 4c | (parked; not needed for 30) Fewer faults per frame, block `FrameLimiterWait` instead of `sched_yield` spin (Deck power). | Claude | ⏸ |
 | 4d | Re-measure after 4b (`sudo tools/perf/waitprof.sh`). Expected: limiter moves to GPU Commands (~32 ms of work/frame, i.e. ~30 FPS cap; estimate). | user + Claude | ✅ 2026-11-13 — done as part of 4b: confirmed, ~30 ms GPU Commands work/frame |
 | 4e | Make GPU Commands cheaper per draw: batch type-0 register writes. | Claude + user test | ✅ 2026-11-13 — see "Unit 4e results" (A/B 21 → 27 FPS) |
-| 4f | ⏳ **next.** Let 3D Engine and GPU Commands overlap (frame ≈ max(A,B) instead of A+B; est. ~37 FPS ceiling at the test spot). **Step 1 (cheap check):** confirm the serialization from `out/perf/unit4e-new-215041/sched.data` / `sched-wakeups.txt`: how long GPU Commands sleeps per frame and what wakes it (3D Engine kick/`UpdateWritePointer`?). **Step 2:** find what really holds the producer back: the guest deadline (`FrameLimiterWait_82242628` / `GpuProgressCheck_82B9BF90`, `BeginFrame_82B9BA58` deadline = counter+2) and/or the host side (when the 3D Engine's commands become visible to GPU Commands). Prefer a host-side fix (the SDK should behave like the 360's GPU, which ran in parallel) over changing the game's own wait. Make it a cvar so it can be A/B'd. Check visuals/timing. | Claude + user test | ⏳ |
-| 4v | Measure at 2–3 worst views (incl. the 16-FPS view) with F3. Pick spots and record them in the A/B table so later runs reuse them. | user | ⏳ |
-| 4g | (only if a worst view is still < 30 after 4f) One targeted GPU Commands cut: `SharedMemory::RequestRange` → `VulkanSharedMemory::UploadRanges` (~14% of the thread). Next candidates: `UpdateBindings` 12%, `RequestTextures` 9%, `GetSamplerParameters` 6%. | Claude + user test | ⏳ |
+| 4f | Let 3D Engine and GPU Commands overlap. Found: the turn-taking is the game's own design (not fixable host-side without risking data races). Did the one safe host overlap: async Vulkan submit, cvar `--vulkan_async_submit`. | Claude + user test | ✅ 2026-11-13 — see "Unit 4f results" (−1.2 ms/frame critical path, 23 → 24 FPS, no visual issues) |
+| 4v | **next.** Measure at 2–3 worst views with F3 (incl. the new angle that still showed 24 FPS after 4g). Pick spots and record them in the A/B table so later runs reuse them. Run with `--gpu_shared_memory_stats=true` + waitprof so we see which of 4g-b / 4g2 / 4g3 / 5 matters there. | user + Claude | ⏳ |
+| 4g | Stop needless re-uploads / re-protection. Found the real cause with new upload stats: SDK cvar `clear_memory_page_state` (default true) marked all CPU-uploaded pages stale every frame → ~21 MB + ~1,130 mprotect ranges per frame. Fable now seeds it **false**. | Claude + user test | ✅ 2026-11-13 — see "Unit 4g results" (24 → **31 FPS** at the test spot) |
+| 4g-b | (optional, only if a worst view needs it) Narrow the write-fault widening: after 4g ~70 faults/frame write ~280 KB but invalidate ~16 MB (up to 256 KB each), ~6.6 MB/frame still uploaded. Try a smaller widening (e.g. 64 KB) behind a cvar; trade-off is more faults. | Claude + user test | ⏳ |
+| 4g2 | Fix 2: skip per-draw state that didn't change since the previous draw (`UpdateBindings` 12%, `RequestTextures` 9–10%, `GetSamplerParameters` 6%): cheap "same as last draw?" check before rebuilding descriptor sets / texture lookups. Cvar for A/B. Est. a few ms (unmeasured). Can share a session with 4g if 4g is quick. | Claude + user test | ⏳ |
+| 4g3 | (only if still < 30 after 4g+4g2) Smaller extras: memexport readback (~1–2 ms/frame; `--readback_memexport=false` only gave +1 FPS earlier, so look at the wait itself). Then the deeper option: **Fable-specific "don't watch" knowledge**: if 4g's counts show the same guest ranges re-protected every frame (e.g. static vertex data loaded once), reverse-engineer what they are and stop write-watching them. Needs RE, so higher effort/risk. | Claude + user test | ⏳ |
 | 4h | Turn guest vblank pacing back on (revert `ac6ba00` / `--guest_vblank_pacing=true`) so the game's own 30 FPS lock and vblank-based timing work as on the console. Verify F3 flat at 30 and correct game speed. | Claude + user test | ⏳ |
 | 5 | (only if there's stutter) Pipeline-creation hitches: persistent `VkPipelineCache` + async/background pipeline compile. | Claude + user test | ⏳ |
-| — | **Out of scope for this plan:** 2b alertable waits, 4c, Theseus rewrites (6+), Steam Deck port. | | ⏸ |
+| — | **Out of scope for this plan:** 2b alertable waits, 4c, Theseus rewrites (6+), Steam Deck port, and a **native renderer** (game render code calling Vulkan directly, no Xenos interpretation; see `plans/NATIVE_RENDERER_*.md`), which is the ultimate fix but a separate, much later project. | | ⏸ |
 
 ## Unit 2 results (2026-11-13, `out/perf/unit2-blocking-wait-203557/`)
 
@@ -237,6 +246,91 @@ it next to `fable_2`, and the first 4e run (`out/perf/unit4e-212915/`, 16 FPS) s
 old code. Always md5-check. (2) FPS at "the test spot" swings 16–25 with position/view, so judge
 changes only by same-spot A/B runs, not against an older session's number.
 
+## Unit 4f results (2026-11-13, `out/perf/unit4f-off-221952/` vs `out/perf/unit4f-on-222221/`)
+
+**Step 1: serialization confirmed.** `perf sched` lost ~70% of events (the 3D Engine's
+`sched_yield` spin floods it), so the evidence is a 1 ms timeline built from the sampled
+profile (`perf script` → classify each 3D Engine sample as in/out of `FrameLimiterWait`, each
+GPU Commands sample as working/swap). At the 4e spot: 3D Engine works ~9–10 ms, kicks the whole
+frame at the end, then waits ~25 ms; GPU Commands is idle ~8 ms while the engine works, then
+translates ~25 ms; the engine wakes ~0.5–1.5 ms after GPU Commands' `IssueSwap`/`EndSubmission`.
+Frame ≈ 10 + 25 + ~2 = 37 ms.
+
+**Step 2: what holds the producer back.** `MainRenderLoop_82B9CD68` calls
+`FrameLimiterWait(video, now = video[14940], 3)` after the frame's swap call (`ProcessAndProcessAndProcess1256_82BA8630`),
+then stores `video[14940] = deadline (video[10908])`. The wait ends when the GPU-written counter
+(`*video[10896]`, written by `EVENT_WRITE_SHD` with the vblank counter) reaches it, which in practice means
+**"GPU Commands has processed the swap of the frame I just submitted"**. This is the game's design:
+on a 360 the GPU front end consumed commands almost instantly, so 10 ms CPU + GPU time fit in 33 ms.
+Releasing the wait early (host lying about the counter, or the hotfunc waiting on an older target) would
+let the game overwrite buffers GPU Commands hasn't read yet → rejected. (Correction: `sub_82B9BA58`, called
+"BeginFrame" in the unit 4 notes, is one-time ring-buffer setup (`VdInitializeRingBuffer`), not per frame.)
+The 3D Engine's own ~10 ms is ~88% real guest code, ~8% write-watch faults, so there's little to trim there.
+
+**Fix (the one safe host-side overlap):** SDK `src/graphics/vulkan/command_processor.cpp` +
+`include/rex/graphics/vulkan/{command_processor,deferred_command_buffer}.h`, hot-reload cvar
+**`--vulkan_async_submit`** (default false). `EndSubmission` still does all bookkeeping on GPU Commands,
+but the deferred-command replay into the real `VkCommandBuffer` + `vkQueueSubmit` run on a new
+**"GPU Submit"** thread (one worker, FIFO, streams swapped not copied). Fence polling only looks at fences
+the worker already submitted; blocking fence waits, sparse binds, toggling the cvar off, and swaps (the
+presenter submits right after) wait for the worker first. Off by default and in RenderDoc captures.
+
+| Metric (same spot; user looked around in the "on" run) | off | on |
+|---|---|---|
+| Guest F3 FPS | 23 | 24 |
+| `EndSubmission` samples while 3D Engine waits (critical path) | 569 | 2 |
+| 3D Engine wait per frame (median) = GPU Commands kick→swap | 30.2 ms | **29.0 ms** |
+| 3D Engine work per frame (median; view-dependent) | 12.1 ms | 14.4 ms |
+| GPU Commands cores (+ GPU Submit) | 0.73 | 0.66 (+0.12) |
+| Visual issues | none | none |
+
+Gain is small (~1.2 ms/frame, est. ~2 ms before; the swap's own replay stays synchronous). Keep it on for
+future runs. **Remaining gap:** at 22–24 FPS views the frame is ~12–14 ms engine + ~29–30 ms GPU Commands;
+30 FPS needs GPU Commands kick→swap ≈ 19–21 ms, i.e. ~30% cheaper → unit 4g.
+
+**Method (reuse):** `perf script -i perf-kernel.data -F tid,time,ip,sym --tid <gpu>,<engine>`, then per
+engine sample "in FrameLimiterWait/GpuProgressCheck or not" gives wait/work runs per frame; GPU samples during
+engine-wait runs are the critical path. Scripts: `tools/perf/frames.py` (per-frame wait/work medians) and `tools/perf/critpath.py` (GPU Commands work split by engine phase). Get tids from waitprof.txt.
+
+## Unit 4g results (2026-11-13, `out/perf/unit4g-clear-on-225131/` vs `out/perf/unit4g-clear-off-225417/`)
+
+**Step 1, measure.** New diagnostic cvar **`--gpu_shared_memory_stats`** (SDK `src/graphics/shared_memory.cpp`,
+hot-reload, default off): every 60 guest frames logs per-frame upload KB/ranges, % also uploaded last frame,
+write faults (KB written vs KB invalidated after widening) and the top 8 upload addresses, to
+`out/build/linux-amd64-release/logs/fable_2_NNN.log` (not stdout). Hooked from `VulkanCommandProcessor::IssueSwap`.
+Copies of the logs: `out/perf/fable_2_018.log` (A), `fable_2_020.log` (B), `unit4g-stats-game.log` (first look).
+
+**What it showed.** The plan's idea (merge adjacent ranges, skip already-protected pages) was already
+implemented in `PhysicalHeap::EnableAccessCallbacks`. The real problem: ~21 MB/frame uploaded, 94% the same
+pages as last frame, but write faults only invalidated ~8 MB. The rest came from
+`SharedMemory::SetSystemPageBlocksValidWithGpuDataWritten()`, called at every frame end when SDK cvar
+`clear_memory_page_state` is true (SDK default; added generically in SDK commit `0bd3521`, described as
+"minor CPU overhead"). It drops the valid bit of every CPU-uploaded page, so the next frame re-copies and
+re-`mprotect`s everything it touches. It's a safety net for host code writing guest memory through the
+unprotected mapping without a fault; Fable showed no stale data without it.
+
+**Fix:** `src/core/fable_2_app.h` `OnPostSetup()` seeds `clear_memory_page_state=false` (only if still at the
+SDK default, so `--clear_memory_page_state=true` / fable_2.toml can still A/B it). No SDK default changed.
+
+| Per frame (same spot/view) | A: on (old default) | B: off (new default) |
+|---|---|---|
+| Uploaded | 21 MB (94% same as last frame) | **6.6 MB** (55%) |
+| Upload ranges (≈ re-protect calls ×3 heaps) | ~1,130 | ~700 |
+| Write faults (KB written → KB invalidated) | 34 (135 KB → 8 MB) | 70 (280 KB → 16 MB) |
+| GPU Commands kick→swap (frames.py engine wait med) | 27.0 ms | **18.7 ms** |
+| 3D Engine work med | 11.4 ms | 11.0 ms |
+| Frame period med (frames.py) | 41.0 ms (24.4 FPS) | **32.4 ms (30.9 FPS)** |
+| Guest F3 FPS | 24 | **31** |
+| Memexport readback on critical path (critpath.py samples) | 292 | 21 |
+| Visual issues | — | none (walked around; some hitching while moving, settled) |
+
+A slightly different angle in the same scene still showed **24 FPS** → measure worst views next (4v).
+Hitching while moving is not yet explained (streaming, pipeline compiles → unit 5, or the fault widening).
+
+**Lessons:** (1) count before optimizing: the sampled profile pointed at mprotect, but the counter showed the
+mprotects were caused by a per-frame "forget everything" flag, not by the protect code. (2) Check SDK "safety
+net" cvar defaults against upstream behaviour; one generic default cost ~8 ms/frame here.
+
 ## A/B results (fill in)
 
 | Date | Flags | Guest FPS (F3) at test spot | Visual issues |
@@ -250,6 +344,11 @@ changes only by same-spot A/B runs, not against an older session's number.
 | 2026-11-13 | unit 4e run that accidentally used the old plugin (different view) | 16 | |
 | 2026-11-13 | A/B same spot: old plugin (4b code) | 21 | |
 | 2026-11-13 | A/B same spot: new plugin (unit 4e) | 27 | none noted |
+| 2026-11-13 | unit 4f A/B (different view than 4e): `--vulkan_async_submit` off | 23 | none |
+| 2026-11-13 | unit 4f A/B: `--vulkan_async_submit=true` (looked around while measuring) | 24 | none |
+| 2026-11-13 | unit 4g A/B same spot: `--clear_memory_page_state` on (old default) | 24 | |
+| 2026-11-13 | unit 4g A/B same spot: `--clear_memory_page_state=false` (now Fable default) | **31** | none; some hitching while walking, settled |
+| 2026-11-13 | after 4g, slightly different angle in the same scene | 24 | |
 
 Conclusion: neither GPU readback nor occlusion queries limit the desktop (+1 FPS, within noise).
 MangoHud's ~70 is host presents: about 60 capped UI repaints plus forced presents for the ~17 guest
