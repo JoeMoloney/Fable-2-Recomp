@@ -3,9 +3,14 @@
 Started 2026-11-13. Supersedes the older Steam Deck / offline perf handoffs as the
 *active* plan. Those stay as evidence; don't re-read them unless a step below says so.
 
-**Goal:** steady 60 FPS on the desktop (i9-10900K, RTX 3090, CachyOS), then the
-Steam Deck. Long-term: replace hot recompiled code with readable C++ that we write
-ourselves (the Ship of Theseus approach; later Rust).
+**Goal (revised 2026-11-13):** a **solid 30 FPS** on the desktop (i9-10900K, RTX 3090, CachyOS).
+Fable II is locked to 30 FPS by design (community high-FPS/tick patches exist but aren't
+perfect), so once 30 holds at the worst views the bottlenecks are gone and this effort is **done**.
+60 FPS, the Steam Deck port and Theseus rewrites are separate, later projects.
+
+**Done when:** (1) F3 guest FPS holds 30 at 2–3 chosen worst views (incl. the view that gave 16 in
+`out/perf/unit4e-212915/`), (2) with guest vblank pacing back ON (commit `ac6ba00` turned it off)
+and game speed looks right (animations, NPC movement, day/night), (3) no recurring hitches while walking.
 
 **Working style (keeps usage down):** one focused unit per session. The user drives
 the game and runs A/B launches; Claude reads numbers, edits code and rebuilds.
@@ -20,18 +25,20 @@ At the end of every session Claude updates the status table and replaces the
 
 ```
 Continue Fable II desktop performance work. Read ONLY plans/PERF_SESSIONS.md
-(don't re-read older handoffs unless it says so). Unit 4b fixed the write-watch fault path
-(18 -> 25 FPS). The frame is now a 3D Engine <-> GPU Commands ping-pong: GPU Commands
-does ~30 ms of host work per 40 ms frame (0.76 cores), and the 3D Engine spends ~70% of its time in
-FrameLimiterWait waiting for it. Do unit 4e: make GPU Commands cheaper per draw. Start by
-profiling the GPU Commands thread from out/perf/unit4b-211720/perf-kernel.data
-(--children, comm "GPU Commands (F"): break down IssueDraw / UpdateBindings / texture
-cache lookups / WriteRegister / SharedMemory::RequestRange. Pick the single biggest
-cheap win, keep behaviour identical, unit-test it if it's testable in isolation, rebuild, then tell
-me when to launch tools/perf/run-profile.sh and run `sudo tools/perf/waitprof.sh unit4e`.
-Compare against out/perf/unit4b-211720 (25 FPS). Keep it focused, explain simply (I'm a
-Java dev). At the end: update the status table + this prompt, and store findings/lessons
-in the memory MCP (Fable II = projectId 3; reusable lessons GLOBAL).
+(don't re-read older handoffs unless it says so). Goal is now a SOLID 30 FPS (game is
+30-locked by design), see "Done when". Unit 4e batched type-0 register writes (same-spot A/B
+21 -> 27 FPS; GPU Commands ~27 ms work per ~37 ms frame, idle ~26%). The 3D Engine (producer)
+and GPU Commands (consumer) mostly take turns. Do unit 4f: make them overlap.
+Step 1: confirm the serialization from out/perf/unit4e-new-215041/sched.data (perf sched
+timehist/latency for "GPU Commands (F" and "3D Engine (F800"): how long GPU Commands sleeps per
+frame and what wakes it. Step 2: find what holds the producer back (guest FrameLimiterWait /
+GpuProgressCheck deadline vs host-side command visibility) and pick the smallest fix, behind a
+cvar for A/B. Prefer host-side (SDK) over changing the game's own wait. Rebuild (GPU-plugin-only
+changes: copy librexgpu-xenos.so by hand + md5, see "How to run things"), then have me A/B at
+the SAME spot/view with the cvar on/off, each with `sudo tools/perf/waitprof.sh <label>`, and
+check visuals/animation timing. Keep it focused, explain simply (I'm a Java dev). At the end:
+update the status table + this prompt, and store findings/lessons in the memory MCP
+(Fable II = projectId 3; reusable lessons GLOBAL).
 ```
 
 ## How to run things
@@ -40,6 +47,7 @@ in the memory MCP (Fable II = projectId 3; reusable lessons GLOBAL).
 |---|---|
 | Full Release build (~5 min, first time) | `bash build-release-linux_amd64.sh` (edit `-j4` to `-j12` locally if wanted) |
 | Rebuild after an SDK runtime/GPU change only | `cmake --build out/build/linux-amd64-release --target fable_2 -j12` |
+| **After a GPU-plugin-only change** (`src/graphics/**`): the build does NOT re-stage the plugin unless `fable_2` relinks. Copy it by hand and check md5 | `cp thirdparty/rexglue-sdk/out/linux-amd64/librexgpu-xenos.so out/build/linux-amd64-release/` |
 | Launch with MangoHud overlay | `tools/perf/run-profile.sh [extra --flags]` |
 | 20 s CPU profile of the running game | `tools/perf/capture.sh <label>` → `out/perf/<label>-HHMMSS/` |
 | Wait profile (per-thread user/kernel CPU, R/S state, ctx switches; with sudo also perf sched, SIGSEGV rate, kernel-inclusive profile) | `sudo tools/perf/waitprof.sh <label>` → `<dir>/waitprof.txt`, `signals.txt`, `perf-kernel.data` |
@@ -90,13 +98,15 @@ by **waiting and synchronization, not by slow recompiled code.** In order:
 | 3 | Cap the presenter: present only when there's a new guest frame and/or at the display refresh (FIFO/MAILBOX). Re-measure with MangoHud, which then becomes meaningful. | Claude + user test | ✅ 2026-11-13 — see "Unit 3 results" |
 | 4 | **Revised after 1b:** off-CPU/wait profile + trace what `GpuProgressCheck_82B9BF90` / `FrameLimiterWait_82242628` wait for and who signals it. | Claude + user test | ✅ 2026-11-13 — see "Unit 4 results" |
 | 4b | Make the write-watch fault path cheap: stop re-reading `/proc/self/maps` in `memory::QueryProtect` (Linux) on every SIGSEGV, under the global lock. | Claude + user test | ✅ 2026-11-13 — see "Unit 4b results" (18 → 25 FPS) |
-| 4c | (later) Fewer faults per frame (~30/frame), and stop `FrameLimiterWait`'s `sched_yield` spin burning a core (matters on the Deck: block on the counter write instead). | Claude | ⏳ |
+| 4c | (parked; not needed for 30) Fewer faults per frame, block `FrameLimiterWait` instead of `sched_yield` spin (Deck power). | Claude | ⏸ |
 | 4d | Re-measure after 4b (`sudo tools/perf/waitprof.sh`). Expected: limiter moves to GPU Commands (~32 ms of work/frame, i.e. ~30 FPS cap; estimate). | user + Claude | ✅ 2026-11-13 — done as part of 4b: confirmed, ~30 ms GPU Commands work/frame |
-| 4e | ⏳ **next.** Make GPU Commands cheaper per draw: SDK host code, readable C++. `IssueDraw` is ~65% of the thread (UpdateBindings, texture cache lookups, register writes, SharedMemory::RequestRanges). | Claude + user test | ⏳ |
-| 4f | (riskier, only if still capped ~30 after 4e) Let 3D Engine and GPU Commands overlap: allow 2 frames in flight instead of the game's "wait until the GPU thread finished the previous frame" (`FrameLimiterWait_82242628` / `BeginFrame_82B9BA58` deadline = counter+2). It's one well-understood wait, but it changes the game's own sync, so check for visual/timing breakage. | Claude + user test | ⏳ |
-| 5 | Pipeline-creation hitches: persistent `VkPipelineCache` + async/background pipeline compile. | Claude + user test | ⏳ |
-| 6+ | Theseus: rewrite the top guest functions from the latest profile as readable C++ hotfuncs, verified against the originals. | together | ⏳ |
-| later | Port fixes 2–5 to the Steam Deck build and measure there. | | ⏳ |
+| 4e | Make GPU Commands cheaper per draw: batch type-0 register writes. | Claude + user test | ✅ 2026-11-13 — see "Unit 4e results" (A/B 21 → 27 FPS) |
+| 4f | ⏳ **next.** Let 3D Engine and GPU Commands overlap (frame ≈ max(A,B) instead of A+B; est. ~37 FPS ceiling at the test spot). **Step 1 (cheap check):** confirm the serialization from `out/perf/unit4e-new-215041/sched.data` / `sched-wakeups.txt`: how long GPU Commands sleeps per frame and what wakes it (3D Engine kick/`UpdateWritePointer`?). **Step 2:** find what really holds the producer back: the guest deadline (`FrameLimiterWait_82242628` / `GpuProgressCheck_82B9BF90`, `BeginFrame_82B9BA58` deadline = counter+2) and/or the host side (when the 3D Engine's commands become visible to GPU Commands). Prefer a host-side fix (the SDK should behave like the 360's GPU, which ran in parallel) over changing the game's own wait. Make it a cvar so it can be A/B'd. Check visuals/timing. | Claude + user test | ⏳ |
+| 4v | Measure at 2–3 worst views (incl. the 16-FPS view) with F3. Pick spots and record them in the A/B table so later runs reuse them. | user | ⏳ |
+| 4g | (only if a worst view is still < 30 after 4f) One targeted GPU Commands cut: `SharedMemory::RequestRange` → `VulkanSharedMemory::UploadRanges` (~14% of the thread). Next candidates: `UpdateBindings` 12%, `RequestTextures` 9%, `GetSamplerParameters` 6%. | Claude + user test | ⏳ |
+| 4h | Turn guest vblank pacing back on (revert `ac6ba00` / `--guest_vblank_pacing=true`) so the game's own 30 FPS lock and vblank-based timing work as on the console. Verify F3 flat at 30 and correct game speed. | Claude + user test | ⏳ |
+| 5 | (only if there's stutter) Pipeline-creation hitches: persistent `VkPipelineCache` + async/background pipeline compile. | Claude + user test | ⏳ |
+| — | **Out of scope for this plan:** 2b alertable waits, 4c, Theseus rewrites (6+), Steam Deck port. | | ⏸ |
 
 ## Unit 2 results (2026-11-13, `out/perf/unit2-blocking-wait-203557/`)
 
@@ -201,6 +211,32 @@ for it. Even with perfect overlap (4f) the cap would be about 33 FPS, so 60 FPS 
 cost cut roughly in half. **Next: 4e** (WriteRegister, UpdateBindings, texture-cache hash lookups,
 ExecutePacket are the top self-time symbols).
 
+## Unit 4e results (2026-11-13, A/B at the same spot: `out/perf/unit4e-old-215256/` vs `out/perf/unit4e-new-215041/`)
+
+Fix (SDK `src/graphics/command_processor.cpp`, `ExecutePacketType0`): consecutive type-0 register
+writes now go through `WriteRegisterRangeFromRing` → the backend's batched `WriteRegistersFromMem`
+(one copy + one dirty-bit update for whole shader-constant ranges; anything else falls back to the
+same per-register `WriteRegister`). "Write one register N times" mode unchanged. Same thing upstream
+Xenia does. No unit test (needs a Vulkan device); equivalence checked by reading both paths.
+Old plugin binary kept for future A/Bs: `out/perf/unit4e-old-215256/librexgpu-xenos.so.old`.
+
+| Metric | Old plugin | New plugin |
+|---|---|---|
+| Guest F3 FPS (same spot/view) | 21 | **27** |
+| Type-0 packet path (incl., % of GPU Commands) | 14.8% | 5.1% |
+| GPU Commands cores | 0.75 | 0.73 |
+| GPU Commands host work per frame | ~36 ms | ~27 ms |
+| SIGSEGV per frame | ~34 | ~35 |
+
+New GPU Commands split (inside `IssueDraw`, ~75% of the thread): `RequestRange` 18%
+(of which `UploadRanges` 14%, mutex 2%), `UpdateBindings` 12%, `RequestTextures` 9%,
+`GetSamplerParameters` 6%, `RenderTargetCache::Update` 5.5%, memexport checks 3%.
+
+**Lessons:** (1) the GPU backend is a runtime-loaded plugin; a plugin-only rebuild does not re-stage
+it next to `fable_2`, and the first 4e run (`out/perf/unit4e-212915/`, 16 FPS) silently tested the
+old code. Always md5-check. (2) FPS at "the test spot" swings 16–25 with position/view, so judge
+changes only by same-spot A/B runs, not against an older session's number.
+
 ## A/B results (fill in)
 
 | Date | Flags | Guest FPS (F3) at test spot | Visual issues |
@@ -211,6 +247,9 @@ ExecutePacket are the top self-time symbols).
 | 2026-11-13 | `--occlusion_query_enable=false` (after unit 3) | 17 | none noted; MangoHud 70 but feels like 17 |
 | 2026-11-13 | (none, unit 4 wait profile run) | 18 | |
 | 2026-11-13 | (none, after unit 4b) | 25 | none noted |
+| 2026-11-13 | unit 4e run that accidentally used the old plugin (different view) | 16 | |
+| 2026-11-13 | A/B same spot: old plugin (4b code) | 21 | |
+| 2026-11-13 | A/B same spot: new plugin (unit 4e) | 27 | none noted |
 
 Conclusion: neither GPU readback nor occlusion queries limit the desktop (+1 FPS, within noise).
 MangoHud's ~70 is host presents: about 60 capped UI repaints plus forced presents for the ~17 guest
