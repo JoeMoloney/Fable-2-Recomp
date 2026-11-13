@@ -26,24 +26,33 @@ At the end of every session Claude updates the status table and replaces the
 ```
 Continue Fable II desktop performance work. Read ONLY plans/PERF_SESSIONS.md
 (don't re-read older handoffs unless it says so). Goal: a SOLID 30 FPS (game is 30-locked by
-design), see "Done when". Unit 4g got the test spot from 24 to 31 FPS (Fable now seeds
-clear_memory_page_state=false; GPU Commands kick->swap 27 -> 18.7 ms). But a slightly different
-angle in the same scene still shows 24, and walking causes some hitches.
-This session = unit 4v: find the worst views and see what limits THEM.
- - Have me pick 2-3 worst views (incl. that 24-FPS angle), record them in the A/B table.
- - At each, standing still: launch with
-   tools/perf/run-profile.sh --vulkan_async_submit=true --gpu_shared_memory_stats=true
-   and `sudo tools/perf/waitprof.sh 4v-<view>`. Note F3 FPS. Stats go to the newest
-   out/build/linux-amd64-release/logs/fable_2_NNN.log (not stdout).
- - Read tools/perf/frames.py (engine wait = GPU Commands kick->swap; engine work = game code)
-   and tools/perf/critpath.py per view (tids from waitprof.txt; run loops under bash, not zsh).
- - Then pick the next fix from the data: 4g-b (narrow the 256 KB fault widening, if uploads are
-   still big), 4g2 (per-draw state caching: UpdateBindings/RequestTextures), 4g3 (memexport), or
-   unit 5 (pipeline-compile hitches) if the hitching is the main complaint. If engine WORK is
-   the long part, that's the game's own code (Theseus territory, out of scope) - say so.
-Rebuild notes in "How to run things" (GPU plugin: copy librexgpu-xenos.so by hand + md5).
+design), see "Done when". After unit 4g the test spot runs 31 FPS, but a slightly different
+angle in the same scene shows 24. This session = unit 4v (one quick measurement) then unit 4g2
+(code fix). Walk me through it step by step, one step at a time, telling me exactly what to run
+and what to look at, and wait for me between steps:
+ 1. Measure the 24-FPS angle (I do it, no code). Tell me the exact launch command
+    (tools/perf/run-profile.sh --vulkan_async_submit=true --gpu_shared_memory_stats=true),
+    to stand still at that angle, note F3 FPS, then run `sudo tools/perf/waitprof.sh 4v-angle2`.
+    Record the spot/angle in the A/B table.
+ 2. You read it: tools/perf/frames.py + tools/perf/critpath.py (tids from waitprof.txt; run
+    loops under bash, not zsh) and the shared_memory_stats lines in the newest
+    out/build/linux-amd64-release/logs/fable_2_NNN.log. Tell me simply: is the frame long because
+    of GPU Commands (engine WAIT) or the game's own code (engine WORK)?
+ 3. If GPU Commands: do unit 4g2. Skip per-draw state unchanged since the previous draw
+    (UpdateBindings ~3.5 ms/frame, RequestTextures ~2.3 ms/frame on the critical path at the test
+    spot). Read the code first, explain the plan in a few lines before editing, put it behind a
+    hot-reload cvar (default off), rebuild the GPU plugin, copy librexgpu-xenos.so by hand + md5.
+    If engine WORK is the long part instead, stop and explain (game code = Theseus, out of scope)
+    and suggest the next best option (4g-b fault widening or unit 5 hitches).
+ 4. A/B (I do it): same spot AND angle, standing still, new cvar off vs on, each with
+    `sudo tools/perf/waitprof.sh 4g2-off|4g2-on`. Tell me what visuals to check (wrong/flickering
+    textures, stretched polygons, missing objects = stale bindings). Judge by frames.py
+    engine-wait median, not only F3.
+ 5. If it's a clear win with no glitches: seed the cvar on for Fable in src/core/fable_2_app.h
+    OnPostSetup (like clear_memory_page_state), rebuild fable_2.
 Keep it focused, explain simply (I'm a Java dev). At the end: update the status table + this
-prompt, and store findings/lessons in the memory MCP (Fable II = projectId 3; reusable = GLOBAL).
+prompt, give me the git add/commit commands (SDK submodule first, then main repo, only files from
+this session), and store findings/lessons in the memory MCP (Fable II = projectId 3; reusable = GLOBAL).
 ```
 
 ## How to run things
@@ -108,7 +117,7 @@ by **waiting and synchronization, not by slow recompiled code.** In order:
 | 4d | Re-measure after 4b (`sudo tools/perf/waitprof.sh`). Expected: limiter moves to GPU Commands (~32 ms of work/frame, i.e. ~30 FPS cap; estimate). | user + Claude | ✅ 2026-11-13 — done as part of 4b: confirmed, ~30 ms GPU Commands work/frame |
 | 4e | Make GPU Commands cheaper per draw: batch type-0 register writes. | Claude + user test | ✅ 2026-11-13 — see "Unit 4e results" (A/B 21 → 27 FPS) |
 | 4f | Let 3D Engine and GPU Commands overlap. Found: the turn-taking is the game's own design (not fixable host-side without risking data races). Did the one safe host overlap: async Vulkan submit, cvar `--vulkan_async_submit`. | Claude + user test | ✅ 2026-11-13 — see "Unit 4f results" (−1.2 ms/frame critical path, 23 → 24 FPS, no visual issues) |
-| 4v | **next.** Measure at 2–3 worst views with F3 (incl. the new angle that still showed 24 FPS after 4g). Pick spots and record them in the A/B table so later runs reuse them. Run with `--gpu_shared_memory_stats=true` + waitprof so we see which of 4g-b / 4g2 / 4g3 / 5 matters there. | user + Claude | ⏳ |
+| 4v | **next (with 4g2, same session).** Measure at 2–3 worst views with F3 (incl. the new angle that still showed 24 FPS after 4g). Pick spots and record them in the A/B table so later runs reuse them. Run with `--gpu_shared_memory_stats=true` + waitprof so we see which of 4g-b / 4g2 / 4g3 / 5 matters there. | user + Claude | ⏳ |
 | 4g | Stop needless re-uploads / re-protection. Found the real cause with new upload stats: SDK cvar `clear_memory_page_state` (default true) marked all CPU-uploaded pages stale every frame → ~21 MB + ~1,130 mprotect ranges per frame. Fable now seeds it **false**. | Claude + user test | ✅ 2026-11-13 — see "Unit 4g results" (24 → **31 FPS** at the test spot) |
 | 4g-b | (optional, only if a worst view needs it) Narrow the write-fault widening: after 4g ~70 faults/frame write ~280 KB but invalidate ~16 MB (up to 256 KB each), ~6.6 MB/frame still uploaded. Try a smaller widening (e.g. 64 KB) behind a cvar; trade-off is more faults. | Claude + user test | ⏳ |
 | 4g2 | Fix 2: skip per-draw state that didn't change since the previous draw (`UpdateBindings` 12%, `RequestTextures` 9–10%, `GetSamplerParameters` 6%): cheap "same as last draw?" check before rebuilding descriptor sets / texture lookups. Cvar for A/B. Est. a few ms (unmeasured). Can share a session with 4g if 4g is quick. | Claude + user test | ⏳ |
