@@ -217,6 +217,21 @@ class Fable2App : public rex::ReXApp {
                     "keeping SDK default");
       }
     }
+    // Deck unit D4b: the game re-sends ~23k shader constants + ~13k fetch
+    // constants per frame and over half repeat the value already there; the
+    // SDK invalidated bindings/buffers on every write anyway. Skip invalidation
+    // when nothing changed (identical values = identical state). Deck: ~27 FPS
+    // either way but less CPU work, no visual issues.
+    // --gpu_skip_unchanged_constant_writes=false restores the old behaviour.
+    if (rex::cvar::GetFlagSource("gpu_skip_unchanged_constant_writes") ==
+        rex::cvar::Source::kDefault) {
+      if (rex::cvar::SetFlagByName("gpu_skip_unchanged_constant_writes", "true")) {
+        REXSYS_INFO("[fable2-config] seeded gpu_skip_unchanged_constant_writes=true (perf)");
+      } else {
+        REXSYS_WARN("[fable2-config] cvar gpu_skip_unchanged_constant_writes missing; "
+                    "keeping SDK default");
+      }
+    }
 
     // Feed the F3 debug overlay with guest FPS (below). The GPU plugin
     // records per-guest-swap frame timing into the shared perf registry

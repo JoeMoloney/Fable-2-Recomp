@@ -32,6 +32,30 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
 include(generated/rexglue.cmake)
+
+# Profile-guided optimization of the GPU plugin only (Clang, source SDK build):
+#   -DFABLE2_GPU_PGO=generate          instrumented build; writes .profraw files
+#                                      (see GpuPgoMaybeDumpProfile in the SDK)
+#   -DFABLE2_GPU_PGO=/path/x.profdata  optimized build using a merged profile (use a new
+#                                      file name per profile: changing the file alone
+#                                      does not trigger a rebuild)
+#   -DFABLE2_GPU_PGO=                  off (default)
+set(FABLE2_GPU_PGO "" CACHE STRING "GPU plugin PGO: empty, generate, or a .profdata path")
+if(FABLE2_GPU_PGO AND TARGET rexgpu-xenos)
+    if(FABLE2_GPU_PGO STREQUAL "generate")
+        target_compile_options(rexgpu-xenos PRIVATE -fprofile-generate)
+        target_link_options(rexgpu-xenos PRIVATE -fprofile-generate)
+        message(STATUS "GPU plugin PGO: instrumented (profile generation) build")
+    else()
+        if(NOT EXISTS "${FABLE2_GPU_PGO}")
+            message(FATAL_ERROR "FABLE2_GPU_PGO profile not found: ${FABLE2_GPU_PGO}")
+        endif()
+        target_compile_options(rexgpu-xenos PRIVATE "-fprofile-use=${FABLE2_GPU_PGO}"
+            -Wno-profile-instr-unprofiled -Wno-profile-instr-out-of-date
+            -Wno-backend-plugin)
+        message(STATUS "GPU plugin PGO: optimized with ${FABLE2_GPU_PGO}")
+    endif()
+endif()
 set(FABLE2_CODEGEN_TOOL "" CACHE FILEPATH "Standalone compatible ReXGlue codegen tool")
 if(FABLE2_CODEGEN_TOOL)
     if(NOT EXISTS "${FABLE2_CODEGEN_TOOL}")
