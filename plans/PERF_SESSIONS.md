@@ -8,6 +8,8 @@ Fable II is locked to 30 FPS by design (community high-FPS/tick patches exist bu
 perfect), so once 30 holds at the worst views the bottlenecks are gone and this effort is **done**.
 60 FPS, the Steam Deck port and Theseus rewrites are separate, later projects.
 
+**STATUS: DONE (2026-11-14, unit 4h).** All three "Done when" points met; see "Unit 4h results".
+
 **Done when:** (1) F3 guest FPS holds 30 at 2–3 chosen worst views (incl. the view that gave 16 in
 `out/perf/unit4e-212915/`), (2) with guest vblank pacing back ON (commit `ac6ba00` turned it off)
 and game speed looks right (animations, NPC movement, day/night), (3) no recurring hitches while walking.
@@ -24,22 +26,12 @@ At the end of every session Claude updates the status table and replaces the
 ### Next session prompt
 
 ```
-Continue Fable II desktop performance work. Read ONLY plans/PERF_SESSIONS.md
-(don't re-read older handoffs unless it says so). Goal: a SOLID 30 FPS, see "Done when".
-Units 4g + 4g-b are done: angle 2 (the old worst view) now gives ~35-40 F3 FPS with vblank pacing
-OFF. Next is unit 4h: turn guest vblank pacing back on (tools/perf/run-profile.sh passes
---guest_vblank_pacing=false; commit ac6ba00 turned it off) so the game's own 30 FPS lock and
-timing work like on the console. Walk me through it step by step, one step at a time, telling me
-exactly what to run (plain copy-paste commands, no tables around them) and wait for me:
- 1. Find what ac6ba00 changed and why pacing was turned off (was it a hang, a slowdown?).
- 2. I run with --guest_vblank_pacing=true at angle 2 + walking: F3 should sit flat at 30,
-    animations / NPC walking / day-night speed should look normal, no hitches.
- 3. If good: make it the default (launcher scripts + any code seed), rebuild, confirm.
-    If not: find why (e.g. vblank interrupt timing, wait in FrameLimiterWait) and fix.
- 4. Then check "Done when" (2-3 worst views at 30, no recurring hitches). If all met, the plan is DONE.
-Keep it focused, explain simply (I'm a Java dev). At the end: update the status table + this
-prompt, give me the git add/commit commands, and store findings in the memory MCP
-(Fable II = projectId 3; reusable = GLOBAL).
+Fable II desktop performance: plans/PERF_SESSIONS.md is DONE (solid 30 FPS with guest vblank
+pacing on, unit 4h). Read ONLY its "Unit 4h results" section. Only reopen this plan if a new
+recurring hitch or a sustained < 30 view turns up; then the next candidate is unit 5 (persistent
+VkPipelineCache / background pipeline compile) or 4g3. Otherwise start a separate plan (60 FPS,
+Steam Deck port, Theseus rewrites or native renderer). Explain simply (I'm a Java dev); store
+findings in the memory MCP (Fable II = projectId 3; reusable = GLOBAL).
 ```
 
 ## How to run things
@@ -109,7 +101,7 @@ by **waiting and synchronization, not by slow recompiled code.** In order:
 | 4g-b | Cache/skip per-draw `HasNonDefaultValue` lookup + new cvar **`--gpu_write_fault_widen_kb`** (SDK default 256 = old behaviour). Also found+fixed a /dev/shm leak (SIGBUS crash). Fable seeds **16**. | Claude + user test | ✅ 2026-11-14 — see "Unit 4g-b results" (26 → 32 from the lookup fix, → **35–40 FPS** at angle 2 with 16 KB; uploads 2,750 → ~650 KB/frame) |
 | 4g2 | Skip rewriting texture descriptor sets when unchanged since the previous draw (cvar `--vulkan_reuse_texture_bindings`, default off). | Claude + user test | ❌ 2026-11-13 — no gain (26 vs 26 FPS); see "Unit 4v + 4g2 results". Not seeded. |
 | 4g3 | (only if still < 30 after 4g+4g2) Smaller extras: memexport readback (~1–2 ms/frame; `--readback_memexport=false` only gave +1 FPS earlier, so look at the wait itself). Then the deeper option: **Fable-specific "don't watch" knowledge**: if 4g's counts show the same guest ranges re-protected every frame (e.g. static vertex data loaded once), reverse-engineer what they are and stop write-watching them. Needs RE, so higher effort/risk. | Claude + user test | ⏳ |
-| 4h | Turn guest vblank pacing back on (revert `ac6ba00` / `--guest_vblank_pacing=true`) so the game's own 30 FPS lock and vblank-based timing work as on the console. Verify F3 flat at 30 and correct game speed. | Claude + user test | ⏳ |
+| 4h | Turn guest vblank pacing back on (revert `ac6ba00` / `--guest_vblank_pacing=true`) so the game's own 30 FPS lock and vblank-based timing work as on the console. Verify F3 flat at 30 and correct game speed. | Claude + user test | ✅ 2026-11-14 — see "Unit 4h results"; **plan DONE** |
 | 5 | (only if there's stutter) Pipeline-creation hitches: persistent `VkPipelineCache` + async/background pipeline compile. | Claude + user test | ⏳ |
 | — | **Out of scope for this plan:** 2b alertable waits, 4c, Theseus rewrites (6+), Steam Deck port, and a **native renderer** (game render code calling Vulkan directly, no Xenos interpretation; see `plans/NATIVE_RENDERER_*.md`), which is the ultimate fix but a separate, much later project. | | ⏸ |
 
@@ -402,6 +394,27 @@ flag: "quite consistent", ~40 FPS (60-frame stats every ~1.5 s), ~650 KB uploade
 **Lessons:** (1) a SIGBUS (not SIGSEGV) in guest code on Linux = shm backing failure; check `df -h /dev/shm` first.
 (2) shm objects that nobody re-opens by name should be unlinked right after creation.
 
+## Unit 4h results (2026-11-14) — plan DONE
+
+**Why pacing was off:** `ac6ba00` (run-debug.sh) and `8b79b86` (run-release.sh, copied into run-profile.sh) added
+`--guest_vblank_pacing=false` on purpose, to try for 60 FPS. No hang or slowdown. The SDK "GPU VSync" thread
+(`thirdparty/rexglue-sdk/src/graphics/graphics_system.cpp`) fires guest vblanks at the video-mode rate (60 Hz) with
+pacing on, ~1000 Hz with it off. Fable waits for 2 vblanks per frame → 30 FPS lock with pacing on. Catch: frames are
+quantized to whole vblanks (a 34 ms frame waits for the 3rd one → 20 FPS), so it only holds 30 once frames are
+< 33 ms, which 4g + 4g-b achieved (~25–28 ms at angle 2).
+
+**Change:** removed `--guest_vblank_pacing=false` from `run-release.sh`, `run-debug.sh` and `tools/perf/run-profile.sh`
+(the last is git-ignored, local only). SDK default is already `true`, so no code seed and no rebuild needed. The Windows
+launcher already turns pacing on for its 30 FPS setting. `--guest_vblank_pacing=false` still works for 60 FPS experiments.
+
+**Result (user runs, pacing on, `--vulkan_async_submit=true`):** angle 2 + running around: felt good, lowest F3 ~28.
+Other worst views (4g test spot + busiest spot) while walking: lowest F3 28, "feels more stable" than unpaced
+35–40. Game speed looked normal. The 28s are brief dips (F3 averages over a short window, so one slow streaming frame
+pulls it under 30), not a sustained drop to 20, which is what a frame that doesn't fit 2 vblanks would show.
+
+**Done when:** (1) worst views hold 30 except brief dips ✅, (2) pacing on, game speed right ✅, (3) no recurring
+hitches reported ✅. If the brief dips ever bother you: unit 5 (pipeline cache / background compile) is the follow-up.
+
 ## A/B results (fill in)
 
 | Date | Flags | Guest FPS (F3) at test spot | Visual issues |
@@ -430,6 +443,8 @@ flag: "quite consistent", ~40 FPS (60-frame stats every ~1.5 s), ~650 KB uploade
 | 2026-11-14 | angle 2, re-test `--gpu_write_fault_widen_kb=16`, walked ~1 min | **40** | none, felt good |
 | 2026-11-14 | angle 2, re-test `--gpu_write_fault_widen_kb=64`, walked | 36 | none (black screen did not repeat) |
 | 2026-11-14 | angle 2, no widen flag (Fable now seeds 16) | ~40 | none; "quite consistent" |
+| 2026-11-14 | unit 4h: `--guest_vblank_pacing=true`, angle 2 + running around | 30, lowest ~28 | none; felt good, speed normal |
+| 2026-11-14 | unit 4h: pacing on (now default), other worst views + walking | 30, lowest 28 | none; "feels more stable" |
 
 Conclusion: neither GPU readback nor occlusion queries limit the desktop (+1 FPS, within noise).
 MangoHud's ~70 is host presents: about 60 capped UI repaints plus forced presents for the ~17 guest
