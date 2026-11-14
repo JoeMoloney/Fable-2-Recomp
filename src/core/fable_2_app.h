@@ -202,6 +202,21 @@ class Fable2App : public rex::ReXApp {
         REXSYS_WARN("[fable2-config] cvar gpu_write_fault_widen_kb missing; keeping SDK default");
       }
     }
+    // Perf (plans/STEAMDECK_SESSIONS.md unit D3): ~2 memexport draws per frame
+    // repeat within one submission, so the fast double-buffered readback fell
+    // back to a full synchronous readback (end submission + wait for the whole
+    // GPU). Skipping the CPU copy for those repeats keeps the guest's copy at
+    // most ~1 frame old (GPU consumers unaffected): Deck 18 -> 25 FPS, no
+    // visual issues. --readback_memexport_fast_no_stall=false restores it.
+    if (rex::cvar::GetFlagSource("readback_memexport_fast_no_stall") ==
+        rex::cvar::Source::kDefault) {
+      if (rex::cvar::SetFlagByName("readback_memexport_fast_no_stall", "true")) {
+        REXSYS_INFO("[fable2-config] seeded readback_memexport_fast_no_stall=true (perf)");
+      } else {
+        REXSYS_WARN("[fable2-config] cvar readback_memexport_fast_no_stall missing; "
+                    "keeping SDK default");
+      }
+    }
 
     // Feed the F3 debug overlay with guest FPS (below). The GPU plugin
     // records per-guest-swap frame timing into the shared perf registry

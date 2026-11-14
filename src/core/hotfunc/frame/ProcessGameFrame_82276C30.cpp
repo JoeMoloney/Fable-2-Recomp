@@ -99,6 +99,9 @@
 //   }
 #include "fable_2_pch.h"
 
+#include <chrono>
+#include <thread>
+
 extern "C" void CallActivePlayerMethod_821A11E8(PPCContext& ctx, uint8_t* base);
 extern "C" void ConstructRefCounted_8222CF18(PPCContext& ctx, uint8_t* base);
 extern "C" void DispatchFrameCallback_821A6010(PPCContext& ctx, uint8_t* base);
@@ -1078,6 +1081,15 @@ extern "C" void ProcessGameFrame_82276C30(PPCContext& __restrict ctx, uint8_t* b
 	process_frame_work(ctx, base);
 	} else {
 	// --- (no work on this path) yield + re-check the frame threshold ---
+#ifndef _WIN32
+	// Host-only deviation: no simulation tick is due yet (r30 <= 0), so this
+	// loop only waits for the timebase to reach the next fixed tick. A bare
+	// sched_yield() spin kept a core at full clock; on a power-capped APU
+	// (Steam Deck, 15 W shared) that starved the GPU clock. Sleep briefly
+	// first; touches no guest state. Not on Windows: its default sleep
+	// granularity (~1-15 ms) is far coarser than a tick.
+	std::this_thread::sleep_for(std::chrono::microseconds(200));
+#endif
 	// bl 0x82cbd098
 	ctx.lr = 0x8227720C;
 	Yield_82CBD098(ctx, base);

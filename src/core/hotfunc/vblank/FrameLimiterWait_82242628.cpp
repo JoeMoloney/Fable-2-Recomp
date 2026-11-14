@@ -47,6 +47,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #else
+#include <chrono>
 #include <thread>
 #endif
 
@@ -167,14 +168,19 @@ void BuildArgBlock(PPCContext& ctx, uint8_t* base) {
 // Host pause between counter polls. Touches no guest state. Keep the existing
 // Windows behavior for now; its NULL handle is invalid and its timeout argument
 // is in milliseconds, so it does not provide the nanosecond sleep once claimed.
-// On other hosts yield rather than requesting a sub-microsecond sleep, whose
-// scheduler rounding could substantially overshoot the intended interval.
+// On other hosts sleep for a short, fixed interval. A sched_yield() spin here
+// kept a core at full clock while the render thread only waits for the GPU;
+// on a power-capped APU (Steam Deck, 15 W shared) that starved the GPU clock
+// (560-820 of 1600 MHz, 15 guest FPS). 200 us is well under one 16.7 ms
+// vblank, so the added wake-up latency is negligible for the frame limiter.
+constexpr auto kHostPause = std::chrono::microseconds(200);
+
 void SpinPause() {
 #ifdef _WIN32
   const uint32_t hundredNs = kPauseNs / 100;
   WaitForSingleObjectEx(nullptr, hundredNs > 0 ? hundredNs : 1, TRUE);
 #else
-  std::this_thread::yield();
+  std::this_thread::sleep_for(kHostPause);
 #endif
 }
 
