@@ -19,16 +19,44 @@ Each session updates the status table and the next-session prompt below.
 ### Next session prompt
 
 ```
-Fable II Steam Deck performance: read plans/STEAMDECK_SESSIONS.md ("Handoff 2026-11-15",
-then the status table only). Deck is at ~27 FPS on r5. r6 (D4a v3 build + D4b constant-write
-cvar) is built but not deployed. Use the tools/deck/*.sh scripts. First deploy r6 and do the two
-Deck runs from the handoff, then decide between PGO and sampler caching from the stats. The Deck
-is deck@192.168.1.54 (zsh alias `steamdeck`); I launch from the Steam shortcut and tell you the
-F3 guest FPS. Explain simply (I'm a Java dev); store findings in the memory MCP
+Fable II Steam Deck performance: read plans/STEAMDECK_SESSIONS.md ("Handoff 2026-11-14 afternoon",
+then the status table only). Deck reached 30 FPS at the test spot on r12 (deck-perf-20261115-r12-pgo).
+Next: confirm the goal while walking in several areas (town, combat, night), then decide between
+the camera-turn dips and more GPU headroom. Use the tools/deck/*.sh scripts. The Deck is
+deck@192.168.1.54 (zsh alias `steamdeck`); I launch from the Steam shortcut and tell you the F3
+guest FPS. Explain simply (I'm a Java dev); store findings in the memory MCP
 (Fable II = projectId 3; reusable = GLOBAL).
 ```
 
-## Handoff 2026-11-15 (written 2026-11-14 late)
+## Handoff 2026-11-14 afternoon
+
+**Where we are:** Deck **15 → 30 FPS** at the test spot (release `deck-perf-20261115-r12-pgo`, clean
+launcher, automatic clocks). GPU Commands 88% busy + 8% limiter sleep; GPU 93% busy at ~1444 MHz, 15 W.
+Steps this day: D4b constant-write skip (seeded), D5a GPU timing (`gpu_timing_stats`), D6 PGO of the GPU
+plugin, D7 hot-spot fixes + fresh PGO. D4a (x86-64-v3) gave nothing; FSI path 16 FPS; transfer skipping
+not applicable (see D5b).
+
+**Commits:** D4–D6 committed by the user. D7 (SDK: `command_processor.{h,cpp}`, `deferred_command_buffer.{h,cpp}`;
+main: this plan + SDK pointer) — check `git status`; commit if still pending.
+`src/input/remote_control_server.h` is the user's own change: don't commit without asking.
+
+**Builds:** `out/build/deck-linux-amd64-release-v3` holds r12 (PGO-optimized). The PGO profile is
+`out/pgo/rexgpu-xenos-20261114b.profdata` (git-ignored, keep it). To rebuild r12:
+`FABLE2_GPU_PGO=/workspace/out/pgo/rexgpu-xenos-20261114b.profdata tools/deck/build.sh`.
+Without `FABLE2_GPU_PGO` the build is non-PGO (the option resets). After changing GPU-plugin code
+much, re-profile: `FABLE2_GPU_PGO=generate tools/deck/build.sh`, deploy, play 3–5 min, quit, fetch
+`userdata/pgo/rexgpu-xenos-1.profraw`, `llvm-profdata merge` in the builder image to a NEW file name.
+Desktop build restored after the Deck builds (see Gotcha below).
+
+**Deck state:** `current` → r12. Releases r1–r12 present (r9, r11 = instrumented PGO builds; don't use for
+FPS). Launcher clean.
+
+**Open checks / next options:** (1) walking + other areas (town, combat, night) at 30? (2) brief FPS
+dips when turning the camera (likely texture loads / pipeline creation for newly visible objects;
+measure with `--gpu_timing_stats=true` + CPU profile during turns). (3) GPU headroom: resolves 2.7 ms,
+texture loads 2.4 ms, RT transfers 15 ms per frame (D5a). (4) desktop still solid 30 with D4b/D7.
+
+## Handoff 2026-11-15 (written 2026-11-14 late; superseded by the one above)
 
 **Where we are:** Deck **15 → 27 FPS** at the test spot (release `deck-perf-20261114-r5`, clean
 launcher, automatic clocks). Desktop solid 30. Limit on the Deck: GPU Commands thread ~95% busy
