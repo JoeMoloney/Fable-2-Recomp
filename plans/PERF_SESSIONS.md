@@ -25,32 +25,21 @@ At the end of every session Claude updates the status table and replaces the
 
 ```
 Continue Fable II desktop performance work. Read ONLY plans/PERF_SESSIONS.md
-(don't re-read older handoffs unless it says so). Goal: a SOLID 30 FPS (game is 30-locked by
-design), see "Done when". Worst view so far ("angle 2", see A/B table) runs 26 FPS: frame ~39 ms =
-~21 ms GPU Commands (engine WAIT) + ~15 ms game code (engine WORK). Need ~6 ms off the WAIT part.
-4g2 (texture descriptor reuse) gave nothing. This session = unit 4g-b + the cheap cvar-lookup fix.
-Walk me through it step by step, one step at a time, telling me exactly what to run and what to
-look at, and wait for me between steps:
- 1. You read code first (no game run): (a) `IsReadbackMemexportEnabled` in SDK
-    src/graphics/command_processor.cpp (~line 302) does `rex::cvar::HasNonDefaultValue(<string>)`
-    on every draw (~0.5-0.8 ms/frame); cache it (it's a legacy-name check, only needs re-checking
-    when cvars change). (b) the write-fault widening in SharedMemory / PhysicalHeap: a fault
-    invalidates up to 256 KB, so ~212 KB written -> ~12 MB invalidated/frame -> ~5 MB re-uploaded +
-    re-protected (`SharedMemory::RequestRanges` ~28% of IssueDraw). Explain the plan in a few lines
-    before editing: smaller widening (e.g. 64 KB / 16 KB) behind a hot-reload size cvar (default =
-    today's behaviour); trade-off is more faults on the 3D Engine thread.
- 2. Rebuild the GPU plugin + whatever else changed (`cmake --build out/build/linux-amd64-release
-    --target rexgpu-xenos fable_2 -j12`), copy librexgpu-xenos.so by hand + md5.
- 3. A/B (I do it): same spot AND "angle 2", standing still, F3 + `sudo tools/perf/waitprof.sh
-    4gb-<size>` with --vulkan_async_submit=true --gpu_shared_memory_stats=true, for 2-3 widening
-    sizes. Judge by frames.py period/engine-wait median AND shared_memory_stats (KB invalidated,
-    upload KB, faults/frame) AND 3D Engine work median (more faults = more engine work).
-    Visual check: stale/garbled geometry or textures after walking around.
- 4. If a size wins: seed it for Fable in src/core/fable_2_app.h OnPostSetup (like
-    clear_memory_page_state), rebuild fable_2.
+(don't re-read older handoffs unless it says so). Goal: a SOLID 30 FPS, see "Done when".
+Units 4g + 4g-b are done: angle 2 (the old worst view) now gives ~35-40 F3 FPS with vblank pacing
+OFF. Next is unit 4h: turn guest vblank pacing back on (tools/perf/run-profile.sh passes
+--guest_vblank_pacing=false; commit ac6ba00 turned it off) so the game's own 30 FPS lock and
+timing work like on the console. Walk me through it step by step, one step at a time, telling me
+exactly what to run (plain copy-paste commands, no tables around them) and wait for me:
+ 1. Find what ac6ba00 changed and why pacing was turned off (was it a hang, a slowdown?).
+ 2. I run with --guest_vblank_pacing=true at angle 2 + walking: F3 should sit flat at 30,
+    animations / NPC walking / day-night speed should look normal, no hitches.
+ 3. If good: make it the default (launcher scripts + any code seed), rebuild, confirm.
+    If not: find why (e.g. vblank interrupt timing, wait in FrameLimiterWait) and fix.
+ 4. Then check "Done when" (2-3 worst views at 30, no recurring hitches). If all met, the plan is DONE.
 Keep it focused, explain simply (I'm a Java dev). At the end: update the status table + this
-prompt, give me the git add/commit commands (SDK submodule first, then main repo, only files from
-this session), and store findings/lessons in the memory MCP (Fable II = projectId 3; reusable = GLOBAL).
+prompt, give me the git add/commit commands, and store findings in the memory MCP
+(Fable II = projectId 3; reusable = GLOBAL).
 ```
 
 ## How to run things
@@ -117,7 +106,7 @@ by **waiting and synchronization, not by slow recompiled code.** In order:
 | 4f | Let 3D Engine and GPU Commands overlap. Found: the turn-taking is the game's own design (not fixable host-side without risking data races). Did the one safe host overlap: async Vulkan submit, cvar `--vulkan_async_submit`. | Claude + user test | ✅ 2026-11-13 — see "Unit 4f results" (−1.2 ms/frame critical path, 23 → 24 FPS, no visual issues) |
 | 4v | Measure the worst view after 4g ("angle 2", see A/B table). | user + Claude | ✅ 2026-11-13 — see "Unit 4v + 4g2 results": 26 FPS = ~21 ms engine wait + ~15 ms engine work |
 | 4g | Stop needless re-uploads / re-protection. Found the real cause with new upload stats: SDK cvar `clear_memory_page_state` (default true) marked all CPU-uploaded pages stale every frame → ~21 MB + ~1,130 mprotect ranges per frame. Fable now seeds it **false**. | Claude + user test | ✅ 2026-11-13 — see "Unit 4g results" (24 → **31 FPS** at the test spot) |
-| 4g-b | **next.** Plus cache the per-draw `HasNonDefaultValue` string lookup in `IsReadbackMemexportEnabled`. Narrow the write-fault widening: after 4g ~70 faults/frame write ~280 KB but invalidate ~16 MB (up to 256 KB each), ~6.6 MB/frame still uploaded. Try a smaller widening (e.g. 64 KB) behind a cvar; trade-off is more faults. | Claude + user test | ⏳ |
+| 4g-b | Cache/skip per-draw `HasNonDefaultValue` lookup + new cvar **`--gpu_write_fault_widen_kb`** (SDK default 256 = old behaviour). Also found+fixed a /dev/shm leak (SIGBUS crash). Fable seeds **16**. | Claude + user test | ✅ 2026-11-14 — see "Unit 4g-b results" (26 → 32 from the lookup fix, → **35–40 FPS** at angle 2 with 16 KB; uploads 2,750 → ~650 KB/frame) |
 | 4g2 | Skip rewriting texture descriptor sets when unchanged since the previous draw (cvar `--vulkan_reuse_texture_bindings`, default off). | Claude + user test | ❌ 2026-11-13 — no gain (26 vs 26 FPS); see "Unit 4v + 4g2 results". Not seeded. |
 | 4g3 | (only if still < 30 after 4g+4g2) Smaller extras: memexport readback (~1–2 ms/frame; `--readback_memexport=false` only gave +1 FPS earlier, so look at the wait itself). Then the deeper option: **Fable-specific "don't watch" knowledge**: if 4g's counts show the same guest ranges re-protected every frame (e.g. static vertex data loaded once), reverse-engineer what they are and stop write-watching them. Needs RE, so higher effort/risk. | Claude + user test | ⏳ |
 | 4h | Turn guest vblank pacing back on (revert `ac6ba00` / `--guest_vblank_pacing=true`) so the game's own 30 FPS lock and vblank-based timing work as on the console. Verify F3 flat at 30 and correct game speed. | Claude + user test | ⏳ |
@@ -372,6 +361,47 @@ GetSamplerParameters ~7%; `cvar::HasNonDefaultValue` ~4% (string lookup per draw
 (2) `[unknown]` frames under a host function are the NVIDIA driver; find the call with
 `perf script -F ip,sym,symoff` + `objdump` at that offset.
 
+## Unit 4g-b results (2026-11-14, DONE; `out/perf/4gb-256-235522/`, `4gb-64-235817/`, `4gb-16-000054/`)
+
+SDK changes (all built + staged, plugin md5 `a2345b0a…`; old plugin `out/perf/4gb-pre/librexgpu-xenos.so.pre4gb`):
+1. `src/graphics/{vulkan,d3d12}/command_processor.cpp`: memexport readback check now tests
+   `!memexport_ranges_.empty()` **before** `IsReadbackMemexportEnabled` (whose `HasNonDefaultValue` = lock +
+   string map lookup per draw). Same behaviour, lookup only on memexport draws.
+2. `src/graphics/shared_memory.cpp` `MemoryInvalidationCallback`: new hot-reload cvar
+   **`--gpu_write_fault_widen_kb`** (default 256 = upstream: whole 64-page block). Caps the widened
+   invalidation/unprotect to an aligned window of that size (still also clipped by GPU-written pages).
+   `PhysicalHeap::TriggerCallbacks` unprotects the min over callbacks, so this also narrows the unprotect.
+3. `src/core/memory_posix.cpp` `CreateFileMappingHandle`: `shm_unlink` right after create (fd keeps it
+   alive; only user is xmemory.cpp, never re-opened by name). **Bug found:** every killed/crashed run leaked
+   its 4.8 GB sparse `/dev/shm/xenia_memory_*` file (45 files, 13 of 16 GB used) → touching new guest pages
+   gave **SIGBUS** (crash during save load in the first 4 KB run; core dump: `seh_posix` re-raise on top of
+   guest `sub_82B2BCC8`). Not caused by the widening. Fix built, **not yet verified** (check `ls /dev/shm`
+   after a run; a reboot clears the old files anyway since /dev/shm is RAM).
+
+A/B at angle 2 (standing still, `--vulkan_async_submit=true --gpu_shared_memory_stats=true`; logs 026/027/028):
+
+| widen_kb | F3 | period / engine wait / work med (ms) | faults/frame | KB invalidated | KB uploaded | Visual |
+|---|---|---|---|---|---|---|
+| 256 (default) | 32 | 31.4 / 17.6 / 11.5 | ~39 | ~8,400 | ~2,750 | none |
+| 64 | 33 | 30.0 / 16.3 / 11.4 | ~60 | ~3,450 | ~1,680 | **black screen with light fragments** (one run) |
+| 16 | **35** | **28.2 / 14.8 / 11.2** | ~77 | ~1,150 | ~760 | none |
+| 4 | — | — | — | — | — | crashed (SIGBUS from the /dev/shm leak, not this cvar) |
+
+Reads: 2× faults cost nothing visible on the 3D Engine (work 11.5 → 11.2 ms; faults are cheap since 4b), while
+GPU Commands saves ~3 ms/frame. Run A (256) at 32 vs 26 last session = fix (1) + slightly different view.
+The 64 KB black screen is unexplained: narrowing can't leave stale data in theory (pages not invalidated stay
+protected and fault again), and 16 KB was clean, so maybe a one-off; must re-test before seeding.
+
+**Confirmation runs (logs 030/031/032):** 16 KB again = **40 FPS**, walked ~1 min, felt good, no glitches;
+64 KB again = 36 FPS, no black screen (the earlier one was a one-off, cause unknown; watch for it). `/dev/shm` had
+no `xenia_memory_*` file even *while* the game ran → leak fix verified. **Seeded 16** in `src/core/fable_2_app.h`
+`OnPostSetup` (only when still at SDK default; log line `seeded gpu_write_fault_widen_kb=16 (perf)`). Run with no
+flag: "quite consistent", ~40 FPS (60-frame stats every ~1.5 s), ~650 KB uploaded / ~1 MB invalidated per frame.
+`--gpu_write_fault_widen_kb=256` restores upstream behaviour for A/B.
+
+**Lessons:** (1) a SIGBUS (not SIGSEGV) in guest code on Linux = shm backing failure; check `df -h /dev/shm` first.
+(2) shm objects that nobody re-opens by name should be unlinked right after creation.
+
 ## A/B results (fill in)
 
 | Date | Flags | Guest FPS (F3) at test spot | Visual issues |
@@ -393,6 +423,13 @@ GetSamplerParameters ~7%; `cvar::HasNonDefaultValue` ~4% (string lookup per draw
 | 2026-11-13 | **"angle 2"** = 4g test spot, the slightly different angle above; stand still. 4v run, `--vulkan_async_submit=true --gpu_shared_memory_stats=true` | 26 | Lionhead logo flicker at boot (pre-existing) |
 | 2026-11-13 | angle 2, unit 4g2 `--vulkan_reuse_texture_bindings` off | 26 | none |
 | 2026-11-13 | angle 2, unit 4g2 `--vulkan_reuse_texture_bindings=true` | 26 | none reported |
+| 2026-11-14 | angle 2, unit 4g-b `--gpu_write_fault_widen_kb=256` (default; includes cvar-lookup fix) | 32 | none |
+| 2026-11-14 | angle 2, `--gpu_write_fault_widen_kb=64` | 33 | black screen with light fragments (re-test) |
+| 2026-11-14 | angle 2, `--gpu_write_fault_widen_kb=16` | **35** | none |
+| 2026-11-14 | `--gpu_write_fault_widen_kb=4` | crash at load | SIGBUS = /dev/shm full of leaked files (fixed) |
+| 2026-11-14 | angle 2, re-test `--gpu_write_fault_widen_kb=16`, walked ~1 min | **40** | none, felt good |
+| 2026-11-14 | angle 2, re-test `--gpu_write_fault_widen_kb=64`, walked | 36 | none (black screen did not repeat) |
+| 2026-11-14 | angle 2, no widen flag (Fable now seeds 16) | ~40 | none; "quite consistent" |
 
 Conclusion: neither GPU readback nor occlusion queries limit the desktop (+1 FPS, within noise).
 MangoHud's ~70 is host presents: about 60 capped UI repaints plus forced presents for the ~17 guest

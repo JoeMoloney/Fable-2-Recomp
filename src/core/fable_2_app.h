@@ -190,6 +190,18 @@ class Fable2App : public rex::ReXApp {
         REXSYS_WARN("[fable2-config] cvar clear_memory_page_state missing; keeping SDK default");
       }
     }
+    // Perf (unit 4g-b): a GPU-memory write fault used to invalidate + unprotect
+    // the whole 256 KB block around the faulting page, so the GPU re-uploaded
+    // ~8 MB/frame it didn't need. A 16 KB window gives ~2x faults (cheap) but
+    // ~1/4 the uploads: 32 -> 35-40 FPS at angle 2, no visual issues.
+    // --gpu_write_fault_widen_kb=256 restores the SDK/upstream behaviour.
+    if (rex::cvar::GetFlagSource("gpu_write_fault_widen_kb") == rex::cvar::Source::kDefault) {
+      if (rex::cvar::SetFlagByName("gpu_write_fault_widen_kb", "16")) {
+        REXSYS_INFO("[fable2-config] seeded gpu_write_fault_widen_kb=16 (perf)");
+      } else {
+        REXSYS_WARN("[fable2-config] cvar gpu_write_fault_widen_kb missing; keeping SDK default");
+      }
+    }
 
     // Feed the F3 debug overlay with guest FPS (below). The GPU plugin
     // records per-guest-swap frame timing into the shared perf registry
