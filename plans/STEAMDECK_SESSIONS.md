@@ -19,14 +19,137 @@ Each session updates the status table and the next-session prompt below.
 ### Next session prompt
 
 ```
-Fable II Steam Deck performance: read plans/STEAMDECK_SESSIONS.md ("Handoff 2026-11-14 afternoon",
-then the status table only). Deck reached 30 FPS at the test spot on r12 (deck-perf-20261115-r12-pgo).
-Next: confirm the goal while walking in several areas (town, combat, night), then decide between
-the camera-turn dips and more GPU headroom. Use the tools/deck/*.sh scripts. The Deck is
-deck@192.168.1.54 (zsh alias `steamdeck`); I launch from the Steam shortcut and tell you the F3
-guest FPS. Explain simply (I'm a Java dev); store findings in the memory MCP
-(Fable II = projectId 3; reusable = GLOBAL).
+Fable II Steam Deck performance: read plans/STEAMDECK_SESSIONS.md ("Handoff 2026-11-15 night" first,
+then the evening one for details, then the status table only). Deck is on r15 (deck-perf-20261115-r15-pgo),
+clean launcher. Bowerstone: smooth view 30.0; busy view ~28; turn dips ~26-27 for ~1 s.
+First: desktop check + commit the uncommitted SDK/app changes (listed in the handoff). Then the busy
+view: GPU Commands per-draw cost and/or find what creates the small 4xMSAA depth targets behind the
+~15 ms of RT transfers. Use the tools/deck/*.sh scripts; the game logs FPS itself with
+--guest_fps_log=true (no need to time runs together). The Deck is deck@192.168.1.54 (zsh alias
+`steamdeck`); I launch from the Steam shortcut. Explain simply (I'm a Java dev); store findings in
+the memory MCP (Fable II = projectId 3; reusable = GLOBAL).
 ```
+
+## Handoff 2026-11-15 night (latest)
+
+**Deck state:** `current` → **r15** (`deck-perf-20261115-r15-pgo`) = r12 + `guest_fps_log` + memexport stall
+reasons + `readback_memexport_keep_frames` (**seeded 1800** in `fable_2_app.h`) + the `fable2_msaa_mode` hook
+(default -1 = off). Launcher **clean** (`tools/deck/flags.sh` with no args). Desktop build matches r15 code.
+
+**Results this session (details in the evening handoff below):**
+1. **Turn dips fixed (mostly):** cause was memexport readback buffers freed after 2 s unused → full GPU stall
+   per buffer on returning to a view. Keep 60 s → stalls 0 after first visit; turns ~20 → ~26–27 FPS.
+2. **Busy view (~28 FPS) = two limits:** ~2.5x the draws (GPU Commands thread ~92% busy, same function mix)
+   and real GPU 31–33 ms/frame, of which **RT transfers ~15.5 ms** (1x↔4xMSAA depth ping-pong on small
+   targets, pitch 2–14 tiles, ~100 transfer kinds/frame, top 16 ≈ 9 ms).
+3. **Tried, no gain:** `--depth_transfer_not_equal_test=false` (transfers unchanged; RADV has
+   shader_stencil_export so no stencil-bit passes). **`fable2_msaa_mode` hook** (Xenia "Disable MSAA", be8
+   0x8238DF3F; our build has the same code: `sub_8238DE58`, `li r9,2` at 0x8238DF3C → 0x9C(r31), plus
+   width 1120 `li r11,0x460` at 0x8238DF58): values 0 and 1 both ran (log `[msaa] ... 2 -> N`) but the
+   4xMSAA transfer targets were **unchanged** → that field is not what creates them. Value 1 felt worse
+   (more 150–290 ms hitches). Hook kept, default off. Next idea: find who creates the 4x depth targets
+   (`RB_SURFACE_INFO` MSAA bits per draw; trace the guest code that sets them) before patching anything.
+
+**Uncommitted (commit after a desktop check; SDK first, then main; ask the user before committing):**
+- SDK: `src/graphics/command_processor.cpp` (`guest_fps_log`), `src/graphics/vulkan/command_processor.cpp`
+  + `include/rex/graphics/vulkan/command_processor.h` (`readback_memexport_keep_frames`, per-reason stats).
+- Main: `src/core/fable_2_app.h` (seed keep_frames), `src/core/fable2_hooks.cpp` + `fable_2_manifest.toml`
+  (`fable2_msaa_mode` hook), `plans/STEAMDECK_SESSIONS.md`. Not ours: `src/input/remote_control_server.h`,
+  `.opencode/opencode.json`, `FUNCTION_NAMES.md`, `docs/LINUX*.md`, `tests/README.md` (pre-existing).
+- Main `850a1f5` still not pushed.
+
+**Desktop check:** `tools/perf/run-profile.sh --vulkan_async_submit=true`, usual spot: still solid 30, no
+visual issues (the keep_frames seed and the SDK changes affect desktop too).
+
+## Handoff 2026-11-14 evening
+
+**No code or Deck changes since the afternoon handoff below.** This session only re-read the plan.
+Everything in the afternoon handoff still holds (r12 = `current` on the Deck, 30 FPS at the test spot).
+
+**Git:** D7 is committed (main `d438bc1`, SDK `9fda9b4`, SDK pushed to `fable2-perf`). Main `850a1f5`
+(the afternoon handoff) and this update are **not pushed yet**: `git push gitlab HEAD:master`.
+`src/input/remote_control_server.h` is still the user's own uncommitted change.
+
+**User report on r12 (2026-11-14):** the test spot is in **Bowerstone** (a dense town, so it's a
+heavy case). Standing still: **holds 30**. Turning the camera: FPS **drops, then recovers** and settles
+back at 30. Only tested around the test spot so far, not in other areas.
+
+**Turn test (same evening):** repeating a turn over the same view dips **just as much** the second
+time, so it's **not** first-time creation. Pipelines confirmed: 469 loaded from the cache at startup,
+only 1 created during play.
+
+**New tool, r13 (`deck-perf-20261115-r13-pgo`) = r12 + SDK cvar `guest_fps_log`** (default off; launcher
+now has `--guest_fps_log=true`). One log line per second from the XE_SWAP handler
+(`thirdparty/rexglue-sdk/src/graphics/command_processor.cpp`):
+`[guest-fps] 28.4 fps, worst 51.2 ms, slow(>36ms) 4/28`. Uncommitted (SDK). Desktop rebuilt after.
+
+**r13 turn results (Bowerstone test spot, `userdata/logs/fable_2_034.log`), repeating cycle:**
+
+| Phase | Guest FPS | Worst frame | Frames >36 ms |
+|---|---|---|---|
+| Test-spot view, standing | **30.0** solid | ~34.5 ms | 0 |
+| The turn itself (1–2 s) | **19–23** | 60–80 ms | 13–24 of ~22 |
+| Holding the other view (~6 s) | **~28.5** | 40–47 ms | 8–15 of ~29 (frames alternate 33/50 ms) |
+| Turning back (1–2 s) | 23–26 | 55–73 ms | ~12 |
+
+Two separate problems: (1) the turn itself costs extra for 1–2 s; (2) the other view is slightly over
+budget all the time (GPU Commands thread ~93% busy there in the per-thread recording, vs ~45% in the
+test-spot view). Also seen: menu/title screen runs at a steady ~25 FPS (worst ~51 ms); not gameplay.
+
+**Profile of the turn (r13, Deck `userdata/logs/perf-turn2-234056/`, `gpucmd.data` = DWARF perf of the
+GPU Commands thread, 40 s; `threads.txt`; symbols: `--symfs=$PWD/symfs` there):**
+- **Busy view:** GPU Commands thread **saturated** (~460 samples/s of 499 = ~92%; smooth view ~230/s =
+  ~46%). FPS 27.3. Per frame that's **~33 ms vs ~15 ms** of thread work, i.e. ~2.2x. The function mix is
+  **the same** in both views (UpdateBindings 9%, RequestTextures 7%, ExecuteIndirectBuffer 6%, IssueDraw 6%,
+  WriteRegistersFromMem 6%, UpdateTextureBindingsImpl 4.5%, RADV 4.5%, GetSamplerParameters 3%,
+  RenderTargetCache::Update 3%, ...), so the busy view just has more draws. Needs ~10% less per-draw
+  cost to hold 30 there → D4-style per-draw work (bindings, texture requests, samplers).
+- **The turn itself (1–2 s at ~20 FPS):** GPU Commands is **not** the limit then (~45–50% busy, same
+  function mix); the guest "Texture Streamer" thread wakes up right then. So the deep turn dip is
+  something else: guest-side streaming, a wait/stall, or real GPU work (texture uploads). Not measured yet.
+
+**Turn run with counters (r13 + `--gpu_timing_stats=true --readback_memexport_stats=true`, Deck
+`userdata/logs/perf-turn3-234618/`, 120-frame stat windows):**
+
+| | smooth view | busy view / turns |
+|---|---|---|
+| draws per frame | ~2,400 | **~5,100–6,800** |
+| real GPU busy per frame | 28.7 ms | **34–36 ms** (over the 33.3 ms budget too) |
+| of that: draws / RT transfers | 7.8 / 15.0 ms | 11.6 / 17.3 ms |
+| memexport readbacks: ready / skipped / **full stall** | 33 / 4 / **0.00** | 58–62 / 14–16 / **0.5–0.8 per frame** |
+
+**Likely cause of the turn dips (not yet proven):** `IssueDraw_MemexportReadbackFastPath` keys readback buffers
+by (base address, **size**) and evicts a key after **60 frames (2 s) unused**
+(`kReadbackBufferEvictionAgeFrames`, `EvictOldReadbackBuffers`). A key with no previous slot isn't covered by
+`readback_memexport_fast_no_stall`: it takes `IssueDraw_MemexportReadbackFullPath` (end submission +
+wait for the whole GPU). Turning to the busy view brings memexport draws whose buffers were evicted while
+looking away → a burst of full stalls → GPU Commands half idle but FPS ~20 for 1–2 s, on **every** turn.
+Size changes also make new keys (stalls while holding the busy view: 0.26/frame). Also: growing a slot in
+`ensure_readback_slot` calls `AwaitAllQueueOperationsCompletion()` (not counted in the stats).
+**Test (r14):** split the `full` count by reason (new key / slot too small / other) and make the eviction age
+a cvar; then try no-stall for new keys too. **Busy view** needs GPU time savings as well as CPU (34–36 ms).
+
+**r14 result — cause CONFIRMED (`deck-perf-20261115-r14-pgo` = r13 + SDK cvar
+`readback_memexport_keep_frames` (default 60) + per-reason full-stall counts; launcher
+`--readback_memexport_keep_frames=1800`; Deck log `fable_2_038.log` 23:54:34–23:55:42):**
+- Every full stall was reason **new** (key with no previous slot); small/open/alloc/grow_waits all 0.
+- First turn to the busy view still creates the keys (full new 0.87 → 0.22/frame, FPS 18 for ~1 s);
+  after that **full = 0.00** for the rest of the run.
+- Later turns: **25.7–27.3 FPS for ~1 s** (worst frames 50–70 ms), was **19–22 for 1–2 s** in r13.
+- Busy view still ~28–29 (draw/GPU load, separate problem). GPU busy there 31–33 ms (was 34–36 with stalls).
+- **Seeded** `readback_memexport_keep_frames=1800` in `src/core/fable_2_app.h` (uncommitted; desktop check
+  pending; Deck r14 gets it from the launcher flag until the next build).
+- Remaining turn cost (~1 s of 50–70 ms frames) not explained yet; candidates: guest Texture Streamer work,
+  first-sight new keys for parts never seen before, texture uploads.
+
+**Next:** (1) busy view: GPU Commands per-draw cost (~2.5x draws there) + GPU time (RT transfers 15 ms).
+(2) desktop check of the SDK + seed changes, then commit (SDK first).
+**Older next:** (1) turn dip: run turns with `--gpu_timing_stats=true --readback_memexport_stats=true` and a
+perf of GameThread + 3D Engine + Texture Streamer (keep the SSH session open — SteamOS kills background
+jobs when the SSH session closes). (2) busy view: cut per-draw cost on GPU Commands.
+**Older next (done):** with r13, hold the "other" view and `perf record` the GPU Commands thread (what costs more
+per frame there: more draws? texture loads? transfers?) + `--gpu_timing_stats=true` for the GPU side;
+then the same during repeated turns. (b) Walking test in other areas (outside town, a fight, night).
 
 ## Handoff 2026-11-14 afternoon
 
@@ -240,6 +363,10 @@ Deck. Same spot as the desktop test: **~15 guest FPS** (desktop: solid 30). Evid
 | `deck-perf-20261115-r8-v3` | + per-transfer tags (launcher: `--gpu_timing_stats=true`) | — | ~28 |
 | `deck-perf-20261115-r10-pgo` | D6 PGO GPU plugin (r9 = instrumented build) | 1320, 97% busy, 14 W | **~29** (dips while turning the camera) |
 | `deck-perf-20261115-r12-pgo` | D7 hot-spot fixes + fresh PGO (r11 = instrumented) | 1444, 93% busy, 15 W | **30** |
+| `deck-perf-20261115-r13-pgo` | + `guest_fps_log` | — | smooth view 30.0; busy view ~28.5; turns 19–22 for 1–2 s |
+| `deck-perf-20261115-r14-pgo` | + memexport stall reasons; launcher `--readback_memexport_keep_frames=1800` | — | turns **~26–27 for ~1 s**; busy ~28.5 |
+| r14 + `--depth_transfer_not_equal_test=false` | A/B | — | no change (RT transfers ~15.5 ms) |
+| `deck-perf-20261115-r15-pgo` | keep_frames seeded + `fable2_msaa_mode` hook; A/B 0 and 1 | — | no change in transfers; mode 1 more hitches |
 
 ## Unit D3 results (2026-11-14)
 

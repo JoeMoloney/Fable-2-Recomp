@@ -12,6 +12,7 @@
 // consulted on each call, so a patch can be A/B'd without a rebuild.
 
 #include <rex/ppc/context.h>  // PPCRegister (union with u64/s64/u32/... views)
+#include <rex/cvar.h>
 #include <rex/logging/macros.h>
 
 #include <string>
@@ -550,4 +551,30 @@ void fable2_hook_realtime_texture_morphing(PPCRegister& r9) {
     REXSYS_INFO("[texture-morph] building hero/dog textures in realtime (GPU) mode");
   }
   r9.u64 = 1;
+}
+
+// Main render-target MSAA mode (Xenia "Disable MSAA" by Margen67, be8
+// 0x8238DF3F = 0x01). sub_8238DE58 sets up the main scene target (1120x720)
+// and loads its MSAA mode with `li r9, 2` at 0x8238DF3C (stored to
+// 0x9C(r31)); 2 = 4x. The Xenia patch sets 1. On the emulated GPU, 4x MSAA
+// makes the emulator copy EDRAM contents between 1x and 4x render targets
+// ~100 times per frame (~15 ms of GPU time on the Steam Deck).
+// Experimental: --fable2_msaa_mode=N overrides it; -1 (default) = game value.
+REXCVAR_DEFINE_INT32(fable2_msaa_mode, -1, "Fable2",
+                     "Override the main render target MSAA mode set at 0x8238DF3C "
+                     "(game value 2 = 4x; the Xenia 'Disable MSAA' patch uses 1). "
+                     "-1 = keep the game value. Experimental; restart required.")
+    .range(-1, 2);
+
+void fable2_hook_main_rt_msaa(PPCRegister& r9) {
+  const int32_t mode = REXCVAR_GET(fable2_msaa_mode);
+  if (mode < 0) {
+    return;
+  }
+  static bool logged = false;
+  if (!logged) {
+    logged = true;
+    REXSYS_INFO("[msaa] main render target MSAA mode {} -> {} (fable2_msaa_mode)", r9.u32, mode);
+  }
+  r9.u64 = uint64_t(mode);
 }

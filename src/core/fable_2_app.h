@@ -233,6 +233,23 @@ class Fable2App : public rex::ReXApp {
       }
     }
 
+    // Steam Deck camera-turn dips: memexport readback buffers were freed after
+    // 60 frames (2 s) unused, so turning back to a busy view re-created them,
+    // each with a full GPU stall (end submission + wait for the whole GPU).
+    // Keeping them 60 s took those stalls to zero after the first visit and the
+    // turn dips from ~20 to ~27 FPS (2026-11-14, r14). Memory cost is small
+    // (the buffers hold ~100 KB per frame in total; at most 256 pairs).
+    // --readback_memexport_keep_frames=60 restores the SDK default.
+    if (rex::cvar::GetFlagSource("readback_memexport_keep_frames") ==
+        rex::cvar::Source::kDefault) {
+      if (rex::cvar::SetFlagByName("readback_memexport_keep_frames", "1800")) {
+        REXSYS_INFO("[fable2-config] seeded readback_memexport_keep_frames=1800 (perf)");
+      } else {
+        REXSYS_WARN("[fable2-config] cvar readback_memexport_keep_frames missing; "
+                    "keeping SDK default");
+      }
+    }
+
     // Feed the F3 debug overlay with guest FPS (below). The GPU plugin
     // records per-guest-swap frame timing into the shared perf registry
     // (rex::perf, state lives in rexruntime.dll and is shared with the
