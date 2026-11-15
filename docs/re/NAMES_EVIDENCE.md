@@ -54,9 +54,16 @@ Precedence on equal confidence: Lua binding > method string > vtable > STL > Lua
   it (`IsKynapseAvailable`, `SetGiveKynapseMoreTime`, and the debug option
   `SetUseOurOwnCodeToFindTheNearestPointOnTheNavGraphBecauseKynapseIsGash`).
 
-## Next (N3)
+## Reference table (N3, done)
 
-Record the 4,519 record-ready names as a reference table in `docs/re/` (address,
+[`NAMES_EVIDENCE.tsv`](NAMES_EVIDENCE.tsv): the record-ready names, one row per
+function (addr, current name, proposed name, confidence, rule, Lua table, library,
+class). Regenerate with `python3 tools/theseus/export_names.py` after rerunning the
+pipeline. Look up an address with `grep -i 82676A30 docs/re/NAMES_EVIDENCE.tsv`.
+
+## Next
+
+Originally planned: record the 4,519 record-ready names as a reference table in `docs/re/` (address,
 proposed name, rule, confidence, Lua table, library, class) so they survive
 `out/` being cleared and can be searched while reading code. Ghidra annotations
 need the user's OK; manifest renames are a separate decision (they change

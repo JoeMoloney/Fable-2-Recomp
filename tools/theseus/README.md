@@ -17,6 +17,7 @@ manifest. Plans: [THESEUS_PILOT](../../plans/THESEUS_PILOT.md),
 | 2b. Lua bindings | `python3 tools/theseus/lua_bindings.py` | `lua_bindings.jsonl`, `lua_bindings_summary.json` | ~2 s |
 | 2c. STL containers | `python3 tools/theseus/containers.py` | `containers.jsonl` | ~15 s |
 | 3. Naming evidence | `python3 tools/theseus/evidence.py` | `names.jsonl`, `names_summary.json` | ~1 s |
+| 4. Reference table | `python3 tools/theseus/export_names.py` | `docs/re/NAMES_EVIDENCE.tsv` (tracked) | ~1 s |
 | Rewrite check | `python3 tools/theseus/difftest.py <function>` | `difftest/<function>/result.txt` | ~1 min |
 | Caller check | `python3 tools/theseus/caller_usage.py <function>` | printed | ~10 s |
 

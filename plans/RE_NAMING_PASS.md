@@ -1,7 +1,7 @@
 # Evidence-based naming pass (multi-session plan)
 
 Started 2026-11-15. **STATUS: N1 + N4 + N4b + N4c done 2026-11-15: 10,819 functions with evidence, 4,897 proposed names
-(2,491 from Lua bindings, 1,673 STL container helpers), 3,643 functions mapped to a gameplay system, ~4,700 library functions identified. Results: [NAMING_EVIDENCE_RESULTS.md](../docs/analysis/NAMING_EVIDENCE_RESULTS.md). Next: N3 (record the 4,519 record-ready names in docs/re/).**
+(2,491 from Lua bindings, 1,673 STL container helpers), 3,643 functions mapped to a gameplay system, ~4,700 library functions identified. Results: [NAMING_EVIDENCE_RESULTS.md](../docs/analysis/NAMING_EVIDENCE_RESULTS.md). Next: user decisions on Ghidra/manifest naming; or N5 (LLM-assisted naming for the rest) / Theseus pilot T1.**
 
 **Goal:** name and place as much of the game's code as the binary itself proves,
 before any guessing: exact method names from profiler strings, source file and
@@ -69,7 +69,7 @@ through the manifest. `THESEUS_OUT=<dir>` runs it on a test folder.
 | N0 | Evidence survey, export script, matcher, real-sample test | ✅ 2026-11-15 |
 | N1 | Run the export (close big games first), run the matcher, read `names_summary.json`; fix anything the RTTI step gets wrong | ✅ 2026-11-15: added message-string, vtable stub/inheritance, library (path/name/call-graph/address-neighbourhood) rules; contradiction check 0 |
 | N2 | Review: conflicts, Kaim/Kynapse question, hit rate per rule | ✅ 2026-11-15: [docs/re/NAMES_EVIDENCE.md](../docs/re/NAMES_EVIDENCE.md). All checked Lua/string/vtable/STL proposals correct; LuaHelper 1/3 (not recorded); 219 conflicts resolved (folding, precedence); Kynapse confirmed. 4,519 names record-ready |
-| N3 | Record accepted names: a `docs/re/` mapping file now; Ghidra renames only with the user's OK; manifest renames are a separate decision (they change generated symbol names used by hotfuncs) | |
+| N3 | ✅ 2026-11-15 reference table `docs/re/NAMES_EVIDENCE.tsv` (`tools/theseus/export_names.py`). Still open: Ghidra annotations (user's OK), manifest renames (separate decision). Original task: Record accepted names: a `docs/re/` mapping file now; Ghidra renames only with the user's OK; manifest renames are a separate decision (they change generated symbol names used by hotfuncs) | |
 | N4 | Phase 2: find the Lua binding tables (script name → C function) and add them as evidence | ✅ 2026-11-15 (done before N2): `tools/theseus/lua_bindings.py`, 2,491 bindings, validated 768/777 vs strict pairs, 0 wrong |
 | N4b | Spread Lua names one level deeper | ✅ 2026-11-15: "implementation" naming failed spot checks (2 of 3 were container templates) → `LuaHelper_` (low) + reliable `lua:<Table>` module tags; 3,643 functions mapped to a gameplay system; 108 Lua glue helpers found |
 | N4c | Recognise STL container template code (map/set trees, vectors) so naming rules stop mistaking it for gameplay | ✅ 2026-11-15: `tools/theseus/containers.py`, 1,673 helpers, 12/12 known detected, 0/9 false; composition context-only; STL is a class, not a library |
