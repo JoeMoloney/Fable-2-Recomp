@@ -57,7 +57,7 @@ scratch registers may differ only if `caller_usage.py` shows no caller reads the
 | Unit | Task | Status |
 |---|---|---|
 | T0 | Inventory, difftest + caller tools, function #1 | ✅ 2026-11-15 (offline) |
-| T1 | Harness: per-function input rules (which registers are pointers/lengths/counts) and compare **every touched page** (not just the windows) so stray writes are caught. Needed before #5, #9, #13. | |
+| T1 | Harness: per-function input rules (which registers are pointers/lengths/counts) and compare **every touched page** (not just the windows) so stray writes are caught. Needed before #5, #9, #13. | ✅ 2026-11-15: `rewrites/<name>.rules` (`r3 ptr`, `r5 len 256`, `int`, `u32`, `ptr_or_null`, `any`); every page either run touched (mincore) compared every 1,000 cases and at the end (outside-window memory is never reset, so a differing stray write stays visible). Tested: a rewrite with a stray write at 0x20001234 passes the old window check but FAILS the new one (page 0x20001000); FNV1Hash still PASS-ABI. Next: #5 StringCopyN with rules. |
 | T2 | Functions 2–10 (strings, C runtime) | |
 | T3 | Functions 11–17 (pointers, float/vector; check FP exactness, see the AVX/FMA lesson in `docs/analysis/ARITHMETIC_AND_NATIVE_MEMORY_RESULTS.md`) | |
 | T4 | Functions 18–20 with naming; record name + evidence in `docs/re/RE_FINDINGS.md` style | |

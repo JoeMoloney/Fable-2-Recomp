@@ -8,6 +8,10 @@ rewrite from tools/theseus/rewrites/<name>.cpp (which must define
 `rewrite_<name>`), builds tools/theseus/difftest_harness.cpp around them and
 runs it. Output goes to out/theseus/difftest/<name>/. Leaf functions only:
 the harness has no other guest functions or kernel imports to link against.
+
+Optional input rules: tools/theseus/rewrites/<name>.rules, one register per
+line (`r3 ptr`, `r4 ptr_or_null`, `r5 len 256`, `r6 int`, `r7 u32`, `r8 any`,
+`#` comments). Without it every argument register gets a random mix.
 """
 import argparse
 import re
@@ -39,6 +43,27 @@ def extract(name):
     sys.exit(f"{name}: not found in generated code")
 
 
+KINDS = {"ptr": "kPtr", "ptr_or_null": "kPtrOrNull", "len": "kLen", "int": "kInt",
+         "u32": "kU32", "any": "kAny"}
+
+
+def rules_inc(path):
+    """Turn a .rules file into the C++ kRules table for the harness."""
+    rows = []
+    for n, line in enumerate(path.read_text().splitlines(), 1):
+        words = line.split("#", 1)[0].split()
+        if not words:
+            continue
+        m = re.fullmatch(r"r(\d+)", words[0])
+        if not m or not 3 <= int(m.group(1)) <= 10 or len(words) < 2 or words[1] not in KINDS:
+            sys.exit(f"{path}:{n}: expected 'r3..r10 <{'|'.join(KINDS)}> [max]'")
+        if words[1] == "len" and (len(words) < 3 or not 0 < int(words[2], 0) <= 0x8000):
+            sys.exit(f"{path}:{n}: len needs a max between 1 and 0x8000 (the pointer room)")
+        maxv = int(words[2], 0) if len(words) > 2 else 0
+        rows.append(f"{{{m.group(1)}, {KINDS[words[1]]}, {maxv}u}}")
+    return "const ArgRule kRules[] = {" + ", ".join(rows) + "};\n"
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("name")
@@ -63,7 +88,12 @@ def main():
     original.write_text(f'// Extracted from generated/default/{src_file}\n#include "fable_2_pch.h"\n'
                         + "\n".join(body) + "\n")
 
-    flags = ["-std=c++23", "-O2", "-march=x86-64-v2", "-msse4.1", "-fno-strict-aliasing",
+    rules = HERE / "rewrites" / f"{args.name}.rules"
+    extra = []
+    if rules.exists():
+        (out / "difftest_rules.inc").write_text(rules_inc(rules))
+        extra = ["-DHAS_RULES", "-I", str(out)]
+    flags = [*extra, "-std=c++23", "-O2", "-march=x86-64-v2", "-msse4.1", "-fno-strict-aliasing",
              "-ffp-model=strict", f"-DORIGINAL=original_{args.name}",
              f"-DREWRITE=rewrite_{args.name}"]
     for inc in (GEN, SDK / "include", SDK / "thirdparty/simde", SDK / "thirdparty/fmt/include",

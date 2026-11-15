@@ -46,6 +46,10 @@ Rerun 1 and 3 after codegen or manifest changes; rerun 2 after big Ghidra change
 - **`difftest.py`** runs the original leaf function and `rewrites/<function>.cpp`
   on 200,000 random CPU states and compares them (contract below).
   `--rewrite <file>` tests another file, e.g. a deliberately broken one.
+  Optional `rewrites/<name>.rules` fixes what argument registers hold
+  (`r3 ptr`, `r5 len 256`, `r4 ptr_or_null`, `int`, `u32`, `any`). Besides the data
+  window and stack, every page either run touched is compared every 1,000 cases,
+  so stray writes anywhere fail the test.
 - **`caller_usage.py`** checks what every call site does with r3 afterwards and
   that none reads a scratch register first.
 

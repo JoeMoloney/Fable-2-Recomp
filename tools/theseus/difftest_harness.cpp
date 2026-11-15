@@ -13,8 +13,18 @@
 // Guest memory is a 4 GB lazily-allocated mapping, so any 32-bit address a
 // function touches is valid; pointers in argument registers point into a
 // 64 KB "data window" of random bytes (with frequent zero bytes so strings end).
-// Only the data window and a stack window are compared: writes elsewhere are
-// not detected (stated in the report).
+// The data window and stack are compared after every case. Every page either
+// function ever touched (mincore) is compared every kScanEvery cases and at the
+// end: memory outside the windows is never reset, so a stray write that differs
+// stays visible until the next scan.
+//
+// Input rules (optional, tools/theseus/rewrites/<name>.rules, turned into
+// difftest_rules.inc by difftest.py) fix what an argument register holds:
+//   r3 ptr        pointer into the data window (at least 32 KB room after it)
+//   r5 len 256    0..256
+//   r4 int        any sign-extended 32-bit value
+//   r6 ptr_or_null, r7 any (64-bit), r8 u32
+// Registers without a rule get the default random mix.
 #include "fable_2_pch.h"
 
 #include <cstdio>
@@ -43,6 +53,49 @@ uint8_t* map_guest() {
                  MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE, -1, 0);
   if (p == MAP_FAILED) { std::perror("mmap"); std::exit(2); }
   return static_cast<uint8_t*>(p);
+}
+
+enum Kind { kPtr, kPtrOrNull, kLen, kInt, kU32, kAny };
+struct ArgRule { int reg; Kind kind; uint32_t max; };
+#ifdef HAS_RULES
+#include "difftest_rules.inc"
+#else
+const ArgRule kRules[] = {{0, kAny, 0}};  // r0: never an argument, so unused
+#endif
+
+uint64_t ruled_value(Rng& r, const ArgRule& rule) {
+  switch (rule.kind) {
+    case kPtr: return kWindow + r.below(kWindowSize / 2);
+    case kPtrOrNull: return r.below(8) == 0 ? 0 : kWindow + r.below(kWindowSize / 2);
+    case kLen: return r.below(rule.max + 1);
+    case kInt: return uint64_t(int64_t(int32_t(r.next())));
+    case kU32: return uint32_t(r.next());
+    default: return r.next();
+  }
+}
+
+// Number of resident pages over the 4 GB guest map: which pages were touched.
+constexpr size_t kPage = 4096;
+std::vector<unsigned char> resident(uint8_t* mem) {
+  std::vector<unsigned char> v(kGuestSize / kPage);
+  if (mincore(mem, kGuestSize, v.data()) != 0) { std::perror("mincore"); std::exit(2); }
+  return v;
+}
+
+// Compares every page touched in either map; returns differing pages and
+// copies a's version into b so later cases start from equal memory again.
+long scan_touched(uint8_t* a, uint8_t* b, uint32_t* first_page) {
+  auto ra = resident(a), rb = resident(b);
+  long bad = 0;
+  for (size_t i = 0; i < ra.size(); ++i) {
+    if (!((ra[i] | rb[i]) & 1)) continue;
+    if (std::memcmp(a + i * kPage, b + i * kPage, kPage) != 0) {
+      if (!bad && first_page) *first_page = uint32_t(i * kPage);
+      ++bad;
+      std::memcpy(b + i * kPage, a + i * kPage, kPage);
+    }
+  }
+  return bad;
 }
 
 uint64_t arg_value(Rng& r) {
@@ -91,6 +144,9 @@ int main(int argc, char** argv) {
   long strict_bad = 0, abi_bad = 0, r3_low_bad = 0, r3_high_bad = 0, mem_bad = 0;
   long field_bad[sizeof(kFields) / sizeof(kFields[0])] = {};
   long first_abi_case = -1;
+  constexpr long kScanEvery = 1000;
+  long stray_pages = 0, first_stray_scan = -1;
+  uint32_t first_stray_page = 0;
 
   for (long c = 0; c < cases; ++c) {
     for (auto& b : window) b = rng.below(12) == 0 ? 0 : uint8_t(rng.next());
@@ -106,6 +162,10 @@ int main(int argc, char** argv) {
     for (PPCRegister* r : {&init.r3, &init.r4, &init.r5, &init.r6, &init.r7,
                            &init.r8, &init.r9, &init.r10})
       r->u64 = arg_value(rng);
+    PPCRegister* args[] = {&init.r3, &init.r4, &init.r5, &init.r6,
+                           &init.r7, &init.r8, &init.r9, &init.r10};
+    for (const ArgRule& rule : kRules)
+      if (rule.reg >= 3 && rule.reg <= 10) args[rule.reg - 3]->u64 = ruled_value(rng, rule);
     for (PPCRegister* f : {&init.f1, &init.f2, &init.f3, &init.f4})
       f->f64 = fp_value(rng);
     init.r1.u64 = kStackTop - 0x100;
@@ -137,6 +197,11 @@ int main(int argc, char** argv) {
     r3_high_bad += !high_same;
     mem_bad += !memory_same;
     if (!abi_ok && first_abi_case < 0) first_abi_case = c;
+    if ((c + 1) % kScanEvery == 0 || c + 1 == cases) {
+      long n = scan_touched(mem_a, mem_b, first_stray_scan < 0 ? &first_stray_page : nullptr);
+      if (n && first_stray_scan < 0) first_stray_scan = c;
+      stray_pages += n;
+    }
   }
 
   std::printf("cases=%ld seed=0x%llx\n", cases, (unsigned long long)seed);
@@ -148,8 +213,12 @@ int main(int argc, char** argv) {
     if (field_bad[i]) std::printf(" %s%s=%ld", kFields[i].name, kFields[i].abi ? "(ABI!)" : "", field_bad[i]);
   std::printf("\n");
   if (first_abi_case >= 0) std::printf("first_abi_failure_case=%ld\n", first_abi_case);
-  std::printf("RESULT %s\n", abi_bad ? "FAIL" : (strict_bad ? "PASS-ABI" : "PASS-STRICT"));
-  std::printf("note: only the 64 KB data window and 32 KB stack are compared; "
-              "writes elsewhere are not detected\n");
-  return abi_bad ? 1 : 0;
+  std::printf("touched_page_mismatches=%ld", stray_pages);
+  if (first_stray_scan >= 0)
+    std::printf(" first_at_page=0x%08x by_case<=%ld", first_stray_page, first_stray_scan);
+  std::printf(" (all touched pages compared every %ld cases)\n", kScanEvery);
+  std::printf("rules=%s\n", sizeof(kRules) / sizeof(kRules[0]) > 1 || kRules[0].reg ? "yes" : "none");
+  const bool fail = abi_bad || stray_pages;
+  std::printf("RESULT %s\n", fail ? "FAIL" : (strict_bad ? "PASS-ABI" : "PASS-STRICT"));
+  return fail ? 1 : 0;
 }
