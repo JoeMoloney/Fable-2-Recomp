@@ -1,6 +1,13 @@
 # Ship of Theseus — pilot (multi-session plan)
 
-Started 2026-11-15. **STATUS: not started (tooling and first function done offline).**
+Started 2026-11-15. **STATUS: in progress. 11 of 20 functions pass offline (#1–10, #13), 2026-11-15; harness unit T1 done.**
+
+**Next session prompt:** "Theseus pilot: read plans/THESEUS_PILOT.md and tools/theseus/README.md.
+Do #11 `FindChainRoot` and #12 `FindTreeLeaf` (MSVC `std::map` tree walks: node left +0,
+parent +4, right +8, isnil byte +17/+21). Random memory makes them loop forever, so first
+add a difftest rule that builds a small valid tree in the data window. Then #14–16 (floats:
+exact FP compare) and naming #17–20. Then done-when step (2): run 5 rewrites in the game as
+hotfunc overrides."
 
 **Goal:** find out whether rewriting recompiled functions as readable, verified
 C++ can be done at scale, by doing it end to end for ~20 small functions and
