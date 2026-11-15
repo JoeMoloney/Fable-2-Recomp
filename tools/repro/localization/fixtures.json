@@ -1,0 +1,16 @@
+{
+  "target_sha256": "88c4ef2e18e65409444d1b068eff921d1f7e180a5ae64edc64ba6b0872372662",
+  "provenance": "Read-only Ghidra-MCP default.xex, verified Xenon360/PowerPC identity. Getter disassembly verified 2026-11-10 audit; copy read_memory at 0x82CA30E8 length168 verified 2026-11-10 actual-codegen experiment.",
+  "getter": {
+    "address": "0x82240578",
+    "hex": "3d60832f386becf04e800020",
+    "production_file": "fable_2_recomp.78.cpp",
+    "production_symbol": "GetGlobalPtr3_82240578"
+  },
+  "copy": {
+    "address": "0x82CA30E8",
+    "hex": "38050001606600007c0903a64800001838a5ffff88040000388400019806000038c6000170c000034002ffe854a0f0bf41c200247c0903a67080000340c2003c80e400003884000490e6000038c600044320fff070a000037c0903a64de2002088040000388400019806000038c600014320fff04e80002088e40003890400025107442e892400015127821e894400005147c00e3884000490e6000038c600044200ffd84bffffb0",
+    "production_file": "fable_2_recomp.215.cpp",
+    "production_symbol": "MemCpy_Aligned_82CA30E8"
+  }
+}

@@ -42,6 +42,7 @@ fable_2_manifest.toml.bak
 *.sh
 *.png
 build_*.log
+*.status
 rebuild.log
 rebuild2.log
 __pycache__/
@@ -64,6 +65,12 @@ __pycache__/
 !tools/create_app_icon.ps1
 !assets/app-icon.png
 !docs/screenshots/launcher.png
+# Perf/profiling helpers used by plans/STEAMDECK_SESSIONS.md and PERF_SESSIONS.md,
+# and the offline-audit harnesses behind docs/analysis/.
+!tools/perf/
+!tools/perf/*.sh
+!tools/perf/*.py
+!tools/repro/*/*.py
 
 # Linux build/run entry points (keep other shell helpers ignored).
 !/build-release-linux_amd64.sh
