@@ -22,7 +22,7 @@ Each session updates the status table and the next-session prompt below.
 Fable II Steam Deck performance: read plans/STEAMDECK_SESSIONS.md ("Handoff 2026-11-15 night" first,
 then the evening one for details, then the status table only). Deck is on r15 (deck-perf-20261115-r15-pgo),
 clean launcher. Bowerstone: smooth view 30.0; busy view ~28; turn dips ~26-27 for ~1 s.
-First: desktop check + commit the uncommitted SDK/app changes (listed in the handoff). Then the busy
+r15 is committed (main a8613b5, SDK a0031f0; vulkan_async_submit now seeded by the app, 1a7ad71). Next: the busy
 view: GPU Commands per-draw cost and/or find what creates the small 4xMSAA depth targets behind the
 ~15 ms of RT transfers. Use the tools/deck/*.sh scripts; the game logs FPS itself with
 --guest_fps_log=true (no need to time runs together). The Deck is deck@192.168.1.54 (zsh alias
