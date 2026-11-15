@@ -159,13 +159,11 @@ Updated 2026-11-15. Fable II is capped at 30 FPS by the game itself, so 30 is th
   [plans/STEAMDECK_SESSIONS.md](../plans/STEAMDECK_SESSIONS.md).
 - The app sets the perf settings itself at startup (`src/core/fable_2_app.h`):
   `clear_memory_page_state=false`, `gpu_write_fault_widen_kb=16`,
-  `gpu_skip_unchanged_constant_writes=true`, `readback_memexport_fast_no_stall=true`
-  and `readback_memexport_keep_frames=1800`. Guest vblank pacing is on by default
-  in the SDK.
-- All measured runs also used `--vulkan_async_submit=true` (~1 ms/frame).
-  The app does **not** set it, and neither `run-release.sh` nor
-  `tools/linux.py run` passes it, so add it yourself to reproduce the measured
-  setup (`tools/perf/run-profile.sh` and the Deck launcher already do).
+  `gpu_skip_unchanged_constant_writes=true`, `readback_memexport_fast_no_stall=true`,
+  `readback_memexport_keep_frames=1800` and (since 2026-11-15)
+  `vulkan_async_submit=true`, so every launcher gets the measured setup. Guest
+  vblank pacing is on by default in the SDK. Any of these can be overridden on the
+  command line (for example `--vulkan_async_submit=false`) for A/B tests.
 - `--guest_vblank_pacing=false` still removes the 30 FPS lock for 60 FPS
   experiments.
 

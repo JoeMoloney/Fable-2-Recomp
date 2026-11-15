@@ -249,6 +249,20 @@ class Fable2App : public rex::ReXApp {
                     "keeping SDK default");
       }
     }
+    // Perf (plans/done/PERF_SESSIONS.md unit 4f): replay the Vulkan command
+    // buffer and call vkQueueSubmit on a separate thread instead of the GPU
+    // Commands thread (~1.2 ms/frame off the critical path, 23 -> 24 FPS at the
+    // time). Every measured 30 FPS run (desktop 4h, Deck D1-D7, r12-r15) used it.
+    // The SDK reads it at each submission, so setting it here takes effect for
+    // all later frames. RenderDoc guest captures still fall back to synchronous
+    // submits. --vulkan_async_submit=false restores the SDK default.
+    if (rex::cvar::GetFlagSource("vulkan_async_submit") == rex::cvar::Source::kDefault) {
+      if (rex::cvar::SetFlagByName("vulkan_async_submit", "true")) {
+        REXSYS_INFO("[fable2-config] seeded vulkan_async_submit=true (perf)");
+      } else {
+        REXSYS_WARN("[fable2-config] cvar vulkan_async_submit missing; keeping SDK default");
+      }
+    }
 
     // Feed the F3 debug overlay with guest FPS (below). The GPU plugin
     // records per-guest-swap frame timing into the shared perf registry

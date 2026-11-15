@@ -229,6 +229,24 @@ string-build + `RunScript` call in `src/core/fable2_f5_lua.h`.\
 
 # Notes for dev who want to work on the build:
 
+## Repository layout
+
+| Path | What's there |
+|---|---|
+| `src/` | Project code: app/config/hooks (`core/`), hand-edited guest functions (`core/hotfunc/`), input and remote control (`input/`), diagnostics, Lua |
+| `fable_2_manifest.toml`, `fable2_switch_tables.toml` | Recompiler input: function names, hooks and codegen settings |
+| `generated/` | Recompiled guest C++ (build output, git-ignored) |
+| `config/`, `constants/` | Default `fable2_config.toml`; supported game editions |
+| `thirdparty/` | ReXGlue SDK (submodule), SDK patches, Vulkan headers, toml++ |
+| `launcher/` | Windows launcher (C#) |
+| `tools/` | Build/setup helpers; `tools/deck/` (Steam Deck build and deploy), `tools/perf/` (profiling), `tools/repro/` (reproducible Windows builds and audit harnesses) |
+| `tests/` | Python and native tests ([tests/README.md](tests/README.md)) |
+| `docs/` | Guides, reverse-engineering reference, bug write-ups and analysis. Index: [docs/README.md](docs/README.md) |
+| `plans/` | Multi-session work plans (active, done, future). Index: [plans/README.md](plans/README.md) |
+| `build-*-linux_amd64.sh`, `run-*.sh` | Linux build and run entry points |
+| `build.cmd`, `*_wrapper.cmd` | Windows build entry points |
+| `data/`, `default.xex`, `out/` | Game files and build/run output (local only, git-ignored) |
+
 ## Guest-image patches
 
 Data patches for the loaded `default.xex` guest image (Xenia game-patches
