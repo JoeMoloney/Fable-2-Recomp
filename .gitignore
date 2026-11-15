@@ -71,6 +71,8 @@ __pycache__/
 !tools/perf/*.sh
 !tools/perf/*.py
 !tools/repro/*/*.py
+!tools/theseus/*.py
+!tools/theseus/ghidra/*.sh
 
 # Linux build/run entry points (keep other shell helpers ignored).
 !/build-release-linux_amd64.sh

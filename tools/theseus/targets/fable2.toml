@@ -1,0 +1,75 @@
+# Per-game settings for the tools in tools/theseus/. Copy this file for another
+# ReXGlue project and pick it with THESEUS_TARGET=<path> (default: this file).
+# Relative paths are relative to `repo_root`.
+
+name = "Fable II (GOTY)"
+repo_root = "../../.."                     # relative to this file
+
+[recomp]
+generated_dir = "generated/default"
+generated_glob = "fable_2_recomp.*.cpp"     # partitions holding DEFINE_REX_FUNC bodies
+manifest = "fable_2_manifest.toml"          # names without an address suffix get theirs here
+hotfunc_dir = "src/core/hotfunc"            # hand-written strong-symbol overrides
+sdk_dir = "thirdparty/rexglue-sdk"
+out_dir = "out/theseus"
+
+[ghidra]
+container = "ghidra-mcp"
+host_dir = "~/M2/docker_data/ghidra"        # mounted as /projects, /scripts, /exports
+project = "default_88c4ef2e18e6"
+program = "default.xex"
+heap = "3G"
+
+[evidence]
+# Assert paths are shortened to the part after this folder (case-insensitive).
+# Lionhead: D:\dev\Fable2\GoldBranch\SourceCode\ctg\...
+source_root_marker = "\\SourceCode\\"
+
+# Library rules, checked in order; the first match wins. A function is tagged
+# with a library when an assert path or a class/method name it references matches.
+#   path_contains   substrings of a lower-cased source path
+#   path_dirs       folder names appearing as \name\ in a path
+#   path_files      exact lower-case file names
+#   file_regex      regex on the file name (case-insensitive)
+#   name_prefixes   prefixes of class/method names and other strings
+[[evidence.library]]
+name = "Kynogon Kaim (AI navigation)"
+name_prefixes = ["Kaim::"]
+
+[[evidence.library]]
+name = "Microsoft XDK (XGraphics shader compiler)"
+path_contains = ["\\xenon\\", "xgraphics"]
+name_prefixes = ["R400", "IRInst", "D3DX"]
+
+[[evidence.library]]
+name = "Gameface UI (Scaleform GFx)"
+path_contains = ["gameface"]
+name_prefixes = ["GFx", "GAS", "MovieImpl", "Sprite::", "XML::", "XMLNode::"]
+
+[[evidence.library]]
+name = "Microsoft XLip (lip sync)"
+path_contains = ["xlip"]
+name_prefixes = ["XLip"]
+
+[[evidence.library]]
+name = "Havok 5.1"
+path_contains = ["havok"]
+path_dirs = ["collide", "constraint", "dynamics", "packfile", "copier", "visualdebugger",
+             "rig", "mapper", "motion", "serialize", "animation"]
+file_regex = "^hk[a-z]*[A-Z]?\\w*\\.(cpp|inl|h)$"
+name_regex = "^(\\?\\$)?hk[a-z]*[A-Z]|^(Tthk|Lthk)"
+
+[[evidence.library]]
+name = "MGS XeArcade (pub games)"
+path_contains = ["xearcade", "\\mgs"]
+path_files = ["gamehost.cpp", "game.cpp", "module.cpp", "movie.cpp", "gamehost.gameimpl.cpp",
+              "xcontentitemcrosstitleenumeration.cpp"]
+
+[[evidence.library]]
+name = "Lionhead"
+path_contains = ["\\sourcecode\\", "lhcomponents"]
+name_prefixes = ["LIONHEAD::", "LHMemory::"]
+
+[[evidence.library]]
+name = "C++ standard library"
+name_prefixes = ["std::"]

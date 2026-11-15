@@ -44,6 +44,8 @@ Work plans are in [plans/](../plans/README.md).
 | Doc | What it covers |
 |---|---|
 | [PERF_INVESTIGATIONS_OCT_NOV_2026.md](analysis/PERF_INVESTIGATIONS_OCT_NOV_2026.md) | **Start here.** Summary of the October Steam Deck and November offline perf investigations. |
+| [NAMING_EVIDENCE_RESULTS.md](analysis/NAMING_EVIDENCE_RESULTS.md) | First naming run: 596 new names and a map of the third-party libraries (Havok, Microsoft XDK, Gameface, XLip, pub-game framework). |
+| [THESEUS_INVENTORY.md](analysis/THESEUS_INVENTORY.md) | Inventory of all 60,753 guest functions and the first differential test of a readable rewrite (FNV1Hash). |
 | [OFFLINE_SUBSYSTEM_AUDIT.md](analysis/OFFLINE_SUBSYSTEM_AUDIT.md) | CPU, memory and timing audit (2026-11-10), including the manifest codegen options that are ignored. |
 | [LOCALIZATION_ACTUAL_CODEGEN_RESULTS.md](analysis/LOCALIZATION_ACTUAL_CODEGEN_RESULTS.md) | Register-localization codegen experiment: correct, but no speedup. |
 | [ARITHMETIC_AND_NATIVE_MEMORY_RESULTS.md](analysis/ARITHMETIC_AND_NATIVE_MEMORY_RESULTS.md) | AVX/FMA failed its equivalence check; native memory copy microbenchmarks. |
@@ -52,5 +54,6 @@ Work plans are in [plans/](../plans/README.md).
 ## Elsewhere
 
 - [tests/README.md](../tests/README.md): how to run the tests.
+- [tools/theseus/README.md](../tools/theseus/README.md): function inventory, naming evidence and rewrite-checking tools (per-game config, setup for other games).
 - [tools/repro/README.md](../tools/repro/README.md): reproducible, antivirus-clean Windows builds.
 - [launcher/README.md](../launcher/README.md): the Windows launcher.
