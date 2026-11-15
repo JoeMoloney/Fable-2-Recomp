@@ -2,7 +2,7 @@
 //
 // A localhost TCP server that accepts JSON-lines commands so an external AI
 // (script, agent, or LLM harness) can drive the guest gamepad without a human
-// at the keyboard. See plans/ai-remote-input-control.md for the full design
+// at the keyboard. See plans/done/ai-remote-input-control.md for the full design
 // and protocol reference.
 //
 //   client ->  {"cmd":"press","input":"A","hold_ms":120}\n

@@ -82,7 +82,7 @@ class Fable2App : public rex::ReXApp {
         PPCImageConfig));
   }
 
-  // Remote control (AI input channel) - see plans/ai-remote-input-control.md
+  // Remote control (AI input channel) - see plans/done/ai-remote-input-control.md
   // and src/input/remote_control_server.h. The store is shared by the remote pad
   // driver (registered in OnPreSetup) and the command server (started in
   // OnPostInitLogging); the server publishes resolved snapshots and the
@@ -139,7 +139,7 @@ class Fable2App : public rex::ReXApp {
 
   void OnPostSetup() override {
     fable2::branding::Apply(window());
-    // Hero/dog black-texture fix (see plans/hero-dog-texture-readback.md).
+    // Hero/dog black-texture fix (see plans/done/hero-dog-texture-readback.md).
     // Approach + guest base 0x12704000 credit just-harry's Unofficial Xenia
     // femtofork for Fable II. readback_resolve_force_addresses is defined in the
     // GPU plugin (loaded in OnPreSetup, i.e. after OnPostInitLogging), so it is
@@ -177,7 +177,7 @@ class Fable2App : public rex::ReXApp {
                     "(SDK without depth_bias_shader?)");
       }
     }
-    // Perf (plans/PERF_SESSIONS.md unit 4g): the SDK default (true) marks every
+    // Perf (plans/done/PERF_SESSIONS.md unit 4g): the SDK default (true) marks every
     // CPU-uploaded shared-memory page stale at each frame end, so ~13 MB/frame
     // was re-uploaded and re-protected (~1100 mprotect ranges). Fable II's
     // writes are caught by write-watch faults, so off is safe here: 24 -> 31 FPS
@@ -414,7 +414,7 @@ class Fable2App : public rex::ReXApp {
     seed_cvar("mouse_look_scale", std::to_string(cfg.mouse_look_scale));
     // NOTE: the hero/dog readback fix (readback_resolve_force_addresses) is a
     // GPU-PLUGIN cvar, so it is seeded in OnPostSetup() (after the plugin is
-    // loaded) rather than here - see plans/hero-dog-texture-readback.md.
+    // loaded) rather than here - see plans/done/hero-dog-texture-readback.md.
 
 #ifdef FABLE2_REMOTE_CONTROL
     // Start the remote control server (AI input channel; debug-only, no

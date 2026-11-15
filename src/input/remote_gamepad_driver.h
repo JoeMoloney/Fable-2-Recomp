@@ -1,7 +1,7 @@
 // fable_2 - Remote (AI) gamepad driver
 //
 // Synthetic gamepad driven by the remote control server (see
-// src/input/remote_control_server.h and plans/ai-remote-input-control.md). It
+// src/input/remote_control_server.h and plans/done/ai-remote-input-control.md). It
 // presents the latest InputSnapshot published into the shared
 // InputStateStore as ordinary XInput state, so the guest sees a normal
 // gamepad: works in menus, cutscenes, and gameplay alike.

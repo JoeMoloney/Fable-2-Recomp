@@ -5,7 +5,7 @@ Investigation into how the Xbox A button icon texture
 is initialized in the recompiled code, whether its runtime memory is ever read, and which
 functions call it when the main menu renders the A button.
 
-Companion document: `TEXT_RENDERING_NOTES.md` (UI text pipeline, probe infrastructure).
+Companion document: `docs/re/TEXT_RENDERING_NOTES.md` (UI text pipeline, probe infrastructure).
 
 ---
 
@@ -192,7 +192,7 @@ Per `fable2_func_summary.log` (one full session with main menu), the GUI pipelin
                                           1 x UITextPrompt_RenderElement
 ```
 
-Disassembly-verified chain for the title prompt (from `TEXT_RENDERING_NOTES.md`):
+Disassembly-verified chain for the title prompt (from `docs/re/TEXT_RENDERING_NOTES.md`):
 
 ```
 MainRenderLoop_82B9CD68            per-frame, ~30 Hz, VdSwap present
@@ -260,7 +260,7 @@ FrontMenu_EnsureElement     0x82C217B8   get-or-create front-end UI element node
 
 ## 9. Implications for the icon-swap goal
 
-Goal (from TEXT_RENDERING_NOTES.md): replace the Xbox A button icon in the title prompt
+Goal (from docs/re/TEXT_RENDERING_NOTES.md): replace the Xbox A button icon in the title prompt
 with a keyboard E keycap, using the game's own font/rendering, anchored to the prompt text,
 only visible when the text is present.
 

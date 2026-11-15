@@ -59,7 +59,7 @@ struct Values {
   // hand-rolled orbit (not 1:1 with the stick). When false the direct-mouse
   // path offsets the game's target orbit angle (cam+68) and lets the native
   // easing drive the camera -- the intended 1:1 path, but it is still being
-  // tuned (see plans/plan-direct-mouse-1to1.md), so the default is the legacy
+  // tuned (see plans/done/plan-direct-mouse-1to1.md), so the default is the legacy
   // orbit until that path is confirmed to move the eye.
   bool mouse_look_legacy_orbit = true;
   // Camera-look sensitivity: radians of camera rotation per host mouse pixel.
@@ -182,12 +182,12 @@ struct Values {
   // textures on the GPU (the game's own RealTimeTextureMorphing mode) instead
   // of CPU-compressing a resolved scratch texture, so they are not black on a
   // split-memory host (hook fable2_hook_realtime_texture_morphing in
-  // src/core/fable2_hooks.cpp; plans/hero-dog-realtime-texture-morphing.md).
+  // src/core/fable2_hooks.cpp; plans/done/hero-dog-realtime-texture-morphing.md).
   // Replaces hero_dog_texture_readback. false = original.
   bool realtime_texture_morphing = true;
   // Force a CPU readback of the render-to-texture resolve that (re)generates
   // the hero/dog face+skin texture, so the character does not render black on
-  // a split-memory host (see plans/hero-dog-texture-readback.md). Approach + the
+  // a split-memory host (see plans/done/hero-dog-texture-readback.md). Approach + the
   // guest base 0x12704000 come from just-harry's Unofficial Xenia femtofork for
   // Fable II. This seeds the SDK cvar readback_resolve_force_addresses in
   // Fable2App; readback then happens only for that resolve, not every frame.

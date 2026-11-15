@@ -103,7 +103,7 @@ The SDK already implements areas still pending in the old prototype:
 Paths above are inside `thirdparty/rexglue-sdk/`. These source observations do not
 certify every SDK lifecycle, scheduler or original-console ABI detail.
 
-`FABLE2_LUA_API.md` describes an analysis of 1,139 decompiled scripts, native
+`docs/re/FABLE2_LUA_API.md` describes an analysis of 1,139 decompiled scripts, native
 registration and image strings. In particular `gamescripts*.bnk`/`guiscripts.bnk`
 are script banks; memory 18's blanket Wwise/FMOD audio-bank classification is not
 supported. Do not infer a bank's purpose or middleware from `.bnk` alone.

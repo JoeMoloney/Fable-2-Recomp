@@ -196,7 +196,7 @@ registers = ["r3"]
 after_instruction = true
 
 # Hero/dog black textures, fixed without CPU readback
-# (plans/hero-dog-realtime-texture-morphing.md). The hero's and dog's skin
+# (plans/done/hero-dog-realtime-texture-morphing.md). The hero's and dog's skin
 # textures are built by texture morphing. In the default "baked" mode the morph
 # renderer (sub_82A69728) draws each mip into a scratch render target, resolves
 # it to guest memory (the 0x12704000 scratch texture), locks that READONLY on
@@ -48992,7 +48992,7 @@ size = 0x0170
 
 
 # ============================================================================
-# UI text rendering pipeline (reverse-engineered; see TEXT_RENDERING_NOTES.md)
+# UI text rendering pipeline (reverse-engineered; see docs/re/TEXT_RENDERING_NOTES.md)
 # ----------------------------------------------------------------------------
 # The title prompt "Press <a_img> to start" is a live UTF-16BE string in the
 # heap (0x426690F0); <a_img> renders as the Xbox A-button icon. The per-frame
@@ -49300,7 +49300,7 @@ name = "UpdateCamerasGlobalDt_824246F0"
 # TextureMorph_Render, which for the Baked path calls TextureCompress_Quantized
 # and for the Realtime path calls TextureMips_BuildGPU. A per-request mode byte
 # (the "realtime" flag) is what selects the two paths. See
-# plans/hero-dog-realtime-texture-morphing.md.
+# plans/done/hero-dog-realtime-texture-morphing.md.
 
 # Texture morph -- job creation (per-request dispatcher). For each request (r30)
 # it calls vtable[1]; when the result is 18 (the texture-morph request type) it

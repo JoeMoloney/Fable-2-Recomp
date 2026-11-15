@@ -26,7 +26,7 @@ At the end of every session Claude updates the status table and replaces the
 ### Next session prompt
 
 ```
-Fable II desktop performance: plans/PERF_SESSIONS.md is DONE (solid 30 FPS with guest vblank
+Fable II desktop performance: plans/done/PERF_SESSIONS.md is DONE (solid 30 FPS with guest vblank
 pacing on, unit 4h). Read ONLY its "Unit 4h results" section. Only reopen this plan if a new
 recurring hitch or a sustained < 30 view turns up; then the next candidate is unit 5 (persistent
 VkPipelineCache / background pipeline compile) or 4g3. Otherwise start a separate plan (60 FPS,

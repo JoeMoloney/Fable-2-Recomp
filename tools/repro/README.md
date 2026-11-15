@@ -106,7 +106,7 @@ sha256sum out/build/win-amd64-release/fable_2.exe out/build/win-amd64-release/re
   count 0, which is proof the score is novelty/unsigned-dominated. So the count
   only trends down as the stable hash accumulates benign sightings (ship it,
   pro-upload it) and/or BitDefender whitelists the specific hash via a
-  false-positive report. See `plans/av-clean-builds.md`.
+  false-positive report. See `plans/done/av-clean-builds.md`.
 
 Note: the version resource is added **post-hoc** to the prebuilt DLLs by
 `add_version_resource.py` (no SDK rebuild needed). The SDK CMake also carries

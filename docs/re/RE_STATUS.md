@@ -10,7 +10,7 @@ for continuing this fork. The user explicitly selected this migration.
 - Implementation/build configuration: tracked source, manifest and pinned SDK.
 - Current facts: this document and [address-based findings](RE_FINDINGS.md), with
   reproducible evidence and explicit limits. Names/comments alone are not proof.
-- Historical experiments: [Linux progress](LINUX_PORT_PROGRESS.md), memory records
+- Historical experiments: [Linux progress](../history/LINUX_PORT_PROGRESS.md), memory records
   and preserved local artifacts. Their dated pending tasks are not current work.
 - Memory-service: project **FableII, ID 3**. Search with `projectId: 3` and
   `includeGlobal: false`. Use memory as an index of decisions/evidence, not a
@@ -37,7 +37,7 @@ SDK, whole console ABI, or game behavior. Preserve negative results and correcti
   vendored-libmspack patch, exported in
   `thirdparty/rexglue-sdk-linux-vendored-mspack.patch`.
 - Native Linux ELF, ReXGlue source runtime, Vulkan; no Wine/Proton.
-  [Linux workflow](LINUX.md): `python tools/linux.py run` uses native Wayland,
+  [Linux workflow](../LINUX.md): `python tools/linux.py run` uses native Wayland,
   GPU 0, 1280x720 windowed, 30 FPS limit, mouse look off and asynchronous shader
   compilation off. Keep that working baseline while investigating.
 
@@ -74,7 +74,7 @@ remote-control header portability fixes: defer recursive JSON value special
 members/lookup until the type is complete, and include `<netinet/tcp.h>` on
 non-Windows hosts. The original header fails the isolated Clang compile check;
 the fixed parser passes Clang, GCC and ASan/UBSan checks, and all 20 Python tests
-pass. See [test instructions](../tests/README.md#remote-control-json-portability-check).
+pass. See [test instructions](../../tests/README.md#remote-control-json-portability-check).
 
 The Debug executable and its libraries are staged, with `FABLE2_REMOTE_CONTROL`
 enabled. Existing Release executable/libraries and all ten Release save files

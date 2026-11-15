@@ -461,7 +461,7 @@ if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
     # Prefer the source-built runtime/plugin pair over the prebuilt 0.10.0
     # pair (Release only): the source tree carries local fixes the prebuilt
     # SDK lacks (e.g. the vsync present gate in the UI presenter, see
-    # docs/FPS_CAP_INVESTIGATION.md). The source plugin is dual-backend, so a
+    # docs/fixes/FPS_CAP_INVESTIGATION.md). The source plugin is dual-backend, so a
     # plain `fable_2.exe` launch stays D3D12 ("any" picks D3D12).
     if(FABLE2_VULKAN_PLUGIN AND FABLE2_VULKAN_RUNTIME)
         add_custom_command(TARGET fable_2 POST_BUILD
@@ -532,7 +532,7 @@ option(FABLE2_NO_PE_CLEAN
     "Skip the post-build stable-hash PE cleaning (exports trimming + timestamp/PDB-GUID pinning)" OFF)
 
 # --- Reproducible / stable-hash post-processing (cert-free AV-clean builds) -
-# Post-build AV-clean hardening (see plans/av-clean-builds.md +
+# Post-build AV-clean hardening (see plans/done/av-clean-builds.md +
 # tools/repro/clean_pe.py): for the staged release dir it (1) trims the
 # rexruntime export table to the curated set -- the union of every symbol a
 # consumer actually imports plus the whole rex:: public API -- dropping the

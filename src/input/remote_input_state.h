@@ -5,7 +5,7 @@
 // resolved InputSnapshot; the RemoteGamepadDriver (an SDK InputDriver, polled
 // by the guest input system) consumes the latest snapshot on each poll. The
 // critical section is a copy of a tiny struct, so the guest-thread path cost
-// is negligible. See plans/ai-remote-input-control.md.
+// is negligible. See plans/done/ai-remote-input-control.md.
 
 #pragma once
 

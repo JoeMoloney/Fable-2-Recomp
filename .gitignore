@@ -65,7 +65,7 @@ __pycache__/
 !tools/create_app_icon.ps1
 !assets/app-icon.png
 !docs/screenshots/launcher.png
-# Perf/profiling helpers used by plans/STEAMDECK_SESSIONS.md and PERF_SESSIONS.md,
+# Perf/profiling helpers used by plans/STEAMDECK_SESSIONS.md and plans/done/PERF_SESSIONS.md,
 # and the offline-audit harnesses behind docs/analysis/.
 !tools/perf/
 !tools/perf/*.sh

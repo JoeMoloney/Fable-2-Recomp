@@ -61,12 +61,12 @@ is the concise durable index. Historical memories are not current task queues.
 
 | Prior result | Consequence |
 | --- | --- |
-| `docs/FPS_CAP_INVESTIGATION.md`, then `docs/RUNTIME_FIXES.md` | Guest vblank gating and host FPS limiting have already been investigated. The later pacing controls refine the old `vsync=0` advice. |
+| `docs/fixes/FPS_CAP_INVESTIGATION.md`, then `docs/RUNTIME_FIXES.md` | Guest vblank gating and host FPS limiting have already been investigated. The later pacing controls refine the old `vsync=0` advice. |
 | `PERF_INVESTIGATIONS_OCT_NOV_2026.md` (Oct Deck notes, summarised) | Very high yield counts were measured; a prior 50-us pause reduced CPU usage without improving cadence. Do not treat busy CPU as proof of the frame bottleneck. |
 | Same result, following the Oct source review (summarised in `PERF_INVESTIGATIONS_OCT_NOV_2026.md`) | Zero `rt_sigprocmask` calls on the three observed threads excluded the proposed fiber-mask cost in that scene/window. Do not resurrect it from sparse old samples. |
 | `PERF_INVESTIGATIONS_OCT_NOV_2026.md` (Oct Deck notes, summarised) | Historical readback fallback had 35–39 ms inclusive CPU waits for queued GPU work; not measured shader time or guaranteed recoverable frame time. CPU reader/freshness questions remain unresolved. |
 | `PERF_INVESTIGATIONS_OCT_NOV_2026.md` (Oct Deck notes, summarised) | Old memory-lock percentages predate later fixes. Readback allocation/cleanup was small relative to the old fence waits; allocator caching is not a demonstrated major win. |
-| `plans/NATIVE_RENDERER_SOURCE_AUDIT.md`, memory 167 | Unleashed/Skate architectures are not drop-in Fable subsystem replacements; reuse/licensing and game-specific contracts matter. |
+| `plans/future/native-renderer/NATIVE_RENDERER_SOURCE_AUDIT.md`, memory 167 | Unleashed/Skate architectures are not drop-in Fable subsystem replacements; reuse/licensing and game-specific contracts matter. |
 | Memories 51, 53, 103, 104 | Old synthetic XenonRecomp/custom-runtime results and instruction omissions do not certify or diagnose the current ReXGlue fork. |
 
 Existing measurements are dated, scene/platform-specific evidence—not new desktop

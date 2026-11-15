@@ -1,6 +1,6 @@
 # Steam Deck performance — multi-session plan (START HERE)
 
-Started 2026-11-14, after the desktop plan (`plans/PERF_SESSIONS.md`) reached a solid 30 FPS.
+Started 2026-11-14, after the desktop plan (`plans/done/PERF_SESSIONS.md`) reached a solid 30 FPS.
 Supersedes the Oct-25/26 Deck handoffs (deleted 2026-11-15; summary in `docs/analysis/PERF_INVESTIGATIONS_OCT_NOV_2026.md`)
 as the *active* Deck plan. The summary keeps the evidence that matters (especially for unit D3); read it only
 if a step below says so.
@@ -55,7 +55,7 @@ reasons + `readback_memexport_keep_frames` (**seeded 1800** in `fable_2_app.h`) 
   + `include/rex/graphics/vulkan/command_processor.h` (`readback_memexport_keep_frames`, per-reason stats).
 - Main: `src/core/fable_2_app.h` (seed keep_frames), `src/core/fable2_hooks.cpp` + `fable_2_manifest.toml`
   (`fable2_msaa_mode` hook), `plans/STEAMDECK_SESSIONS.md`. Not ours: `src/input/remote_control_server.h`,
-  `.opencode/opencode.json`, `FUNCTION_NAMES.md`, `docs/LINUX*.md`, `tests/README.md` (pre-existing).
+  `.opencode/opencode.json`, `docs/re/FUNCTION_NAMES.md`, `docs/LINUX*.md`, `tests/README.md` (pre-existing).
 - Main `850a1f5` still not pushed.
 
 **Desktop check:** `tools/perf/run-profile.sh --vulkan_async_submit=true`, usual spot: still solid 30, no

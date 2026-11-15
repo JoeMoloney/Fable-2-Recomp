@@ -91,7 +91,7 @@ direct_mouse_look = false
 # 2-axis external orbit (eye rotated around a low-passed hero pivot + look-at
 # quaternion, independent yaw); a working hand-rolled orbit. false = offset the
 # game's target orbit angle (cam+68) and let the native easing drive the camera
-# (the intended 1:1 path, still being tuned -- see plans/plan-direct-mouse-1to1.md).
+# (the intended 1:1 path, still being tuned -- see plans/done/plan-direct-mouse-1to1.md).
 mouse_look_legacy_orbit = true
 
 # Camera-look sensitivity: radians of camera rotation per host mouse pixel
@@ -213,13 +213,13 @@ disable_motion_blur = false
 # instead of being read back to the CPU and DXT-compressed. This fixes the
 # black hero/dog without hero_dog_texture_readback. The textures are stored
 # uncompressed, so they use a few MB more memory. See
-# plans/hero-dog-realtime-texture-morphing.md. false = original baked mode.
+# plans/done/hero-dog-realtime-texture-morphing.md. false = original baked mode.
 # Default: true
 realtime_texture_morphing = true
 
 # Force a CPU readback of the render-to-texture resolve that regenerates the
 # hero/dog face+skin texture, so the character does not render black on a
-# split-memory host (see plans/hero-dog-texture-readback.md). Approach + the
+# split-memory host (see plans/done/hero-dog-texture-readback.md). Approach + the
 # guest base 0x12704000 come from just-harry's Unofficial Xenia femtofork for
 # Fable II. Seeds the SDK cvar readback_resolve_force_addresses; readback then
 # happens only for that resolve, not every frame. Superseded by

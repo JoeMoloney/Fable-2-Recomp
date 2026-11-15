@@ -3,7 +3,7 @@
 
 Sends JSON-lines commands to the fable_2.exe control server (default
 127.0.0.1:8791) so a human or an AI harness can drive the guest gamepad.
-See src/remote_control_server.h and plans/ai-remote-input-control.md for the
+See src/remote_control_server.h and plans/done/ai-remote-input-control.md for the
 full protocol. Stdlib only.
 
 Examples:

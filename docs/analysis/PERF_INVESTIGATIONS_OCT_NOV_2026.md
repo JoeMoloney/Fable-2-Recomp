@@ -9,7 +9,7 @@ They were never committed, so this summary is the only record. It keeps
 staging checklists, which no longer apply.
 
 The current work lives in `plans/STEAMDECK_SESSIONS.md` (Deck, 30 FPS since
-2026-11-14) and `plans/PERF_SESSIONS.md` (desktop, done).
+2026-11-14) and `plans/done/PERF_SESSIONS.md` (desktop, done).
 
 ---
 

@@ -136,7 +136,7 @@ Steam configuration changes are not automated by this workflow.
 - `python -m unittest discover -s tests -p 'test_*.py'` covers catalogue,
   staging and helper safeguards with synthetic fixtures.
 - [Native diagnostic read regression test](../tests/README.md#linux-diagnostic-read-check).
-- [Detailed port progress and evidence](LINUX_PORT_PROGRESS.md).
+- [Detailed port progress and evidence](history/LINUX_PORT_PROGRESS.md).
 
 If GDB sibling attach is denied by Yama, launch the next diagnostic as GDB's
 child instead of weakening system-wide ptrace settings. Guest SIGSEGV handling

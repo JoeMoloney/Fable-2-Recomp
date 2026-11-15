@@ -164,13 +164,13 @@ disable_motion_blur = false
 # instead of being read back to the CPU and DXT-compressed. This fixes the
 # black hero/dog without hero_dog_texture_readback. The textures are stored
 # uncompressed, so they use a few MB more memory. See
-# plans/hero-dog-realtime-texture-morphing.md. false = original baked mode.
+# plans/done/hero-dog-realtime-texture-morphing.md. false = original baked mode.
 # Default: true
 realtime_texture_morphing = true
 
 # Force a CPU readback of the render-to-texture resolve that regenerates the
 # hero/dog face+skin texture, so the character does not render black on a
-# split-memory host (see plans/hero-dog-texture-readback.md). Approach + the
+# split-memory host (see plans/done/hero-dog-texture-readback.md). Approach + the
 # guest base 0x12704000 come from just-harry's Unofficial Xenia femtofork for
 # Fable II. Seeds the SDK cvar readback_resolve_force_addresses; readback then
 # happens only for that resolve, not every frame. Superseded by

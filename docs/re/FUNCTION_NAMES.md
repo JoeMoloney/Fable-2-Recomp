@@ -9,7 +9,7 @@ Names, role descriptions, confidence labels and address-region classifications
 below are analysis annotations, not independently verified facts for every
 entry. In-game correlation alone does not prove that a shared virtual thunk is
 specific to a story event. Use the manifest for current symbols and
-[reconciled RE findings](docs/RE_FINDINGS.md) for audited corrections; do not
+[reconciled RE findings](RE_FINDINGS.md) for audited corrections; do not
 bulk-import these descriptions into Ghidra as established semantics.
 
 ## How these were determined

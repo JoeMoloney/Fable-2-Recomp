@@ -534,7 +534,7 @@ static void legacy_orbit_2axis(rex::memory::Memory* mem, uint32_t cam,
 }
 
 // Realtime Texture Morphing (hero/dog black textures without CPU readback;
-// plans/hero-dog-realtime-texture-morphing.md). sub_82A76018 turns each
+// plans/done/hero-dog-realtime-texture-morphing.md). sub_82A76018 turns each
 // texture morph request into a morph job and copies the request's
 // RealTimeTextureMorphing byte with `lbz r9, 0x20(r30)` at 0x82A7607C. With
 // it set, the morph renderer (sub_82A69728) draws straight into the final

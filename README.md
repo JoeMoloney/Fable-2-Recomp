@@ -59,7 +59,7 @@ ISO** button opens a raw `.iso`, pulls out just `default.xex` first, checks its
 SHA-256 against the supported-version list, and only once it matches does it
 extract the rest of the disc (`default.xex` and `data/`) into the launcher's own
 folder, with a live progress screen and a Stop button. It reads Xbox 360 GDFX
-discs with the shared [X360Extract](tools/x360extract/) library, so its output
+discs with the shared [X360Extract](tools/x360extract) library, so its output
 matches the `x360extract` tool byte for byte — making the launcher the simplest
 way to get the game files in place, with no separate extractor tool.
 
@@ -337,7 +337,7 @@ CMakeLists.txt + `src/core/fable2_func_trace.h` and rebuild.
 
 `fable_2.exe` runs a localhost TCP **remote control server** so an external
 automation harness can drive the guest gamepad over JSON-lines messages —
-no human at the keyboard. Design doc: `plans/ai-remote-input-control.md`.
+no human at the keyboard. Design doc: `plans/done/ai-remote-input-control.md`.
 
 **Debug builds only.** This is a debugging/automation channel — it opens a
 localhost TCP port and injects guest input — so it must not ship to players.
@@ -566,7 +566,7 @@ tools\build_sdk_vulkan.cmd     # builds the SDK source with REXGLUE_USE_VULKAN=O
 The SDK source is the stock `rexglue/rexglue-sdk` repo **plus this project's
 local modifications** (`thirdparty/rexglue-sdk-local.patch`: the main-menu
 crash fix in `exception_handler_win.cpp` + `xmemory.cpp`, and the Vulkan/
-FPS instrumentation — see `docs/main_menu_crash_fix.md` and the patch
+FPS instrumentation — see `docs/fixes/main_menu_crash_fix.md` and the patch
 header). `tools/setup_sdk_src.cmd` reproduces that exact tree from the
 tracked patch + submodule pins, so the source never has to live outside
 this repo.
