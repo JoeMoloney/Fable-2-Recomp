@@ -18,6 +18,11 @@ Rules (each proposal carries its evidence so a reviewer can check it):
                  "std_tree_helper_<addr>" / "std_vector_helper_<addr>" (medium),
                  class std::_Tree / std::vector (not a library tag: template code sits
                  next to its users); inline use / composition = context only.
+  folding        A function carrying several unrelated Lua names (or a Lua name and
+                 an unrelated vtable slot) is a linker-folded shared body, typically
+                 a trivial getter: "folded_accessor_<addr>" (low), all names kept.
+  precedence     On equal confidence: Lua binding > method string > vtable > STL
+                 helper > LuaHelper.
   lua helper     One level deeper: a callee used by no other binding that is the only
                  real callee of a thin binding, or whose callers are only that
                  binding, is "LuaHelper_<Table>_<Name>" (low: often generic container
@@ -327,15 +332,45 @@ def main():
     stats["module_propagated"] = propagated
 
     rank = {"high": 0, "medium": 1, "low": 2}
+
+    def rule_of(n):
+        if n.startswith("Lua_"):
+            return 0          # registered under this name: direct evidence
+        if n.startswith(("folded_accessor_",)):
+            return 5
+        if n.startswith("LuaHelper_"):
+            return 4
+        if n.startswith("std_"):
+            return 3
+        if "::vf" in n:
+            return 2
+        return 1              # method/message strings
+
+    # Identical-code folding: the linker keeps one copy of byte-identical functions
+    # (typically trivial "return this->field" getters), so one function can carry
+    # several unrelated Lua names, or a Lua name and an unrelated vtable slot.
+    for a, e in ev.items():
+        lua = sorted({n for n, _ in e["names"] if n.startswith("Lua_")})
+        vt_classes = {n.split("::vf")[0] for n, _ in e["names"] if "::vf" in n}
+        if len(lua) >= 2 or (lua and vt_classes):
+            e["names"].append((f"folded_accessor_{a[2:]}", "low"))
+            e["names"] = [(n, "low") if (n.startswith("Lua_") or "::vf" in n) else (n, c) for n, c in e["names"]]
+            e["evidence"].insert(0, f"identical-code folding: one body shared by {len(lua)} Lua name(s)"
+                                    + (f" and vtable class(es) {sorted(vt_classes)[:3]}" if vt_classes else ""))
+            e["folded"] = True
+            stats["folded_accessors"] += 1
     with open(OUT / "names.jsonl", "w") as w:
         for a in sorted(ev):
             e, f = ev[a], funcs[a]
-            best = sorted(e["names"], key=lambda n: rank[n[1]])[0] if e["names"] else (None, None)
+            best = (sorted(e["names"], key=lambda n: (rank[n[1]], rule_of(n[0])))[0]
+                    if e["names"] else (None, None))
+            if e.get("folded"):
+                best = (f"folded_accessor_{a[2:]}", "low")
             distinct = sorted({n for n, _ in e["names"]})
             rec = {"name": f["name"], "addr": a, "proposed": best[0], "confidence": best[1],
                    "alternatives": [n for n in distinct if n != best[0]],
                    "module": e["module"], "module_propagated": e.get("module_propagated", False),
-                   "source_file": e["file"], "class": e["class"],
+                   "source_file": e["file"], "class": e["class"], "folded": e.get("folded", False),
                    "library": e["library"], "library_propagated": e.get("library_propagated", False),
                    "library_sandwiched": e.get("library_sandwiched", False),
                    "currently_named": f["named"], "insns": f["insns"],

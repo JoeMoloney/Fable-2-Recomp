@@ -171,6 +171,10 @@ uses it. A first attempt did that and call-graph/address spreading wrongly pulle
 **Totals after N4c:** 10,819 functions with evidence; 4,897 proposed names
 (1,721 high, 2,886 medium, 290 low).
 
+## Review
+
+N2 (hit rates, conflicts, Kynapse): [docs/re/NAMES_EVIDENCE.md](../re/NAMES_EVIDENCE.md).
+
 ## Next
 
 Spread Lua names one call deeper (the bindings are thin wrappers; the gameplay

@@ -32,9 +32,15 @@ source_root_marker = "\\SourceCode\\"
 #   path_files      exact lower-case file names
 #   file_regex      regex on the file name (case-insensitive)
 #   name_prefixes   prefixes of class/method names and other strings
+# Kynogon Kynapse AI navigation (2026-11-15): "Kynogon Spatial graph", "Kynogon Astar
+# Data", "Kynogon Mesh" ... strings are referenced from 0x82E7-0x82EA, interleaved
+# with the CFleeAgent/CHideAgent/CFollowAgent/CShootAgent (0x82E6) and CPathFinder
+# (0x82EA) profiler strings. Lionhead code only calls into it (IsKynapseAvailable).
 [[evidence.library]]
-name = "Kynogon Kaim (AI navigation)"
-name_prefixes = ["Kaim::"]
+name = "Kynogon Kynapse (AI navigation)"
+name_prefixes = ["Kaim::", "Kynogon ", "CFleeAgent::", "CHideAgent::", "CFollowAgent::",
+                 "CShootAgent::", "CPathFinder::", "CHierarchicalPathFinder::",
+                 "CHierarchicalGraphManager::", "CEntityInfoManager::"]
 
 [[evidence.library]]
 name = "Microsoft XDK (XGraphics shader compiler)"

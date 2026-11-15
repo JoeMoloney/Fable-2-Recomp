@@ -22,6 +22,7 @@ Work plans are in [plans/](../plans/README.md).
 | [FUNCTION_NAMES.md](re/FUNCTION_NAMES.md) | Historical reference for 520 named functions (role and trigger). Check `RE_FINDINGS.md` for corrections. |
 | [FABLE2_LUA_API.md](re/FABLE2_LUA_API.md) | Every custom Lua function the game scripts use. |
 | [TEXT_RENDERING_NOTES.md](re/TEXT_RENDERING_NOTES.md) | How UI text is rendered and how to intercept it. |
+| [NAMES_EVIDENCE.md](re/NAMES_EVIDENCE.md) | Review of the automatic naming pass: hit rate per rule, which names are safe to record, conflicts, Kynapse. |
 | [RE_MIGRATION.md](re/RE_MIGRATION.md) | Record of the 2026-10-24 switch to this repo as the source of truth (memory IDs, Ghidra renames, backup in `out/re-migration/`). |
 
 ## Bug fixes ([fixes/](fixes/))
