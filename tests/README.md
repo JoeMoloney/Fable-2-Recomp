@@ -37,3 +37,17 @@ out/linux_ui_input_read_test
 
 Checks a valid read plus protected, partially accessible and unmapped reads
 without installing signal handlers or needing game content.
+
+## Remote-control JSON portability check
+
+```sh
+python -m unittest discover -s tests -p 'test_remote_json.py' -v
+```
+
+Compiles and runs the actual `json_min` namespace extracted from
+`src/input/remote_control_server.h` with available `clang++` and `g++` compilers
+in C++23 mode. Each unavailable compiler is reported as a skip. Covers recursive
+objects/arrays, lookup/defaults/conversions, copy/move/destruction, ordering,
+escaping and basic malformed-input rejection. It needs a C++23 standard library,
+but no SDK, server, GPU, game content or save files. This is not a full JSON
+conformance, remote-protocol, socket or screenshot test.

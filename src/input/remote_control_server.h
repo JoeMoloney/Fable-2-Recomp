@@ -60,6 +60,7 @@ inline void CloseSock(sock_t s) {
 #else
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <netinet/tcp.h>
 #include <sys/socket.h>
 #include <unistd.h>
 using sock_t = int;
@@ -114,6 +115,13 @@ namespace fable2::remote {
 namespace json_min {
 
 struct Value {
+  Value() noexcept;
+  ~Value();
+  Value(const Value&);
+  Value& operator=(const Value&);
+  Value(Value&&) noexcept;
+  Value& operator=(Value&&) noexcept;
+
   enum class Type { Null, Bool, Number, String, Array, Object };
   Type type = Type::Null;
   bool boolean = false;
@@ -122,11 +130,7 @@ struct Value {
   std::vector<Value> arr;
   std::vector<std::pair<std::string, Value>> obj;
 
-  const Value* Find(std::string_view key) const {
-    for (const auto& kv : obj)
-      if (kv.first == key) return &kv.second;
-    return nullptr;
-  }
+  const Value* Find(std::string_view key) const;
   const std::string* FindStr(std::string_view key) const {
     const Value* v = Find(key);
     return (v && v->type == Type::String) ? &v->str : nullptr;
@@ -153,6 +157,23 @@ struct Value {
     return def;
   }
 };
+
+// Defer special-member definitions as well as object lookup: pair's constructor
+// traits otherwise instantiate Value's implicit destructor while pair itself is
+// incomplete (Clang/libstdc++). Keep the original deep-copy and noexcept-move
+// behavior rather than suppressing moves by declaring only a destructor.
+inline Value::Value() noexcept = default;
+inline Value::~Value() = default;
+inline Value::Value(const Value&) = default;
+inline Value& Value::operator=(const Value&) = default;
+inline Value::Value(Value&&) noexcept = default;
+inline Value& Value::operator=(Value&&) noexcept = default;
+
+inline const Value* Value::Find(std::string_view key) const {
+  for (const auto& kv : obj)
+    if (kv.first == key) return &kv.second;
+  return nullptr;
+}
 
 class Parser {
  public:
