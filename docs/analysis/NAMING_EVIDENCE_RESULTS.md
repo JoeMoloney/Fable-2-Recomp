@@ -138,6 +138,39 @@ spans 0x82174238–0x82CBC600), so the per-system function list (`module` field 
 **Totals after N4b:** 8,468 functions with evidence; 3,268 proposed names (1,721
 high, 1,238 medium, 309 low); 4,934 with a module tag.
 
+## C++ container code (N4c)
+
+`tools/theseus/containers.py` recognises MSVC STL template code by shape in the
+generated C++: **map/set** (`std::_Tree`): the node's "end marker" byte
+(`_Isnil`, node+0x11..0x41) tested against 0 plus left/right child loads (node+0/+8),
+or 3+ stores to the link fields (rotation); **vector**: two of first/last/end
+(+4/+8/+12) subtracted and divided by the element size.
+
+| | Count |
+|---|---:|
+| Shape-detected helpers (named `std_tree_helper_<addr>` / `std_vector_helper_<addr>`, medium; class `std::_Tree` / `std::vector`) | **1,673** (930 map/set, 743 vector) |
+| Larger functions using a map/vector inline (context only) | 570 |
+| Small functions calling only container helpers (context only) | 385 |
+
+Validation: all 12 container functions known from earlier work are detected
+(Ghidra spot checks + memory-service #198/#306/#317: find, lower bound,
+find-or-create, count-in-range, rotations, red-black erase); 0 of 9 known
+non-containers (hash, string, memset, vector-maths and gameplay functions) are
+flagged. Further spot checks of shape-detected helpers: 6/6 correct
+(`0x829257F8` vector erase with debug iterator checks, `0x82504F88` vector
+reserve …). The two false "implementations" from N4b (`0x82748DA8`,
+`0x826011D8`) are now correctly STL helpers; the real one (`Village.IsLineOfSight`)
+keeps its Lua name.
+
+Two lessons: **composition** ("only calls container helpers") was 1/2 in spot
+checks (a find-or-create, but also object logic), so it is context only; and STL
+code must **not** be a library tag, because template code sits next to whatever
+uses it. A first attempt did that and call-graph/address spreading wrongly pulled
+5,335 functions into "STL", including Havok and XLip code. It is a class label now.
+
+**Totals after N4c:** 10,819 functions with evidence; 4,897 proposed names
+(1,721 high, 2,886 medium, 290 low).
+
 ## Next
 
 Spread Lua names one call deeper (the bindings are thin wrappers; the gameplay

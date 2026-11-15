@@ -1,7 +1,7 @@
 # Evidence-based naming pass (multi-session plan)
 
-Started 2026-11-15. **STATUS: N1 + N4 + N4b done 2026-11-15: 8,468 functions with evidence, 3,268 proposed names
-(2,491 from Lua bindings), 3,643 functions mapped to a gameplay system, ~4,700 library functions identified. Results: [NAMING_EVIDENCE_RESULTS.md](../docs/analysis/NAMING_EVIDENCE_RESULTS.md). Next: N2 review.**
+Started 2026-11-15. **STATUS: N1 + N4 + N4b + N4c done 2026-11-15: 10,819 functions with evidence, 4,897 proposed names
+(2,491 from Lua bindings, 1,673 STL container helpers), 3,643 functions mapped to a gameplay system, ~4,700 library functions identified. Results: [NAMING_EVIDENCE_RESULTS.md](../docs/analysis/NAMING_EVIDENCE_RESULTS.md). Next: N2 review.**
 
 **Goal:** name and place as much of the game's code as the binary itself proves,
 before any guessing: exact method names from profiler strings, source file and
@@ -49,6 +49,7 @@ other games: [tools/theseus/README.md](../tools/theseus/README.md).
 | 1. Inventory (done) | `python3 tools/theseus/inventory.py` | `out/theseus/functions.jsonl` |
 | 2. Ghidra export | `tools/theseus/ghidra/export.sh` | `out/theseus/ghidra/{strings,rtti,functions}.jsonl` |
 | 2b. Lua bindings | `python3 tools/theseus/lua_bindings.py` | `out/theseus/lua_bindings.jsonl` + summary |
+| 2c. Containers | `python3 tools/theseus/containers.py` | `out/theseus/containers.jsonl` |
 | 3. Match | `python3 tools/theseus/evidence.py` | `out/theseus/names.jsonl` + `names_summary.json` |
 
 `export.sh` runs Ghidra headless **inside the `ghidra-mcp` Docker container on a
@@ -71,6 +72,7 @@ through the manifest. `THESEUS_OUT=<dir>` runs it on a test folder.
 | N3 | Record accepted names: a `docs/re/` mapping file now; Ghidra renames only with the user's OK; manifest renames are a separate decision (they change generated symbol names used by hotfuncs) | |
 | N4 | Phase 2: find the Lua binding tables (script name → C function) and add them as evidence | ✅ 2026-11-15 (done before N2): `tools/theseus/lua_bindings.py`, 2,491 bindings, validated 768/777 vs strict pairs, 0 wrong |
 | N4b | Spread Lua names one level deeper | ✅ 2026-11-15: "implementation" naming failed spot checks (2 of 3 were container templates) → `LuaHelper_` (low) + reliable `lua:<Table>` module tags; 3,643 functions mapped to a gameplay system; 108 Lua glue helpers found |
+| N4c | Recognise STL container template code (map/set trees, vectors) so naming rules stop mistaking it for gameplay | ✅ 2026-11-15: `tools/theseus/containers.py`, 1,673 helpers, 12/12 known detected, 0/9 false; composition context-only; STL is a class, not a library |
 | N5 | Phase 3: remaining strings + module context as input to LLM-suggested names for the rest, reviewed by sample | |
 
 ## Run it (N1)

@@ -15,6 +15,7 @@ manifest. Plans: [THESEUS_PILOT](../../plans/THESEUS_PILOT.md),
 | 1. Inventory | `python3 tools/theseus/inventory.py` | `functions.jsonl`, `summary.json` | ~11 s |
 | 2. Ghidra export | `tools/theseus/ghidra/export.sh` | `ghidra/{strings,rtti,functions}.jsonl` | ~3 min, needs ~3 GB free RAM |
 | 2b. Lua bindings | `python3 tools/theseus/lua_bindings.py` | `lua_bindings.jsonl`, `lua_bindings_summary.json` | ~2 s |
+| 2c. STL containers | `python3 tools/theseus/containers.py` | `containers.jsonl` | ~15 s |
 | 3. Naming evidence | `python3 tools/theseus/evidence.py` | `names.jsonl`, `names_summary.json` | ~1 s |
 | Rewrite check | `python3 tools/theseus/difftest.py <function>` | `difftest/<function>/result.txt` | ~1 min |
 | Caller check | `python3 tools/theseus/caller_usage.py <function>` | printed | ~10 s |
@@ -37,6 +38,9 @@ Rerun 1 and 3 after codegen or manifest changes; rerun 2 after big Ghidra change
   Lua name string with the C++ function pointer loaded as constants. Table names
   loaded by the registrar give the Lua table. Fable-specific in its catalog path
   and register conventions; another game needs checking.
+- **`containers.py`** recognises MSVC STL map/set (`std::_Tree`) and vector template
+  code by its shape, so naming rules don't mistake it for game logic. Generic for
+  MSVC-built games.
 - **`difftest.py`** runs the original leaf function and `rewrites/<function>.cpp`
   on 200,000 random CPU states and compares them (contract below).
   `--rewrite <file>` tests another file, e.g. a deliberately broken one.

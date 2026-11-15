@@ -14,6 +14,10 @@ Rules (each proposal carries its evidence so a reviewer can check it):
   lua binding    The function registered for a Lua script name (lua_bindings.py):
                  "Lua_<Table>_<Name>", high when name and function are passed in the
                  same call, medium when the name was loaded just before.
+  stl container  Shape-detected map/set/vector template code (containers.py):
+                 "std_tree_helper_<addr>" / "std_vector_helper_<addr>" (medium),
+                 class std::_Tree / std::vector (not a library tag: template code sits
+                 next to its users); inline use / composition = context only.
   lua helper     One level deeper: a callee used by no other binding that is the only
                  real callee of a thin binding, or whose callers are only that
                  binding, is "LuaHelper_<Table>_<Name>" (low: often generic container
@@ -201,6 +205,29 @@ def main():
             if c in funcs_by_name:
                 note(funcs_by_name[c]["addr"], evidence=f"Lua glue: called by {used_by[c]} Lua bindings")
 
+    # C++ standard-library container code (tools/theseus/containers.py).
+    cont_path = OUT / "containers.jsonl"
+    if cont_path.exists():
+        for c in load_jsonl(cont_path):
+            if not c.get("addr"):
+                continue
+            kind = {"tree": "map/set (tree)", "vector": "vector", "tree+vector": "map/set + vector"}[c["kind"]]
+            if c.get("method") == "shape" and c["helper"]:
+                stem = "tree" if c["kind"].startswith("tree") else "vector"
+                # Not a library tag: template code is emitted next to whatever uses it
+                # (game or library code), so call-graph/address spreading must not
+                # carry it. It is recorded as the function's class instead.
+                note(c["addr"], name=(f"std_{stem}_helper_{c['addr'][2:]}", "medium"),
+                     evidence=f"STL {kind} helper: {'; '.join(c['signals'])}")
+                e = ev.get(containing(c["addr"]))
+                if e is not None and not e["class"]:
+                    e["class"] = "std::_Tree (map/set)" if stem == "tree" else "std::vector"
+                stats["stl_helpers"] += 1
+            else:
+                how = "uses" if c.get("method") == "shape" else "calls helpers of"
+                note(c["addr"], evidence=f"{how} STL {kind} ({'; '.join(c['signals'])[:90]})")
+                stats["stl_context"] += 1
+
     # A function can sit in several vtables: an inherited, not-overridden method
     # appears at the same slot in each subclass; one function in several slots
     # (or in many classes) is an empty/shared stub. Slot 0 in MSVC is usually the
@@ -306,7 +333,7 @@ def main():
             best = sorted(e["names"], key=lambda n: rank[n[1]])[0] if e["names"] else (None, None)
             distinct = sorted({n for n, _ in e["names"]})
             rec = {"name": f["name"], "addr": a, "proposed": best[0], "confidence": best[1],
-                   "alternatives": distinct[1:] if len(distinct) > 1 else [],
+                   "alternatives": [n for n in distinct if n != best[0]],
                    "module": e["module"], "module_propagated": e.get("module_propagated", False),
                    "source_file": e["file"], "class": e["class"],
                    "library": e["library"], "library_propagated": e.get("library_propagated", False),
