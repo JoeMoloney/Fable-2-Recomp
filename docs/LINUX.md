@@ -88,7 +88,8 @@ python tools/linux.py run
 Baseline: **native Wayland**, Vulkan plugin `xenos`, GPU index 0, windowed
 1280x720, 30-FPS host limit, mouse-look disabled and
 `--async_shader_compilation=false`. The process is **not timed out**; close the
-window when finished. The host limit is not proof of achieved 30 FPS.
+window when finished. The host limit is not proof of achieved 30 FPS; see
+[Performance status](#performance-status) for measured results.
 
 The synchronous-shader setting is a provisional workaround: async enabled
 produced white/silent windows on both Wayland and XWayland, while disabling it
@@ -144,10 +145,36 @@ must be passed through to the runtime; debugger stops can otherwise resemble
 game freezes. Time-bounded diagnostic runs ending with timeout status 124 are
 not, by themselves, game crashes.
 
+## Performance status
+
+Updated 2026-11-15. Fable II is capped at 30 FPS by the game itself, so 30 is the target.
+
+- **Desktop** (i9-10900K, RTX 3090): a solid **30 FPS** at the worst tested
+  views with guest vblank pacing on, and game speed looks normal. Brief dips to
+  ~28 can happen while new areas stream in. Details:
+  [plans/done/PERF_SESSIONS.md](../plans/done/PERF_SESSIONS.md).
+- **Steam Deck** (LCD, 15 W, automatic clocks): **30 FPS** at the Bowerstone test
+  spot. The busiest view sits around 28, and turning the camera dips to ~26–27
+  for about a second. Active plan:
+  [plans/STEAMDECK_SESSIONS.md](../plans/STEAMDECK_SESSIONS.md).
+- The app sets the perf settings itself at startup (`src/core/fable_2_app.h`):
+  `clear_memory_page_state=false`, `gpu_write_fault_widen_kb=16`,
+  `gpu_skip_unchanged_constant_writes=true`, `readback_memexport_fast_no_stall=true`
+  and `readback_memexport_keep_frames=1800`. Guest vblank pacing is on by default
+  in the SDK.
+- All measured runs also used `--vulkan_async_submit=true` (~1 ms/frame).
+  The app does **not** set it, and neither `run-release.sh` nor
+  `tools/linux.py run` passes it, so add it yourself to reproduce the measured
+  setup (`tools/perf/run-profile.sh` and the Deck launcher already do).
+- `--guest_vblank_pacing=false` still removes the 30 FPS lock for 60 FPS
+  experiments.
+
 ## Known limits / next validation
 
-- Some hitching was reported. Measure cold/warm frame times on a repeatable
-  scene before attributing every hitch to shader compilation or tuning FPS.
+- Remaining hitches when something is drawn for the first time probably come from
+  synchronous pipeline creation (`--async_shader_compilation=false`). The planned
+  follow-up is a persistent pipeline cache or compiling pipelines in the background
+  (unit 5 in `plans/done/PERF_SESSIONS.md`).
 - Runtime logged `BaseHeap::Release failed because address is not a region
   start`; execution continued. Investigate rather than treating the run as
   error-free.

@@ -6,9 +6,11 @@ Native Linux/Wayland Vulkan boot, interactive menus and a user-tested new-game
 session with controller input work with `--async_shader_compilation=false`.
 Continue loading the existing save, intro skip and in-game cutscene playback
 are user-verified. The user also confirmed no missing dialogue or music;
-effects/mix/channel correctness were not separately certified. Some hitching/
-visual anomalies and an earlier allocator diagnostic remain; persistence of
-new saves and stable long-session performance are not yet verified. Earlier
+effects/mix/channel correctness were not separately certified. Some visual
+anomalies and an earlier allocator diagnostic remain, and saving new progress
+and reloading it has not been verified yet. **Performance (Nov 2026):** the desktop
+holds a solid 30 FPS since 2026-11-14, and the Steam Deck reaches 30 at the test
+spot since 2026-11-15. See [Performance status](../LINUX.md#performance-status). Earlier
 "pending" entries below are chronological experiment notes, not the latest status. Start with the
 [portable Linux workflow](../LINUX.md) for current setup/run commands.
 
