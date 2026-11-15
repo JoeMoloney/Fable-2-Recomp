@@ -30,6 +30,9 @@
 //   mem32 0x832EF350 ptr   sets a 32-bit global (big-endian) before each case,
 //                          e.g. a table pointer, so the function sees real data
 //                          instead of the harness's all-zero memory.
+//   mem32 @r3+12 ptr       the same for a field of an argument's struct (set
+//                          after the registers)
+//   r4 slen 64             -64..64
 #include "fable_2_pch.h"
 
 #include <cstdio>
@@ -60,9 +63,9 @@ uint8_t* map_guest() {
   return static_cast<uint8_t*>(p);
 }
 
-enum Kind { kPtr, kPtrOrNull, kLen, kInt, kU32, kAny, kNear };
+enum Kind { kPtr, kPtrOrNull, kLen, kInt, kU32, kAny, kNear, kSLen };
 struct ArgRule { int reg; Kind kind; uint32_t max; int base = 0; };
-struct MemRule { uint32_t addr; Kind kind; uint32_t max; };
+struct MemRule { uint32_t addr; Kind kind; uint32_t max; int base = 0; };  // base: rN, addr = offset
 #ifdef HAS_RULES
 #include "difftest_rules.inc"
 #else
@@ -75,6 +78,7 @@ uint64_t ruled_value(Rng& r, const ArgRule& rule) {
     case kPtr: return kWindow + r.below(kWindowSize / 2);
     case kPtrOrNull: return r.below(8) == 0 ? 0 : kWindow + r.below(kWindowSize / 2);
     case kLen: return r.below(rule.max + 1);
+    case kSLen: return uint64_t(int64_t(r.below(2 * rule.max + 1)) - int64_t(rule.max));
     case kInt: return uint64_t(int64_t(int32_t(r.next())));
     case kU32: return uint32_t(r.next());
     default: return r.next();
@@ -163,14 +167,6 @@ int main(int argc, char** argv) {
     std::memcpy(mem_a + kStackTop - kStackSize, stack.data(), kStackSize);
     std::memcpy(mem_b + kStackTop - kStackSize, stack.data(), kStackSize);
 
-    for (const MemRule& m : kMemRules) {
-      if (!m.addr) continue;
-      const uint32_t v = uint32_t(ruled_value(rng, {0, m.kind, m.max}));
-      const uint8_t be[4] = {uint8_t(v >> 24), uint8_t(v >> 16), uint8_t(v >> 8), uint8_t(v)};
-      std::memcpy(mem_a + m.addr, be, 4);
-      std::memcpy(mem_b + m.addr, be, 4);
-    }
-
     PPCContext init{};
     auto* bytes = reinterpret_cast<uint8_t*>(&init);
     for (size_t i = 0; i < sizeof(init); ++i) bytes[i] = uint8_t(rng.next());
@@ -186,6 +182,14 @@ int main(int argc, char** argv) {
             : ruled_value(rng, rule);
     for (PPCRegister* f : {&init.f1, &init.f2, &init.f3, &init.f4})
       f->f64 = fp_value(rng);
+    for (const MemRule& m : kMemRules) {
+      if (!m.addr && !m.base) continue;
+      const uint32_t addr = m.base ? args[m.base - 3]->u32 + m.addr : m.addr;
+      const uint32_t v = uint32_t(ruled_value(rng, {0, m.kind, m.max}));
+      const uint8_t be[4] = {uint8_t(v >> 24), uint8_t(v >> 16), uint8_t(v >> 8), uint8_t(v)};
+      std::memcpy(mem_a + addr, be, 4);
+      std::memcpy(mem_b + addr, be, 4);
+    }
     init.r1.u64 = kStackTop - 0x100;
     init.xer.so = rng.below(2); init.xer.ov = rng.below(2); init.xer.ca = rng.below(2);
 

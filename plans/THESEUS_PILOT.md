@@ -43,7 +43,7 @@ scratch registers may differ only if `caller_usage.py` shows no caller reads the
 | 10 | `Ctype_Pred_Bit2_82CA6B10` | 7 / 48 | table lookup || ✅ offline 2026-11-15: `isdigit` via the ctype table pointer at 0x832EF350 (_DIGIT 0x4); needed the new `mem32` rule (first negative control passed with a zero table); ABI pass, r3 exact; negative control caught |
 | 11 | `FindChainRoot_82A596F0` | 41 / 62 | pointer chasing | |
 | 12 | `FindTreeLeaf_825CB448` | 39 / 51 | pointer chasing | |
-| 13 | `GrowAndZeroBuffer_82BC55B8` | 29 / 72 | writes memory | |
+| 13 | `GrowAndZeroBuffer_82BC55B8` | 29 / 72 | writes memory || ✅ offline 2026-11-15: Lua 5.1 `lua_settop(L, idx)` (top +8, base +12, 8-byte TValues, nil tag at +4); rules put L in low memory and top/base in the window (`mem32 @r3+8`, `slen`): a first try with L inside its own stack swept a gigabyte when a nil hit L->top. ABI pass 200k; negative control (pop off by one) caught only by the touched-page scan. One caller reads r5: harmless, neither version writes it |
 | 14 | `NormalizeVector_82260BC8` | 24 / 177 | float + vector: exact FP check | |
 | 15 | `ComputeWrapped_8222C3E8` | 15 / 77 | float | |
 | 16 | `ComputeSpecialFunction_82239E88` | 56 / 158 | float, unknown maths | |
@@ -57,7 +57,7 @@ scratch registers may differ only if `caller_usage.py` shows no caller reads the
 | Unit | Task | Status |
 |---|---|---|
 | T0 | Inventory, difftest + caller tools, function #1 | ✅ 2026-11-15 (offline) |
-| T1 | Harness: per-function input rules (which registers are pointers/lengths/counts) and compare **every touched page** (not just the windows) so stray writes are caught. Needed before #5, #9, #13. | ✅ 2026-11-15: `rewrites/<name>.rules` (`r3 ptr`, `r5 len 256`, `int`, `u32`, `ptr_or_null`, `any`); every page either run touched (mincore) compared every 1,000 cases and at the end (outside-window memory is never reset, so a differing stray write stays visible). Tested: a rewrite with a stray write at 0x20001234 passes the old window check but FAILS the new one (page 0x20001000); FNV1Hash still PASS-ABI. Next: #5 StringCopyN with rules. Later the same day: `mem32 <addr> <kind>` rule for globals (table pointers). Also `rN near rM <max>` (pointer inside another argument's string); `caller_usage.py` now treats float compares (`crN.compare(f, f)`) as writes. |
+| T1 | Harness: per-function input rules (which registers are pointers/lengths/counts) and compare **every touched page** (not just the windows) so stray writes are caught. Needed before #5, #9, #13. | ✅ 2026-11-15: `rewrites/<name>.rules` (`r3 ptr`, `r5 len 256`, `int`, `u32`, `ptr_or_null`, `any`); every page either run touched (mincore) compared every 1,000 cases and at the end (outside-window memory is never reset, so a differing stray write stays visible). Tested: a rewrite with a stray write at 0x20001234 passes the old window check but FAILS the new one (page 0x20001000); FNV1Hash still PASS-ABI. Next: #5 StringCopyN with rules. Later the same day: `mem32 <addr> <kind>` rule for globals (table pointers). Also `rN near rM <max>` (pointer inside another argument's string); `caller_usage.py` now treats float compares (`crN.compare(f, f)`) as writes. Then `mem32 @rN+off` (struct field) and `slen` (-max..max). |
 | T2 | Functions 2–10 (strings, C runtime) | |
 | T3 | Functions 11–17 (pointers, float/vector; check FP exactness, see the AVX/FMA lesson in `docs/analysis/ARITHMETIC_AND_NATIVE_MEMORY_RESULTS.md`) | |
 | T4 | Functions 18–20 with naming; record name + evidence in `docs/re/RE_FINDINGS.md` style | |

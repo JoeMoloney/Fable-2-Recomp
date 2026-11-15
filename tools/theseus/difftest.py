@@ -11,8 +11,9 @@ the harness has no other guest functions or kernel imports to link against.
 
 Optional input rules: tools/theseus/rewrites/<name>.rules, one register per
 line (`r3 ptr`, `r4 ptr_or_null`, `r5 len 256`, `r6 int`, `r7 u32`, `r8 any`,
-`#` comments; `r4 near r3 32` = half the time r3 + 0..32), and `mem32 <addr> <kind> [max]` to set a 32-bit global (e.g. a
-table pointer) before each case. Without it every argument register gets a
+`r4 slen 64` = -64..64, `#` comments; `r4 near r3 32` = half the time r3 + 0..32), and `mem32 <addr> <kind> [max]` to set a 32-bit global (e.g. a
+table pointer) before each case; `mem32 @r3+12 <kind>` sets a field of an
+argument's struct. Without it every argument register gets a
 random mix and all memory outside the windows is zero.
 """
 import argparse
@@ -45,7 +46,7 @@ def extract(name):
     sys.exit(f"{name}: not found in generated code")
 
 
-KINDS = {"ptr": "kPtr", "ptr_or_null": "kPtrOrNull", "len": "kLen", "int": "kInt",
+KINDS = {"slen": "kSLen", "ptr": "kPtr", "ptr_or_null": "kPtrOrNull", "len": "kLen", "int": "kInt",
          "u32": "kU32", "any": "kAny"}
 
 
@@ -60,7 +61,11 @@ def rules_inc(path):
             if len(words) < 3 or words[2] not in KINDS:
                 sys.exit(f"{path}:{n}: expected 'mem32 <addr> <{'|'.join(KINDS)}> [max]'")
             maxv = int(words[3], 0) if len(words) > 3 else 0
-            mems.append(f"{{{int(words[1], 0):#x}u, {KINDS[words[2]]}, {maxv}u}}")
+            rel = re.fullmatch(r"@r([3-9]|10)\+(\w+)", words[1])
+            if rel:
+                mems.append(f"{{{int(rel.group(2), 0):#x}u, {KINDS[words[2]]}, {maxv}u, {rel.group(1)}}}")
+            else:
+                mems.append(f"{{{int(words[1], 0):#x}u, {KINDS[words[2]]}, {maxv}u}}")
             continue
         if len(words) == 4 and words[1] == "near":
             base = re.fullmatch(r"r(\d+)", words[2])
@@ -71,7 +76,7 @@ def rules_inc(path):
         m = re.fullmatch(r"r(\d+)", words[0])
         if not m or not 3 <= int(m.group(1)) <= 10 or len(words) < 2 or words[1] not in KINDS:
             sys.exit(f"{path}:{n}: expected 'r3..r10 <{'|'.join(KINDS)}> [max]'")
-        if words[1] == "len" and (len(words) < 3 or not 0 < int(words[2], 0) <= 0x8000):
+        if words[1] in ("len", "slen") and (len(words) < 3 or not 0 < int(words[2], 0) <= 0x8000):
             sys.exit(f"{path}:{n}: len needs a max between 1 and 0x8000 (the pointer room)")
         maxv = int(words[2], 0) if len(words) > 2 else 0
         rows.append(f"{{{m.group(1)}, {KINDS[words[1]]}, {maxv}u}}")
