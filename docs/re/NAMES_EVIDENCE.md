@@ -61,6 +61,17 @@ function (addr, current name, proposed name, confidence, rule, Lua table, librar
 class). Regenerate with `python3 tools/theseus/export_names.py` after rerunning the
 pipeline. Look up an address with `grep -i 82676A30 docs/re/NAMES_EVIDENCE.tsv`.
 
+## In Ghidra (N3b, done)
+
+3,513 of the names are applied in the Ghidra project (2026-11-15), each with a plate
+comment `Naming pass N3b (docs/re/NAMES_EVIDENCE.tsv): rule=…, confidence=…`. Names
+containing `::` are plain names in the global namespace (the decompiler prints `::` as
+`__`). Source type IMPORTED, so a hand rename overrides them. 1,006 were skipped because
+Ghidra has no function at that address (mostly Lua bindings reached only by pointer).
+Undo: `tools/theseus/ghidra/apply_names.sh revert` (uses
+[`NAMES_GHIDRA_REVERT.tsv`](NAMES_GHIDRA_REVERT.tsv); only touches functions that still
+carry the applied name).
+
 ## Next
 
 Originally planned: record the 4,519 record-ready names as a reference table in `docs/re/` (address,

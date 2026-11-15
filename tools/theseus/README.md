@@ -2,8 +2,8 @@
 
 Offline tools for the "Ship of Theseus" work: inventory every recompiled guest
 function, gather naming evidence from the binary, and prove readable rewrites
-equivalent to the original. Nothing here changes the game build, Ghidra or the
-manifest. Plans: [THESEUS_PILOT](../../plans/THESEUS_PILOT.md),
+equivalent to the original. Nothing here changes the game build or the manifest; only
+`ghidra/apply_names.sh` writes to Ghidra (with a backup and a revert list). Plans: [THESEUS_PILOT](../../plans/THESEUS_PILOT.md),
 [RE_NAMING_PASS](../../plans/RE_NAMING_PASS.md). Results:
 [THESEUS_INVENTORY](../../docs/analysis/THESEUS_INVENTORY.md),
 [NAMING_EVIDENCE_RESULTS](../../docs/analysis/NAMING_EVIDENCE_RESULTS.md).
@@ -18,6 +18,7 @@ manifest. Plans: [THESEUS_PILOT](../../plans/THESEUS_PILOT.md),
 | 2c. STL containers | `python3 tools/theseus/containers.py` | `containers.jsonl` | ~15 s |
 | 3. Naming evidence | `python3 tools/theseus/evidence.py` | `names.jsonl`, `names_summary.json` | ~1 s |
 | 4. Reference table | `python3 tools/theseus/export_names.py` | `docs/re/NAMES_EVIDENCE.tsv` (tracked) | ~1 s |
+| 5. Apply to Ghidra (writes!) | `tools/theseus/ghidra/apply_names.sh` (`revert` to undo) | Ghidra project; `docs/re/NAMES_GHIDRA_REVERT.tsv` | ~10 s; stops/restarts `ghidra-mcp`, backs up first |
 | Rewrite check | `python3 tools/theseus/difftest.py <function>` | `difftest/<function>/result.txt` | ~1 min |
 | Caller check | `python3 tools/theseus/caller_usage.py <function>` | printed | ~10 s |
 

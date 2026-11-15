@@ -8,7 +8,7 @@ Multi-session work plans. Each plan says at the top whether it is active or done
 |---|---|
 | [STEAMDECK_SESSIONS.md](STEAMDECK_SESSIONS.md) | Steam Deck performance. 30 FPS at the test spot since 2026-11-15; the busy view (~28) is next. Start at its "Next session prompt". |
 | [THESEUS_PILOT.md](THESEUS_PILOT.md) | Ship of Theseus pilot: rewrite ~20 small functions as readable, differentially tested C++ to judge whether it scales. Tools and function #1 done offline. |
-| [RE_NAMING_PASS.md](RE_NAMING_PASS.md) | Name and place functions from evidence in the binary (profiler strings, assert paths, RTTI vtables). First run done (596 new names, library map); next is review (N2). |
+| [RE_NAMING_PASS.md](RE_NAMING_PASS.md) | Name and place functions from evidence in the binary (profiler strings, assert paths, RTTI vtables). Reviewed names recorded (`docs/re/NAMES_EVIDENCE.tsv`) and 3,513 applied in Ghidra (N3b); next is N5 (LLM-assisted naming). |
 
 ## Done ([done/](done/))
 
