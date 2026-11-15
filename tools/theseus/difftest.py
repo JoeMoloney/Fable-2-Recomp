@@ -11,7 +11,9 @@ the harness has no other guest functions or kernel imports to link against.
 
 Optional input rules: tools/theseus/rewrites/<name>.rules, one register per
 line (`r3 ptr`, `r4 ptr_or_null`, `r5 len 256`, `r6 int`, `r7 u32`, `r8 any`,
-`#` comments). Without it every argument register gets a random mix.
+`#` comments), and `mem32 <addr> <kind> [max]` to set a 32-bit global (e.g. a
+table pointer) before each case. Without it every argument register gets a
+random mix and all memory outside the windows is zero.
 """
 import argparse
 import re
@@ -49,10 +51,16 @@ KINDS = {"ptr": "kPtr", "ptr_or_null": "kPtrOrNull", "len": "kLen", "int": "kInt
 
 def rules_inc(path):
     """Turn a .rules file into the C++ kRules table for the harness."""
-    rows = []
+    rows, mems = [], []
     for n, line in enumerate(path.read_text().splitlines(), 1):
         words = line.split("#", 1)[0].split()
         if not words:
+            continue
+        if words[0] == "mem32":
+            if len(words) < 3 or words[2] not in KINDS:
+                sys.exit(f"{path}:{n}: expected 'mem32 <addr> <{'|'.join(KINDS)}> [max]'")
+            maxv = int(words[3], 0) if len(words) > 3 else 0
+            mems.append(f"{{{int(words[1], 0):#x}u, {KINDS[words[2]]}, {maxv}u}}")
             continue
         m = re.fullmatch(r"r(\d+)", words[0])
         if not m or not 3 <= int(m.group(1)) <= 10 or len(words) < 2 or words[1] not in KINDS:
@@ -61,7 +69,10 @@ def rules_inc(path):
             sys.exit(f"{path}:{n}: len needs a max between 1 and 0x8000 (the pointer room)")
         maxv = int(words[2], 0) if len(words) > 2 else 0
         rows.append(f"{{{m.group(1)}, {KINDS[words[1]]}, {maxv}u}}")
-    return "const ArgRule kRules[] = {" + ", ".join(rows) + "};\n"
+    rows = rows or ["{0, kAny, 0u}"]
+    mems = mems or ["{0u, kAny, 0u}"]
+    return ("const ArgRule kRules[] = {" + ", ".join(rows) + "};\n"
+            "const MemRule kMemRules[] = {" + ", ".join(mems) + "};\n")
 
 
 def main():

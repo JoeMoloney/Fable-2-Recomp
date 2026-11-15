@@ -32,15 +32,15 @@ scratch registers may differ only if `caller_usage.py` shows no caller reads the
 | # | Function | Size / callers | Why | Status |
 |---|---|---|---|---|
 | 1 | `FNV1Hash_821F3C28` | 22 / 2,167 | FNV-1 hash | ✅ offline: ABI pass, r3 exact, negative control caught |
-| 2 | `HashCstring_82188CF0` | 19 / 282 | string hash | |
-| 3 | `StrCmpIgnoreCase_82CA6320` | 21 / 211 | C runtime | |
-| 4 | `StrCmp_Signed_8226D7A8` | 21 / 169 | C runtime | |
+| 2 | `HashCstring_82188CF0` | 19 / 282 | string hash || ✅ offline 2026-11-15: x65599 hash (signed chars, includes terminator, max 100 bytes); ABI pass, r3 exact 64-bit (8 callers read 64-bit); negative control caught |
+| 3 | `StrCmpIgnoreCase_82CA6320` | 21 / 211 | C runtime || ✅ offline 2026-11-15: `_stricmp` (ASCII folding only); ABI pass, r3 exact; negative control caught |
+| 4 | `StrCmp_Signed_8226D7A8` | 21 / 169 | C runtime || ✅ offline 2026-11-15: strcmp on signed chars, returns -1/0/1; ABI pass, r3 exact; negative control caught |
 | 5 | `StringCopyN_822CD828` | 23 / 56 | writes memory: needs input rules | ✅ offline 2026-11-15: it is `strncpy`; rules file; ABI pass (200k, touched-page check), r3 exact, no caller reads scratch (11 sites "unclear"); negative controls caught (no zero-fill 98%, off-by-one 1.6% of cases) |
 | 6 | `FindSubstring_821E6388` | 31 / 51 | C runtime | |
-| 7 | `FindChar_82CA3980` | 15 / 46 | C runtime | |
-| 8 | `StrLenUTF16_8217AB30` | 9 / 44 | 16-bit loads | |
+| 7 | `FindChar_82CA3980` | 15 / 46 | C runtime || ✅ offline 2026-11-15: `strchr` (char compared as full int; found address only replaces r3's low 32 bits, kept); ABI pass, r3 exact; negative control caught |
+| 8 | `StrLenUTF16_8217AB30` | 9 / 44 | 16-bit loads || ✅ offline 2026-11-15: `wcslen` for 16-bit chars; ABI pass, r3 exact (11 callers read 64-bit); negative control caught |
 | 9 | `MemSet_SdkRuntime_82CA3190` | 40 / 479 | writes memory: needs input rules | |
-| 10 | `Ctype_Pred_Bit2_82CA6B10` | 7 / 48 | table lookup | |
+| 10 | `Ctype_Pred_Bit2_82CA6B10` | 7 / 48 | table lookup || ✅ offline 2026-11-15: `isdigit` via the ctype table pointer at 0x832EF350 (_DIGIT 0x4); needed the new `mem32` rule (first negative control passed with a zero table); ABI pass, r3 exact; negative control caught |
 | 11 | `FindChainRoot_82A596F0` | 41 / 62 | pointer chasing | |
 | 12 | `FindTreeLeaf_825CB448` | 39 / 51 | pointer chasing | |
 | 13 | `GrowAndZeroBuffer_82BC55B8` | 29 / 72 | writes memory | |
@@ -57,7 +57,7 @@ scratch registers may differ only if `caller_usage.py` shows no caller reads the
 | Unit | Task | Status |
 |---|---|---|
 | T0 | Inventory, difftest + caller tools, function #1 | ✅ 2026-11-15 (offline) |
-| T1 | Harness: per-function input rules (which registers are pointers/lengths/counts) and compare **every touched page** (not just the windows) so stray writes are caught. Needed before #5, #9, #13. | ✅ 2026-11-15: `rewrites/<name>.rules` (`r3 ptr`, `r5 len 256`, `int`, `u32`, `ptr_or_null`, `any`); every page either run touched (mincore) compared every 1,000 cases and at the end (outside-window memory is never reset, so a differing stray write stays visible). Tested: a rewrite with a stray write at 0x20001234 passes the old window check but FAILS the new one (page 0x20001000); FNV1Hash still PASS-ABI. Next: #5 StringCopyN with rules. |
+| T1 | Harness: per-function input rules (which registers are pointers/lengths/counts) and compare **every touched page** (not just the windows) so stray writes are caught. Needed before #5, #9, #13. | ✅ 2026-11-15: `rewrites/<name>.rules` (`r3 ptr`, `r5 len 256`, `int`, `u32`, `ptr_or_null`, `any`); every page either run touched (mincore) compared every 1,000 cases and at the end (outside-window memory is never reset, so a differing stray write stays visible). Tested: a rewrite with a stray write at 0x20001234 passes the old window check but FAILS the new one (page 0x20001000); FNV1Hash still PASS-ABI. Next: #5 StringCopyN with rules. Later the same day: `mem32 <addr> <kind>` rule for globals (table pointers). |
 | T2 | Functions 2–10 (strings, C runtime) | |
 | T3 | Functions 11–17 (pointers, float/vector; check FP exactness, see the AVX/FMA lesson in `docs/analysis/ARITHMETIC_AND_NATIVE_MEMORY_RESULTS.md`) | |
 | T4 | Functions 18–20 with naming; record name + evidence in `docs/re/RE_FINDINGS.md` style | |

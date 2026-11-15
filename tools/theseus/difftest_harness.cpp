@@ -25,6 +25,9 @@
 //   r4 int        any sign-extended 32-bit value
 //   r6 ptr_or_null, r7 any (64-bit), r8 u32
 // Registers without a rule get the default random mix.
+//   mem32 0x832EF350 ptr   sets a 32-bit global (big-endian) before each case,
+//                          e.g. a table pointer, so the function sees real data
+//                          instead of the harness's all-zero memory.
 #include "fable_2_pch.h"
 
 #include <cstdio>
@@ -57,10 +60,12 @@ uint8_t* map_guest() {
 
 enum Kind { kPtr, kPtrOrNull, kLen, kInt, kU32, kAny };
 struct ArgRule { int reg; Kind kind; uint32_t max; };
+struct MemRule { uint32_t addr; Kind kind; uint32_t max; };
 #ifdef HAS_RULES
 #include "difftest_rules.inc"
 #else
 const ArgRule kRules[] = {{0, kAny, 0}};  // r0: never an argument, so unused
+const MemRule kMemRules[] = {{0, kAny, 0}};  // address 0: unused
 #endif
 
 uint64_t ruled_value(Rng& r, const ArgRule& rule) {
@@ -156,6 +161,14 @@ int main(int argc, char** argv) {
     std::memcpy(mem_a + kStackTop - kStackSize, stack.data(), kStackSize);
     std::memcpy(mem_b + kStackTop - kStackSize, stack.data(), kStackSize);
 
+    for (const MemRule& m : kMemRules) {
+      if (!m.addr) continue;
+      const uint32_t v = uint32_t(ruled_value(rng, {0, m.kind, m.max}));
+      const uint8_t be[4] = {uint8_t(v >> 24), uint8_t(v >> 16), uint8_t(v >> 8), uint8_t(v)};
+      std::memcpy(mem_a + m.addr, be, 4);
+      std::memcpy(mem_b + m.addr, be, 4);
+    }
+
     PPCContext init{};
     auto* bytes = reinterpret_cast<uint8_t*>(&init);
     for (size_t i = 0; i < sizeof(init); ++i) bytes[i] = uint8_t(rng.next());
@@ -217,7 +230,7 @@ int main(int argc, char** argv) {
   if (first_stray_scan >= 0)
     std::printf(" first_at_page=0x%08x by_case<=%ld", first_stray_page, first_stray_scan);
   std::printf(" (all touched pages compared every %ld cases)\n", kScanEvery);
-  std::printf("rules=%s\n", sizeof(kRules) / sizeof(kRules[0]) > 1 || kRules[0].reg ? "yes" : "none");
+  std::printf("rules=%s\n", sizeof(kRules) / sizeof(kRules[0]) > 1 || kRules[0].reg || kMemRules[0].addr ? "yes" : "none");
   const bool fail = abi_bad || stray_pages;
   std::printf("RESULT %s\n", fail ? "FAIL" : (strict_bad ? "PASS-ABI" : "PASS-STRICT"));
   return fail ? 1 : 0;
