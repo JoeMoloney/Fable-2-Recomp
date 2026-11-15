@@ -90,6 +90,15 @@ The current work lives in `plans/STEAMDECK_SESSIONS.md` (Deck, 30 FPS since
   before the splash screens, the main menu sitting at exactly 30, and one
   Deck freeze during a Steam update.
 
+### Linux black hero/dog skin with realtime texture morphing (resolved)
+On Oct 24, `realtime_texture_morphing = true` left the hero's and dog's skin black on
+Linux/Vulkan (the readback fallback worked). It has since been fixed: the user
+confirmed normal skin on Linux in Nov with realtime morphing on and readback off.
+The likely fix is SDK commit `6e79e20` "Fix Vulkan texture fetch exponent adjustment
+word" (`spirv_translator_fetch.cpp`, Oct 24 evening), but that hasn't been proven.
+The investigation note (`plans/linux-vulkan-realtime-morph-investigation.md`)
+was deleted in the cleanup.
+
 ### Local model trial (Bonsai)
 `ollama/bonsai-2:27b` was tried as a read-only reviewer. It was useful for
 finding things in the source and as a checklist, but its first design proposal

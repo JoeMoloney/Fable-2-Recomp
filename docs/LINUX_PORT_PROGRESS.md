@@ -5,11 +5,17 @@
 Native Linux/Wayland Vulkan boot, interactive menus and a user-tested new-game
 session with controller input work with `--async_shader_compilation=false`.
 Continue loading the existing save, intro skip and in-game cutscene playback
-are user-verified. Some hitching/visual anomalies and an earlier allocator
-diagnostic remain; audio, persistence of new saves and stable long-session
-performance are not yet verified. Earlier "pending" entries below
-are chronological experiment notes, not the latest status. Start with the
+are user-verified. The user also confirmed no missing dialogue or music;
+effects/mix/channel correctness were not separately certified. Some hitching/
+visual anomalies and an earlier allocator diagnostic remain; persistence of
+new saves and stable long-session performance are not yet verified. Earlier
+"pending" entries below are chronological experiment notes, not the latest status. Start with the
 [portable Linux workflow](LINUX.md) for current setup/run commands.
+
+The [canonical RE status](RE_STATUS.md) and [migration record](RE_MIGRATION.md)
+supersede the former standalone-runtime development queue. This document keeps
+the dated Linux experiments below as history; migration documentation is not
+a new gameplay test.
 
 ## Goal
 

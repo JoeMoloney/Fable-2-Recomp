@@ -153,8 +153,9 @@ not, by themselves, game crashes.
   error-free.
 - Continue successfully loaded the existing save into early gameplay. The
   pre-test Hero save files were unchanged afterward, so persistence/reload of
-  newly earned progress is not yet verified. Audio endpoint initialization is
-  logged; audible/correct sound still needs explicit confirmation.
+  newly earned progress is not yet verified. The user confirmed no missing
+  dialogue or music; sound effects, mix and channel correctness have not been
+  separately certified.
 - Long sessions, cinematics and repeatable startup need more testing. An idle
   cinematic freeze was suspected, but a later run returned from the idle
   cinematic with controller A and loaded Continue. A hard-lock cause is not

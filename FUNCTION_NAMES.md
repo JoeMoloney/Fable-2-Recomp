@@ -1,8 +1,16 @@
 # Fable 2 (ReXGlue) — Function Names & Reference
 
-Every `[entrypoint.functions]` entry in `fable_2_manifest.toml` now carries a `name` field. This document explains each one: what it does, its name, and how it is triggered.
+This is a historical reference for an earlier set of **520** named functions,
+not an exhaustive catalog of the current manifest. On 2026-10-24 the manifest
+contained **5,049** explicitly named `[entrypoint.functions]` entries. Neither
+count is the total number of functions in the game.
 
-**Total functions named: 520** (no entrypoint was removed).
+Names, role descriptions, confidence labels and address-region classifications
+below are analysis annotations, not independently verified facts for every
+entry. In-game correlation alone does not prove that a shared virtual thunk is
+specific to a story event. Use the manifest for current symbols and
+[reconciled RE findings](docs/RE_FINDINGS.md) for audited corrections; do not
+bulk-import these descriptions into Ghidra as established semantics.
 
 ## How these were determined
 
@@ -5465,4 +5473,3 @@ _Functions with real code but no resolved import or strong signature (many are m
 - **Trigger:** Internal call — reached as part of normal engine/SDK operation, no direct player action.
 
 - **Calls:** `sub_831DF3D0`
-
