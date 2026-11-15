@@ -14,6 +14,11 @@ Rules (each proposal carries its evidence so a reviewer can check it):
   lua binding    The function registered for a Lua script name (lua_bindings.py):
                  "Lua_<Table>_<Name>", high when name and function are passed in the
                  same call, medium when the name was loaded just before.
+  lua helper     One level deeper: a callee used by no other binding that is the only
+                 real callee of a thin binding, or whose callers are only that
+                 binding, is "LuaHelper_<Table>_<Name>" (low: often generic container
+                 code, not the implementation) and gets module lua:<Table>.
+                 Callees shared by 8+ bindings are Lua glue (argument readers etc.).
   method string  A string like "CFleeAgent::ComputeDestination" (profiler zone;
                  Havok timer prefixes Tt/Lt/St/Et stripped) referenced by exactly
                  one function names that function: high. By 2-3: medium each.
@@ -142,6 +147,8 @@ def main():
                 note(a, library=lib, evidence=f"library-prefixed string {value[:60]!r}")
             stats["library_hint_strings"] += 1
 
+    funcs_by_name = {r["name"]: r for r in funcs.values()}
+
     # Lua script bindings (tools/theseus/lua_bindings.py): the C++ function that
     # implements a script-visible name. Run lua_bindings.py first to include them.
     lua_path = OUT / "lua_bindings.jsonl"
@@ -153,6 +160,46 @@ def main():
                  evidence=f"Lua binding {table}.{b['lua_name']} registered by {b['registrar']} "
                           f"via {b['helper']} ({b['pairing']})")
             stats["lua_bindings"] += 1
+
+        # One level deeper (N4b): most bindings are thin wrappers that read their
+        # Lua arguments with shared "glue" helpers and call one real function.
+        GLUE = 8          # a callee used by this many bindings is shared Lua glue
+        THIN = 40         # bindings up to this many instructions count as thin wrappers
+        bound = {}
+        for b in load_jsonl(lua_path):
+            bound.setdefault(b["function"], b)
+        used_by = Counter(c for f in bound if f in funcs_by_name for c in set(funcs_by_name[f]["callees"]))
+        glue = {c for c, k in used_by.items() if k >= GLUE}
+        stats["lua_glue_functions"] = len(glue)
+        for fname, b in bound.items():
+            f = funcs_by_name.get(fname)
+            if f is None:
+                continue
+            table, lua = b.get("table") or "unknown", b["lua_name"]
+            real = [c for c in dict.fromkeys(f["callees"]) if c not in glue and c not in bound
+                    and c in funcs_by_name and used_by[c] == 1]
+            for c in real:
+                cf = funcs_by_name[c]
+                others = [x for x in cf["callers"] if x not in bound]
+                exclusive = not others
+                thin_only = f["insns"] <= THIN and len(real) == 1
+                if exclusive or thin_only:
+                    # Spot checks (2026-11-15): 1 of 3 was the real work (a line-of-sight
+                    # query); 2 were generic container code (map find-or-insert,
+                    # vector push_back) used by only this binding. So: "helper used by",
+                    # low confidence; the lua:<Table> module tag is the reliable part.
+                    note(cf["addr"], name=(f"LuaHelper_{table}_{lua}", "low"), module=f"lua:{table}",
+                         evidence=f"helper used by Lua {table}.{lua}: called by its binding {fname}"
+                                  + (" (thin wrapper)" if thin_only else "")
+                                  + (f"; also called by {len(others)} non-Lua function(s)" if others else "; no other callers"))
+                    stats["lua_helper_named"] += 1
+                else:
+                    note(cf["addr"], module=f"lua:{table}",
+                         evidence=f"called by Lua binding {table}.{lua} ({fname}) and {len(others)} other(s)")
+                    stats["lua_impl_context"] += 1
+        for c in glue:
+            if c in funcs_by_name:
+                note(funcs_by_name[c]["addr"], evidence=f"Lua glue: called by {used_by[c]} Lua bindings")
 
     # A function can sit in several vtables: an inherited, not-overridden method
     # appears at the same slot in each subclass; one function in several slots

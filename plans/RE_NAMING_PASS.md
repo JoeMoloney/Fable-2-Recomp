@@ -1,7 +1,7 @@
 # Evidence-based naming pass (multi-session plan)
 
-Started 2026-11-15. **STATUS: N1 + N4 done 2026-11-15: 7,489 functions with evidence, 2,959 proposed names
-(2,491 from Lua bindings), ~4,700 library functions identified. Results: [NAMING_EVIDENCE_RESULTS.md](../docs/analysis/NAMING_EVIDENCE_RESULTS.md). Next: N2 review.**
+Started 2026-11-15. **STATUS: N1 + N4 + N4b done 2026-11-15: 8,468 functions with evidence, 3,268 proposed names
+(2,491 from Lua bindings), 3,643 functions mapped to a gameplay system, ~4,700 library functions identified. Results: [NAMING_EVIDENCE_RESULTS.md](../docs/analysis/NAMING_EVIDENCE_RESULTS.md). Next: N2 review.**
 
 **Goal:** name and place as much of the game's code as the binary itself proves,
 before any guessing: exact method names from profiler strings, source file and
@@ -70,7 +70,7 @@ through the manifest. `THESEUS_OUT=<dir>` runs it on a test folder.
 | N2 | Review: all conflicts + a random sample of high-confidence names; confirm/reject the Kaim hypothesis for the `C…Agent`/path-finder classes; parse RTTI class-hierarchy descriptors (exact defining class for inherited vtable slots); ingest memory-service Oct 31 `FUNCTION_MEANING` batches; write `docs/re/NAMES_EVIDENCE.md` | |
 | N3 | Record accepted names: a `docs/re/` mapping file now; Ghidra renames only with the user's OK; manifest renames are a separate decision (they change generated symbol names used by hotfuncs) | |
 | N4 | Phase 2: find the Lua binding tables (script name → C function) and add them as evidence | ✅ 2026-11-15 (done before N2): `tools/theseus/lua_bindings.py`, 2,491 bindings, validated 768/777 vs strict pairs, 0 wrong |
-| N4b | Spread Lua names one level deeper: functions called only from one binding are its implementation ("impl of Village.X"); same for a binding's main callee | |
+| N4b | Spread Lua names one level deeper | ✅ 2026-11-15: "implementation" naming failed spot checks (2 of 3 were container templates) → `LuaHelper_` (low) + reliable `lua:<Table>` module tags; 3,643 functions mapped to a gameplay system; 108 Lua glue helpers found |
 | N5 | Phase 3: remaining strings + module context as input to LLM-suggested names for the rest, reviewed by sample | |
 
 ## Run it (N1)

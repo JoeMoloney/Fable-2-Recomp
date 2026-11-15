@@ -104,6 +104,40 @@ returns a query result or 0. Both match their names.
 (2,915 for unnamed functions, 1,721 high); meaningful names went from ~1.5% of the
 code to ~5%, plus ~6.5% identified as third-party library code.
 
+## One level deeper (N4b)
+
+Bindings are mostly thin wrappers: 1,189 of 2,357 are under 20 instructions. They
+read Lua arguments through shared **glue** helpers (108 callees used by 8+
+bindings: refcounting, hashing, allocation and unnamed argument readers/pushers)
+and call real functions. Some bindings register the C++ method directly, so
+the binding *is* the gameplay function (e.g. `Navigation.SetMovementPaused`).
+
+First attempt: name a callee "the implementation" (`LuaImpl_…`, medium) when it
+is the only real callee of a thin binding or is called by nothing but that
+binding. **Ghidra spot checks rejected that:** of 3 sampled, only
+`Village.IsLineOfSight` → 0x82455E40 was the real work (query + virtual call,
+returns "nothing in the way"); `Debug.SetBulletTime` → 0x82748DA8 was a map
+find-or-insert and `QuestTracker.SetObjectiveTagSilently` → 0x826011D8 a vector
+push_back. Template container code is compiled separately for each use, so "used
+by one binding" doesn't mean "implements it". Now: `LuaHelper_<Table>_<Name>`
+(**low**: "a helper used by"), 309 functions. The reliable output is the
+**`lua:<Table>` module tag**: 465 more callees get it as context, and call-graph
+spreading extends it.
+
+### Gameplay system map (by Lua table)
+
+3,643 functions (262,831 instructions) carry a Lua-table tag. Largest: Debug 521,
+Dog 187, GUI 166, OpinionReaction 153, CombatStyles 102, Village 100, Player 91,
+QuestTracker 89, PlayerFamily 84, SearchTools 83, Navigation 79, Stats 76,
+Breadcrumber 73, Multiplayer 69, XboxLive 65, Combat 64, VillageCrimeManager 64,
+GroupEvent 59, SpellManager 57, Camera 53, Inventory 47, Creature 42, Carrying 41.
+Unlike the libraries, **game systems are not contiguous in the binary** (Dog code
+spans 0x82174238–0x82CBC600), so the per-system function list (`module` field in
+`names.jsonl`) is the useful view, not an address range.
+
+**Totals after N4b:** 8,468 functions with evidence; 3,268 proposed names (1,721
+high, 1,238 medium, 309 low); 4,934 with a module tag.
+
 ## Next
 
 Spread Lua names one call deeper (the bindings are thin wrappers; the gameplay
