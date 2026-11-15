@@ -1,0 +1,5 @@
+# strncpy(dst, src, count)
+r3 ptr        # destination
+r4 ptr        # source (may overlap the destination, as in the window)
+r5 len 600    # count; random strings in the window are ~12 bytes long, so most
+              # cases also test the zero-fill part

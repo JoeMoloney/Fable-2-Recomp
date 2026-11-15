@@ -35,7 +35,7 @@ scratch registers may differ only if `caller_usage.py` shows no caller reads the
 | 2 | `HashCstring_82188CF0` | 19 / 282 | string hash | |
 | 3 | `StrCmpIgnoreCase_82CA6320` | 21 / 211 | C runtime | |
 | 4 | `StrCmp_Signed_8226D7A8` | 21 / 169 | C runtime | |
-| 5 | `StringCopyN_822CD828` | 23 / 56 | writes memory: needs input rules | |
+| 5 | `StringCopyN_822CD828` | 23 / 56 | writes memory: needs input rules | ✅ offline 2026-11-15: it is `strncpy`; rules file; ABI pass (200k, touched-page check), r3 exact, no caller reads scratch (11 sites "unclear"); negative controls caught (no zero-fill 98%, off-by-one 1.6% of cases) |
 | 6 | `FindSubstring_821E6388` | 31 / 51 | C runtime | |
 | 7 | `FindChar_82CA3980` | 15 / 46 | C runtime | |
 | 8 | `StrLenUTF16_8217AB30` | 9 / 44 | 16-bit loads | |
