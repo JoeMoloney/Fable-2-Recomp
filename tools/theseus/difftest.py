@@ -11,7 +11,7 @@ the harness has no other guest functions or kernel imports to link against.
 
 Optional input rules: tools/theseus/rewrites/<name>.rules, one register per
 line (`r3 ptr`, `r4 ptr_or_null`, `r5 len 256`, `r6 int`, `r7 u32`, `r8 any`,
-`#` comments), and `mem32 <addr> <kind> [max]` to set a 32-bit global (e.g. a
+`#` comments; `r4 near r3 32` = half the time r3 + 0..32), and `mem32 <addr> <kind> [max]` to set a 32-bit global (e.g. a
 table pointer) before each case. Without it every argument register gets a
 random mix and all memory outside the windows is zero.
 """
@@ -61,6 +61,12 @@ def rules_inc(path):
                 sys.exit(f"{path}:{n}: expected 'mem32 <addr> <{'|'.join(KINDS)}> [max]'")
             maxv = int(words[3], 0) if len(words) > 3 else 0
             mems.append(f"{{{int(words[1], 0):#x}u, {KINDS[words[2]]}, {maxv}u}}")
+            continue
+        if len(words) == 4 and words[1] == "near":
+            base = re.fullmatch(r"r(\d+)", words[2])
+            if not re.fullmatch(r"r([3-9]|10)", words[0]) or not base or not 3 <= int(base.group(1)) <= 10:
+                sys.exit(f"{path}:{n}: expected 'rN near rM <max>'")
+            rows.append(f"{{{words[0][1:]}, kNear, {int(words[3], 0)}u, {base.group(1)}}}")
             continue
         m = re.fullmatch(r"r(\d+)", words[0])
         if not m or not 3 <= int(m.group(1)) <= 10 or len(words) < 2 or words[1] not in KINDS:

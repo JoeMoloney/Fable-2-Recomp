@@ -1,0 +1,4 @@
+# strstr(haystack, needle): half the cases put the needle inside the haystack
+# (its tail), so the "found" path is exercised, not just "not found"
+r3 ptr
+r4 near r3 32

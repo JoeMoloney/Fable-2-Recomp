@@ -57,7 +57,8 @@ def scratch_reads(lines):
         if s.startswith("loc_") or "goto " in s or s.startswith("goto") or s == "return;" \
                 or re.match(r"^\w+\(ctx, base\);", s):
             break
-        cmp = re.match(r"ctx\.(cr\d)\.compare<[^>]*>\((.*), ctx\.xer\);", s)
+        # Integer compares: compare<T>(a, b, ctx.xer); float compares: compare(a, b).
+        cmp = re.match(r"ctx\.(cr\d)\.compare(?:<[^>]*>)?\((.*?)(?:, ctx\.xer)?\);$", s)
         if cmp:
             # A compare writes its CR field and reads only XER's sticky SO bit,
             # which a rewrite that never touches XER leaves unchanged.

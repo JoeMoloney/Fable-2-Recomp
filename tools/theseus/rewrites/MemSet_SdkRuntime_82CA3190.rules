@@ -1,0 +1,4 @@
+# memset(dst, value, count)
+r3 ptr
+r4 any         # only the low byte is used
+r5 len 4096    # long enough for every path (align, 16-byte blocks, words, tail)

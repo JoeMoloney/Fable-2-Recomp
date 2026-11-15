@@ -24,6 +24,8 @@
 //   r5 len 256    0..256
 //   r4 int        any sign-extended 32-bit value
 //   r6 ptr_or_null, r7 any (64-bit), r8 u32
+//   r4 near r3 32 half the time r3 + 0..32 (e.g. a needle inside the haystack),
+//                 otherwise a normal pointer (rules apply in file order)
 // Registers without a rule get the default random mix.
 //   mem32 0x832EF350 ptr   sets a 32-bit global (big-endian) before each case,
 //                          e.g. a table pointer, so the function sees real data
@@ -58,8 +60,8 @@ uint8_t* map_guest() {
   return static_cast<uint8_t*>(p);
 }
 
-enum Kind { kPtr, kPtrOrNull, kLen, kInt, kU32, kAny };
-struct ArgRule { int reg; Kind kind; uint32_t max; };
+enum Kind { kPtr, kPtrOrNull, kLen, kInt, kU32, kAny, kNear };
+struct ArgRule { int reg; Kind kind; uint32_t max; int base = 0; };
 struct MemRule { uint32_t addr; Kind kind; uint32_t max; };
 #ifdef HAS_RULES
 #include "difftest_rules.inc"
@@ -178,7 +180,10 @@ int main(int argc, char** argv) {
     PPCRegister* args[] = {&init.r3, &init.r4, &init.r5, &init.r6,
                            &init.r7, &init.r8, &init.r9, &init.r10};
     for (const ArgRule& rule : kRules)
-      if (rule.reg >= 3 && rule.reg <= 10) args[rule.reg - 3]->u64 = ruled_value(rng, rule);
+      if (rule.reg >= 3 && rule.reg <= 10)
+        args[rule.reg - 3]->u64 = rule.kind == kNear && rng.below(2)
+            ? uint64_t(args[rule.base - 3]->u32 + rng.below(rule.max + 1))
+            : ruled_value(rng, rule);
     for (PPCRegister* f : {&init.f1, &init.f2, &init.f3, &init.f4})
       f->f64 = fp_value(rng);
     init.r1.u64 = kStackTop - 0x100;

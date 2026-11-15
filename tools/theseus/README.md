@@ -48,7 +48,8 @@ Rerun 1 and 3 after codegen or manifest changes; rerun 2 after big Ghidra change
   `--rewrite <file>` tests another file, e.g. a deliberately broken one.
   Optional `rewrites/<name>.rules` fixes what argument registers hold
   (`r3 ptr`, `r5 len 256`, `r4 ptr_or_null`, `int`, `u32`, `any`; `mem32 <addr> ptr`
-  sets a global such as a table pointer, which is otherwise zero). Besides the data
+  sets a global such as a table pointer, which is otherwise zero; `r4 near r3 32`
+  puts r4 inside r3's string half the time, e.g. a needle that will be found). Besides the data
   window and stack, every page either run touched is compared every 1,000 cases,
   so stray writes anywhere fail the test.
 - **`caller_usage.py`** checks what every call site does with r3 afterwards and
