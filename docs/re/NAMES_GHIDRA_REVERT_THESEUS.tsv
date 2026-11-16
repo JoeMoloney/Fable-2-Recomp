@@ -1,0 +1,21 @@
+addr	old_name	new_name	old_comment
+0x821F3C28	FUN_821f3c28	FNV1_Hash32	
+0x82188CF0	FUN_82188cf0	Hash_x65599_Cstring	
+0x82CA6320	FUN_82ca6320	_stricmp	
+0x8226D7A8	FUN_8226d7a8	strcmp_signed	
+0x822CD828	FUN_822cd828	strncpy	
+0x821E6388	FUN_821e6388	strstr	
+0x82CA3980	FUN_82ca3980	strchr	
+0x8217AB30	FUN_8217ab30	wcslen	
+0x82CA3190	FUN_82ca3190	memset	
+0x82CA6B10	FUN_82ca6b10	isdigit	
+0x82A596F0	std_tree_helper_82A596F0	MapIterator_Increment	
+0x825CB448	std_tree_helper_825CB448	MapU32_Find	
+0x82BC55B8	FUN_82bc55b8	lua_settop	
+0x82260BC8	FUN_82260bc8	NormalizeVec3InPlace	
+0x8222C3E8	FUN_8222c3e8	floor	
+0x82239E88	FUN_82239e88	cos	
+0x82210418	FUN_82210418	SetShaderConstantById	
+0x82D4F620	FUN_82d4f620	hkClass_Construct	
+0x82F6C2D0	std_vector_helper_82F6C2D0	GFx_GASFnCall_Arg	
+0x821E3E10	FUN_821e3e10	HashMapU32_Find	

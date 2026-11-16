@@ -50,7 +50,20 @@ Rerun 1 and 3 after codegen or manifest changes; rerun 2 after big Ghidra change
   (`r3 ptr`, `r5 len 256`, `r4 ptr_or_null`, `int`, `u32`, `any`; `mem32 <addr> ptr`
   sets a global such as a table pointer, which is otherwise zero; `r4 near r3 32`
   puts r4 inside r3's string half the time, e.g. a needle that will be found;
-  `mem32 @r3+8 ptr` sets a field of an argument's struct; `slen 64` = -64..64).
+  `mem32 @r3+8 ptr` sets a field of an argument's struct; `slen 64` = -64..64;
+  `tree 17 12` builds a valid MSVC `std::map` tree each case (isnil and key
+  offsets) for the kinds `tree_cont`, `tree_node`, `tree_key`; `data <addr> <hex>`
+  puts fixed bytes such as a float constant from the game image; `ret f1` makes
+  the float return value part of the ABI check; `fval <double>` adds an edge
+  value for float arguments; `r3 fixed 0x4000C000` / `mem32 <addr> fixed <v>` pin
+  a value, e.g. to place a struct in the window's last 16 KB; `mem32
+  *<global>+off <kind>` sets a field of the struct a global points to).
+  Float arguments mix specials, uniform -2048..2048 and log-uniform 2^-60..2^60.
+  FPU state: `ctx.fpscr` caches the host MXCSR; each case starts with them equal
+  (flush bits random) and the MXCSR control bits must match afterwards.
+  Traps (`ppc_trap`) only log, so the harness counts log calls and they must
+  match. The stack is compared only from r1 up: the red zone below it is dead
+  after a return, so differences there are strict-only.
   Keep pointed-to structs apart from the buffers they point at, or a write can
   corrupt a loop bound (see `rewrites/GrowAndZeroBuffer_82BC55B8.rules`). Besides the data
   window and stack, every page either run touched is compared every 1,000 cases,
@@ -61,6 +74,14 @@ Rerun 1 and 3 after codegen or manifest changes; rerun 2 after big Ghidra change
 **Rewrite contract:** identical full 64-bit r3, non-volatile registers
 (r1, r2, r13–r31, f14–f31, cr2–cr4, lr) and memory. Scratch registers may differ
 only when `caller_usage.py` shows no caller reads them.
+
+## In the game
+
+`src/core/hotfunc/theseus/<name>.cpp` turns a passing rewrite into a hotfunc
+override: it `#include`s `rewrites/<name>.cpp` (so the game runs exactly the
+tested code) and `THESEUS_OVERRIDE(<name>)` from `theseus_switch.h`.
+`--theseus_rewrites=false` runs the recompiled originals instead (A/B without a
+rebuild). New files are picked up by the hotfunc glob on the next build.
 
 ## Per-game settings
 

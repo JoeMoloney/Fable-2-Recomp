@@ -1,0 +1,5 @@
+# map.find(key) on a std::map<uint32_t, 4-byte value>: node key at +12, isnil at +21.
+tree 21 12
+r3 ptr          # where the returned iterator {container, node} is written
+r4 tree_cont    # the map: +4 head sentinel
+r5 tree_key     # pointer to the key (existing, +-1, or random)

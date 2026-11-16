@@ -110,3 +110,36 @@ supported. Do not infer a bank's purpose or middleware from `.bnk` alone.
 The catalog's completeness counts and all script registrations were not rerun
 during this migration. Other salvaged factory/property leads (memory 19) remain
 unverified rather than silently becoming repository facts.
+
+## Theseus pilot: functions identified by verified rewrites (2026-11-15/16)
+
+Each name below is backed by a readable rewrite in `tools/theseus/rewrites/`
+that matches the recompiled original on 200,000 random inputs (ABI level:
+r3, non-volatile registers, memory, FPU mode, trap count) plus negative
+controls. The behaviour is proven; the *role* names for #18–20 rest on the
+caller evidence given. Applied in Ghidra 2026-11-16 (revert list
+`docs/re/NAMES_GHIDRA_REVERT_THESEUS.tsv`); the manifest and generated code keep
+the old names.
+
+| # | Current name | Identified as | Proposed name | Evidence beyond the test |
+|---|---|---|---|---|
+| 1 | `FNV1Hash_821F3C28` | FNV-1 32-bit hash | (keep) | constants 0x811C9DC5 / 0x01000193 |
+| 2 | `HashCstring_82188CF0` | x65599 string hash (signed chars, max 100) | (keep) | |
+| 3 | `StrCmpIgnoreCase_82CA6320` | `_stricmp` (ASCII) | (keep) | |
+| 4 | `StrCmp_Signed_8226D7A8` | `strcmp` on signed chars, -1/0/1 | (keep) | |
+| 5 | `StringCopyN_822CD828` | `strncpy` | `strncpy` | |
+| 6 | `FindSubstring_821E6388` | `strstr` | `strstr` | |
+| 7 | `FindChar_82CA3980` | `strchr` | `strchr` | |
+| 8 | `StrLenUTF16_8217AB30` | `wcslen` (16-bit) | `wcslen` | |
+| 9 | `MemSet_SdkRuntime_82CA3190` | `memset` (unrolled CRT version) | `memset` | |
+| 10 | `Ctype_Pred_Bit2_82CA6B10` | `isdigit` via the ctype table at 0x832EF350 | `isdigit` | |
+| 11 | `FindChainRoot_82A596F0` | checked `std::map`/`set` iterator `++` | `MapIterator_Increment` | MSVC `_Tree` node layout, debug traps |
+| 12 | `FindTreeLeaf_825CB448` | `std::map<uint32_t, 4-byte>::find` | `MapU32_Find` | |
+| 13 | `GrowAndZeroBuffer_82BC55B8` | Lua 5.1 `lua_settop` | `lua_settop` | Lua state layout (top +8, base +12) |
+| 14 | `NormalizeVector_82260BC8` | normalise vec4 by xyz length if >= min; returns length | `NormalizeVec3InPlace` | |
+| 15 | `ComputeWrapped_8222C3E8` | `floor` (double) | `floor` | |
+| 16 | `ComputeSpecialFunction_82239E88` | `cos` (double, Cody-Waite + sine series) | `cos` | constant table 0x832EEA60 |
+| 17 | `ProcessAndProcessAndProcess619_82210418` | set a float4 shader constant by logical id | `SetShaderConstantById` | ID table `*0x834BDBC4`, device `*0x8336019C`, see PERF_INVESTIGATIONS_OCT_NOV_2026 |
+| 18 | `ProcessAndProcessAndProcess1728_82D4F620` | Havok `hkClass::hkClass` (reflection) | `hkClass_Construct` | 323 static-init callers; first builds class "hkClass" (strings at 0x820246FC: "hkClass", "describedVersion", "items") |
+| 19 | `sub_82F6C2D0` | Scaleform GFx `GASFnCall::Arg(n)` | `GFx_GASFnCall_Arg` | callers in GFx code; 0x82F11560 is AS2 `Math.abs`. Ghidra's `std_vector_helper_82F6C2D0` (stl_shape rule) is wrong |
+| 20 | `sub_821E3E10` | open-addressing `uint32 -> uint32` hash map find (0 = absent) | `HashMapU32_Find` | 0x8217E6D0 looks up `*0x83496BD0` with an FNV-1 id |

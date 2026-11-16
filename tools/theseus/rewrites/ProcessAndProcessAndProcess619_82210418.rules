@@ -1,0 +1,16 @@
+# SetShaderConstantById(id = r3, value = v1). Globals: 0x834BDBC4 = ID table
+# (12-byte entries: +0 register, +4 count), 0x83491598 = u64 enabled-register
+# mask, 0x8336019C = device (+0 u64 dirty mask, +1920 float4 constants).
+r3 len 3
+mem32 0x834BDBC4 ptr
+mem32 0x8336019C ptr
+mem32 0x83491598 u32          # enabled mask, high word
+mem32 0x8349159C u32          # enabled mask, low word
+mem32 *0x834BDBC4+0 slen 300  # entries 0..3: register (negative too: signed vs unsigned /4)
+mem32 *0x834BDBC4+4 slen 2    # count (< 1: skipped)
+mem32 *0x834BDBC4+12 slen 300
+mem32 *0x834BDBC4+16 slen 2
+mem32 *0x834BDBC4+24 slen 300
+mem32 *0x834BDBC4+28 slen 2
+mem32 *0x834BDBC4+36 slen 300
+mem32 *0x834BDBC4+40 slen 2

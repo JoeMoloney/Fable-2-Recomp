@@ -1,0 +1,3 @@
+# hkClass constructor: r3 = this (48 bytes); arguments in r4..r10 and 5 on the
+# caller's stack (r1+84..116, random stack bytes in the test)
+r3 ptr

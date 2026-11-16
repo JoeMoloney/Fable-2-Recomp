@@ -1,0 +1,11 @@
+# GFx GASFnCall::Arg(n): r3 = fn call {+24 env, +32 first-arg bottom index}, r4 = n.
+# The env's value stack is put at 0x4000C000: +8 page end, +12 page start,
+# +24 page table (at 0x4000E000, random page pointers), +28 page count.
+r3 ptr
+r4 slen 64
+mem32 @r3+24 fixed 0x4000C000
+mem32 @r3+32 len 200
+mem32 0x4000C008 slen 600      # (end - start) >> 4, negative too (srawi rounds down)
+mem32 0x4000C00C fixed 0
+mem32 0x4000C018 fixed 0x4000E000
+mem32 0x4000C01C len 6

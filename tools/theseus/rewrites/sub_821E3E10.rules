@@ -1,0 +1,18 @@
+# Open-addressing hash map lookup: r3 = map {+0 table}, r4 = key. The table is
+# put at 0x4000C000: +16 entries (at 0x4000D000, 8 bytes {key, value}),
+# +20 capacity 8. Keys 0..3 in the slots (0 = empty); slot 3 always empty so
+# every probe ends (the real map is never full; a full one loops forever) and
+# probes starting at slots 4-7 must wrap around to reach it.
+r3 ptr
+r4 len 7
+mem32 @r3+0 fixed 0x4000C000
+mem32 0x4000C010 fixed 0x4000D000
+mem32 0x4000C014 fixed 8
+mem32 0x4000D000 len 3
+mem32 0x4000D008 len 3
+mem32 0x4000D010 len 3
+mem32 0x4000D018 fixed 0       # slot 3
+mem32 0x4000D020 len 3
+mem32 0x4000D028 len 3
+mem32 0x4000D030 len 3
+mem32 0x4000D038 len 3

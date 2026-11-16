@@ -1,0 +1,5 @@
+# Normalize the vec4 at r3 by its xyz length if that length >= f1 (epsilon).
+r3 ptr
+data 0x820994B4 00000000   # 0.0f, returned when the vector is too short
+data 0x820994C0 3F800000   # 1.0f
+ret f1

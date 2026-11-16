@@ -1,0 +1,4 @@
+# floor(f1): constants from the game image (Ghidra 0x82000CB0, 0x82000CD8)
+data 0x82000CB0 3FF0000000000000   # 1.0
+data 0x82000CD8 43ABC16D674EC800   # 1e18: above this every double is an integer
+ret f1
