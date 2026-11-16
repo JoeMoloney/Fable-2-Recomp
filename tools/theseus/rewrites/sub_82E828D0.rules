@@ -1,0 +1,6 @@
+# Widths 1, 7, 13, 33 (33: bit 32 of the result is dropped); elements 0..20 of
+# random bytes at 0x4000C000. Width 0 would loop 2^32 times (as in the game).
+r3 ptr
+r4 len 20
+mem32 @r3+4 oneof 1 7 13 33
+mem32 @r3+8 fixed 0x4000C000

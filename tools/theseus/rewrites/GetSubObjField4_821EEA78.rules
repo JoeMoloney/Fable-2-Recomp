@@ -1,0 +1,3 @@
+# The sub-object pointer is null half the time, else a real struct in the window.
+r3 ptr
+mem32 @r3+0 fixed_or_null 0x4000C000

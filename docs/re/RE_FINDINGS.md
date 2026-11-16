@@ -181,3 +181,51 @@ name yet. The manifest and generated code keep the old names.
 | `ToLower_Ascii_821EE9E8` | ASCII `tolower` on a full 64-bit register | `tolower_ascii` | |
 | `GetPointerFromContext_82CC1C70` | `*(KPCR->CurrentThread + 0x160)`, 0 while KPCR+0x150 is set | `GetCurrentThreadField160` | reads r13 (the per-processor block) |
 | `ProcessAndProcessAndProcess878_82CA9E84` | MSVC `__chkstk` stack probe (r12 = -frame size) | `__chkstk` | rewrite is empty; callers rely on r4..r12 unchanged |
+
+## Theseus batch 2: functions identified by gated rewrites (2026-11-16)
+
+The next 50 of tier A (plans/THESEUS_BATCH.md B5), same gate as batch 1. 18 names
+applied in Ghidra 2026-11-16 (rows appended to `docs/re/NAMES_GHIDRA_REVERT_THESEUS.tsv`).
+
+| Current name | Identified as | Ghidra name | Evidence beyond the test |
+|---|---|---|---|
+| `ProcessAndProcessAndProcess1012_82CA6AB0` | CRT `isalpha` (`_pctype` & 0x103) | `isalpha` | `isdigit` already named at 0x82CA6B10; the 0x82CA6AB0.. block is MSVC's ctype order |
+| `sub_82CA6B30` | CRT `isxdigit` (& 0x80) | `isxdigit` | same block |
+| `Ctype_Pred_Bit3_82CA6B50` | CRT `isspace` (& 0x8) | `isspace` | same block |
+| `sub_82CA6B90` | CRT `isalnum` (& 0x107) | `isalnum` | same block |
+| `LookupMasked_8223F970` | CRT `isleadbyte` (locale info +200 ctype table & 0x8000) | `isleadbyte` |  |
+| `SearchStringForChar_82CA70C0` | CRT `strrchr` (keeps r3's high 32 bits) | `strrchr` |  |
+| `sub_82CA5E30` | CRT `memchr` (keeps r3's high 32 bits) | `memchr` |  |
+| `ProcessAndProcessAndProcess1694_82CA9A18` | CRT `wcscmp` (-1/0/1) | `wcscmp` (on the body at 0x82CA9A2C; 0x82CA9A18 is a branch into it) |  |
+| `sub_82FA3E68` | Gregorian leap year (4/100/400) | `IsLeapYear` |  |
+| `sub_830E71D8` | pack r,g,b,a bytes into 0xAARRGGBB | `PackColorRGBA` | D3DCOLOR layout |
+| `sub_824FDA50` | TutorialManager.HasDisplayedTutorial (id found and display count > 0) | (kept `Lua_TutorialManager_HasDisplayedTutorial`) | Lua binding registration |
+| `ProcessAndProcessAndProcess1419_823B0B10` | `std::vector<T*>::size()` (0 when first is null) | `std_vector4_size` |  |
+| `sub_827CE1E0` | bounds-checked first word of element i of a vector of 8-byte elements (debug assert repeats the check) | (none) |  |
+| `sub_831FC770` | count nodes of a circular intrusive list (sentinel at +12) | `List_Count` |  |
+| `sub_82D5A2C0` | open-addressing u32 hash set find (Fibonacci hash of key >> 4), slot index or capacity | `IntHashSet_FindIndex` | next to `IntHashMap_Get` (Havok region) |
+| `sub_82D4F340` | sum of element counts over a chunk chain | `ChunkList_TotalCount` | Havok region |
+| `sub_82D4F368` | element address by position counted from the end of a chunk chain (24-byte elements) | (none) | sibling of the above |
+| `HashTable_Find3_821CF1D0` | chained hash table find by key pointer (log2 bucket count), static end node 0x82090754 | (kept) |  |
+| `HashLookupByKey_82228570` | same with a plain bucket count, end node 0x82099760; walks the chain once for nothing first | (kept) |  |
+| `sub_8311A550` | first set bit >= r4 in a u64 bitmap, or -1 | `BitArray_FindFirstSet` |  |
+| `sub_8311C908` | bit field r4+1..r5+1 of a u32 bit array (inline or out-of-line storage) | `BitArray_GetBits` |  |
+| `sub_82E828D0` | element r4 of a packed w-bit array, bits read in reverse | (none) |  |
+| `ToUpper_SdkRuntime_821EEB10 / ToLower_Ascii_8217A980` | ASCII `toupper` (64-bit register) / wide ASCII `towlower` (WEOF passes through) | `toupper_ascii` / `towlower_ascii` |  |
+| others (22) | flag/type-code classifiers on a 7-bit code (bits 7..13 of +8: sub_8310F980, sub_8311C250, sub_8310FA10, sub_83110068, sub_83123CB8), node-list walks (sub_82ECD0F0, sub_82ECCFD0, sub_82ECD028), field getters and small lookups | (none) | see each rewrite's header |
+
+## Theseus batch 3: tier B (functions that store), identified by gated rewrites (2026-11-16)
+
+The top 25 of tier B (plans/THESEUS_BATCH.md B6). 17 names applied in Ghidra 2026-11-16
+(rows appended to `docs/re/NAMES_GHIDRA_REVERT_THESEUS.tsv`).
+
+| Current name | Identified as | Ghidra name | Evidence beyond the test |
+|---|---|---|---|
+| `ProcessAndValidateAndProcess3_8273F9D8`, `FindChainRoot2_823D4F20`, `ProcessAndProcessAndProcess1039_8273FAF8`, `FindChainRoot3_82A962B0` | MSVC checked `std::map`/`set` iterator `operator++` (isnil at +21/+25/+29/+33) | `MapIter_Inc_<addr>` | same code as the pilot's `FindChainRoot_82A596F0` (+17); 64..148 callers each |
+| `ProcessChain2_8250AF60`, `sub_82498700`, `FindChainRoot4_828836E8`, `ProcessAndProcessAndProcess2132_8273ACB8` | the same iterators' `operator--` (+21/+25/+33/+29) | `MapIter_Dec_<addr>` | |
+| `List_SpliceNode2_8292CC88`, `List_SpliceNode_827C6448` / `List_SpliceNode3_8234D600`, `sub_827C64C0` | `std::_Tree::_Lrotate` / `_Rrotate` (isnil +33 / +25) | `Tree_Lrotate_<addr>` / `Tree_Rrotate_<addr>` | the "splice" names were wrong |
+| `AccessElement8_82A1E620`, `GetIndexedPointer_82BC5448` | Lua 5.1 `index2adr` (two builds: `l_gt` +72/+68, `env` +80/+76, nilobject 0x82099760/0x82090754) | `lua_index2adr_<addr>` | LUA_GLOBALSINDEX/ENVIRONINDEX/REGISTRYINDEX = -10002/-10001/-10000, upvalues below; the two nilobjects are the end nodes of the two hash lookups in batch 2 |
+| `MemCpy_Aligned_82CA30E8` | CRT `memcpy` (bytes to align dst, words, tail) | `memcpy` | CRT block next to `memset` |
+| `ProcessAndProcessAndProcess1124_822641F0` | sorted vector of 12-byte `{key, value}` entries: `lower_bound`, value if the key matches, else 0 | `SortedVector_FindValue` | 145 callers |
+| `ProcessAndProcessAndProcess2518_82FFCAE8` | unoptimised (debug) pair constructor; spills its arguments into the caller's home slots | `Pair_Construct` | |
+| others (8) | constructors (`sub_830468D0`, `sub_830493B8`, `sub_82EF6FE0` with a magic-pair check, `sub_830795F0` reset), HRESULT field copy (`sub_83079640`: E_FAIL for null), flag-bit allocator (`sub_82E7CA00`), bit-field merge (`sub_83122F18`), distinct-value mask + popcount (`sub_831237D8`) | (none) | see each rewrite's header |

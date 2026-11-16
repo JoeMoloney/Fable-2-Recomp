@@ -1,0 +1,4 @@
+# Random bytes; c -300..300 (bytes, and values no byte can equal); n 0..64.
+r3 ptr
+r4 slen 300
+r5 len 64

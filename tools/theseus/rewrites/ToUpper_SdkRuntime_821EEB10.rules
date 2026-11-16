@@ -1,0 +1,2 @@
+# -200..200: both sides of a..z, negatives too.
+r3 slen 200

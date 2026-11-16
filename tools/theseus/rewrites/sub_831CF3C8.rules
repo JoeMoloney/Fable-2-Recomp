@@ -1,0 +1,9 @@
+# Start = 0x4000C001 (tag bit set: must be ignored). Elements N0 (0x4000C000),
+# N1 (+0x40), N2 (+0x80 = r4), N3 (+0xC0). Links: next element, end tag, or
+# 40 (-> element 0); N1 leads to N2 (found) or N3 (not r4).
+r3 fixed 0x4000C001
+r4 fixed 0x4000C080
+mem32 0x4000c024 oneof 0x4000C068 0x4000C069 0x28
+mem32 0x4000c064 oneof 0x4000C0A8 0x4000C0E8 0x4000C069 0x28
+mem32 0x4000c0a4 fixed 1
+mem32 0x4000c0e4 oneof 1 0x28

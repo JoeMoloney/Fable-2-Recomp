@@ -1,0 +1,7 @@
+# Start: null, node A (0x4000D000) or node B (0x4000D100); A -> B or end; B -> end.
+# The byte flag +56 is the top byte of the word (set, or only lower bytes set).
+r3 oneof 0 0x4000D000 0x4000D000 0x4000D100
+mem32 0x4000d038 oneof 0 0x01000000 0x00FFFFFF
+mem32 0x4000d040 fixed_or_null 0x4000D100
+mem32 0x4000d138 oneof 0 0x01000000 0x00FFFFFF
+mem32 0x4000d140 fixed 0

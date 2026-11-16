@@ -1,0 +1,5 @@
+# r3 = the tree container {+0 proxy, +4 head, +8 size}, r4 = a node of it
+# (1 in 16 the head itself). MSVC node layout with isnil at +25.
+tree 25 12
+r3 tree_cont
+r4 tree_node

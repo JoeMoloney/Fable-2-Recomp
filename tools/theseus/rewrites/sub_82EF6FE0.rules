@@ -1,0 +1,4 @@
+# +4/+8: the magic pair, one half of it, or neighbours of it.
+r3 ptr
+mem32 @r3+4 oneof 0x56471E89 0x56471E89 0x56471E88 0
+mem32 @r3+8 oneof 0x9FE1234A 0x9FE1234A 0x9FE1234B 0

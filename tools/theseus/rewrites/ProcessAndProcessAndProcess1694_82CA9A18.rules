@@ -1,0 +1,3 @@
+# b: a copy of a (bytes), half the time with one byte changed.
+r3 str 40
+r4 mirror r3

@@ -1,0 +1,5 @@
+# Empty, 0/2/5 elements, or last < first (negative size: huge as unsigned); index 0..6.
+r3 ptr
+r4 len 6
+mem32 @r3+8 fixed_or_null 0x4000C000
+mem32 @r3+12 oneof 0x4000C000 0x4000C010 0x4000C028 0x4000BF00

@@ -1,0 +1,12 @@
+# Start: null, node A (0x4000D000) or node B (0x4000D100); A -> B or end; B -> end.
+# Descriptor 0x4000C100 (kind 5 or 4) or none; byte flags +48/+56 = top bytes.
+r3 oneof 0 0x4000D000 0x4000D000 0x4000D100
+mem32 0x4000d014 oneof 0x4000C100 0x4000C100 0
+mem32 0x4000d030 oneof 0 0x01000000 0x00FFFFFF 0
+mem32 0x4000d038 oneof 0 0x01000000 0x00FFFFFF 0
+mem32 0x4000d040 fixed_or_null 0x4000D100
+mem32 0x4000d114 oneof 0x4000C100 0x4000C100 0
+mem32 0x4000d130 oneof 0 0x01000000 0x00FFFFFF 0
+mem32 0x4000d138 oneof 0 0x01000000 0x00FFFFFF 0
+mem32 0x4000d140 fixed 0
+mem32 0x4000c110 oneof 5 5 4

@@ -1,0 +1,2 @@
+r3 ptr
+mem32 @r3+4 fixed_or_null 0x4000C000

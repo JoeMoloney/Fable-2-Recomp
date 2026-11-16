@@ -155,10 +155,11 @@ uint8_t* map_guest() {
 }
 
 enum Kind { kPtr, kPtrOrNull, kLen, kInt, kU32, kAny, kNear, kSLen, kTreeCont, kTreeNode, kTreeKey, kFixed, kStr, kPtrLo, kFixedOrNull, kMirror, kOneOf, kNearBits };
-struct ArgRule { int reg; Kind kind; uint32_t max; int base = 0; };
+struct ArgRule { int reg; Kind kind; uint32_t max; int base = 0;
+                 uint32_t alts[8] = {}; uint32_t n_alts = 0; };  // kOneOf: one of alts (zero-extended)
 struct MemRule { uint32_t addr; Kind kind; uint32_t max; int base = 0; uint32_t deref = 0;
                  int near_base = 0; uint32_t near_off = 0;
-                 uint32_t alts[4] = {}; uint32_t n_alts = 0; };  // kOneOf: one of alts[0..n_alts)  // kNear: half the time *(r<near_base>+near_off) + 0..max  // base: rN / deref: 32-bit global holding the base; addr = offset
+                 uint32_t alts[8] = {}; uint32_t n_alts = 0; };  // kOneOf: one of alts[0..n_alts)  // kNear: half the time *(r<near_base>+near_off) + 0..max  // base: rN / deref: 32-bit global holding the base; addr = offset
 struct TreeRule { uint32_t isnil_off, key_off, max_nodes; };  // max_nodes 0: no tree
 struct DataRule { uint32_t addr; const char* hex; };  // addr 0: unused
 #ifdef HAS_RULES
@@ -175,7 +176,7 @@ constexpr size_t kFloatValueCount = sizeof(kFloatValues) / sizeof(kFloatValues[0
 
 // ---- tree rule: a valid MSVC _Tree built into the window buffer -------------
 constexpr uint32_t kTreeArea = kWindow + 0xC000;  // last 16 KB of the window
-constexpr uint32_t kNodeStride = 32, kMaxNodes = 256;
+constexpr uint32_t kNodeStride = 48, kMaxNodes = 256;  // 48: isnil up to +47 (B6: +33)
 constexpr uint32_t kTreeContAddr = kTreeArea;                        // container struct
 constexpr uint32_t kTreeKeySlot = kTreeArea + 0x10;             // a key for tree_key
 constexpr uint32_t kTreeHead = kTreeArea + 0x20;                 // nodes follow the head
@@ -247,6 +248,7 @@ uint64_t ruled_value(Rng& r, const ArgRule& rule) {
     case kTreeKey: return kTreeKeySlot;
     case kFixed: return rule.max;
     case kFixedOrNull: return r.below(8) == 0 ? 0 : rule.max;  // `fixed_or_null <v>`: a struct pointer that is sometimes null
+    case kOneOf: return rule.alts[r.below(rule.n_alts)];  // `rN oneof a b [c d]`
     default: return r.next();
   }
 }

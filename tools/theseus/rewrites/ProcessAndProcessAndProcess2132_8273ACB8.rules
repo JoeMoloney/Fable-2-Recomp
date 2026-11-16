@@ -1,0 +1,6 @@
+# r3 = a checked std::map/set iterator {+0 owning container (debug proxy), +4 node}.
+# MSVC node layout with isnil at +29 (key offset unused here).
+tree 29 12
+r3 ptr                        # the iterator itself, first 32 KB (tree is in the last 16 KB)
+mem32 @r3+0 ptr_or_null       # container: null 1 in 8 -> trap path
+mem32 @r3+4 tree_node         # current node; 1 in 16 it is end()

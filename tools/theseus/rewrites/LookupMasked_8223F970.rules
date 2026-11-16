@@ -1,0 +1,3 @@
+# Locale info at 0x4000C000, its ctype table (random) at 0x4000D000.
+mem32 0x832EF368 fixed 0x4000C000
+mem32 0x4000c0c8 fixed 0x4000D000

@@ -1,0 +1,10 @@
+# Up to 3 chunks: r3 -> 0x4000C000 -> 0x4000C040, counts 0..16, r4 -60..60
+# (negative: no chunk fits and the first base comes back).
+r3 ptr
+r4 slen 60
+mem32 @r3+4 fixed_or_null 0x4000C000
+mem32 @r3+28 len 16
+mem32 0x4000c004 fixed_or_null 0x4000C040
+mem32 0x4000c01c len 16
+mem32 0x4000c044 fixed 0
+mem32 0x4000c05c len 16

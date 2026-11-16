@@ -1,0 +1,6 @@
+# Header: a pointer to the block at 0x4000C000 (bits from 0x4000C004) or an
+# odd word (bits inline at r3). Fields between bits 1 and 101.
+r3 ptr
+r4 len 100
+r5 len 100
+mem32 @r3+0 oneof 0x4000C000 0x4000C000 0x12345671 0xFFFFFFFF 0x80000001

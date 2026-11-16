@@ -1,0 +1,21 @@
+# Start node r3 (random) with parent R or none. R -> next N2 or none; r3 -> next N2 or none.
+# Descriptors D1 (R), D2 (N2), D3 (r3): kind 5 or 4, start and size small, r4 near them.
+r3 ptr
+r4 len 160
+mem32 @r3+60 fixed_or_null 0x4000C000
+mem32 @r3+20 fixed 0x4000C180
+mem32 @r3+64 fixed_or_null 0x4000C080
+mem32 0x4000c03c fixed 0
+mem32 0x4000c014 fixed 0x4000C100
+mem32 0x4000c040 fixed_or_null 0x4000C080
+mem32 0x4000c094 fixed 0x4000C140
+mem32 0x4000c0c0 fixed 0
+mem32 0x4000c110 oneof 5 4
+mem32 0x4000c114 len 80
+mem32 0x4000c118 len 80
+mem32 0x4000c150 oneof 5 4
+mem32 0x4000c154 len 80
+mem32 0x4000c158 len 80
+mem32 0x4000c190 oneof 5 4
+mem32 0x4000c194 len 80
+mem32 0x4000c198 len 80

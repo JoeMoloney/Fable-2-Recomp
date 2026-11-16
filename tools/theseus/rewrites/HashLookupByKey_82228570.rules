@@ -1,0 +1,103 @@
+# Count 4, 8 or 0 (mask ~0: the hash 0..15 indexes 16 buckets directly). 16 buckets
+# of 20 bytes at 0x4000C000, key = r4 or another, kind 4 or 3, maybe a chain node.
+r3 ptr
+r4 fixed 0x4000D000
+mem32 0x4000d008 len 15
+mem32 @r3+8 oneof 4 8 0
+mem32 @r3+20 fixed 0x4000C000
+mem32 0x4000c008 oneof 0x4000D000 0x4000D100
+mem32 0x4000c00c oneof 4 3
+mem32 0x4000c010 fixed_or_null 0x4000e000
+mem32 0x4000e008 oneof 0x4000D000 0x4000D100
+mem32 0x4000e00c oneof 4 3
+mem32 0x4000e010 fixed 0
+mem32 0x4000c01c oneof 0x4000D000 0x4000D100
+mem32 0x4000c020 oneof 4 3
+mem32 0x4000c024 fixed_or_null 0x4000e020
+mem32 0x4000e028 oneof 0x4000D000 0x4000D100
+mem32 0x4000e02c oneof 4 3
+mem32 0x4000e030 fixed 0
+mem32 0x4000c030 oneof 0x4000D000 0x4000D100
+mem32 0x4000c034 oneof 4 3
+mem32 0x4000c038 fixed_or_null 0x4000e040
+mem32 0x4000e048 oneof 0x4000D000 0x4000D100
+mem32 0x4000e04c oneof 4 3
+mem32 0x4000e050 fixed 0
+mem32 0x4000c044 oneof 0x4000D000 0x4000D100
+mem32 0x4000c048 oneof 4 3
+mem32 0x4000c04c fixed_or_null 0x4000e060
+mem32 0x4000e068 oneof 0x4000D000 0x4000D100
+mem32 0x4000e06c oneof 4 3
+mem32 0x4000e070 fixed 0
+mem32 0x4000c058 oneof 0x4000D000 0x4000D100
+mem32 0x4000c05c oneof 4 3
+mem32 0x4000c060 fixed_or_null 0x4000e080
+mem32 0x4000e088 oneof 0x4000D000 0x4000D100
+mem32 0x4000e08c oneof 4 3
+mem32 0x4000e090 fixed 0
+mem32 0x4000c06c oneof 0x4000D000 0x4000D100
+mem32 0x4000c070 oneof 4 3
+mem32 0x4000c074 fixed_or_null 0x4000e0a0
+mem32 0x4000e0a8 oneof 0x4000D000 0x4000D100
+mem32 0x4000e0ac oneof 4 3
+mem32 0x4000e0b0 fixed 0
+mem32 0x4000c080 oneof 0x4000D000 0x4000D100
+mem32 0x4000c084 oneof 4 3
+mem32 0x4000c088 fixed_or_null 0x4000e0c0
+mem32 0x4000e0c8 oneof 0x4000D000 0x4000D100
+mem32 0x4000e0cc oneof 4 3
+mem32 0x4000e0d0 fixed 0
+mem32 0x4000c094 oneof 0x4000D000 0x4000D100
+mem32 0x4000c098 oneof 4 3
+mem32 0x4000c09c fixed_or_null 0x4000e0e0
+mem32 0x4000e0e8 oneof 0x4000D000 0x4000D100
+mem32 0x4000e0ec oneof 4 3
+mem32 0x4000e0f0 fixed 0
+mem32 0x4000c0a8 oneof 0x4000D000 0x4000D100
+mem32 0x4000c0ac oneof 4 3
+mem32 0x4000c0b0 fixed_or_null 0x4000e100
+mem32 0x4000e108 oneof 0x4000D000 0x4000D100
+mem32 0x4000e10c oneof 4 3
+mem32 0x4000e110 fixed 0
+mem32 0x4000c0bc oneof 0x4000D000 0x4000D100
+mem32 0x4000c0c0 oneof 4 3
+mem32 0x4000c0c4 fixed_or_null 0x4000e120
+mem32 0x4000e128 oneof 0x4000D000 0x4000D100
+mem32 0x4000e12c oneof 4 3
+mem32 0x4000e130 fixed 0
+mem32 0x4000c0d0 oneof 0x4000D000 0x4000D100
+mem32 0x4000c0d4 oneof 4 3
+mem32 0x4000c0d8 fixed_or_null 0x4000e140
+mem32 0x4000e148 oneof 0x4000D000 0x4000D100
+mem32 0x4000e14c oneof 4 3
+mem32 0x4000e150 fixed 0
+mem32 0x4000c0e4 oneof 0x4000D000 0x4000D100
+mem32 0x4000c0e8 oneof 4 3
+mem32 0x4000c0ec fixed_or_null 0x4000e160
+mem32 0x4000e168 oneof 0x4000D000 0x4000D100
+mem32 0x4000e16c oneof 4 3
+mem32 0x4000e170 fixed 0
+mem32 0x4000c0f8 oneof 0x4000D000 0x4000D100
+mem32 0x4000c0fc oneof 4 3
+mem32 0x4000c100 fixed_or_null 0x4000e180
+mem32 0x4000e188 oneof 0x4000D000 0x4000D100
+mem32 0x4000e18c oneof 4 3
+mem32 0x4000e190 fixed 0
+mem32 0x4000c10c oneof 0x4000D000 0x4000D100
+mem32 0x4000c110 oneof 4 3
+mem32 0x4000c114 fixed_or_null 0x4000e1a0
+mem32 0x4000e1a8 oneof 0x4000D000 0x4000D100
+mem32 0x4000e1ac oneof 4 3
+mem32 0x4000e1b0 fixed 0
+mem32 0x4000c120 oneof 0x4000D000 0x4000D100
+mem32 0x4000c124 oneof 4 3
+mem32 0x4000c128 fixed_or_null 0x4000e1c0
+mem32 0x4000e1c8 oneof 0x4000D000 0x4000D100
+mem32 0x4000e1cc oneof 4 3
+mem32 0x4000e1d0 fixed 0
+mem32 0x4000c134 oneof 0x4000D000 0x4000D100
+mem32 0x4000c138 oneof 4 3
+mem32 0x4000c13c fixed_or_null 0x4000e1e0
+mem32 0x4000e1e8 oneof 0x4000D000 0x4000D100
+mem32 0x4000e1ec oneof 4 3
+mem32 0x4000e1f0 fixed 0

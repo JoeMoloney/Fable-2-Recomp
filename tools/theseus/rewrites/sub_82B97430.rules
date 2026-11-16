@@ -1,0 +1,7 @@
+# Records of 9936 bytes from 0x40000100, index 0..2; field +96 negative or not.
+r3 fixed 0x40000100
+r4 any
+mem32 0x40000100 len 2
+mem32 0x40000160 oneof 0xFFFFFFFF 5 0x80000000 0 0x7FFFFFFF
+mem32 0x40002830 oneof 0xFFFFFFFF 5 0x80000000 0 0x7FFFFFFF
+mem32 0x40004f00 oneof 0xFFFFFFFF 5 0x80000000 0 0x7FFFFFFF

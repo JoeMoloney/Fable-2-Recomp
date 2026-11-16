@@ -1,0 +1,23 @@
+# Struct at 0x4000C000 (1128-byte header): 0..6 entry pointers at +1128 to 64-bit
+# ids at 0x4000D000 + 16*i (high word 0 or 1, low 0..3); r4 0..3.
+r3 fixed 0x4000C000
+r4 len 3
+mem32 0x4000c008 len 6
+mem32 0x4000c468 fixed 0x4000d000
+mem32 0x4000d000 oneof 0 0 1
+mem32 0x4000d004 len 3
+mem32 0x4000c46c fixed 0x4000d010
+mem32 0x4000d010 oneof 0 0 1
+mem32 0x4000d014 len 3
+mem32 0x4000c470 fixed 0x4000d020
+mem32 0x4000d020 oneof 0 0 1
+mem32 0x4000d024 len 3
+mem32 0x4000c474 fixed 0x4000d030
+mem32 0x4000d030 oneof 0 0 1
+mem32 0x4000d034 len 3
+mem32 0x4000c478 fixed 0x4000d040
+mem32 0x4000d040 oneof 0 0 1
+mem32 0x4000d044 len 3
+mem32 0x4000c47c fixed 0x4000d050
+mem32 0x4000d050 oneof 0 0 1
+mem32 0x4000d054 len 3

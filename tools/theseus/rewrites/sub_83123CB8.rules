@@ -1,0 +1,11 @@
+# Links lead to element 0x4000C000 / 0x4000C040 (tag bit set in the link) /
+# 0x4000C080 / null; codes cover 83..92 around the wanted set.
+r3 ptr
+r4 ptr
+mem32 @r4+28 oneof 0 1 0 2
+mem32 @r4+36 oneof 0 1 0 2
+mem32 @r4+24 oneof 0x4000C028 0x4000C069 0x4000C0A8 0x28
+mem32 @r4+32 oneof 0x4000C028 0x4000C069 0x4000C0A8 0x28
+mem32 0x4000c008 oneof 0x2A00 0x2C00 0x2D00 0x2D80
+mem32 0x4000c048 oneof 0x2980 0x2A80 0x2B00 0x2B80
+mem32 0x4000c088 oneof 0x2C80 0 0x2E00

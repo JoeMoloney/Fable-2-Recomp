@@ -1,0 +1,34 @@
+# As sub_82639068.rules with this layout (flag bit 4; heads +32, values +60, next +64).
+r3 ptr
+mem32 @r3+0 len 3
+mem32 @r3+16 fixed 0x4000C000
+mem32 0x4000c004 oneof 0 0x10 1 0x11
+mem32 0x4000c030 oneof 0 1 2 3
+mem32 0x4000c034 fixed 0x4000C100
+mem32 0x4000c03c fixed 0x4000C200
+mem32 0x4000c020 fixed 0x4000C300
+mem32 0x4000c040 fixed 0x4000C400
+mem32 0x4000c100 oneof 0xFFFFFFFF 1
+mem32 0x4000c200 len 3
+mem32 0x4000c108 oneof 0xFFFFFFFF 1
+mem32 0x4000c204 len 3
+mem32 0x4000c110 oneof 0xFFFFFFFF 1
+mem32 0x4000c208 len 3
+mem32 0x4000c118 oneof 0xFFFFFFFF 1
+mem32 0x4000c20c len 3
+mem32 0x4000c120 oneof 0xFFFFFFFF 1
+mem32 0x4000c210 len 3
+mem32 0x4000c128 fixed 1
+mem32 0x4000c214 len 3
+mem32 0x4000c130 fixed 1
+mem32 0x4000c218 len 3
+mem32 0x4000c138 fixed 1
+mem32 0x4000c21c len 3
+mem32 0x4000c300 oneof 0xFFFFFFFF 1 2 3
+mem32 0x4000c304 oneof 0xFFFFFFFF 1 2 3
+mem32 0x4000c308 oneof 0xFFFFFFFF 1 2 3
+mem32 0x4000c30c oneof 0xFFFFFFFF 1 2 3
+mem32 0x4000c400 fixed 0xFFFFFFFF
+mem32 0x4000c404 oneof 0xFFFFFFFF 0
+mem32 0x4000c408 oneof 0xFFFFFFFF 1
+mem32 0x4000c40c oneof 2 0xFFFFFFFF

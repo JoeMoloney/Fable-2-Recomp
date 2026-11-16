@@ -61,8 +61,8 @@ with a reason). The pilot's 20 go in as `shipped` (memset: `gated`, kept out for
 | B2 | `gate.py`: one command per function: difftest PASS-ABI (200k, `--timeout`); `mutate.py` on the original (floats at 200k: unfused-fma mutants need it); **rewrite mutants** (same idea on `rewrites/<name>.cpp`: `<`↔`<=`, `>`↔`>=`, `std::fma`/`NegMulSub` unfused, integer literal ±1, dropped NaN/sign guard); `caller_usage.py` clean; `gate.json` + ledger. No hard kill-rate threshold (B1: 82–100% with only equivalent survivors): every surviving original mutant is listed and pre-labelled ("likely equivalent": sign swap on a same-object compare or byte value, deleted zero-extend/reload, red-zone/neighbour offset; else "review"); every surviving rewrite mutant = gate-fail. `-j` for parallel runs | ✅ 2026-11-16, see "B2 results" below. All 20 pilot functions pass (14 on the first run; the other 6 were 2 gate bugs, 1 junk mutant kind and 7 equivalent survivors, now marked). Found 1 more real rules gap (sub_821E3E10). Caller check is now per register. ~2–3 min per function, 20 in 17 min at `-j 4` |
 | B3 | Batch 1: top 25 of tier A, written in-session from packets, all through the gate. Measure: minutes per function, first-try pass, how many needed human review | ✅ 2026-11-16, see "B3 results" below. 25/25 gated (ledger batch 1). Every rewrite passed difftest on the first try; 21/25 passed the gate on the first run, the other 4 were equivalent mutants or rule gaps. The gate found 3 more rule gaps in passing functions and 5 harness gaps (now fixed: null page, string copies, value choices, r11–r13, CPU-time limits). ~4 min per function in session, all 45 rewrites rechecked |
 | B4 | `ship.py` + ship batch 1: wrappers, Release build, user A/B (save load, UI, Bowerstone, FPS) | ✅ 2026-11-16, see "B4 results" below. 25 wrappers, incremental Release build 89 s, all 25 overrides strong symbols; in-game run with the rewrites on looked normal (user); ledger batch 1 → `shipped`; 18 names in Ghidra |
-| B5 | Batch 2 (tier A, next 25–50) + ship. Decide headless or in-session (needs the user: cost) | ⬜ |
-| B6 | Batch 3 from tier B (stores) + ship | ⬜ |
+| B5 | Batch 2 (tier A, next 25–50) + ship. Decide headless or in-session (needs the user: cost) | ✅ 2026-11-16, see "B5 results" below. In-session (user's choice). 50 tier-A functions, ~1 min each to write; 50/50 difftest-correct, 41/50 gate first run (the rest: 7 rule gaps, 1 UB shift, 1 equivalent line); all 95 rewrites re-gated; shipped, in-game check fine (user); 18 Ghidra names |
+| B6 | Batch 3 from tier B (stores) + ship | ✅ 2026-11-16, see "B6 results" below. 25 tier-B functions (map iterators, tree rotations, Lua index2adr, memcpy, constructors); 25/25 difftest-correct, 19/25 gate first run (1 forgotten, 5 rule gaps); all 120 re-gated; shipped, in-game fine (user); 17 Ghidra names |
 | B7 | Update the verdict; decide on tier C (floats) and D (no direct callers) | ⬜ |
 
 ## B1 results (2026-11-16)
@@ -203,6 +203,38 @@ in-game check) sets the rows to `shipped`.
 | Build | incremental Release, 89 s, only the 2 usual SDK warnings; 25/25 strong symbols |
 | In game | `run-release.sh` (rewrites on): save load, menus, Bowerstone, FPS all normal, no issues seen (user). The `--theseus_rewrites=false` run was skipped: it is the recompiled originals, the known baseline; it stays the first thing to try if a problem shows up later |
 | Names | 18 Ghidra renames (revert list `docs/re/NAMES_GHIDRA_REVERT_THESEUS.tsv`), table in `docs/re/RE_FINDINGS.md` ("Theseus batch 1"); 7 kept their sub_/generic names (no strong evidence) |
+
+## B5 results (2026-11-16)
+
+**In-session** (the user chose it over headless; nothing else heavy was running, so the gate ran at
+`-j 10..16`). Batch 2 = the next 50 of tier A (ledger batch 2, `shipped`).
+
+| What | Result |
+|---|---|
+| Time | packets 19:45, all 50 written and gated by 20:26 (~1 min per function to write, 4x faster than B3: compact packet viewer, 10 at a time, gate in the background while writing the next 10). Final gate of all 95 rewrites: 21 min at `-j 16`. Ship build 89 s |
+| Difftest | **50/50 correct**: no rewrite ever disagreed with the original. 2 first runs stopped at `FAIL (rules)` (my rules wrote into the null page through a null `r3`; moved to fixed nodes) |
+| Gate, first run | **41/50**. Rewrite-mutant survivors showing rule gaps: 4 (flag words without bit 0, an owner value whose bytes 1..3 were never 0). "Review" survivors showing rule gaps: 3 (hash multiplier invisible with 8 slots since 0x9E3779B1 is 1 mod 8; tag words without other bits; a not-found path that needs a negative position). 1 rewrite shape fix (a 32-bit shift by 32, undefined in C++), 1 equivalent line marked |
+| Human review | all "review" survivors read; besides the 3 gaps above, all equivalent (unread `cr0` from record forms, a debug-assert re-check after the same check, copies/masks of values already in range) |
+| Kinds | 8 MSVC CRT functions (`isalpha`, `isspace`, `isxdigit`, `isalnum`, `isleadbyte`, `strrchr`, `memchr`, `wcscmp`), leap year, colour packing, vector size/at, 3 hash lookups, list walks/counts, 3 bit-array helpers, 7-bit type-code classifiers, small getters |
+| In game | `run-release.sh` with 94 rewrites on (19 pilot + 25 + 50): fine (user) |
+
+**Harness:** `rN oneof v1 .. v8` (a register that is one of up to 8 values: sub_830ACDE0 compares
+against six ids that random values never hit); `mem32 ... oneof` takes up to 8 values.
+
+## B6 results (2026-11-16)
+
+Batch 3 = the top 25 of tier B (functions with stores), in-session, ledger batch 3 `shipped`.
+
+| What | Result |
+|---|---|
+| Time | packets ~21:00 (25 in under 10 min), all 25 written and gated by ~21:15; final gate of all 120 rewrites 25 min at `-j 16`; ship build ~90 s |
+| Difftest | **25/25 correct**: no rewrite ever disagreed with the original (stores, red zone, caller home slots included) |
+| Gate, first run | **19/25** (1 not written yet). Rule gaps: Lua index list without 0/1/-9999; `lower_bound` split invisible with sorted keys (needs unsorted keys and a negative count); memcpy word vs byte steps only differ with dst 1..3 bytes after src; a redundant flag test (removed from the rewrite) |
+| Families | 8 MSVC `std::map` iterator `++`/`--` (isnil at +21..+33: one template, 8 instances), 4 `_Tree::_Lrotate`/`_Rrotate` (the "List_SpliceNode" names were wrong), 2 builds of Lua 5.1 `index2adr`, CRT `memcpy`, sorted-vector find, debug pair constructor, constructors and bit helpers |
+| Tier B lesson | stores were not harder to check than loads: the harness compares every touched page and the stack. The cost is in rules: struct graphs, aliasing (src/dst overlap, nodes that alias the head) and keeping the original store order |
+| In game | `run-release.sh` with 119 rewrites: fine (user; saves, NPCs, quests). Startup white screen of ~3 min is pre-existing and intermittent (also with `--theseus_rewrites=false`): the render thread waits on the GPU command thread |
+
+**Harness/tools:** `tree` nodes 48 bytes apart (isnil up to +47). `ship.py`'s "already overridden" check now matches only definitions (it skipped `SortedVector_FindValue` because a hand-written override *calls* it).
 
 ## Open questions
 

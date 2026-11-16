@@ -1,0 +1,11 @@
+# 0..6 pairs at 0x4000C000 with keys 0..3 (like r4).
+r3 ptr
+r4 len 3
+mem32 @r3+28 len 6
+mem32 @r3+24 fixed 0x4000C000
+mem32 0x4000c000 len 3
+mem32 0x4000c008 len 3
+mem32 0x4000c010 len 3
+mem32 0x4000c018 len 3
+mem32 0x4000c020 len 3
+mem32 0x4000c028 len 3

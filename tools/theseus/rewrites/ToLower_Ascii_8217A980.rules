@@ -1,0 +1,2 @@
+# -200..200: both sides of A..Z, and -1 (WEOF in the low 16 bits).
+r3 slen 200

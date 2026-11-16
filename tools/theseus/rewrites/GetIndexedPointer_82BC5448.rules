@@ -1,0 +1,12 @@
+# lua_State at a random spot: base 0x4000C000, top 0x4000C040 (8 slots), ci at
+# 0x4000C100 -> func TValue 0x4000C200 -> closure 0x4000C300 (nupvalues 0..3).
+# idx: 1 (in the stack), 9 (past top), 0 and -9999 (relative to top, both ends),
+# the 3 pseudo-indices, upvalue 2.
+r3 ptr
+r4 oneof 1 9 0 0xFFFFD8F1 0xFFFFD8F0 0xFFFFD8EF 0xFFFFD8EE 0xFFFFD8EC
+mem32 @r3+8 fixed 0x4000C040
+mem32 @r3+12 fixed 0x4000C000
+mem32 @r3+20 fixed 0x4000C100
+mem32 0x4000c104 fixed 0x4000C200
+mem32 0x4000c200 fixed 0x4000C300
+mem32 0x4000c304 oneof 0 1 2 3

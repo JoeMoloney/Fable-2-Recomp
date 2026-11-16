@@ -1,0 +1,5 @@
+# Random buffers; half the time dst lies 0..8 bytes after src (an overlapping
+# forward copy, where byte vs word steps change the result).
+r4 ptr
+r3 near r4 8
+r5 len 200

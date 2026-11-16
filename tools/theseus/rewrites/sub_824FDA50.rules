@@ -1,0 +1,19 @@
+# Manager at 0x4000C000 with 0..4 entries at 0x4000C100; records 0x4000D000 + 64*i
+# with ids 0..3 (like r4) and display counts -2..2.
+r3 ptr
+r4 len 3
+mem32 @r3+4 fixed 0x4000C000
+mem32 0x4000c010 fixed 0x4000C100
+mem32 0x4000c014 oneof 0x4000C100 0x4000C108 0x4000C118 0x4000C120
+mem32 0x4000c100 fixed 0x4000d000
+mem32 0x4000d000 len 3
+mem32 0x4000d028 slen 2
+mem32 0x4000c108 fixed 0x4000d040
+mem32 0x4000d040 len 3
+mem32 0x4000d068 slen 2
+mem32 0x4000c110 fixed 0x4000d080
+mem32 0x4000d080 len 3
+mem32 0x4000d0a8 slen 2
+mem32 0x4000c118 fixed 0x4000d0c0
+mem32 0x4000d0c0 len 3
+mem32 0x4000d0e8 slen 2

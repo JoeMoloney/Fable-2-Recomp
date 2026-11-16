@@ -1,0 +1,6 @@
+# 0..3 descriptors (0x4000C000, +0x40, +0x80) with random words.
+r3 ptr
+mem32 @r3+4 fixed_or_null 0x4000C000
+mem32 0x4000c008 fixed_or_null 0x4000C040
+mem32 0x4000c048 fixed_or_null 0x4000C080
+mem32 0x4000c088 fixed 0

@@ -1,0 +1,5 @@
+# Node word +8: code 124 or 125 (flag clear), code 0 with the flag, code 1 without,
+# and bit 0 set (must not count as the flag).
+r3 ptr
+mem32 @r3+12 fixed 0x4000C000
+mem32 0x4000c008 oneof 0x3E00 0x3E80 0x20 0x80 0x81 0x3E01

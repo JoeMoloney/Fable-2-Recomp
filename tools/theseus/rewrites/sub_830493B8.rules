@@ -1,0 +1,3 @@
+# The copied block is anywhere, sometimes overlapping the object.
+r3 ptr
+r9 near r3 96

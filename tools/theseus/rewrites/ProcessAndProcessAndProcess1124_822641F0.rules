@@ -1,0 +1,16 @@
+# 0, 1, 4, 7 or 10 entries at 0x4000C000, or last < first (negative count); keys
+# random 0..20 (mostly unsorted: the probe order shows), r4 -22..22.
+r3 ptr
+r4 slen 22
+mem32 @r3+8 fixed 0x4000C000
+mem32 @r3+12 oneof 0x4000C000 0x4000C00C 0x4000C030 0x4000C054 0x4000C078 0x4000BFF4
+mem32 0x4000c000 len 20
+mem32 0x4000c00c len 20
+mem32 0x4000c018 len 20
+mem32 0x4000c024 len 20
+mem32 0x4000c030 len 20
+mem32 0x4000c03c len 20
+mem32 0x4000c048 len 20
+mem32 0x4000c054 len 20
+mem32 0x4000c060 len 20
+mem32 0x4000c06c len 20

@@ -39,8 +39,12 @@ def wrapper_text(name):
 
 
 def other_override(name):
-    """A hand-written override of the same guest function outside theseus/?"""
-    pat = re.compile(r"\b" + re.escape(name) + r"\b")
+    """A hand-written override (a definition, not a call or extern declaration)
+    of the same guest function outside theseus/?"""
+    n = re.escape(name)
+    pat = re.compile(rf"\bvoid\s+{n}\s*\([^;]*?\)\s*\{{"            # extern "C" void NAME(...) {
+                     rf"|\b\w*(?:FUNC|OVERRIDE)\w*\(\s*{n}\s*\)\s*(?:\{{|$)",  # REX_FUNC(NAME) {
+                     re.M)
     for p in HOTFUNC.rglob("*.cpp"):
         if THESEUS_DIR in p.parents:
             continue

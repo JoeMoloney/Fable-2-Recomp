@@ -1,0 +1,3 @@
+# _pctype points at a (random) 512-byte table; c is 0..255.
+mem32 0x832EF350 fixed 0x4000C000
+r3 len 255

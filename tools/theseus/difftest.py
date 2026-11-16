@@ -20,7 +20,7 @@ then kinds `tree_cont` / `tree_node` / `tree_key` point into it;
 `data <addr> <hex>` fixed bytes (image constants); `ret f1` = float return;
 `fval <double>` an edge value for float arguments (nudged by +-2 ulps); `r4 near r3 32` = half the time r3 + 0..32), `r4 mirror r3` = a copy of r3's string in its own buffer, half the time with one byte changed (strcmp-style functions), and `mem32 <addr> <kind> [max]` to set a 32-bit global (e.g. a
 table pointer) before each case; `mem32 @r3+12 <kind>` sets a field of an
-argument's struct; `mem32 <addr|@rN+off> oneof a b [c d]` = one of those values; `mem32 *0x834BDBC4+16 <kind>` a field of the struct a
+argument's struct; `mem32 <addr|@rN+off> oneof v1 .. v8` (and `rN oneof ...`) = one of those 2..8 values; `mem32 *0x834BDBC4+16 <kind>` a field of the struct a
 global points to; `mem32 @r3+8 near @r3+12 512` = half the time the
 other field's value + 0..512 (set the referenced field first); `mem32 @r4+0 nearbits @r3+0` = the
 other field's value, half the time with one random bit flipped. Rules may also set r11..r13
@@ -94,8 +94,8 @@ def rules_inc(path):
                 sys.exit(f"{path}:{n}: expected 'tree <isnil_off> <key_off> [max_nodes]'")
             isnil, key = int(words[1], 0), int(words[2], 0)
             maxn = int(words[3], 0) if len(words) > 3 else 24
-            if not (isnil < 32 and key + 4 <= 32 and 12 <= min(isnil, key) and 0 < maxn <= 255):
-                sys.exit(f"{path}:{n}: fields must sit in 12..31 of a 32-byte node, max_nodes 1..255")
+            if not (isnil < 48 and key + 4 <= 48 and 12 <= min(isnil, key) and 0 < maxn <= 255):
+                sys.exit(f"{path}:{n}: fields must sit in 12..47 of a 48-byte node, max_nodes 1..255")
             tree = f"{{{isnil}u, {key}u, {maxn}u}}"
             continue
         if words[0] == "mem32" and len(words) == 4 and words[2] == "nearbits":
@@ -116,8 +116,8 @@ def rules_inc(path):
             continue
         if words[0] == "mem32" and len(words) >= 4 and words[2] == "oneof":
             vals = [int(w, 0) for w in words[3:]]
-            if not 1 < len(vals) <= 4:
-                sys.exit(f"{path}:{n}: oneof takes 2 to 4 values")
+            if not 1 < len(vals) <= 8:
+                sys.exit(f"{path}:{n}: oneof takes 2 to 8 values")
             rel = re.fullmatch(r"@r([3-9]|1[0-3])\+(\w+)", words[1])
             addr, reg = (int(rel.group(2), 0), rel.group(1)) if rel else (int(words[1], 0), 0)
             alts = ", ".join(f"{v:#x}u" for v in vals)
@@ -141,6 +141,14 @@ def rules_inc(path):
             if not re.fullmatch(r"r([3-9]|1[0-3])", words[0]) or not base:
                 sys.exit(f"{path}:{n}: expected 'rN mirror rM' (rM: a str rule)")
             rows.append(f"{{{words[0][1:]}, kMirror, 0u, {base.group(1)}}}")
+            continue
+        if len(words) >= 2 and words[1] == "oneof":
+            vals = [int(v, 0) for v in words[2:]]
+            if not re.fullmatch(r"r([3-9]|1[0-3])", words[0]) or not 2 <= len(vals) <= 8 \
+                    or any(not 0 <= v <= 0xFFFFFFFF for v in vals):
+                sys.exit(f"{path}:{n}: expected 'rN oneof v1 .. v8' (2 to 8 u32 values)")
+            alts = ", ".join(f"{v:#x}u" for v in vals)
+            rows.append(f"{{{words[0][1:]}, kOneOf, 0u, 0, {{{alts}}}, {len(vals)}u}}")
             continue
         if len(words) == 4 and words[1] == "near":
             base = re.fullmatch(r"r(\d+)", words[2])

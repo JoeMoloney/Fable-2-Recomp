@@ -98,6 +98,10 @@ Rerun 1 and 3 after codegen or manifest changes; rerun 2 after big Ghidra change
   original and the rewrite; a rule that writes there is an error); `r4 mirror r3` (copy of r3's
   string, half the time one byte changed); `mem32 <addr|@rN+off> oneof a b [c d]`; `mem32 @r4+0
   nearbits @r3+0` (same word or one bit flipped); `fixed_or_null <v>`; rules may set r11..r13.
+- B5 additions: `rN oneof v1 .. v8` (a register that is one of up to 8 u32 values, e.g. the ids a
+  function compares against); `mem32 ... oneof` now takes up to 8 values too.
+- B6: `tree` nodes are 48 bytes apart (isnil/key offsets up to +47; Fable's map nodes put isnil
+  at +17..+33).
   All test limits are **CPU seconds** (`difftest.run_limited`): a busy machine slows the gate
   (which also runs at nice 10) but can't fake a hang; if the wall-clock backstop fires the
   result is `INCONCLUSIVE` (rerun).

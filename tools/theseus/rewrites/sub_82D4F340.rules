@@ -1,0 +1,5 @@
+# Up to 3 chunks: r3 -> 0x4000C000 -> 0x4000C040, counts random (sums can pass 2^32).
+r3 ptr
+mem32 @r3+4 fixed_or_null 0x4000C000
+mem32 0x4000c004 fixed_or_null 0x4000C040
+mem32 0x4000c044 fixed 0

@@ -1,0 +1,9 @@
+# Static 36-byte records from 0x8201B5E0 (ids 0..5, like r3); the end pointer
+# (0x832F6434) gives 0..5 records. Not found: the default record 0x8201B5B8.
+r3 len 5
+mem32 0x832F6434 oneof 0x8201B5E0 0x8201B604 0x8201B64C 0x8201B694 0x8201B6B8
+mem32 0x8201b5e0 len 5
+mem32 0x8201b604 len 5
+mem32 0x8201b628 len 5
+mem32 0x8201b64c len 5
+mem32 0x8201b670 len 5
