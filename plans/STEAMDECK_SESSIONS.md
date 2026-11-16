@@ -30,6 +30,21 @@ view: GPU Commands per-draw cost and/or find what creates the small 4xMSAA depth
 the memory MCP (Fable II = projectId 3; reusable = GLOBAL).
 ```
 
+## Note 2026-11-16: Deck folder rebuilt, 60 FPS test launcher
+
+`~/Documents/fable2-native-experimental` (releases r1–r15, `launch.sh`, `userdata` with saves/cache) was
+deleted by accident on the Deck. Rebuilt: the launcher now lives in the repo (`tools/deck/launch.sh`,
+installed by `tools/deck/install-launcher.sh`, same layout, so `deploy.sh`/`flags.sh`/`use-release.sh` work
+as before). New release **`deck-20261116-r16-pgo`** = master 4ae2fc0 (r15 code + the Theseus overrides) +
+GPU PGO `rexgpu-xenos-20261114b`. The Steam shortcut path `~/Documents/fable-2-recomp/launch.sh` and
+`run-release.sh` there are now wrappers that exec the launcher; the launcher also needed Steam's
+`XAUTHORITY` passed into the container (Game Mode display `:0` refuses connections without it).
+Desktop save copied to `userdata/saves` (shader cache starts cold). **60 FPS test (same day):**
+`--vsync=false` + `high_tick_rate` + `higher_hf_tick_rate` loaded and played but felt **more stuttery on
+camera turns in the busy view** (suspects: uneven frame pacing between ~28 and 60 with vsync off, the cold
+shader cache with synchronous compilation, the existing turn dips). Reverted to the normal **30 FPS** setup
+(no `--vsync` flag, both tick-rate keys false); how to retry is in the comment in `tools/deck/launch.sh`.
+
 ## Handoff 2026-11-15 night (latest)
 
 **Deck state:** `current` → **r15** (`deck-perf-20261115-r15-pgo`) = r12 + `guest_fps_log` + memexport stall
@@ -279,7 +294,7 @@ Perf captures: `userdata/logs/perf-20261114-013357/`.
 
 | What | Where / command |
 |---|---|
-| Deck install (what the Steam "non-Steam game" shortcut runs) | `~/Documents/fable2-native-experimental/launch.sh` on the Deck |
+| Deck install (what the Steam "non-Steam game" shortcut runs) | `~/Documents/fable2-native-experimental/launch.sh` on the Deck (source: `tools/deck/launch.sh`, install/repair: `tools/deck/install-launcher.sh`; the shortcut itself points at the wrapper `~/Documents/fable-2-recomp/launch.sh`) |
 | Builds on the Deck | `releases/<name>/bin/` (+ `container-image.txt`, `BUILD_INFO.txt`); the `current` symlink picks which one runs |
 | Saves / config / logs (shared by all releases) | `userdata/` (each release's `bin/` has symlinks to it) |
 | Launcher backups | `launcher-backups/` (`launch.sh.before-perf-20261114` = the old native-renderer r9 launcher) |
