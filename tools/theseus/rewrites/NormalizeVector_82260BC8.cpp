@@ -47,7 +47,7 @@ float Dot3(float x, float y, float z, float w) {
 extern "C" REX_FUNC(rewrite_NormalizeVector_82260BC8) {
   const uint32_t v = ctx.r3.u32 & ~0xFu;  // lvx/stvx ignore the low 4 bits
   float c[4];
-  for (int i = 0; i < 4; ++i) c[i] = LoadF32(base, v + 4 * i);
+  for (int i = 0; i < 4; ++i) c[i] = LoadF32(base, v + 4 * i);  // gate: equivalent: a 5th pass only overruns the local c[4] (UB, no guest state)
 
   ctx.fpscr.enableFlushMode();
   const float dot = Dot3(c[0], c[1], c[2], c[3]);

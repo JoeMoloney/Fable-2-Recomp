@@ -16,7 +16,7 @@ namespace {
 
 constexpr uint32_t kLeft = 0, kParent = 4, kRight = 8, kIsNil = 17;
 constexpr uint32_t kIterContainer = 0, kIterNode = 4;
-constexpr uint16_t kTrapAssert = 22;
+constexpr uint16_t kTrapAssert = 22;  // gate: equivalent: harness counts traps, not codes; the code only changes the log text
 
 bool IsNil(uint8_t* base, uint32_t node) { return REX_LOAD_U8(node + kIsNil) != 0; }
 

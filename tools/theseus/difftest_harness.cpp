@@ -69,6 +69,8 @@
 #include <algorithm>
 #include <bit>
 #include <cmath>
+#include <csetjmp>
+#include <csignal>
 #include <sys/mman.h>
 #include <vector>
 
@@ -105,6 +107,7 @@ constexpr uint32_t kWindow = 0x40000000, kWindowSize = 0x10000;
 // where the SDK adds its 4 KB physical-mirror offset.
 constexpr uint32_t kHiDelta = 0x70000000, kWindowHi = kWindow + kHiDelta;
 constexpr uint32_t kStackTop = 0x50008000, kStackSize = 0x8000;
+constexpr size_t kNullGuard = 0x10000;  // guest 0..64 KB: no access
 
 struct Rng {
   uint64_t s;
@@ -112,17 +115,50 @@ struct Rng {
   uint32_t below(uint32_t n) { return uint32_t(next() % n); }
 };
 
+// Null-page faults: a read or write below guest 64 KB faults (as on the console).
+// The handler jumps back out of the guest call; the case then only checks that
+// the original and the rewrite fault alike (both or neither).
+sigjmp_buf g_fault_jmp;
+volatile sig_atomic_t g_in_guest_call = 0;
+uint8_t* g_guard[2] = {nullptr, nullptr};
+
+void on_segv(int sig, siginfo_t* info, void*) {
+  const auto* at = static_cast<uint8_t*>(info->si_addr);
+  for (uint8_t* g : g_guard)
+    if (g_in_guest_call && g && at >= g && at < g + kNullGuard) {
+      g_in_guest_call = 0;
+      siglongjmp(g_fault_jmp, 1);
+    }
+  signal(sig, SIG_DFL);  // a real crash: let it happen
+  raise(sig);
+}
+
+void install_fault_handler() {
+  struct sigaction sa {};
+  sa.sa_sigaction = on_segv;
+  sa.sa_flags = SA_SIGINFO | SA_NODEFER;
+  sigemptyset(&sa.sa_mask);
+  sigaction(SIGSEGV, &sa, nullptr);
+  sigaction(SIGBUS, &sa, nullptr);
+}
+
 uint8_t* map_guest() {
   void* p = mmap(nullptr, kGuestSize, PROT_READ | PROT_WRITE,
                  MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE, -1, 0);
   if (p == MAP_FAILED) { std::perror("mmap"); std::exit(2); }
+  // Guest addresses below 64 KB are never mapped on the console: a read through a
+  // null pointer (+ a small offset) faults there. Make it fault here too, so a
+  // rewrite or mutant that drops a null check crashes instead of reading zeros
+  // (gate.py B3 found this gap: a dropped `string == 0` check survived).
+  if (mprotect(p, kNullGuard, PROT_NONE) != 0) { std::perror("mprotect"); std::exit(2); }
   return static_cast<uint8_t*>(p);
 }
 
-enum Kind { kPtr, kPtrOrNull, kLen, kInt, kU32, kAny, kNear, kSLen, kTreeCont, kTreeNode, kTreeKey, kFixed, kStr, kPtrLo };
+enum Kind { kPtr, kPtrOrNull, kLen, kInt, kU32, kAny, kNear, kSLen, kTreeCont, kTreeNode, kTreeKey, kFixed, kStr, kPtrLo, kFixedOrNull, kMirror, kOneOf, kNearBits };
 struct ArgRule { int reg; Kind kind; uint32_t max; int base = 0; };
 struct MemRule { uint32_t addr; Kind kind; uint32_t max; int base = 0; uint32_t deref = 0;
-                 int near_base = 0; uint32_t near_off = 0; };  // kNear: half the time *(r<near_base>+near_off) + 0..max  // base: rN / deref: 32-bit global holding the base; addr = offset
+                 int near_base = 0; uint32_t near_off = 0;
+                 uint32_t alts[4] = {}; uint32_t n_alts = 0; };  // kOneOf: one of alts[0..n_alts)  // kNear: half the time *(r<near_base>+near_off) + 0..max  // base: rN / deref: 32-bit global holding the base; addr = offset
 struct TreeRule { uint32_t isnil_off, key_off, max_nodes; };  // max_nodes 0: no tree
 struct DataRule { uint32_t addr; const char* hex; };  // addr 0: unused
 #ifdef HAS_RULES
@@ -210,6 +246,7 @@ uint64_t ruled_value(Rng& r, const ArgRule& rule) {
     case kTreeNode: return g_tree.n && r.below(16) ? node_addr(r.below(g_tree.n)) : kTreeHead;
     case kTreeKey: return kTreeKeySlot;
     case kFixed: return rule.max;
+    case kFixedOrNull: return r.below(8) == 0 ? 0 : rule.max;  // `fixed_or_null <v>`: a struct pointer that is sometimes null
     default: return r.next();
   }
 }
@@ -312,6 +349,10 @@ int main(int argc, char** argv) {
   long csr_bad = 0;
   uint8_t* mem_a = map_guest();
   uint8_t* mem_b = map_guest();
+  g_guard[0] = mem_a;
+  g_guard[1] = mem_b;
+  install_fault_handler();
+  long faults_a = 0, faults_b = 0, fault_bad = 0;
   Rng rng{seed};
   std::vector<uint8_t> window(kWindowSize), stack(kStackSize);
 
@@ -340,10 +381,12 @@ int main(int argc, char** argv) {
     for (PPCRegister* r : {&init.r3, &init.r4, &init.r5, &init.r6, &init.r7,
                            &init.r8, &init.r9, &init.r10})
       r->u64 = arg_value(rng);
-    PPCRegister* args[] = {&init.r3, &init.r4, &init.r5, &init.r6,
-                           &init.r7, &init.r8, &init.r9, &init.r10};
+    // r3..r10 are the arguments; r11..r13 can be set by rules too (r12: e.g. a
+    // stack-probe size, r13: the per-processor block).
+    PPCRegister* args[] = {&init.r3, &init.r4, &init.r5, &init.r6, &init.r7, &init.r8,
+                           &init.r9, &init.r10, &init.r11, &init.r12, &init.r13};
     for (const ArgRule& rule : kRules)
-      if (rule.reg >= 3 && rule.reg <= 10)
+      if (rule.reg >= 3 && rule.reg <= 13)
         args[rule.reg - 3]->u64 = rule.kind == kNear && rng.below(2)
             ? uint64_t(args[rule.base - 3]->u32 + rng.below(rule.max + 1))
             : ruled_value(rng, rule);
@@ -358,6 +401,21 @@ int main(int argc, char** argv) {
           mem_a[at + i] = mem_b[at + i] = ch;
         }
       }
+    for (const ArgRule& rule : kRules)  // `rN mirror rM`: a copy of rM's string, maybe one byte changed
+      if (rule.kind == kMirror) {
+        // Own buffer at 0x40009000..0x4000A000 (str/ptr arguments stay below 0x40008000).
+        const uint32_t src = args[rule.base - 3]->u32;
+        const uint32_t dst = kWindow + 0x9000 + rng.below(0x800);
+        uint32_t len = 0;
+        while (len < 0x7FF && mem_a[src + len]) ++len;
+        for (uint32_t i = 0; i <= len; ++i) mem_a[dst + i] = mem_b[dst + i] = mem_a[src + i];
+        if (rng.below(2)) {  // half the time: equal up to a random position, then different
+          const uint32_t at = rng.below(len + 1);
+          const uint8_t ch = uint8_t(rng.below(256));
+          mem_a[dst + at] = mem_b[dst + at] = ch;
+        }
+        args[rule.reg - 3]->u64 = dst;
+      }
     for (PPCRegister* f : {&init.f1, &init.f2, &init.f3, &init.f4})
       f->f64 = fp_value(rng);
     for (const MemRule& m : kMemRules) {
@@ -368,7 +426,11 @@ int main(int argc, char** argv) {
         addr = ((uint32_t(g[0]) << 24) | (uint32_t(g[1]) << 16) | (uint32_t(g[2]) << 8) | g[3]) + m.addr;
       }
       uint32_t v;
-      if (m.kind == kNear) {  // `mem32 @r3+8 near @r3+12 512`: a field close to another field's value
+      if (m.kind == kNearBits) {  // `mem32 @r4+0 nearbits @r3+0`: equal, or one bit flipped
+        const uint8_t* q = mem_a + args[m.near_base - 3]->u32 + m.near_off;
+        const uint32_t ref = (uint32_t(q[0]) << 24) | (uint32_t(q[1]) << 16) | (uint32_t(q[2]) << 8) | q[3];
+        v = rng.below(2) ? ref : ref ^ (1u << rng.below(32));
+      } else if (m.kind == kNear) {  // `mem32 @r3+8 near @r3+12 512`: a field close to another field's value
         const uint8_t* q = mem_a + args[m.near_base - 3]->u32 + m.near_off;
         const uint32_t ref = (uint32_t(q[0]) << 24) | (uint32_t(q[1]) << 16) | (uint32_t(q[2]) << 8) | q[3];
         // The other half: anywhere in the SAME window as the referenced value, so two
@@ -376,8 +438,15 @@ int main(int argc, char** argv) {
         // (a loop from one to the other would sweep 1.8 GB).
         const uint32_t lo = kWindow + rng.below(kWindowSize / 2);
         v = rng.below(2) ? ref + rng.below(m.max + 1) : (ref >= kWindowHi ? lo + kHiDelta : lo);
+      } else if (m.kind == kOneOf) {  // `mem32 <addr> oneof a b [c d]`
+        v = m.alts[rng.below(m.n_alts)];
       } else {
         v = uint32_t(ruled_value(rng, {0, m.kind, m.max}));
+      }
+      if (addr < kNullGuard) {
+        std::printf("rule error: a mem32 rule writes to guest 0x%08x, inside the null page (0..64 KB);\n"
+                    "put that struct elsewhere (e.g. `rN fixed 0x60001000`)\nRESULT FAIL (rules)\n", addr);
+        return 1;
       }
       const uint8_t be[4] = {uint8_t(v >> 24), uint8_t(v >> 16), uint8_t(v >> 8), uint8_t(v)};
       std::memcpy(mem_a + addr, be, 4);
@@ -398,12 +467,49 @@ int main(int argc, char** argv) {
     PPCContext a = init, b = init;
     const long log0 = rex::g_log_calls;
     a.fpscr.setcsr(init.fpscr.csr);
-    ORIGINAL(a, mem_a);
+    volatile bool fault_a = false, fault_b = false;
+    if (sigsetjmp(g_fault_jmp, 1) == 0) {
+      g_in_guest_call = 1;
+      ORIGINAL(a, mem_a);
+      g_in_guest_call = 0;
+    } else {
+      fault_a = true;
+    }
     const uint32_t host_csr_a = a.fpscr.getcsr();
     const long log_a = rex::g_log_calls - log0;
     b.fpscr.setcsr(init.fpscr.csr);
-    CALL_REWRITE(b, mem_b);
+    if (sigsetjmp(g_fault_jmp, 1) == 0) {
+      g_in_guest_call = 1;
+      CALL_REWRITE(b, mem_b);
+      g_in_guest_call = 0;
+    } else {
+      fault_b = true;
+    }
     const uint32_t host_csr_b = b.fpscr.getcsr();
+    if (fault_a || fault_b) {
+      // State after a fault is partial: only "faulted in both" counts. The window
+      // and stack are rewritten for the next case; a differing write elsewhere
+      // would show up in the next touched-page scan.
+      a.fpscr.setcsr(default_csr);
+      faults_a += fault_a;
+      faults_b += fault_b;
+      if (fault_a != fault_b) {
+        ++fault_bad;
+        ++abi_bad;
+        ++strict_bad;
+        if (first_abi_case < 0) {
+          first_abi_case = c;
+          std::printf("first ABI failure (case %ld): null-page fault in the %s only; r3 %016llx r4 %016llx\n",
+                      c, fault_a ? "original" : "rewrite", (unsigned long long)init.r3.u64,
+                      (unsigned long long)init.r4.u64);
+        }
+      }
+      if (stop_early && abi_bad) {
+        std::printf("stopped early after case %ld (DIFFTEST_STOP)\n", c);
+        break;
+      }
+      continue;
+    }
     a.fpscr.setcsr(default_csr);
     const bool csr_same = (host_csr_a & ~0x3Fu) == (host_csr_b & ~0x3Fu);  // control bits; 0-5 are sticky flags
     csr_bad += !csr_same;
@@ -482,6 +588,8 @@ int main(int argc, char** argv) {
               r3_low_bad, r3_high_bad, mem_bad, redzone_bad);
   std::printf("trap_or_log_count_mismatches=%ld (original logged %ld times)\n", trap_bad, traps_a);
   std::printf("host_mxcsr_mismatches=%ld float_return=%s\n", csr_bad, kFloatReturn ? "f1" : "no");
+  std::printf("null_page_faults: original=%ld rewrite=%ld mismatched=%ld (guest 0..64 KB)\n",
+              faults_a, faults_b, fault_bad);
   std::printf("differing_fields:");
   for (size_t i = 0; i < sizeof(kFields) / sizeof(kFields[0]); ++i)
     if (field_bad[i]) std::printf(" %s%s=%ld", kFields[i].name, kFields[i].abi ? "(ABI!)" : "", field_bad[i]);

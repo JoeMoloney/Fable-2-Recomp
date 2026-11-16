@@ -14,19 +14,22 @@ line (`r3 ptr`, `r4 ptr_or_null`, `r5 len 256`, `r6 int`, `r7 u32`, `r8 any`,
 `r4 slen 64` = -64..64, `r3 ptr_lo` = pointer
 always in the low window (0x4000xxxx), never its copy above the sign bit
 (0xB000xxxx, a quarter of `ptr` values and random pointers), `r3 str 120` = pointer to a string of
-length 0..120 (a quarter at 119..121), `r3 fixed 0x4000C000` = always that value, `#` comments;
+length 0..120 (a quarter at 119..121), `r3 fixed 0x4000C000` = always that value, `fixed_or_null 0x4000C000` = that value or (1 in 8) 0, `#` comments;
 `tree <isnil_off> <key_off> [n]` builds a valid MSVC std::map tree each case,
 then kinds `tree_cont` / `tree_node` / `tree_key` point into it;
 `data <addr> <hex>` fixed bytes (image constants); `ret f1` = float return;
-`fval <double>` an edge value for float arguments (nudged by +-2 ulps); `r4 near r3 32` = half the time r3 + 0..32), and `mem32 <addr> <kind> [max]` to set a 32-bit global (e.g. a
+`fval <double>` an edge value for float arguments (nudged by +-2 ulps); `r4 near r3 32` = half the time r3 + 0..32), `r4 mirror r3` = a copy of r3's string in its own buffer, half the time with one byte changed (strcmp-style functions), and `mem32 <addr> <kind> [max]` to set a 32-bit global (e.g. a
 table pointer) before each case; `mem32 @r3+12 <kind>` sets a field of an
-argument's struct; `mem32 *0x834BDBC4+16 <kind>` a field of the struct a
+argument's struct; `mem32 <addr|@rN+off> oneof a b [c d]` = one of those values; `mem32 *0x834BDBC4+16 <kind>` a field of the struct a
 global points to; `mem32 @r3+8 near @r3+12 512` = half the time the
-other field's value + 0..512 (set the referenced field first). Without it every argument register gets a
+other field's value + 0..512 (set the referenced field first); `mem32 @r4+0 nearbits @r3+0` = the
+other field's value, half the time with one random bit flipped. Rules may also set r11..r13
+(e.g. `r13 ptr_lo` for code that reads the per-processor block through r13). Without it every argument register gets a
 random mix and all memory outside the windows is zero.
 """
 import argparse
 import re
+import signal
 import subprocess
 import sys
 from pathlib import Path
@@ -57,7 +60,8 @@ def extract(name):
 
 KINDS = {"slen": "kSLen", "ptr": "kPtr", "ptr_or_null": "kPtrOrNull", "len": "kLen", "int": "kInt",
          "u32": "kU32", "any": "kAny", "tree_cont": "kTreeCont", "tree_node": "kTreeNode",
-         "tree_key": "kTreeKey", "fixed": "kFixed", "str": "kStr", "ptr_lo": "kPtrLo"}
+         "tree_key": "kTreeKey", "fixed": "kFixed", "str": "kStr", "ptr_lo": "kPtrLo",
+         "fixed_or_null": "kFixedOrNull"}
 
 
 def rules_inc(path):
@@ -94,19 +98,36 @@ def rules_inc(path):
                 sys.exit(f"{path}:{n}: fields must sit in 12..31 of a 32-byte node, max_nodes 1..255")
             tree = f"{{{isnil}u, {key}u, {maxn}u}}"
             continue
+        if words[0] == "mem32" and len(words) == 4 and words[2] == "nearbits":
+            rel = re.fullmatch(r"@r([3-9]|1[0-3])\+(\w+)", words[1])
+            ref = re.fullmatch(r"@r([3-9]|1[0-3])\+(\w+)", words[3])
+            if not rel or not ref:
+                sys.exit(f"{path}:{n}: expected 'mem32 @rN+off nearbits @rM+off'")
+            mems.append(f"{{{int(rel.group(2), 0):#x}u, kNearBits, 0u, {rel.group(1)}, 0u, "
+                        f"{ref.group(1)}, {int(ref.group(2), 0):#x}u}}")
+            continue
         if words[0] == "mem32" and len(words) == 5 and words[2] == "near":
-            rel = re.fullmatch(r"@r([3-9]|10)\+(\w+)", words[1])
-            ref = re.fullmatch(r"@r([3-9]|10)\+(\w+)", words[3])
+            rel = re.fullmatch(r"@r([3-9]|1[0-3])\+(\w+)", words[1])
+            ref = re.fullmatch(r"@r([3-9]|1[0-3])\+(\w+)", words[3])
             if not rel or not ref:
                 sys.exit(f"{path}:{n}: expected 'mem32 @rN+off near @rM+off <max>'")
             mems.append(f"{{{int(rel.group(2), 0):#x}u, kNear, {int(words[4], 0)}u, {rel.group(1)}, 0u, "
                         f"{ref.group(1)}, {int(ref.group(2), 0):#x}u}}")
             continue
+        if words[0] == "mem32" and len(words) >= 4 and words[2] == "oneof":
+            vals = [int(w, 0) for w in words[3:]]
+            if not 1 < len(vals) <= 4:
+                sys.exit(f"{path}:{n}: oneof takes 2 to 4 values")
+            rel = re.fullmatch(r"@r([3-9]|1[0-3])\+(\w+)", words[1])
+            addr, reg = (int(rel.group(2), 0), rel.group(1)) if rel else (int(words[1], 0), 0)
+            alts = ", ".join(f"{v:#x}u" for v in vals)
+            mems.append(f"{{{addr:#x}u, kOneOf, 0u, {reg}, 0u, 0, 0u, {{{alts}}}, {len(vals)}u}}")
+            continue
         if words[0] == "mem32":
             if len(words) < 3 or words[2] not in KINDS:
                 sys.exit(f"{path}:{n}: expected 'mem32 <addr> <{'|'.join(KINDS)}> [max]'")
             maxv = int(words[3], 0) if len(words) > 3 else 0
-            rel = re.fullmatch(r"@r([3-9]|10)\+(\w+)", words[1])
+            rel = re.fullmatch(r"@r([3-9]|1[0-3])\+(\w+)", words[1])
             der = re.fullmatch(r"\*(0x[0-9a-fA-F]+)\+(\w+)", words[1])
             if rel:
                 mems.append(f"{{{int(rel.group(2), 0):#x}u, {KINDS[words[2]]}, {maxv}u, {rel.group(1)}}}")
@@ -115,15 +136,21 @@ def rules_inc(path):
             else:
                 mems.append(f"{{{int(words[1], 0):#x}u, {KINDS[words[2]]}, {maxv}u}}")
             continue
+        if len(words) == 3 and words[1] == "mirror":
+            base = re.fullmatch(r"r([3-9]|1[0-3])", words[2])
+            if not re.fullmatch(r"r([3-9]|1[0-3])", words[0]) or not base:
+                sys.exit(f"{path}:{n}: expected 'rN mirror rM' (rM: a str rule)")
+            rows.append(f"{{{words[0][1:]}, kMirror, 0u, {base.group(1)}}}")
+            continue
         if len(words) == 4 and words[1] == "near":
             base = re.fullmatch(r"r(\d+)", words[2])
-            if not re.fullmatch(r"r([3-9]|10)", words[0]) or not base or not 3 <= int(base.group(1)) <= 10:
+            if not re.fullmatch(r"r([3-9]|1[0-3])", words[0]) or not base or not 3 <= int(base.group(1)) <= 13:
                 sys.exit(f"{path}:{n}: expected 'rN near rM <max>'")
             rows.append(f"{{{words[0][1:]}, kNear, {int(words[3], 0)}u, {base.group(1)}}}")
             continue
         m = re.fullmatch(r"r(\d+)", words[0])
-        if not m or not 3 <= int(m.group(1)) <= 10 or len(words) < 2 or words[1] not in KINDS:
-            sys.exit(f"{path}:{n}: expected 'r3..r10 <{'|'.join(KINDS)}> [max]'")
+        if not m or not 3 <= int(m.group(1)) <= 13 or len(words) < 2 or words[1] not in KINDS:
+            sys.exit(f"{path}:{n}: expected 'r3..r13 <{'|'.join(KINDS)}> [max]'")
         if words[1] == "str" and (len(words) < 3 or not 1 < int(words[2], 0) < 0x8000):
             sys.exit(f"{path}:{n}: str needs a max length between 2 and 0x7FFF")
         if words[1] in ("len", "slen") and (len(words) < 3 or not 0 < int(words[2], 0) <= 0x8000):
@@ -150,6 +177,30 @@ def write_original(name, out):
     head = f'// Extracted from generated/default/{src_file}\n#include "fable_2_pch.h"\n'
     (out / "original.cpp").write_text(head + "\n".join([f'extern "C" REX_FUNC(original_{name}) {{', *body[1:]]) + "\n")
     return src_file, body
+
+
+def run_limited(cmd, cpu_seconds, env=None, wall_factor=20, min_wall=600):
+    """Run a test binary with a CPU-time limit instead of a wall-clock one, so a busy
+    machine (a game in the background) can't turn a slow run into a "hang".
+    Returns (status, returncode, stdout, stderr); status is "ok", "cpu" (used up its
+    CPU seconds: a real hang) or "wall" (the wall-clock backstop fired: inconclusive)."""
+    import resource
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=env)
+    try:
+        lim = max(1, int(cpu_seconds))
+        resource.prlimit(proc.pid, resource.RLIMIT_CPU, (lim, lim + 5))
+    except (ProcessLookupError, ValueError):
+        pass  # already finished
+    try:
+        out, err = proc.communicate(timeout=max(min_wall, cpu_seconds * wall_factor))
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        out, err = proc.communicate()
+        return "wall", proc.returncode, out, err
+    # SIGXCPU at the soft limit, SIGKILL at the hard one.
+    if proc.returncode in (-signal.SIGXCPU, -signal.SIGKILL):
+        return "cpu", proc.returncode, out, err
+    return "ok", proc.returncode, out, err
 
 
 def build(name, out, rewrite_srcs, defines=(), rules=None):
@@ -187,7 +238,8 @@ def main():
     ap.add_argument("--rewrite", type=Path, help="test this file instead of rewrites/<name>.cpp (e.g. a deliberately broken copy)")
     ap.add_argument("--out-suffix", default="")
     ap.add_argument("--timeout", type=float, default=600.0,
-                    help="seconds before the run counts as hung (FAIL); 200k cases normally take well under a minute")
+                    help="CPU seconds before the run counts as hung (FAIL); 200k cases normally take well under a minute. "
+                         "CPU time, not wall time, so a busy machine doesn't cause false hangs")
     args = ap.parse_args()
 
     rewrite = args.rewrite.resolve() if args.rewrite else HERE / "rewrites" / f"{args.name}.cpp"
@@ -196,17 +248,23 @@ def main():
     if not rewrite.exists():
         sys.exit(f"missing rewrite: {rewrite}")
     exe = build(args.name, out, [rewrite])
-    try:
-        run = subprocess.run([str(exe), str(args.cases), args.seed], capture_output=True, text=True,
-                             timeout=args.timeout)
-    except subprocess.TimeoutExpired as e:
-        partial = (e.stdout or b"").decode(errors="replace") if isinstance(e.stdout, bytes) else (e.stdout or "")
-        text = (partial + f"no result after {args.timeout:.0f} s: the original or the rewrite hangs on some input\n"
-                "(often an input rule that lets a loop run across a huge range; check the .rules file)\n"
-                "RESULT FAIL (timeout)\n")
+    status, code, stdout, stderr = run_limited([str(exe), str(args.cases), args.seed], args.timeout)
+    if status != "ok":
+        if status == "cpu":
+            tail = (f"no result after {args.timeout:.0f} CPU seconds: the original or the rewrite hangs on some input\n"
+                    "(often an input rule that lets a loop run across a huge range; check the .rules file)\n"
+                    "RESULT FAIL (timeout)\n")
+        else:
+            tail = ("the wall-clock backstop fired before the CPU limit: the machine is too busy to tell\n"
+                    "RESULT INCONCLUSIVE (rerun)\n")
+        text = stdout + tail
         (out / "result.txt").write_text(text)
         print(text, end="")
-        sys.exit(1)
+        sys.exit(1 if status == "cpu" else 3)
+    if code < 0:  # killed by a signal: the harness itself crashed (output may be lost)
+        stdout += f"the test binary crashed (signal {-code})\nRESULT FAIL (crash, signal {-code})\n"
+        code = 1
+    run = subprocess.CompletedProcess([], code, stdout, stderr)
     (out / "result.txt").write_text(run.stdout + run.stderr)
     print(run.stdout + run.stderr, end="")
     sys.exit(run.returncode)

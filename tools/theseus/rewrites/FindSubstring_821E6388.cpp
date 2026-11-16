@@ -10,7 +10,7 @@
 
 namespace {
 
-constexpr int64_t kNotFound = -1;
+constexpr int64_t kNotFound = -1;  // gate: equivalent: internal sentinel (mapped to 0 below), never a real offset
 
 // Offset of the first match from the haystack start, or kNotFound.
 int64_t FindSubstring(uint8_t* base, uint32_t haystack, uint32_t needle) {

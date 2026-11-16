@@ -172,19 +172,21 @@ def mutants_cpp(name, body, chosen):
 
 
 def run_one(exe, k, cases, seed, timeout):
+    """timeout is in CPU seconds (difftest.run_limited): a busy machine slows a run
+    down but can't make it look hung. The wall-clock backstop gives "inconclusive"."""
     env = dict(os.environ, DIFFTEST_STOP="1")
-    try:
-        r = subprocess.run([str(exe), str(cases), seed, str(k)], capture_output=True, text=True,
-                           timeout=timeout, env=env)
-    except subprocess.TimeoutExpired:
-        return k, "killed", "timeout (hang)"
-    if r.returncode == 0:
+    status, code, stdout, _ = difftest.run_limited([str(exe), str(cases), seed, str(k)], timeout, env=env)
+    if status == "cpu":
+        return k, "killed", "timeout (hang: used up its CPU seconds)"
+    if status == "wall":
+        return k, "inconclusive", "wall-clock backstop fired (machine busy?): rerun"
+    if code == 0:
         return k, "survived", ""
-    if r.returncode == 1:
-        why = [l for l in r.stdout.splitlines() if l.startswith(("first ABI failure", "abi_mismatches",
-                                                                  "trap_or_log", "host_mxcsr", "touched_page"))]
+    if code == 1:
+        why = [l for l in stdout.splitlines() if l.startswith(("first ABI failure", "abi_mismatches",
+                                                                "trap_or_log", "host_mxcsr", "touched_page"))]
         return k, "killed", "; ".join(why)[:300]
-    return k, "killed", f"crash (exit {r.returncode})"
+    return k, "killed", f"crash (exit {code})"
 
 
 def main():
@@ -234,13 +236,16 @@ def main():
         t[0] += verdict == "killed"
         t[1] += 1
     killed = sum(r["verdict"] == "killed" for r in rows)
+    inconclusive = sum(r["verdict"] == "inconclusive" for r in rows)
     summary = {"name": args.name, "ablate": ablate, "cases": args.cases, "mutants": len(rows),
-               "killed": killed, "kill_rate": round(killed / len(rows), 3),
+               "killed": killed, "inconclusive": inconclusive, "kill_rate": round(killed / len(rows), 3),
                "per_op": {op: f"{a}/{b}" for op, (a, b) in sorted(per_op.items())}, "rows": rows}
     (out / "result.json").write_text(json.dumps(summary, indent=1) + "\n")
     print(f"{args.name}{' (ablate ' + ','.join(ablate) + ')' if ablate else ''}: "
           f"killed {killed}/{len(rows)} ({summary['kill_rate']:.0%})  "
           + "  ".join(f"{op} {v}" for op, v in summary["per_op"].items()))
+    if inconclusive:
+        print(f"  {inconclusive} inconclusive (wall-clock backstop; machine busy?): rerun")
     for r in rows:
         if r["verdict"] == "survived":
             print(f"  survived #{r['k']:<3} {r['op']:<6} {r['desc']:<30} | {r['ppc']}")

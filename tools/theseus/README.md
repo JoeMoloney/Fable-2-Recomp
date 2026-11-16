@@ -25,6 +25,8 @@ equivalent to the original. Nothing here changes the game build or the manifest;
 | Caller check | `python3 tools/theseus/caller_usage.py <function>` | printed | ~10 s |
 | Batch queue | `python3 tools/theseus/batch_pool.py [--top N A]` | `batch/queue.jsonl`; ledger `tools/theseus/batch/ledger.tsv` (tracked) | ~10 s |
 | Batch packet | `python3 tools/theseus/batch_packet.py <function>` or `--next N A` | `batch/<function>/packet.md` | ~4 s each |
+| **Gate** (all checks) | `python3 tools/theseus/gate.py <function>... [-j N] [--no-ledger]` | `batch/<function>/gate.json`, ledger row | ~2–3 min each; `-j 4` runs 4 at once |
+| Ship a batch | `python3 tools/theseus/ship.py <batch> [--build]`, after the in-game A/B `--confirm` | wrappers in `src/core/hotfunc/theseus/`; `--build`: incremental Release build + `nm` check; `--confirm`: ledger rows -> `shipped` | build ~1–5 min |
 
 Rerun 1 and 3 after codegen or manifest changes; rerun 2 after big Ghidra changes.
 
@@ -83,12 +85,29 @@ Rerun 1 and 3 after codegen or manifest changes; rerun 2 after big Ghidra change
   pointer that always stays in the low window, `mem32 @r3+8 near @r3+12 512` = a field close to
   another field's value. A quarter of random pointers now go to a copy of the data window above
   the sign bit (0xB000xxxx). `--timeout` (default 600 s) turns a hang into `RESULT FAIL (timeout)`.
+- **`gate.py`** (B2) is the one command per function: difftest at 200k (`--timeout`), `mutate.py` on
+  the original (20k cases, 200k for float/vector bodies; survivors listed with a pre-label "likely
+  equivalent: …" or "review", they don't fail the gate), **mutants of the rewrite** (`<`↔`<=`,
+  `>`↔`>=`, `std::fma` unfused, integer literal ±1 or a top-mantissa-bit flip for 64-bit constants,
+  NaN/sign guard dropped; any survivor = gate-fail, a truly equivalent line can be marked
+  `// gate: equivalent <reason>`), the caller check (a caller that reads a scratch register after
+  the call is fine only if the rewrite leaves that register equal: difftest's `differing_fields`)
+  and a compile of the override wrapper with the game's Release flags. Writes the ledger
+  (`gated` / `gate-fail`; `reviewed`/`shipped`/`rejected` rows keep their status).
+- B3 additions: guest **0..64 KB is a null page** (faults are caught and must match between the
+  original and the rewrite; a rule that writes there is an error); `r4 mirror r3` (copy of r3's
+  string, half the time one byte changed); `mem32 <addr|@rN+off> oneof a b [c d]`; `mem32 @r4+0
+  nearbits @r3+0` (same word or one bit flipped); `fixed_or_null <v>`; rules may set r11..r13.
+  All test limits are **CPU seconds** (`difftest.run_limited`): a busy machine slows the gate
+  (which also runs at nice 10) but can't fake a hang; if the wall-clock backstop fires the
+  result is `INCONCLUSIVE` (rerun).
 - **`caller_usage.py`** checks what every call site does with r3 afterwards and
   that none reads a scratch register first.
 
 **Rewrite contract:** identical full 64-bit r3, non-volatile registers
-(r1, r2, r13–r31, f14–f31, cr2–cr4, lr) and memory. Scratch registers may differ
-only when `caller_usage.py` shows no caller reads them.
+(r1, r2, r13–r31, f14–f31, cr2–cr4, lr) and memory. A scratch register may differ
+only when `caller_usage.py` shows no caller reads it after the call (some do: the
+compiler knew the callee leaves e.g. r7 alone; `gate.py` checks this per register).
 
 ## In the game
 

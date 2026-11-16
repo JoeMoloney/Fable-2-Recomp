@@ -1,9 +1,10 @@
 # lua_settop(L, idx): L->top / L->base point into the data window so the
 # fill loop runs a bounded number of times (top and base are each anywhere in
 # the first 32 KB, so both "push nils" and "pop" cases occur).
-r3 len 0x7FF0      # L itself in low memory (0..0x7FF0), away from its stack in
-                   # the data window: if a nil landed on L->top the loop would
-                   # sweep a gigabyte (the game never does that)
+r3 fixed 0x60001000  # L itself outside the data window, away from its stack: if a
+                     # nil landed on L->top the loop would sweep a gigabyte (the game
+                     # never does that). Was 0..0x7FF0 (low memory) until B3 made
+                     # guest 0..64 KB a faulting null page.
 r4 slen 64
 mem32 @r3+12 ptr   # L->base
 mem32 @r3+8 near @r3+12 512   # L->top: half the time just above L->base, so

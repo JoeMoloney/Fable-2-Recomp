@@ -12,7 +12,7 @@
 
 namespace {
 
-constexpr uint32_t kNotFound = 0xFFFFFFFF;  // never a valid string address here
+constexpr uint32_t kNotFound = 0xFFFFFFFF;  // gate: equivalent: internal sentinel (mapped to 0 below), never a valid string address
 
 uint32_t FindChar(uint8_t* base, uint32_t str, int32_t ch) {
   for (uint32_t p = str;; ++p) {

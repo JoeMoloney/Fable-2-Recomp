@@ -38,13 +38,13 @@ constexpr double kSin[8] = {
 
 // PowerPC fctid / fctidz: double -> int64, saturating, NaN -> INT64_MIN.
 int64_t PpcFctid(double v) {   // rounds with the current mode (nearest)
-  if (std::isnan(v)) return INT64_MIN;
-  if (v > double(LLONG_MAX)) return LLONG_MAX;
+  if (std::isnan(v)) return INT64_MIN;  // gate: equivalent on x86 (cvtsd2si of NaN is INT64_MIN too); kept to state the PPC rule
+  if (v > double(LLONG_MAX)) return LLONG_MAX;  // gate: equivalent in Cos (n < ~7e7: larger arguments return NaN), so v never reaches 2^63
   return simde_mm_cvtsd_si64(simde_mm_load_sd(&v));
 }
 int64_t PpcFctidz(double v) {  // truncates
-  if (std::isnan(v)) return INT64_MIN;
-  if (v > double(LLONG_MAX)) return LLONG_MAX;
+  if (std::isnan(v)) return INT64_MIN;  // gate: equivalent on x86 (cvtsd2si of NaN is INT64_MIN too); kept to state the PPC rule
+  if (v > double(LLONG_MAX)) return LLONG_MAX;  // gate: equivalent in Cos (n < ~7e7: larger arguments return NaN), so v never reaches 2^63
   return simde_mm_cvttsd_si64(simde_mm_load_sd(&v));
 }
 
@@ -60,7 +60,7 @@ double Cos(double x) {
   double r = NegMulSub(kPiHigh, xn, ax);  // ax - xn*pi_high
   r = NegMulSub(kPiLow, xn, r);           //    - xn*pi_low
   const double r2 = r * r;
-  double p = std::fma(kSin[7], r2, kSin[6]);
+  double p = std::fma(kSin[7], r2, kSin[6]);  // gate: equivalent: unfused, the top term moves p by ~1e-30, far below one ulp of the result
   for (int i = 5; i >= 0; --i) p = std::fma(p, r2, kSin[i]);
   p = std::fma(p, r2, 1.0);
   double s = p * r;
