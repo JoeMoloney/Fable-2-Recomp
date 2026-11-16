@@ -1,0 +1,4 @@
+# Low bytes near the interesting values: r3 -40..40 gives 0xD8..0xFF and 0..40,
+# r4 -2..2 gives 0xFE, 0xFF (BT_NONXML) and 0..2.
+r3 slen 40
+r4 slen 2

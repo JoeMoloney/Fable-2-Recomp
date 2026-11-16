@@ -1,0 +1,4 @@
+r3 ptr
+r4 len 20
+mem32 @r3+32 len 16
+mem32 @r3+24 ptr

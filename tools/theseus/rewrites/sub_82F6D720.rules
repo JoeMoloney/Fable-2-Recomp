@@ -1,0 +1,6 @@
+# data at 0x4000C000 (or null), count 0..4; each u16 is 0 or 1.
+r3 ptr
+mem32 @r3+8 len 4
+mem32 @r3+4 fixed_or_null 0x4000C000
+mem32 0x4000C000 oneof 0 1 0x10000 0x10001
+mem32 0x4000C004 oneof 0 1 0x10000 0x10001

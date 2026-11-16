@@ -1,0 +1,12 @@
+# Global manager -> state -> flags, at fixed window addresses (r3 pointers stay
+# below 0x40008000, so they never overlap). The three flag bytes +52/+53/+54 are
+# set by overlapping 32-bit writes, latest first, so each ends up 0 or 1.
+r3 ptr
+mem32 0x83496920 fixed 0x4000C000
+mem32 0x4000C00C fixed 0x4000C100
+mem32 0x4000C18C fixed 0x4000C400
+mem32 0x4000C21C len 3            # state +284 mode: 2 a quarter of the time
+mem32 0x4000C433 len 1            # byte +54
+mem32 0x4000C432 len 1            # byte +53
+mem32 0x4000C431 len 1            # byte +52
+mem32 @r3+101 len 1               # object byte +104: 0 or 1

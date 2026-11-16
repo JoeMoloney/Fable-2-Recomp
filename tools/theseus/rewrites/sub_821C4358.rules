@@ -1,0 +1,7 @@
+# Global -> manager at 0x4000C000 -> pool at 0x4000C100 -> base (random pointer);
+# the object's element is a random pointer or null.
+r3 ptr
+mem32 @r3+20 ptr_or_null
+mem32 0x8333FD30 fixed 0x4000C000
+mem32 0x4000C014 fixed 0x4000C100
+mem32 0x4000C104 ptr

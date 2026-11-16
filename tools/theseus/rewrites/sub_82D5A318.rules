@@ -1,0 +1,16 @@
+# Keys at 0x4000C000 (8 slots, mask 7); slot 3 always 0xFFFFFFFF (empty) so
+# every probe ends; other keys 0..127 like r4; values follow the keys (random).
+# Start slot = (key >> 4) & 7, so keys up to 127 start probes in all 8 slots and
+# probes from 4..7 must wrap past slot 7 (gate B3: with keys 0..31 they never did).
+r3 ptr
+r4 len 127
+mem32 @r3+0 fixed 0x4000C000
+mem32 @r3+8 fixed 7
+mem32 0x4000c000 len 127
+mem32 0x4000c004 len 127
+mem32 0x4000c008 len 127
+mem32 0x4000c00c fixed 0xFFFFFFFF
+mem32 0x4000c010 len 127
+mem32 0x4000c014 len 127
+mem32 0x4000c018 len 127
+mem32 0x4000c01c len 127

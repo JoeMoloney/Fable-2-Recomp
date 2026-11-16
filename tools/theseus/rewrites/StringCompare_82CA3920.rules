@@ -1,0 +1,5 @@
+# r4: a copy of r3's string, half the time with one byte changed, so equal
+# prefixes of every length occur; n around the lengths (also <= 0).
+r3 str 40
+r4 mirror r3
+r5 slen 50

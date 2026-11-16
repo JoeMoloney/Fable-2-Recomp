@@ -1,0 +1,5 @@
+# r3 = start, r4 = END address (not a length). Start below 128 aligns down to 0,
+# so end - start is never negative (a negative span makes the original loop
+# ~2^29 times). Ends up to 32 KB.
+r3 len 127
+r4 len 0x8000

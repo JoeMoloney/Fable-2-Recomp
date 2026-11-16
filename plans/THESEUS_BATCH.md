@@ -58,9 +58,9 @@ with a reason). The pilot's 20 go in as `shipped` (memset: `gated`, kept out for
 |---|---|---|
 | B0 | `batch_pool.py` (queue + tiers), ledger with the pilot's 20, `batch_packet.py` | ✅ 2026-11-16: pool 4,766, queued 4,746 (A 611, B 1,402, C 853, D 1,880). Ledger `tools/theseus/batch/ledger.tsv` holds only functions that left the queue (pilot: 19 `shipped`, memset `gated`). Packets take ~4 s each (the caller scan reads all generated files; batch it if that adds up). Inventory rerun: it still counts 20 hotfunc overrides, so the 19 `theseus/` wrappers aren't seen as overrides. Harmless here (rewrites are excluded by name); fix in `inventory.py` some time |
 | B1 | `mutate.py`: mechanical mutants of the original. Check on the 20 pilot functions: kill rate per function, look at survivors (some are equivalent mutants, e.g. dead code); remove the `fval`/log-uniform/trap-count rules on purpose and confirm the matching mutants then survive (proves mutants find the pilot's 3 gaps) | ✅ 2026-11-16, see "B1 results" below. Kill rate 82–100% per function at 20k cases, every survivor explained. Found 2 real coverage gaps in pilot tests that had passed (fixed). Reproduces 1 of the pilot's 3 gaps (trap count); the 2 float gaps were rewrite-shape mistakes, so B2 adds mutants of the rewrite too |
-| B2 | `gate.py`: one command per function: difftest PASS-ABI (200k, `--timeout`); `mutate.py` on the original (floats at 200k: unfused-fma mutants need it); **rewrite mutants** (same idea on `rewrites/<name>.cpp`: `<`↔`<=`, `>`↔`>=`, `std::fma`/`NegMulSub` unfused, integer literal ±1, dropped NaN/sign guard); `caller_usage.py` clean; `gate.json` + ledger. No hard kill-rate threshold (B1: 82–100% with only equivalent survivors): every surviving original mutant is listed and pre-labelled ("likely equivalent": sign swap on a same-object compare or byte value, deleted zero-extend/reload, red-zone/neighbour offset; else "review"); every surviving rewrite mutant = gate-fail. `-j` for parallel runs | ⬜ |
-| B3 | Batch 1: top 25 of tier A, written in-session from packets, all through the gate. Measure: minutes per function, first-try pass, how many needed human review | ⬜ |
-| B4 | `ship.py` + ship batch 1: wrappers, Release build, user A/B (save load, UI, Bowerstone, FPS) | ⬜ |
+| B2 | `gate.py`: one command per function: difftest PASS-ABI (200k, `--timeout`); `mutate.py` on the original (floats at 200k: unfused-fma mutants need it); **rewrite mutants** (same idea on `rewrites/<name>.cpp`: `<`↔`<=`, `>`↔`>=`, `std::fma`/`NegMulSub` unfused, integer literal ±1, dropped NaN/sign guard); `caller_usage.py` clean; `gate.json` + ledger. No hard kill-rate threshold (B1: 82–100% with only equivalent survivors): every surviving original mutant is listed and pre-labelled ("likely equivalent": sign swap on a same-object compare or byte value, deleted zero-extend/reload, red-zone/neighbour offset; else "review"); every surviving rewrite mutant = gate-fail. `-j` for parallel runs | ✅ 2026-11-16, see "B2 results" below. All 20 pilot functions pass (14 on the first run; the other 6 were 2 gate bugs, 1 junk mutant kind and 7 equivalent survivors, now marked). Found 1 more real rules gap (sub_821E3E10). Caller check is now per register. ~2–3 min per function, 20 in 17 min at `-j 4` |
+| B3 | Batch 1: top 25 of tier A, written in-session from packets, all through the gate. Measure: minutes per function, first-try pass, how many needed human review | ✅ 2026-11-16, see "B3 results" below. 25/25 gated (ledger batch 1). Every rewrite passed difftest on the first try; 21/25 passed the gate on the first run, the other 4 were equivalent mutants or rule gaps. The gate found 3 more rule gaps in passing functions and 5 harness gaps (now fixed: null page, string copies, value choices, r11–r13, CPU-time limits). ~4 min per function in session, all 45 rewrites rechecked |
+| B4 | `ship.py` + ship batch 1: wrappers, Release build, user A/B (save load, UI, Bowerstone, FPS) | ✅ 2026-11-16, see "B4 results" below. 25 wrappers, incremental Release build 89 s, all 25 overrides strong symbols; in-game run with the rewrites on looked normal (user); ledger batch 1 → `shipped`; 18 names in Ghidra |
 | B5 | Batch 2 (tier A, next 25–50) + ship. Decide headless or in-session (needs the user: cost) | ⬜ |
 | B6 | Batch 3 from tier B (stores) + ship | ⬜ |
 | B7 | Update the verdict; decide on tier C (floats) and D (no direct callers) | ⬜ |
@@ -96,6 +96,113 @@ near …` (its random half stays in the referenced value's window), `ptr_lo` (al
 table build (`-DMUTANTS`), ablation switches `NO_TRAP_COUNT` / `NO_LOG_UNIFORM`. The first recheck hung:
 `lua_settop` with `base` in the high window and `top` in the low one swept 1.8 GB; fixed by the
 same-window `near`.
+
+## B2 results (2026-11-16)
+
+`tools/theseus/gate.py <name>... [-j N] [--no-ledger]` runs difftest (200k, `--timeout`), `mutate.py`
+on the original (20k; 200k when the body uses floats/vectors), **rewrite mutants**, the caller
+check and a compile of the override wrapper with the game's Release flags (read from
+`out/build/linux-amd64-release/build.ninja`), then writes `out/theseus/batch/<name>/gate.json`
+and the ledger row. Hard failures: difftest, any surviving rewrite mutant, caller check,
+override compile. Original-mutant survivors don't fail the gate. They are listed with a
+pre-label ("likely equivalent: sign swap between two registers / on a byte value / on a small
+counter, deleted zero-extend / reload, stack red-zone offset", else "review").
+
+**Rewrite mutants** (one TU, each copy of the rewrite in its own namespace): `<`↔`<=`, `>`↔`>=`,
+`std::fma` unfused (covers `NegMulSub` through its definition), integer literal ±1 (a 64-bit
+constant flips its top mantissa bit instead: a last-bit change to a double is invisible), and
+`if (` + `isnan/isinf/signbit` guard dropped. Skipped: array sizes, `memcpy`/`memset`/`sizeof`
+sizes (+1 is only overflow UB), and lines marked `// gate: equivalent <reason>` (the reason
+goes into gate.json). A mutant that doesn't compile counts as killed and the rest rebuild.
+
+**Pilot, 20 functions:** first run 14/20 passed. The 6 failures:
+
+| Failure | What it was |
+|---|---|
+| NormalizeVector: rewrite mutants didn't build (`shuffle_ps` immediate 0xFF→0x100) | gate bug: now drops non-compiling mutants |
+| MemSet ledger note overwritten | gate bug: the human part of a note is kept, only the `gate.py <date>:` tail is replaced |
+| 619: `memcpy(…, 4)`→5 (×2) | junk mutant kind: memcpy sizes skipped |
+| NormalizeVector: `i < 4`→`<=`, `4`→`5` on the load loop | equivalent: a 5th pass only overruns the local `c[4]` (marked) |
+| FindChar / FindSubstring `kNotFound` ±1 | equivalent: internal sentinel mapped to 0 (marked) |
+| FindChainRoot `kTrapAssert` 22→23 | harness counts traps, not trap codes; only the log text differs (marked) |
+| ComputeSpecialFunction: `isnan` guards dropped, `>`→`>=` vs `LLONG_MAX`, top polynomial fma unfused | equivalent: cvtsd2si of NaN is INT64_MIN on x86 too; n < ~7e7 so 2^63 is unreachable; the top term moves p by ~1e-30 (marked) |
+
+After the fixes, 20/20 pass. Earlier the same day (3-function trial) the gate also found:
+
+- **sub_821E3E10 rules gap** (real, rewrite was correct): rewrite mutant "wrap to slot 1 instead
+  of 0" survived. Search keys were 0..7 = the capacity mask, so a probe that wrapped could never
+  find its key. Keys now 0..15 in the rules, so the mutant is killed.
+- **Callers do read scratch registers**: e.g. 6 callers of sub_821E3E10 keep a value in r7
+  across the call (MSVC knew the leaf leaves r7 alone); ComputeWrapped's callers read cr1,
+  memset's read r8. The old rule ("no caller reads scratch, else needs PASS-STRICT") would
+  have failed 7 of the 20. Now: the registers callers read must not be in difftest's
+  `differing_fields`. None are, for all 20.
+
+**Ablation (do rewrite mutants find the pilot's float gaps?):** ComputeSpecialFunction with
+`fval` rules and log-uniform floats off: `>=`→`>` at the 2.2e8 cutoff survives (the pilot's
+first float gap, reproduced) and so does a typo in that constant. With them on, both are
+killed. The unfused split-π `NegMulSub` mutant is killed even with both off.
+
+**Cost:** 100–210 s per function (difftest ~60 s, two mutant builds ~25 s each, caller scan
+~10 s, override compile ~10 s). 20 functions at `-j 4` (20 cores) took 17 min. Original
+survivors still labelled "review": MemSet `andi.` compare imm (B1: alignment-loop compare,
+equivalent) and FindTreeLeaf deleted reload (B1: value already there). The labeller doesn't
+catch either yet.
+
+## B3 results (2026-11-16)
+
+**Batch 1 = the top 25 of tier A**, written in-session from the packets, all gated (`gated`, batch 1
+in the ledger). Then all 45 rewrites (25 + the pilot's 20) were rerun through the final gate:
+45/45 pass. Proposed names are in each rewrite's header. They go to `RE_FINDINGS.md`/Ghidra with
+the ship step (B4).
+
+| What | Result |
+|---|---|
+| Time | 16:13 → 17:06 to write all 25 (incl. the harness work below), ~2 min per rewrite. Gate 120–300 s per function; the final 45 took 28 min at `-j 5` with Star Citizen running |
+| Difftest, first try | **25/25** (20k-case check after writing; none needed a fix) |
+| Gate, first run | **21/25**. The 4 failures: a dead table entry in IndirectCall (rewrite restructured), the CRC table loop start and the null fallback in sub_82F6D720 (equivalent, marked), and strncmp (needed the new `mirror` rule plus a restructure without a redundant early return) |
+| Rule gaps the gate found in functions that passed | 3: sub_82F6AD80 (ref never 1), sub_82D5A318 (probes never wrapped: keys too small), FindChainValue (head and end the same address). All found through "review" survivors and fixed |
+| Human review | every function's survivor list was read (in-session, by the writer). After the labeller updates, "review" items left: 8 in 5 functions plus FlushCache's 18 and ChkStk's 5 (both originals are entirely dead code). All checked equivalent |
+| Kinds | 2 string compares, strlen, CRC-32, 3 hash lookups, 2 c_str getters, list/array getters, expat's `unicode_byte_type`, flag/compat tests, ASCII tolower, a KPCR read, 2 no-ops (cache flush with the `dcbst`s gone, `__chkstk`) |
+
+**Harness gaps found and fixed** (the pilot's 20 were rechecked with all of them):
+
+- **Null page** (CRC: a dropped `string == 0` check survived, because guest address 4 read as zero).
+  Guest 0..64 KB is now `PROT_NONE`. A fault inside the guest call is caught (`sigsetjmp`), and the
+  original and the rewrite must fault on the same cases (`null_page_faults: original= rewrite=
+  mismatched=`). Unruled functions fault often (FNV1Hash: 17% of cases, where a small integer is
+  used as a pointer), and those cases used to read zeros anyway. One pilot rule file had put a
+  struct in low memory (GrowAndZeroBuffer `r3 len 0x7FF0`): moved to `r3 fixed 0x60001000`. A rule
+  that writes below 64 KB now stops with a clear error, and a crashing test binary now reports
+  `RESULT FAIL (crash, signal N)` instead of an empty result.
+- `rN mirror rM`: a copy of rM's string, half the time with one byte changed (strncmp's `<`→`<=`
+  survived without it: random strings never share a prefix).
+- `mem32 <addr> oneof a b [c d]`: lists with 0..3 nodes, u16 pairs that are 0 or 1.
+- `mem32 @rN+off nearbits @rM+off`: equal to another word, or one random bit flipped (packed-field compares).
+- `fixed_or_null <v>`, and rules for r11..r13 (`r12` stack-probe size, `r13` per-processor block).
+- **CPU-time limits** (requested so a game can run in the background): every test limit is CPU
+  seconds (`RLIMIT_CPU`, `difftest.run_limited`), with a generous wall-clock backstop that gives
+  `INCONCLUSIVE` (gate fails the step: rerun), never a false kill. The gate runs at nice 10. The
+  final run above was done with Star Citizen running. Results are deterministic (fixed seeds), so
+  load only changes how long the gate takes.
+- Labeller: jump-table plumbing (the recompiled `switch` ignores ctr), clrlwi of a small value,
+  sign swaps on small bit fields.
+
+## B4 results (2026-11-16)
+
+`tools/theseus/ship.py <batch> [--build] [--confirm]` writes `src/core/hotfunc/theseus/<name>.cpp` for
+every `gated` row of the batch with a passing `gate.json` (the same wrapper text the gate's override
+check compiled: it `#include`s the tested rewrite, so the game runs exactly the gated code), refuses a
+function that already has a hand-written override, then `--build` does an incremental Release build
+and checks with `nm` that `<name>` and `rewrite_<name>` are strong symbols. `--confirm` (after the
+in-game check) sets the rows to `shipped`.
+
+| What | Result |
+|---|---|
+| Wrappers | 25 (45 Theseus overrides in the game now, plus the switch) |
+| Build | incremental Release, 89 s, only the 2 usual SDK warnings; 25/25 strong symbols |
+| In game | `run-release.sh` (rewrites on): save load, menus, Bowerstone, FPS all normal, no issues seen (user). The `--theseus_rewrites=false` run was skipped: it is the recompiled originals, the known baseline; it stays the first thing to try if a problem shows up later |
+| Names | 18 Ghidra renames (revert list `docs/re/NAMES_GHIDRA_REVERT_THESEUS.tsv`), table in `docs/re/RE_FINDINGS.md` ("Theseus batch 1"); 7 kept their sub_/generic names (no strong evidence) |
 
 ## Open questions
 

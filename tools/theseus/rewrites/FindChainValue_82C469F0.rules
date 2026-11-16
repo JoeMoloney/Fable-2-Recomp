@@ -1,0 +1,10 @@
+# head -> its own node at 0x4000C200 whose next starts the list; end is the
+# sentinel 0x4000C000 (a different address, so reading one field for the other
+# is visible: gate B3). Lists of 0..3 nodes at 0x4000D000/+0x40/+0x80.
+r3 ptr
+mem32 @r3+0 fixed 0x4000C200
+mem32 @r3+4 fixed 0x4000C000
+mem32 0x4000C200 oneof 0x4000C000 0x4000D000
+mem32 0x4000D000 oneof 0x4000C000 0x4000D040
+mem32 0x4000D040 oneof 0x4000C000 0x4000D080
+mem32 0x4000D080 fixed 0x4000C000

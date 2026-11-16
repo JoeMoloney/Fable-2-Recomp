@@ -1,0 +1,21 @@
+# 8 buckets at 0x4000C000; bucket 3 always empty so every probe ends; others point
+# (or not, 1 in 8) at entries 0x4000D000 + 16*i whose keys are 0..15 like r4.
+r3 ptr
+r4 len 15
+mem32 @r3+0 fixed 8
+mem32 @r3+4 fixed 0x4000C000
+mem32 0x4000c000 fixed_or_null 0x4000d000
+mem32 0x4000d000 len 15
+mem32 0x4000c004 fixed_or_null 0x4000d010
+mem32 0x4000d010 len 15
+mem32 0x4000c008 fixed_or_null 0x4000d020
+mem32 0x4000d020 len 15
+mem32 0x4000c00c fixed 0
+mem32 0x4000c010 fixed_or_null 0x4000d040
+mem32 0x4000d040 len 15
+mem32 0x4000c014 fixed_or_null 0x4000d050
+mem32 0x4000d050 len 15
+mem32 0x4000c018 fixed_or_null 0x4000d060
+mem32 0x4000d060 len 15
+mem32 0x4000c01c fixed_or_null 0x4000d070
+mem32 0x4000d070 len 15

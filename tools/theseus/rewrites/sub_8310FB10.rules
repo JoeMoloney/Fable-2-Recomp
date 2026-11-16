@@ -1,0 +1,11 @@
+# Types: both point at one of two type records half the time; type flags give
+# kind 120 (0x3C00, also with all other bits set) or 121 or 0.
+# b's desc equals a's or differs in one random bit, so every field compare is hit.
+r3 ptr
+r4 ptr
+mem32 @r3+12 oneof 0x4000C000 0x4000C100
+mem32 @r4+12 oneof 0x4000C000 0x4000C100
+mem32 0x4000C008 oneof 0x3C00 0xFFFFFC7F 0x3C80 0
+mem32 0x4000C108 oneof 0x3C00 0xFFFFFC7F 0x3C80 0
+mem32 @r3+0 u32
+mem32 @r4+0 nearbits @r3+0

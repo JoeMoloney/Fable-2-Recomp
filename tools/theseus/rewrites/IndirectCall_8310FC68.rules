@@ -1,0 +1,2 @@
+# r4 = type code; the table covers 84..125, so pick 0..140 to hit it most of the time.
+r4 len 140

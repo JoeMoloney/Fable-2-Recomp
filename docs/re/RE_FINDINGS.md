@@ -143,3 +143,41 @@ the old names.
 | 18 | `ProcessAndProcessAndProcess1728_82D4F620` | Havok `hkClass::hkClass` (reflection) | `hkClass_Construct` | 323 static-init callers; first builds class "hkClass" (strings at 0x820246FC: "hkClass", "describedVersion", "items") |
 | 19 | `sub_82F6C2D0` | Scaleform GFx `GASFnCall::Arg(n)` | `GFx_GASFnCall_Arg` | callers in GFx code; 0x82F11560 is AS2 `Math.abs`. Ghidra's `std_vector_helper_82F6C2D0` (stl_shape rule) is wrong |
 | 20 | `sub_821E3E10` | open-addressing `uint32 -> uint32` hash map find (0 = absent) | `HashMapU32_Find` | 0x8217E6D0 looks up `*0x83496BD0` with an FNV-1 id |
+
+## Theseus batch 1: functions identified by gated rewrites (2026-11-16)
+
+The top 25 of tier A (integer leaf functions without stores, most callers
+first; plans/THESEUS_BATCH.md B3). Each passed `tools/theseus/gate.py`:
+difftest at 200,000 cases (ABI level, including null-page faults), every
+mutant of the rewrite killed, caller scratch-register check, override builds.
+18 names applied in Ghidra 2026-11-16 (rows appended to
+`docs/re/NAMES_GHIDRA_REVERT_THESEUS.tsv`); the 7 marked "(none)" have no
+name yet. The manifest and generated code keep the old names.
+
+| Current name | Identified as | Ghidra name | Evidence beyond the test |
+|---|---|---|---|
+| `IndirectCall_8310FC68` | record size by type code 84..125: (count+11)*4 + per-type extra (not an indirect call: the bctr is a jump table) | (none) | same 0x8310..0x831D system as the next two |
+| `sub_831101B8` | record check: kind (flags bits 7..13) not 83..95, exclusive flag, no active blocking node in its list | (none) | |
+| `sub_8310FB10` | are two records compatible (kind 120 types, id/count/data bits) | (none) | |
+| `sub_82214C28` | flag check on global manager `*0x83496920` state + object byte +104 | (none) | |
+| `ProcessAndProcessAndProcess852_823DB930` | CRC-32 (0xEDB88320, init 0, no final xor) of a `{data, len}` string ref | `Crc32_StringRef` | table at 0x82098CA0 = the standard table byte for byte; 12 Lua bindings call it |
+| `sub_82F6AD80` | tagged value: ref at +4 if type (+0 byte) is 5 or 7, else 0 | `TaggedValue_GetRef` | 5/7 = table/userdata in Lua numbering (unconfirmed) |
+| `sub_82D51980` | `strlen` (32-bit result) | `strlen_82D51980` | 0x82D4..0x82D6 is probably Havok's own copy (hkClass at 0x82D4F620) |
+| `sub_82D51730` | `strcmp` returning the byte difference | `strcmp_82D51730` | same region |
+| `StringCompare_82CA3920` | `strncmp` (MSVC CRT) | `strncmp` | |
+| `SwitchDispatch_82C8DAE8` | expat `unicode_byte_type(hi, lo)` | `expat_unicode_byte_type` | exact expat BT_ values (LEAD4 7, TRAIL 8, NONXML 0, NONASCII 29); tokenizer callers |
+| `sub_829FC128` | 12-byte tagged entry lookup with a type-4 substitution (globals 0x8349E158/164) | (none) | |
+| `sub_82E7D860` | bounds-checked `u32` array get (`+24` items, `+32` count) | `PtrArray_GetAt` | |
+| `HashTable_Find2_829FC630` | open-addressing hash set find, returns `&entry->value` | `HashTable_FindValue` | caller `HashTable_Insert_829FC6A0` |
+| `sub_82D5A318` | int hash map get with default: Fibonacci hash 0x9E3779B1, -1 = empty, values after keys | `IntHashMap_Get` | Havok region |
+| `GetField833_822F8628` | string handle `c_str()`, `""` (0x8209003F) when null | `StringHandle_CStr` | 0x8209003F is a 0 byte; callers read r6/r9/r10 after the call |
+| `sub_82BFFAA8` | the same on field +4 | `GetNameCStr` | UI callers (`FrontMenu_EnsureElement`) |
+| `sub_82EF1068` | weak handle equality (slot + generation; stale handles are equal) | `WeakHandle_Equals` | |
+| `sub_821C4358` | index of an object's element in a 20-byte pool (`*0x8333FD30`), -1 if none | (none) | |
+| `SwitchDispatch_8250B778` | kind 2..4 -> 1, 5..8 -> 2, else 0 | (none) | 10 Lua bindings |
+| `FindChainValue_82C469F0` | value (+16) of the last node of a sentinel-terminated list | `List_LastValue` | |
+| `sub_82F6D720` | is the last u16 of a counted buffer 0 | `WideBuffer_EndsWithNul` | |
+| `FlushCache_821D11C8` | data-cache flush of [start, end) in 128-byte lines; a no-op once the recompiler drops `dcbst` | `FlushDataCacheRange` | rewrite is empty |
+| `ToLower_Ascii_821EE9E8` | ASCII `tolower` on a full 64-bit register | `tolower_ascii` | |
+| `GetPointerFromContext_82CC1C70` | `*(KPCR->CurrentThread + 0x160)`, 0 while KPCR+0x150 is set | `GetCurrentThreadField160` | reads r13 (the per-processor block) |
+| `ProcessAndProcessAndProcess878_82CA9E84` | MSVC `__chkstk` stack probe (r12 = -frame size) | `__chkstk` | rewrite is empty; callers rely on r4..r12 unchanged |

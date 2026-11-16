@@ -1,0 +1,4 @@
+# r4: a copy of r3's string, half the time with one byte changed (equal
+# prefixes of every length, including fully equal strings).
+r3 str 40
+r4 mirror r3

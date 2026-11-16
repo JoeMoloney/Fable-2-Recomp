@@ -1,21 +1,46 @@
 name	tier	status	gate	kill_rate	batch	note
-ComputeSpecialFunction_82239E88	C	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-ComputeWrapped_8222C3E8	C	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-Ctype_Pred_Bit2_82CA6B10	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-FNV1Hash_821F3C28	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-FindChainRoot_82A596F0	B	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-FindChar_82CA3980	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-FindSubstring_821E6388	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-FindTreeLeaf_825CB448	B	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-GrowAndZeroBuffer_82BC55B8	B	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-HashCstring_82188CF0	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-MemSet_SdkRuntime_82CA3190	B	gated	PASS-ABI		pilot	pilot; hand-written negative controls; kept out of the game: plain byte loop, possible FPS cost
-NormalizeVector_82260BC8	C	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-ProcessAndProcessAndProcess1728_82D4F620	B	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-ProcessAndProcessAndProcess619_82210418	C	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-StrCmpIgnoreCase_82CA6320	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-StrCmp_Signed_8226D7A8	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-StrLenUTF16_8217AB30	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-StringCopyN_822CD828	B	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-sub_821E3E10	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
-sub_82F6C2D0	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+ComputeSpecialFunction_82239E88	C	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 31/31; rewrite mutants 17/17
+ComputeWrapped_8222C3E8	C	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 13/13; rewrite mutants 1/1
+Ctype_Pred_Bit2_82CA6B10	A	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 8/8; rewrite mutants 3/3
+FNV1Hash_821F3C28	A	shipped	PASS-ABI	0.905	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 19/21; rewrite mutants 2/2
+FindChainRoot_82A596F0	B	shipped	PASS-ABI	0.972	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 35/36; rewrite mutants 8/8
+FindChainValue_82C469F0	A	shipped	PASS-ABI	1.000	1	gate.py 2026-11-16: PASS-ABI; orig mutants 16/16; rewrite mutants 5/5
+FindChar_82CA3980	A	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 14/14; rewrite mutants 4/4
+FindSubstring_821E6388	A	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 29/29; rewrite mutants 8/8
+FindTreeLeaf_825CB448	B	shipped	PASS-ABI	0.973	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 36/37 (1 to review); rewrite mutants 11/11
+FlushCache_821D11C8	A	shipped	PASS-ABI	0.231	1	gate.py 2026-11-16: PASS-ABI; orig mutants 6/26 (18 to review)
+GetField833_822F8628	A	shipped	PASS-ABI	1.000	1	gate.py 2026-11-16: PASS-ABI; orig mutants 9/9; rewrite mutants 2/2
+GetPointerFromContext_82CC1C70	A	shipped	PASS-ABI	1.000	1	gate.py 2026-11-16: PASS-ABI; orig mutants 9/9; rewrite mutants 5/5
+GrowAndZeroBuffer_82BC55B8	B	shipped	PASS-ABI	0.903	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 28/31; rewrite mutants 9/9
+HashCstring_82188CF0	A	shipped	PASS-ABI	0.950	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 19/20; rewrite mutants 7/7
+HashTable_Find2_829FC630	A	shipped	PASS-ABI	1.000	1	gate.py 2026-11-16: PASS-ABI; orig mutants 24/24; rewrite mutants 10/10
+IndirectCall_8310FC68	A	shipped	PASS-ABI	0.842	1	gate.py 2026-11-16: PASS-ABI; orig mutants 16/19; rewrite mutants 13/13
+MemSet_SdkRuntime_82CA3190	B	gated	PASS-ABI	0.963	pilot	pilot; hand-written negative controls; kept out of the game: plain byte loop, possible FPS cost; gate.py 2026-11-16: PASS-ABI; orig mutants 26/27 (1 to review); rewrite mutants 2/2
+NormalizeVector_82260BC8	C	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 17/17; rewrite mutants 12/12
+ProcessAndProcessAndProcess1728_82D4F620	B	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 19/19; rewrite mutants 12/12
+ProcessAndProcessAndProcess619_82210418	C	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 29/29; rewrite mutants 15/15
+ProcessAndProcessAndProcess852_823DB930	A	shipped	PASS-ABI	0.864	1	gate.py 2026-11-16: PASS-ABI; orig mutants 19/22 (2 to review); rewrite mutants 14/14
+ProcessAndProcessAndProcess878_82CA9E84	A	shipped	PASS-ABI	0.583	1	gate.py 2026-11-16: PASS-ABI; orig mutants 7/12 (5 to review)
+StrCmpIgnoreCase_82CA6320	A	shipped	PASS-ABI	0.871	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 27/31; rewrite mutants 7/7
+StrCmp_Signed_8226D7A8	A	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 22/22; rewrite mutants 8/8
+StrLenUTF16_8217AB30	A	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 11/11; rewrite mutants 7/7
+StringCompare_82CA3920	A	shipped	PASS-ABI	1.000	1	gate.py 2026-11-16: PASS-ABI; orig mutants 19/19; rewrite mutants 5/5
+StringCopyN_822CD828	B	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 25/25; rewrite mutants 5/5
+SwitchDispatch_8250B778	A	shipped	PASS-ABI	0.643	1	gate.py 2026-11-16: PASS-ABI; orig mutants 9/14; rewrite mutants 11/11
+SwitchDispatch_82C8DAE8	A	shipped	PASS-ABI	0.682	1	gate.py 2026-11-16: PASS-ABI; orig mutants 15/22 (2 to review); rewrite mutants 15/15
+ToLower_Ascii_821EE9E8	A	shipped	PASS-ABI	0.900	1	gate.py 2026-11-16: PASS-ABI; orig mutants 9/10; rewrite mutants 2/2
+sub_821C4358	A	shipped	PASS-ABI	1.000	1	gate.py 2026-11-16: PASS-ABI; orig mutants 14/14; rewrite mutants 7/7
+sub_821E3E10	A	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 19/19; rewrite mutants 10/10
+sub_82214C28	A	shipped	PASS-ABI	0.938	1	gate.py 2026-11-16: PASS-ABI; orig mutants 30/32; rewrite mutants 12/12
+sub_829FC128	A	shipped	PASS-ABI	0.952	1	gate.py 2026-11-16: PASS-ABI; orig mutants 20/21 (1 to review); rewrite mutants 8/8
+sub_82BFFAA8	A	shipped	PASS-ABI	1.000	1	gate.py 2026-11-16: PASS-ABI; orig mutants 9/9; rewrite mutants 3/3
+sub_82D51730	A	shipped	PASS-ABI	1.000	1	gate.py 2026-11-16: PASS-ABI; orig mutants 14/14; rewrite mutants 3/3
+sub_82D51980	A	shipped	PASS-ABI	1.000	1	gate.py 2026-11-16: PASS-ABI; orig mutants 11/11; rewrite mutants 2/2
+sub_82D5A318	A	shipped	PASS-ABI	1.000	1	gate.py 2026-11-16: PASS-ABI; orig mutants 17/17; rewrite mutants 9/9
+sub_82E7D860	A	shipped	PASS-ABI	0.900	1	gate.py 2026-11-16: PASS-ABI; orig mutants 9/10; rewrite mutants 5/5
+sub_82EF1068	A	shipped	PASS-ABI	0.941	1	gate.py 2026-11-16: PASS-ABI; orig mutants 32/34; rewrite mutants 9/9
+sub_82F6AD80	A	shipped	PASS-ABI	1.000	1	gate.py 2026-11-16: PASS-ABI; orig mutants 13/13; rewrite mutants 5/5
+sub_82F6C2D0	A	shipped	PASS-ABI	1.000	pilot	pilot; hand-written negative controls; gate.py 2026-11-16: PASS-ABI; orig mutants 18/18; rewrite mutants 13/13
+sub_82F6D720	A	shipped	PASS-ABI	0.810	1	gate.py 2026-11-16: PASS-ABI; orig mutants 17/21 (3 to review); rewrite mutants 6/6
+sub_8310FB10	A	shipped	PASS-ABI	1.000	1	gate.py 2026-11-16: PASS-ABI; orig mutants 32/32; rewrite mutants 12/12
+sub_831101B8	A	shipped	PASS-ABI	0.914	1	gate.py 2026-11-16: PASS-ABI; orig mutants 32/35; rewrite mutants 14/14

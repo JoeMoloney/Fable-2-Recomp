@@ -1,0 +1,19 @@
+# 4 entries at 0x4000C000 (12 bytes each); entry refs point at words that are
+# 0 or 1; the match global is 1, so type-4 entries hit the substitution half the time.
+r3 ptr
+mem32 @r3+0 fixed 0x4000C000
+mem32 @r3+8 len 3
+mem32 0x8349E158 fixed 1
+mem32 0x8349E164 fixed 0x13572468
+mem32 0x4000c000 len 7            # entry 0 type 0..7
+mem32 0x4000c008 fixed 0x4000d000
+mem32 0x4000d000 len 1
+mem32 0x4000c00c len 7            # entry 1 type 0..7
+mem32 0x4000c014 fixed 0x4000d010
+mem32 0x4000d010 len 1
+mem32 0x4000c018 len 7            # entry 2 type 0..7
+mem32 0x4000c020 fixed 0x4000d020
+mem32 0x4000d020 len 1
+mem32 0x4000c024 len 7            # entry 3 type 0..7
+mem32 0x4000c02c fixed 0x4000d030
+mem32 0x4000d030 len 1

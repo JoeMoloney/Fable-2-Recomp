@@ -1,0 +1,11 @@
+# Both handles usually share the slot at 0x4000C000 (r4's slot = r3's half the
+# time, else a random window address); slot -> object at 0x4000C100 (or null);
+# generations 0..3 so newer/older/equal all happen.
+r3 ptr
+r4 ptr
+mem32 @r3+0 fixed_or_null 0x4000C000
+mem32 @r3+4 len 3
+mem32 @r4+0 near @r3+0 0
+mem32 @r4+4 len 3
+mem32 0x4000C000 fixed_or_null 0x4000C100
+mem32 0x4000C104 len 3

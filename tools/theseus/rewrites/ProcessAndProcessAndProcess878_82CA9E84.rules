@@ -1,0 +1,3 @@
+# r12 = -frame size: -32 KB..32 KB, so 0..8 pages are probed (positive values
+# probe nothing).
+r12 slen 0x8000

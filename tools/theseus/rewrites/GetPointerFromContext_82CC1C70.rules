@@ -1,0 +1,5 @@
+# r13 = the per-processor block in the window; its busy flag is 0 or 1 and its
+# current-thread pointer a window pointer.
+r13 ptr_lo
+mem32 @r13+336 len 1
+mem32 @r13+256 ptr

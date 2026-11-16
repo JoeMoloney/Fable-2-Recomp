@@ -1,0 +1,2 @@
+# -100..100: covers both sides of A..Z, negatives too.
+r3 slen 100

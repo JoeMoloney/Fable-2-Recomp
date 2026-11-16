@@ -1,0 +1,4 @@
+# Type byte at +0 = the top byte of this word: 0..8, so 5 and 7 come up often.
+r3 ptr
+mem32 @r3+0 len 0x08FFFFFF
+mem32 @r3+4 len 3                 # the ref: 0..3 (0 and 1 both matter: type 7 tests ref != 0)
