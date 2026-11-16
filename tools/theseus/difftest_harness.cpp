@@ -81,12 +81,29 @@ spdlog::logger* GetLoggerRaw(LogCategoryId) { ++g_log_calls; return nullptr; }
 }  // namespace rex
 
 extern "C" REX_FUNC(ORIGINAL);
+#ifdef MUTANTS
+// tools/theseus/mutate.py: many mutants of the original in one binary; argv[3]
+// picks one. Each mutant stands in for the rewrite.
+using GuestFn = void (*)(PPCContext&, uint8_t*);
+extern "C" const GuestFn kMutantTable[];
+extern "C" const int kMutantCount;
+static GuestFn g_rewrite = nullptr;
+#define CALL_REWRITE(c, m) g_rewrite(c, m)
+#else
 extern "C" REX_FUNC(REWRITE);
+#define CALL_REWRITE(c, m) REWRITE(c, m)
+#endif
 
 namespace {
 
 constexpr uint64_t kGuestSize = 0x100000000ull + 0x10000;
 constexpr uint32_t kWindow = 0x40000000, kWindowSize = 0x10000;
+// A copy of the window above the sign bit (real guest pointers live on both sides:
+// heap 0x4..., image 0x82..., physical 0xA0...+). A quarter of the random pointers
+// go there, so a rewrite that compares pointers as signed numbers fails.
+// (Mutants found this gap: B1 in plans/THESEUS_BATCH.md.) Below 0xE0000000,
+// where the SDK adds its 4 KB physical-mirror offset.
+constexpr uint32_t kHiDelta = 0x70000000, kWindowHi = kWindow + kHiDelta;
 constexpr uint32_t kStackTop = 0x50008000, kStackSize = 0x8000;
 
 struct Rng {
@@ -102,9 +119,10 @@ uint8_t* map_guest() {
   return static_cast<uint8_t*>(p);
 }
 
-enum Kind { kPtr, kPtrOrNull, kLen, kInt, kU32, kAny, kNear, kSLen, kTreeCont, kTreeNode, kTreeKey, kFixed };
+enum Kind { kPtr, kPtrOrNull, kLen, kInt, kU32, kAny, kNear, kSLen, kTreeCont, kTreeNode, kTreeKey, kFixed, kStr, kPtrLo };
 struct ArgRule { int reg; Kind kind; uint32_t max; int base = 0; };
-struct MemRule { uint32_t addr; Kind kind; uint32_t max; int base = 0; uint32_t deref = 0; };  // base: rN / deref: 32-bit global holding the base; addr = offset
+struct MemRule { uint32_t addr; Kind kind; uint32_t max; int base = 0; uint32_t deref = 0;
+                 int near_base = 0; uint32_t near_off = 0; };  // kNear: half the time *(r<near_base>+near_off) + 0..max  // base: rN / deref: 32-bit global holding the base; addr = offset
 struct TreeRule { uint32_t isnil_off, key_off, max_nodes; };  // max_nodes 0: no tree
 struct DataRule { uint32_t addr; const char* hex; };  // addr 0: unused
 #ifdef HAS_RULES
@@ -174,10 +192,16 @@ void build_tree(std::vector<uint8_t>& w, Rng& r) {
   put32(w, kTreeKeySlot, key);
 }
 
+uint32_t window_ptr(Rng& r, uint32_t room) {
+  const uint32_t p = kWindow + r.below(room);
+  return r.below(4) == 0 ? p + kHiDelta : p;
+}
+
 uint64_t ruled_value(Rng& r, const ArgRule& rule) {
   switch (rule.kind) {
-    case kPtr: return kWindow + r.below(kWindowSize / 2);
-    case kPtrOrNull: return r.below(8) == 0 ? 0 : kWindow + r.below(kWindowSize / 2);
+    case kPtr: case kStr: return window_ptr(r, kWindowSize / 2);
+    case kPtrLo: return kWindow + r.below(kWindowSize / 2);  // `ptr_lo`: never the high copy
+    case kPtrOrNull: return r.below(8) == 0 ? 0 : window_ptr(r, kWindowSize / 2);
     case kLen: return r.below(rule.max + 1);
     case kSLen: return uint64_t(int64_t(r.below(2 * rule.max + 1)) - int64_t(rule.max));
     case kInt: return uint64_t(int64_t(int32_t(r.next())));
@@ -217,7 +241,7 @@ long scan_touched(uint8_t* a, uint8_t* b, uint32_t* first_page) {
 
 uint64_t arg_value(Rng& r) {
   switch (r.below(6)) {
-    case 0: case 1: return kWindow + r.below(kWindowSize - 64);   // pointer into data
+    case 0: case 1: return window_ptr(r, kWindowSize - 64);       // pointer into data
     case 2: return r.below(64);                                   // small int / length
     case 3: return uint32_t(r.next());                            // any 32-bit value
     case 4: return uint64_t(int64_t(int32_t(r.next())));          // sign-extended 32-bit
@@ -241,6 +265,9 @@ double fp_value(Rng& r) {
   }
   if (r.below(2)) return nice[r.below(sizeof(nice) / sizeof(nice[0]))];
   if (r.below(2)) return (double(int64_t(r.next() >> 11)) / double(1ull << 40)) - 2048.0;
+#ifdef NO_LOG_UNIFORM  // ablation (mutate.py --ablate): the pilot's float inputs before #16
+  return (double(int64_t(r.next() >> 11)) / double(1ull << 40)) - 2048.0;
+#endif
   // log-uniform magnitude 2^-60 .. 2^60, random sign: covers large and tiny inputs
   const double m = 1.0 + double(r.next() >> 11) / double(1ull << 53);
   const double v = std::ldexp(m, int(r.below(121)) - 60);
@@ -269,6 +296,16 @@ Field kFields[] = {
 int main(int argc, char** argv) {
   const long cases = argc > 1 ? std::atol(argv[1]) : 200000;
   const uint64_t seed = argc > 2 ? std::strtoull(argv[2], nullptr, 0) : 0x9E3779B97F4A7C15ull;
+#ifdef MUTANTS
+  const int mutant = argc > 3 ? std::atoi(argv[3]) : -1;
+  if (mutant < 0 || mutant >= kMutantCount) {
+    std::printf("mutants=%d (pass an index 0..%d as the third argument)\n", kMutantCount, kMutantCount - 1);
+    return 2;
+  }
+  g_rewrite = kMutantTable[mutant];
+#endif
+  // DIFFTEST_STOP=1: stop at the first ABI failure (mutant runs only need to know that).
+  const bool stop_early = std::getenv("DIFFTEST_STOP") != nullptr;
   for (Field& f : kFields)
     if (f.off == offsetof(PPCContext, f1)) f.abi = kFloatReturn;
   const uint32_t default_csr = 0x1F80;  // all exceptions masked, round to nearest
@@ -290,8 +327,10 @@ int main(int argc, char** argv) {
     for (auto& b : window) b = rng.below(12) == 0 ? 0 : uint8_t(rng.next());
     for (auto& b : stack) b = uint8_t(rng.next());
     if (kTreeRule.max_nodes) build_tree(window, rng);
-    std::memcpy(mem_a + kWindow, window.data(), kWindowSize);
-    std::memcpy(mem_b + kWindow, window.data(), kWindowSize);
+    for (uint32_t w : {kWindow, kWindowHi}) {
+      std::memcpy(mem_a + w, window.data(), kWindowSize);
+      std::memcpy(mem_b + w, window.data(), kWindowSize);
+    }
     std::memcpy(mem_a + kStackTop - kStackSize, stack.data(), kStackSize);
     std::memcpy(mem_b + kStackTop - kStackSize, stack.data(), kStackSize);
 
@@ -308,6 +347,17 @@ int main(int argc, char** argv) {
         args[rule.reg - 3]->u64 = rule.kind == kNear && rng.below(2)
             ? uint64_t(args[rule.base - 3]->u32 + rng.below(rule.max + 1))
             : ruled_value(rng, rule);
+    for (const ArgRule& rule : kRules)  // `rN str <max>`: a string of a chosen length at rN
+      if (rule.kind == kStr) {
+        // Lengths 0..max, a quarter of them at the edges (max-1, max, max+1) so a
+        // length cap inside the function is reached; bytes 1..255 (signed chars too).
+        uint32_t len = rng.below(4) == 0 ? rule.max - 1 + rng.below(3) : rng.below(rule.max + 1);
+        const uint32_t at = args[rule.reg - 3]->u32;
+        for (uint32_t i = 0; i <= len; ++i) {
+          const uint8_t ch = i == len ? 0 : uint8_t(1 + rng.below(255));
+          mem_a[at + i] = mem_b[at + i] = ch;
+        }
+      }
     for (PPCRegister* f : {&init.f1, &init.f2, &init.f3, &init.f4})
       f->f64 = fp_value(rng);
     for (const MemRule& m : kMemRules) {
@@ -317,7 +367,18 @@ int main(int argc, char** argv) {
         const uint8_t* g = mem_a + m.deref;
         addr = ((uint32_t(g[0]) << 24) | (uint32_t(g[1]) << 16) | (uint32_t(g[2]) << 8) | g[3]) + m.addr;
       }
-      const uint32_t v = uint32_t(ruled_value(rng, {0, m.kind, m.max}));
+      uint32_t v;
+      if (m.kind == kNear) {  // `mem32 @r3+8 near @r3+12 512`: a field close to another field's value
+        const uint8_t* q = mem_a + args[m.near_base - 3]->u32 + m.near_off;
+        const uint32_t ref = (uint32_t(q[0]) << 24) | (uint32_t(q[1]) << 16) | (uint32_t(q[2]) << 8) | q[3];
+        // The other half: anywhere in the SAME window as the referenced value, so two
+        // fields of one struct (e.g. Lua's top and base) never straddle the windows
+        // (a loop from one to the other would sweep 1.8 GB).
+        const uint32_t lo = kWindow + rng.below(kWindowSize / 2);
+        v = rng.below(2) ? ref + rng.below(m.max + 1) : (ref >= kWindowHi ? lo + kHiDelta : lo);
+      } else {
+        v = uint32_t(ruled_value(rng, {0, m.kind, m.max}));
+      }
       const uint8_t be[4] = {uint8_t(v >> 24), uint8_t(v >> 16), uint8_t(v >> 8), uint8_t(v)};
       std::memcpy(mem_a + addr, be, 4);
       std::memcpy(mem_b + addr, be, 4);
@@ -341,19 +402,24 @@ int main(int argc, char** argv) {
     const uint32_t host_csr_a = a.fpscr.getcsr();
     const long log_a = rex::g_log_calls - log0;
     b.fpscr.setcsr(init.fpscr.csr);
-    REWRITE(b, mem_b);
+    CALL_REWRITE(b, mem_b);
     const uint32_t host_csr_b = b.fpscr.getcsr();
     a.fpscr.setcsr(default_csr);
     const bool csr_same = (host_csr_a & ~0x3Fu) == (host_csr_b & ~0x3Fu);  // control bits; 0-5 are sticky flags
     csr_bad += !csr_same;
     const long log_b = rex::g_log_calls - log0 - log_a;
     traps_a += log_a;
+#ifdef NO_TRAP_COUNT  // ablation (mutate.py --ablate): before trap counting existed
+    bool traps_same = true;
+#else
     bool traps_same = log_a == log_b;
+#endif
     trap_bad += !traps_same;
 
     const uint32_t sp = uint32_t(init.r1.u64);
     bool memory_same =
         std::memcmp(mem_a + kWindow, mem_b + kWindow, kWindowSize) == 0 &&
+        std::memcmp(mem_a + kWindowHi, mem_b + kWindowHi, kWindowSize) == 0 &&
         std::memcmp(mem_a + sp, mem_b + sp, kStackTop - sp) == 0;
     bool redzone_same = std::memcmp(mem_a + kStackTop - kStackSize, mem_b + kStackTop - kStackSize,
                                     sp - (kStackTop - kStackSize)) == 0;
@@ -401,6 +467,11 @@ int main(int argc, char** argv) {
       long n = scan_touched(mem_a, mem_b, first_stray_scan < 0 ? &first_stray_page : nullptr);
       if (n && first_stray_scan < 0) first_stray_scan = c;
       stray_pages += n;
+    }
+    if (stop_early && (abi_bad || stray_pages)) {
+      if (!stray_pages) stray_pages = scan_touched(mem_a, mem_b, &first_stray_page);
+      std::printf("stopped early after case %ld (DIFFTEST_STOP)\n", c);
+      break;
     }
   }
 

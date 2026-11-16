@@ -6,4 +6,6 @@ r3 len 0x7FF0      # L itself in low memory (0..0x7FF0), away from its stack in
                    # sweep a gigabyte (the game never does that)
 r4 slen 64
 mem32 @r3+12 ptr   # L->base
-mem32 @r3+8 ptr    # L->top
+mem32 @r3+8 near @r3+12 512   # L->top: half the time just above L->base, so
+                              # top == base + idx*8 happens (B1: a bound mutant
+                              # survived when top and base were independent)

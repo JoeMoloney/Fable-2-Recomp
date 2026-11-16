@@ -8,7 +8,7 @@ Multi-session work plans. Each plan says at the top whether it is active or done
 |---|---|
 | [STEAMDECK_SESSIONS.md](STEAMDECK_SESSIONS.md) | Steam Deck performance. 30 FPS at the test spot since 2026-11-15; the busy view (~28) is next. Start at its "Next session prompt". |
 | [THESEUS_PILOT.md](THESEUS_PILOT.md) | Ship of Theseus pilot: DONE 2026-11-16 (20/20 rewrites pass, 19 run in game). Verdict: batch job for leaf functions. |
-| [THESEUS_BATCH.md](THESEUS_BATCH.md) | Theseus batch job over the 4,766-function leaf pool: queue, packets, mechanical mutants, gate, ship in batches. B0 done; next B1 (`mutate.py`). |
+| [THESEUS_BATCH.md](THESEUS_BATCH.md) | Theseus batch job over the 4,766-function leaf pool: queue, packets, mechanical mutants, gate, ship in batches. B0 + B1 done (mutants found 2 real test gaps in the pilot); next B2 (`gate.py`). |
 | [RE_NAMING_PASS.md](RE_NAMING_PASS.md) | Name and place functions from evidence in the binary (profiler strings, assert paths, RTTI vtables). Reviewed names recorded (`docs/re/NAMES_EVIDENCE.tsv`) and 3,513 applied in Ghidra (N3b); next is N5 (LLM-assisted naming). |
 
 ## Done ([done/](done/))

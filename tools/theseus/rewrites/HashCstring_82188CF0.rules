@@ -1,0 +1,4 @@
+# The hash stops after 100 bytes: strings of 0..100 bytes, a quarter at 99..101,
+# so the cap is reached (B1: with random bytes strings were ~12 long and four
+# mutants of the cap survived).
+r3 str 100

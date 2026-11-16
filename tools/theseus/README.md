@@ -20,7 +20,8 @@ equivalent to the original. Nothing here changes the game build or the manifest;
 | 3. Naming evidence | `python3 tools/theseus/evidence.py` | `names.jsonl`, `names_summary.json` | ~1 s |
 | 4. Reference table | `python3 tools/theseus/export_names.py` | `docs/re/NAMES_EVIDENCE.tsv` (tracked) | ~1 s |
 | 5. Apply to Ghidra (writes!) | `tools/theseus/ghidra/apply_names.sh` (`revert` to undo) | Ghidra project; `docs/re/NAMES_GHIDRA_REVERT.tsv` | ~10 s; stops/restarts `ghidra-mcp`, backs up first |
-| Rewrite check | `python3 tools/theseus/difftest.py <function>` | `difftest/<function>/result.txt` | ~1 min |
+| Rewrite check | `python3 tools/theseus/difftest.py <function> [--timeout S]` | `difftest/<function>/result.txt` | ~1 min |
+| Mutants (test coverage) | `python3 tools/theseus/mutate.py <function> [--list] [--cases N]` | `mutants/<function>/result.json` | ~45 s |
 | Caller check | `python3 tools/theseus/caller_usage.py <function>` | printed | ~10 s |
 | Batch queue | `python3 tools/theseus/batch_pool.py [--top N A]` | `batch/queue.jsonl`; ledger `tools/theseus/batch/ledger.tsv` (tracked) | ~10 s |
 | Batch packet | `python3 tools/theseus/batch_packet.py <function>` or `--next N A` | `batch/<function>/packet.md` | ~4 s each |
@@ -71,6 +72,17 @@ Rerun 1 and 3 after codegen or manifest changes; rerun 2 after big Ghidra change
   corrupt a loop bound (see `rewrites/GrowAndZeroBuffer_82BC55B8.rules`). Besides the data
   window and stack, every page either run touched is compared every 1,000 cases,
   so stray writes anywhere fail the test.
+- **`mutate.py`** makes single-line mutants of the *original* body (flip/move a branch,
+  signed↔unsigned compare, immediate ±1, field offset +4, drop a store/trap, unfuse an fma,
+  delete a statement), builds them into one binary and runs each against the original
+  with the function's rules. A survivor means the test inputs never reach that spot (a coverage
+  gap) or the mutant can't change anything (equivalent); look at each. Floats: use `--cases
+  200000` (unfused fmas differ rarely). `--ablate trap|loguniform|fval` switches a harness
+  feature off to check that mutants notice. Results: `plans/THESEUS_BATCH.md` "B1 results".
+- More rules (B1): `r3 str 100` = a string of length 0..100 (a quarter at 99..101), `r3 ptr_lo` =
+  pointer that always stays in the low window, `mem32 @r3+8 near @r3+12 512` = a field close to
+  another field's value. A quarter of random pointers now go to a copy of the data window above
+  the sign bit (0xB000xxxx). `--timeout` (default 600 s) turns a hang into `RESULT FAIL (timeout)`.
 - **`caller_usage.py`** checks what every call site does with r3 afterwards and
   that none reads a scratch register first.
 
