@@ -247,6 +247,45 @@ Batch 3 = the top 25 of tier B (functions with stores), in-session, ledger batch
 - **Names:** batch names go to `docs/re/RE_FINDINGS.md` and Ghidra per batch (same
   revert-list method as the pilot), never the manifest.
 
+## Handoff (end of 2026-11-16)
+
+**State.** B0–B6 done and committed (`6e475da` tooling, `49daa1c` batch 1, `01a1548` batches 2 **and** 3:
+the B5 commits were not made separately, so batch 2 and the `rN oneof` harness change are in the
+batch-3 commit). 120 rewrites pass the gate; **119 run in the game** behind `--theseus_rewrites`
+(pilot 19 + 25 + 50 + 25). User in-game check of batch 3: interactions, inventory, quest advance,
+save, menu reload, full restart, all fine. Queue left: A 536, B 1,377, C 853, D 1,880.
+52 Ghidra names added today (revert list `docs/re/NAMES_GHIDRA_REVERT_THESEUS.tsv`).
+
+**How a batch runs (in-session, ~1 min per function to write):**
+1. `batch_pool.py --top N <tier>` → names; `batch_packet.py --next N <tier>` (takes a few minutes).
+2. Read originals compactly (strip the asm comments: body, caller summary, evidence), write 10 rewrites
+   + rules at a time, `gate.py <10 names> -j 10` in the background while writing the next 10.
+3. Read every gate-fail and every "review" survivor: a survivor is either equivalent (say why) or a
+   rule gap (fix the rules, regate). Then mark the ledger batch, regate **all** rewrites at `-j 16`
+   (~25 min for 120), `ship.py <batch> --build`, user in-game check, `ship.py <batch> --confirm`.
+4. Names: Ghidra rename + revert-list rows + a `RE_FINDINGS.md` table per batch.
+
+**Gotchas met so far:** `@rN+off` rules with a null `rN` write into the null page → `FAIL (rules)`
+(use fixed nodes and `rN oneof 0 <node>`); `rN near rM` is random on its other half; sorted test
+data hides split/probe mutants (binary search, Fibonacci hash with few slots); flag words need
+values with *other* bits set too; overlapping copies only differ with dst just after src; a C++
+shift by 32 is UB (guard it); `pgrep -f` in a waiter matches its own command line (use the gate
+log's "passed; ledger" line instead).
+
+**Not Theseus, noted for later:**
+- Startup sometimes sits on a white screen for ~3 min with one core busy (also with
+  `--theseus_rewrites=false`): the render thread polls a ring/fence for the GPU command thread.
+  Possibly synchronous shader compilation (`--async_shader_compilation=false`); unproven.
+- A user-found FPS-drop spot (location still to note) is GPU-command-thread bound: ~half of that
+  thread in driver ioctls from memexport readback buffers being allocated/evicted per address
+  (`thirdparty/rexglue-sdk/src/graphics/vulkan/command_processor.cpp`, `MakeMemexportReadbackKey`).
+  Confirm with `--readback_memexport_stats=true` at the spot; fix idea: pool buffers by size class.
+- perf needs `kernel.perf_event_paranoid=1` for call graphs (set via sudo on 2026-11-16; reboot or
+  `sudo sysctl kernel.perf_event_paranoid=2` restores it). gdb/eu-stack attach is blocked (ptrace_scope 1).
+
 ## Next session prompt
 
-"Theseus batch: read plans/THESEUS_BATCH.md and do the next unit marked ⬜."
+"Theseus batch: read plans/THESEUS_BATCH.md (Handoff section first) and do the next unit marked ⬜."
+That is **B7**: update `docs/analysis/THESEUS_PILOT_VERDICT.md` with the batch numbers (B3–B6:
+~1 min per function, every rewrite correct, all gate failures were test gaps), then decide tier C
+(floats: bit-exact fma/NaN rules, 200k-case mutants) and tier D (no direct callers) with the user.
