@@ -1,0 +1,21 @@
+name	tier	status	gate	kill_rate	batch	note
+ComputeSpecialFunction_82239E88	C	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+ComputeWrapped_8222C3E8	C	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+Ctype_Pred_Bit2_82CA6B10	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+FNV1Hash_821F3C28	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+FindChainRoot_82A596F0	B	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+FindChar_82CA3980	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+FindSubstring_821E6388	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+FindTreeLeaf_825CB448	B	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+GrowAndZeroBuffer_82BC55B8	B	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+HashCstring_82188CF0	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+MemSet_SdkRuntime_82CA3190	B	gated	PASS-ABI		pilot	pilot; hand-written negative controls; kept out of the game: plain byte loop, possible FPS cost
+NormalizeVector_82260BC8	C	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+ProcessAndProcessAndProcess1728_82D4F620	B	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+ProcessAndProcessAndProcess619_82210418	C	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+StrCmpIgnoreCase_82CA6320	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+StrCmp_Signed_8226D7A8	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+StrLenUTF16_8217AB30	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+StringCopyN_822CD828	B	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+sub_821E3E10	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls
+sub_82F6C2D0	A	shipped	PASS-ABI		pilot	pilot; hand-written negative controls

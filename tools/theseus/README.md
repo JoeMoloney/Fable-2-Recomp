@@ -4,6 +4,7 @@ Offline tools for the "Ship of Theseus" work: inventory every recompiled guest
 function, gather naming evidence from the binary, and prove readable rewrites
 equivalent to the original. Nothing here changes the game build or the manifest; only
 `ghidra/apply_names.sh` writes to Ghidra (with a backup and a revert list). Plans: [THESEUS_PILOT](../../plans/THESEUS_PILOT.md),
+[THESEUS_BATCH](../../plans/THESEUS_BATCH.md),
 [RE_NAMING_PASS](../../plans/RE_NAMING_PASS.md). Results:
 [THESEUS_INVENTORY](../../docs/analysis/THESEUS_INVENTORY.md),
 [NAMING_EVIDENCE_RESULTS](../../docs/analysis/NAMING_EVIDENCE_RESULTS.md).
@@ -21,6 +22,8 @@ equivalent to the original. Nothing here changes the game build or the manifest;
 | 5. Apply to Ghidra (writes!) | `tools/theseus/ghidra/apply_names.sh` (`revert` to undo) | Ghidra project; `docs/re/NAMES_GHIDRA_REVERT.tsv` | ~10 s; stops/restarts `ghidra-mcp`, backs up first |
 | Rewrite check | `python3 tools/theseus/difftest.py <function>` | `difftest/<function>/result.txt` | ~1 min |
 | Caller check | `python3 tools/theseus/caller_usage.py <function>` | printed | ~10 s |
+| Batch queue | `python3 tools/theseus/batch_pool.py [--top N A]` | `batch/queue.jsonl`; ledger `tools/theseus/batch/ledger.tsv` (tracked) | ~10 s |
+| Batch packet | `python3 tools/theseus/batch_packet.py <function>` or `--next N A` | `batch/<function>/packet.md` | ~4 s each |
 
 Rerun 1 and 3 after codegen or manifest changes; rerun 2 after big Ghidra changes.
 

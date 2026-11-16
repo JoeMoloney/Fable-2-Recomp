@@ -1,6 +1,6 @@
 # Ship of Theseus — pilot (multi-session plan)
 
-Started 2026-11-15. **STATUS: DONE 2026-11-16.** All 20 pass offline, 19 ran in the game with no visible change and the same FPS (30 cap), verdict written: [THESEUS_PILOT_VERDICT](../docs/analysis/THESEUS_PILOT_VERDICT.md) (batch job recommended for leaf functions).
+Started 2026-11-15. **STATUS: DONE 2026-11-16.** All 20 pass offline, 19 ran in the game with no visible change and the same FPS (30 cap), verdict written: [THESEUS_PILOT_VERDICT](../docs/analysis/THESEUS_PILOT_VERDICT.md) (batch job recommended for leaf functions). Continued in [THESEUS_BATCH](THESEUS_BATCH.md).
 
 **Next session prompt:** "Theseus: the pilot is done (plans/THESEUS_PILOT.md,
 docs/analysis/THESEUS_PILOT_VERDICT.md). Write plans/THESEUS_BATCH.md for the batch job
